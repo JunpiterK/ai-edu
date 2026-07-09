@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lang 모듈 구현 가이드 - AI Edu Archive 한국어</title>
+<meta content="LangChain과 LangGraph 모듈을 실전 기준으로 설명합니다: core, provider, loader, splitter, vector store, retriever, tool, LCEL, StateGraph를 언제 쓰고 어떻게 구현하는지." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/lang-modules-implementation-guide.html" rel="canonical"/><link href="https://ai-edu-archive.example.com/blog/articles/lang-modules-implementation-guide.html" hreflang="en" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/ko/articles/lang-modules-implementation-guide.html" hreflang="ko" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/articles/lang-modules-implementation-guide.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+<meta content="article" property="og:type"/>
+<meta content="Lang 모듈 구현 가이드 - AI Edu Archive 한국어" property="og:title"/>
+<meta content="LangChain과 LangGraph 모듈을 실전 기준으로 설명합니다: core, provider, loader, splitter, vector store, retriever, tool, LCEL, StateGraph를 언제 쓰고 어떻게 구현하는지." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="ko_KR" property="og:locale"/>
+<meta content="en_US" property="og:locale:alternate"/>
+<meta content="2026-07-06" property="article:published_time"/>
+<meta content="Python Stack" property="article:section"/>
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Lang 모듈 구현 가이드",
+  "description": "LangChain과 LangGraph 모듈을 실전 기준으로 설명합니다: core, provider, loader, splitter, vector store, retriever, tool, LCEL, StateGraph를 언제 쓰고 어떻게 구현하는지.",
+  "inLanguage": "ko",
+  "datePublished": "2026-07-06",
+  "dateModified": "2026-07-06",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive"
+  },
+  "url": "https://ai-edu-archive.example.com/blog/ko/articles/lang-modules-implementation-guide.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/ko/articles/lang-modules-implementation-guide.html"
+  }
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/blog.css" rel="stylesheet"/>
+<meta content="LangChain과 LangGraph 모듈을 실전 기준으로 설명합니다: core, provider, loader, splitter, vector store, retriever, tool, LCEL, StateGraph를 언제 쓰고 어떻게 구현하는지." name="twitter:description"/><meta content="Lang 모듈 구현 가이드 - AI Edu Archive 한국어" name="twitter:title"/><meta content="https://ai-edu-archive.example.com/blog/ko/articles/lang-modules-implementation-guide.html" property="og:url"/></head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive 홈" class="brand" href="../../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="주요 메뉴" class="nav-links">
+<a href="../../../index.html#courses">강의</a>
+<a href="../index.html">글</a>
+<a href="../portfolio.html">포트폴리오</a>
+<a href="../about.html">소개</a>
+<div aria-label="언어 선택" class="language-switch"><a href="../../articles/lang-modules-implementation-guide.html" lang="en" title="English">🇺🇸 EN</a><a aria-current="true" href="lang-modules-implementation-guide.html" lang="ko" title="한국어">🇰🇷 KO</a><a href="../../articles/lang-modules-implementation-guide.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a><a href="../../articles/lang-modules-implementation-guide.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a><a href="../../articles/lang-modules-implementation-guide.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a><a href="../../articles/lang-modules-implementation-guide.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a><a href="../../articles/lang-modules-implementation-guide.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a></div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article itemscope="" itemtype="https://schema.org/TechArticle">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="탐색경로" class="breadcrumb">
+<a href="../../../index.html">홈</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">저널</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">Lang 모듈 가이드</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag">Python Stack</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-06" itemprop="datePublished">2026년 7월 6일</time>
+<span class="post-dot"></span>
+<span class="rt">18분 읽기</span>
+</div>
+<h1 itemprop="headline">Lang 모듈 구현 가이드</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>반도체 공정 엔지니어 · Air-gapped LLM / RAG / Agents</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="목차" class="toc">
+<div class="toc-title">이 페이지에서</div>
+<ol>
+<li><a href="#map">모듈 지도</a></li>
+<li><a href="#builds">무엇을 만들 수 있는가</a></li>
+<li><a href="#install">설치 세트</a></li>
+<li><a href="#chat">Chat model + prompt + parser</a></li>
+<li><a href="#rag">Load, split, embed, retrieve</a></li>
+<li><a href="#tools">Tool과 structured call</a></li>
+<li><a href="#graph">LangGraph workflow</a></li>
+<li><a href="#project">Mini project layout</a></li>
+</ol>
+</nav>
+<div class="article-body" itemprop="articleBody">
+<p>Lang ecosystem에서 헷갈리는 부분은 API 하나가 아닙니다. 어떤 package가 어떤 일을 맡는지 아는 것이 핵심입니다. 이 감각이 잡히면 stack은 평범한 Python처럼 보입니다. model이 들어오고, prompt가 들어오고, parser가 나오고, document가 들어오고, retriever가 나오고, tool이 들어오고, graph가 workflow를 만듭니다.</p>
+<p>Lang 모듈은 LLM application을 위한 building block입니다. 단순 model call은 블록 하나일 뿐입니다. 진짜 가치는 prompt, parser, retrieval, tool, graph state를 조합해 파일에서 답하고, local function을 호출하고, approval을 요청하고, error에서 복구하는 workflow를 만들 때 나옵니다.</p>
+<h2 id="map">모듈 지도</h2>
+<p>코드를 쓰기 전에 이 표를 mental model로 사용하세요.</p>
+<table>
+<thead>
+<tr><th>Module</th><th>무엇을 하는가</th><th>언제 쓰는가</th></tr>
+</thead>
+<tbody>
+<tr><td>langchain-core</td><td>message, prompt, output parser, runnable, tool, document 같은 base abstraction.</td><td>chain을 조합하거나 tool을 정의할 때 씁니다. 대부분의 Lang app의 공통 기반입니다.</td></tr>
+<tr><td>langchain-openai, langchain-ollama 등</td><td>provider별 chat model과 embedding.</td><td>model provider 또는 local model server를 호출해야 할 때 씁니다.</td></tr>
+<tr><td>langchain-community</td><td>loader, vector store, tool, utility 같은 community integration.</td><td>core에 없는 integration이 필요할 때 씁니다.</td></tr>
+<tr><td>langchain-text-splitters</td><td>document chunking utility.</td><td>RAG를 만들고 안정적인 retrieval unit이 필요할 때 씁니다.</td></tr>
+<tr><td>langgraph</td><td>stateful, multi-step, cyclic agent workflow.</td><td>memory, branching, approval, retry, long-running state가 필요할 때 씁니다.</td></tr>
+</tbody>
+</table>
+<p>경험칙입니다. 재사용 가능한 interface라면 대개 langchain-core에 있습니다. vendor나 외부 system과 통신한다면 provider 또는 community package에 있을 가능성이 큽니다. workflow에 state와 branch가 있다면 LangGraph를 선택하세요.</p>
+<h2 id="builds">무엇을 만들 수 있는가</h2>
+<p>import부터 보기 전에 목적지를 먼저 보는 편이 좋습니다. 이 글의 같은 모듈들로 만들 수 있는 현실적인 project들입니다.</p>
+<table>
+<thead>
+<tr><th>Project</th><th>무엇을 하는가</th><th>주요 모듈</th></tr>
+</thead>
+<tbody>
+<tr><td>Local document Q&amp;A</td><td>manual, PDF, Markdown note, SOP folder 위에서 질문합니다.</td><td>loader, splitter, embedding, vector store, retriever, prompt</td></tr>
+<tr><td>Meeting note summarizer</td><td>지저분한 transcript를 decision, action item, risk로 정리합니다.</td><td>prompt template, chat model, output parser, structured output</td></tr>
+<tr><td>Engineering troubleshooting assistant</td><td>known issue를 검색하고 관련 fix를 찾아 다음 check를 제안합니다.</td><td>retriever, reranking pattern, tool, LangGraph route node</td></tr>
+<tr><td>Local coding helper</td><td>repo를 설명하고 patch를 초안 작성하고 controlled tool로 test를 실행합니다.</td><td>tool, MCP/Goose integration, LangGraph approval state</td></tr>
+<tr><td>Spec compliance checker</td><td>design note를 policy document와 비교하고 violation을 cite합니다.</td><td>document loader, retriever, JSON parser, graph branch</td></tr>
+<tr><td>GPU sizing assistant</td><td>model이 consumer GPU에 맞는지 추정하고 tradeoff를 설명합니다.</td><td>@tool function, prompt, structured output</td></tr>
+<tr><td>Manufacturing SOP agent</td><td>procedure 기반으로 다음 행동을 답하되 unsafe action은 거부합니다.</td><td>RAG, tool, safety prompt, LangGraph human approval</td></tr>
+<tr><td>Research digest bot</td><td>note를 load, summarize, cluster하고 reading plan을 만듭니다.</td><td>loader, splitter, map-reduce pattern, output parser</td></tr>
+<tr><td>CSV / log explainer</td><td>log 또는 CSV summary에서 anomaly나 next check를 뽑습니다.</td><td>community loader, tool, model, parser</td></tr>
+<tr><td>Personal knowledge base</td><td>note를 index하고 local LLM이 source link와 함께 답하게 합니다.</td><td>Chroma/Qdrant, retriever, prompt, local embedding</td></tr>
+</tbody>
+</table>
+<p>패턴은 반복됩니다. model alone은 language work에 좋고, RAG는 답이 document에서 나와야 할 때 좋고, tool은 model이 Python에게 일을 부탁해야 할 때 좋고, LangGraph는 workflow에 state, routing, retry, approval이 필요할 때 좋습니다.</p>
+<h2 id="install">설치 세트</h2>
+<p>가정용 PC 또는 local LLM tutorial이라면 Ollama-compatible local serving으로 시작하세요. 나중에 provider를 바꾸더라도 app 전체를 다시 쓸 필요는 없습니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">shell</span>install.ps1</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code>python -m venv .venv
+.\.venv\Scripts\activate
+pip install -U langchain-core langchain-ollama langchain-community langchain-text-splitters langgraph chromadb</code></pre>
+</figure>
+<p>예상 output입니다. package 설치가 끝나고 virtual environment가 활성화된 prompt가 보여야 합니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">output</span>pip-output.txt</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code>Successfully installed langchain-core-... langchain-ollama-... langgraph-... chromadb-...
+(.venv) PS C:\coding\lang-lab&gt;</code></pre>
+</figure>
+<h2 id="chat">Chat model + prompt + parser</h2>
+<p>가장 작은 Lang app입니다. chat model, prompt, output parser로 구성됩니다. tool이나 retrieval 없이 deterministic text transformation, summarization, simple assistant response가 필요할 때 씁니다.</p>
+<p>이 pattern은 email rewriting, 한국어/영어 기술 번역, 회의록 요약, code explanation, glossary generation, report drafting처럼 model이 user input과 instruction만으로 처리할 수 있는 작업에 적합합니다.</p>
+<p>private document, 현재 database 값, 정확한 계산, file write나 test 실행 같은 action이 필요한 질문에는 이 pattern만 쓰면 안 됩니다. 그런 경우 retrieval 또는 tool이 필요합니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span>01_chat_chain.py</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain_ollama <span class="tok-kw">import</span> ChatOllama
+<span class="tok-kw">from</span> langchain_core.prompts <span class="tok-kw">import</span> ChatPromptTemplate
+<span class="tok-kw">from</span> langchain_core.output_parsers <span class="tok-kw">import</span> StrOutputParser
+
+model = ChatOllama(model=<span class="tok-str">"qwen2.5:7b-instruct"</span>, temperature=<span class="tok-num">0.2</span>)
+
+prompt = ChatPromptTemplate.from_messages([
+    (<span class="tok-str">"system"</span>, <span class="tok-str">"You explain AI engineering in clear Korean."</span>),
+    (<span class="tok-str">"human"</span>, <span class="tok-str">"Explain {topic} in 5 bullet points."</span>),
+])
+
+chain = prompt | model | StrOutputParser()
+
+print(chain.invoke({<span class="tok-str">"topic"</span>: <span class="tok-str">"LangChain LCEL"</span>}))</code></pre>
+</figure>
+<p>각 모듈이 한 일입니다. ChatOllama는 local model을 호출했습니다. ChatPromptTemplate은 변수를 chat message로 바꿨습니다. StrOutputParser는 model message를 plain text로 바꿨습니다. pipe operator는 runnable chain을 만들었습니다.</p>
+<p>실전 variation입니다. text 대신 JSON object가 필요하면 StrOutputParser를 structured-output parser로 바꾸거나 schema-capable interface를 통해 model에 요청하세요. risk classification이나 blog metadata generation이 대표 예입니다.</p>
+<p>예상 output입니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">output</span>chat-output.txt</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code>- LCEL connects LangChain components as a pipeline.
+- prompt | model | parser makes the data flow visible.
+- invoke, stream, and batch share the same runnable interface.
+- You can swap the model or parser without rewriting the whole chain.
+- The same style scales from simple chains to RAG pipelines.</code></pre>
+</figure>
+<h2 id="rag">Load, split, embed, retrieve</h2>
+<p>RAG는 네 종류의 모듈 family를 사용합니다. loader는 file을 Document object로 바꿉니다. splitter는 chunk를 만듭니다. embedding은 chunk를 vector로 바꿉니다. vector store는 vector를 저장하고 검색합니다. retriever는 query-to-documents interface를 제공합니다.</p>
+<p>답이 근거에 기반해야 할 때 RAG를 사용합니다. policy가 무엇을 말하는지, 어떤 SOP가 alarm을 언급하는지, claim의 출처가 어디인지 묻는 경우 model은 먼저 source text를 retrieve하고 그 text에서 답해야 합니다.</p>
+<p>각 RAG 모듈의 용도입니다.</p>
+<ul>
+<li>Document loaders: 외부 자료를 page_content와 metadata가 있는 표준 Document 형태로 읽습니다.</li>
+<li>Text splitters: 긴 document를 retrieve 가능한 chunk로 자릅니다. chunk가 나쁘면 좋은 model도 어리석어 보입니다.</li>
+<li>Embeddings: text를 vector로 바꿔 비슷한 의미를 검색할 수 있게 합니다.</li>
+<li>Vector stores: vector를 저장하고 similarity search를 수행합니다.</li>
+<li>Retrievers: storage detail을 invoke(question) 뒤에 숨깁니다.</li>
+</ul>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span>02_tiny_rag.py</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-kw">from</span> pathlib <span class="tok-kw">import</span> Path
+<span class="tok-kw">from</span> langchain_core.documents <span class="tok-kw">import</span> Document
+<span class="tok-kw">from</span> langchain_text_splitters <span class="tok-kw">import</span> RecursiveCharacterTextSplitter
+<span class="tok-kw">from</span> langchain_ollama <span class="tok-kw">import</span> OllamaEmbeddings, ChatOllama
+<span class="tok-kw">from</span> langchain_community.vectorstores <span class="tok-kw">import</span> Chroma
+<span class="tok-kw">from</span> langchain_core.prompts <span class="tok-kw">import</span> ChatPromptTemplate
+<span class="tok-kw">from</span> langchain_core.output_parsers <span class="tok-kw">import</span> StrOutputParser
+
+docs_dir = Path(<span class="tok-str">"docs"</span>)
+docs_dir.mkdir(exist_ok=<span class="tok-kw">True</span>)
+(docs_dir / <span class="tok-str">"policy.txt"</span>).write_text(
+    <span class="tok-str">"Local LLM lab policy: tools are read-only by default. "</span>
+    <span class="tok-str">"Shell commands require explicit approval. Secrets must not be indexed."</span>,
+    encoding=<span class="tok-str">"utf-8"</span>,
+)
+
+raw_docs = [
+    Document(page_content=p.read_text(encoding=<span class="tok-str">"utf-8"</span>), metadata={<span class="tok-str">"source"</span>: str(p)})
+    <span class="tok-kw">for</span> p <span class="tok-kw">in</span> docs_dir.glob(<span class="tok-str">"*.txt"</span>)
+]
+
+splitter = RecursiveCharacterTextSplitter(chunk_size=<span class="tok-num">300</span>, chunk_overlap=<span class="tok-num">40</span>)
+chunks = splitter.split_documents(raw_docs)
+
+embeddings = OllamaEmbeddings(model=<span class="tok-str">"nomic-embed-text"</span>)
+vectorstore = Chroma.from_documents(chunks, embedding=embeddings, collection_name=<span class="tok-str">"lab_docs"</span>)
+retriever = vectorstore.as_retriever(search_kwargs={<span class="tok-str">"k"</span>: <span class="tok-num">2</span>})
+
+prompt = ChatPromptTemplate.from_template(
+    <span class="tok-str">"""Answer from the context only.
+
+Context:
+{context}
+
+Question: {question}
+Answer:"""</span>
+)
+model = ChatOllama(model=<span class="tok-str">"qwen2.5:7b-instruct"</span>, temperature=<span class="tok-num">0</span>)
+
+<span class="tok-kw">def</span> <span class="tok-fn">format_docs</span>(docs):
+    <span class="tok-kw">return</span> <span class="tok-str">"\n\n"</span>.join(f<span class="tok-str">"[{d.metadata['source']}]\n{d.page_content}"</span> <span class="tok-kw">for</span> d <span class="tok-kw">in</span> docs)
+
+question = <span class="tok-str">"Can tools run shell commands by default?"</span>
+hits = retriever.invoke(question)
+answer = (prompt | model | StrOutputParser()).invoke({
+    <span class="tok-str">"context"</span>: format_docs(hits),
+    <span class="tok-str">"question"</span>: question,
+})
+
+print(answer)
+print(<span class="tok-str">"\nSources:"</span>, [d.metadata[<span class="tok-str">"source"</span>] <span class="tok-kw">for</span> d <span class="tok-kw">in</span> hits])</code></pre>
+</figure>
+<p>예상 output입니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">output</span>rag-output.txt</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code>No. Tools are read-only by default, and shell commands require explicit approval.
+
+Sources: ['docs\\policy.txt']</code></pre>
+</figure>
+<p>각 piece를 언제 쓰는지입니다. source가 외부에 있거나 지저분하면 loader를 씁니다. document가 retrieval target보다 길면 splitter를 씁니다. semantic search가 중요하면 embedding과 vector store를 씁니다. app의 나머지 부분이 search 구현을 몰라도 되게 하려면 retriever를 씁니다.</p>
+<p>실전 선택지입니다. 개인 note나 prototype에는 작은 persistent vector store가 좋습니다. 여러 app이나 user가 같은 index를 써야 하면 Qdrant, Postgres pgvector, server-backed store를 고려하세요. document type, date, equipment, product, author, permission scope가 질문에 포함되면 metadata filter를 사용합니다.</p>
+<h2 id="tools">Tool과 structured call</h2>
+<p>Tool은 schema가 있는 function입니다. model이 system에게 계산, 검색, file lookup, internal API call, MCP server query 같은 일을 부탁해야 할 때 사용합니다. 첫 tool은 지루하고 안전하게 시작하세요.</p>
+<p>language만으로 부족할 때 tool을 사용합니다. model은 계산기나 database client가 아니며, shell user로 두면 위험합니다. tool은 wrapper입니다. model이 estimate_weight_memory를 요청하면 Python code가 계산하고 model이 결과를 설명합니다.</p>
+<p>좋은 첫 tool입니다.</p>
+<ul>
+<li>Calculator: 정확한 arithmetic, unit conversion, GPU memory estimate.</li>
+<li>Search: local index 또는 controlled file list query.</li>
+<li>Lookup: 알려진 config, policy, glossary entry 읽기.</li>
+<li>Test runner: disposable workspace 안에서만 pytest 실행.</li>
+<li>Ticket draft: live external ticket이 아니라 draft object 생성.</li>
+</ul>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span>03_tools.py</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain_core.tools <span class="tok-kw">import</span> tool
+
+<span class="tok-dec">@tool</span>
+<span class="tok-kw">def</span> <span class="tok-fn">estimate_weight_memory</span>(params_billion: float, bits: int = <span class="tok-num">4</span>) -&gt; str:
+    <span class="tok-str">"""Estimate raw LLM weight memory in GB before KV cache and overhead."""</span>
+    gb = params_billion * bits / <span class="tok-num">8</span>
+    <span class="tok-kw">return</span> f<span class="tok-str">"Raw weights need about {gb:.1f} GB."</span>
+
+print(estimate_weight_memory.invoke({<span class="tok-str">"params_billion"</span>: <span class="tok-num">7</span>, <span class="tok-str">"bits"</span>: <span class="tok-num">4</span>}))</code></pre>
+</figure>
+<p>예상 output입니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">output</span>tool-output.txt</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code>Raw weights need about 3.5 GB.</code></pre>
+</figure>
+<p>설계 rule입니다. tool docstring은 장식이 아닙니다. model이 읽는 interface의 일부입니다. 새벽 2시에 피곤한 junior engineer가 쓴다고 생각하고 tool name, argument name, docstring을 쓰세요.</p>
+<p>위험 rule입니다. 첫날부터 general shell tool을 노출하지 마세요. narrow tool부터 시작하세요. run_tests()가 run_command(command)보다 안전하고, read_policy(name)가 read_file(path)보다 안전합니다. tool이 general해질수록 validation과 approval이 더 필요합니다.</p>
+<h2 id="graph">LangGraph workflow</h2>
+<p>LCEL은 straight-line chain에 좋습니다. LangGraph는 classify, retrieve, answer, approval request, retry, stop처럼 state가 있는 workflow를 위한 것입니다. 핵심은 StateGraph입니다. 각 node는 current state를 읽고 partial update를 반환합니다.</p>
+<p>workflow flag를 쓰기 시작했다면 LangGraph를 사용할 때입니다. needs_retrieval, tool_failed, approval_required, retry_count, final_answer 같은 변수가 code에 있다면 이미 머릿속으로 graph를 만들고 있는 것입니다. LangGraph는 그 state를 명시적으로 만듭니다.</p>
+<p>실전 graph pattern입니다.</p>
+<ul>
+<li>Router graph: question을 chat, RAG, tool, refusal path로 보냅니다.</li>
+<li>RAG retry graph: retrieve, evidence grade, query rewrite, retrieve again.</li>
+<li>Human approval graph: action을 draft하고 pause한 뒤 approval 후에만 resume합니다.</li>
+<li>Coding agent graph: repo inspect, patch propose, test run, failure fix, diff summarize.</li>
+<li>Incident assistant graph: alarm classify, SOP retrieve, read-only diagnostics call, next steps 생성.</li>
+</ul>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span>04_graph.py</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-kw">from</span> typing <span class="tok-kw">import</span> TypedDict, Literal
+<span class="tok-kw">from</span> langgraph.graph <span class="tok-kw">import</span> StateGraph, END
+
+<span class="tok-kw">class</span> <span class="tok-fn">AgentState</span>(TypedDict):
+    question: str
+    route: Literal[<span class="tok-str">"rag"</span>, <span class="tok-str">"tool"</span>, <span class="tok-str">"stop"</span>]
+    answer: str
+
+<span class="tok-kw">def</span> <span class="tok-fn">route</span>(state: AgentState):
+    q = state[<span class="tok-str">"question"</span>].lower()
+    <span class="tok-kw">if</span> <span class="tok-str">"memory"</span> <span class="tok-kw">in</span> q <span class="tok-kw">or</span> <span class="tok-str">"gpu"</span> <span class="tok-kw">in</span> q:
+        <span class="tok-kw">return</span> {<span class="tok-str">"route"</span>: <span class="tok-str">"tool"</span>}
+    <span class="tok-kw">if</span> <span class="tok-str">"policy"</span> <span class="tok-kw">in</span> q:
+        <span class="tok-kw">return</span> {<span class="tok-str">"route"</span>: <span class="tok-str">"rag"</span>}
+    <span class="tok-kw">return</span> {<span class="tok-str">"route"</span>: <span class="tok-str">"stop"</span>}
+
+<span class="tok-kw">def</span> <span class="tok-fn">answer_with_tool</span>(state: AgentState):
+    <span class="tok-kw">return</span> {<span class="tok-str">"answer"</span>: <span class="tok-str">"Use the VRAM estimator tool for model memory questions."</span>}
+
+<span class="tok-kw">def</span> <span class="tok-fn">answer_with_rag</span>(state: AgentState):
+    <span class="tok-kw">return</span> {<span class="tok-str">"answer"</span>: <span class="tok-str">"Use the local policy documents as context before answering."</span>}
+
+<span class="tok-kw">def</span> <span class="tok-fn">stop</span>(state: AgentState):
+    <span class="tok-kw">return</span> {<span class="tok-str">"answer"</span>: <span class="tok-str">"I do not know which workflow to use yet."</span>}
+
+<span class="tok-kw">def</span> <span class="tok-fn">choose_next</span>(state: AgentState):
+    <span class="tok-kw">return</span> state[<span class="tok-str">"route"</span>]
+
+graph = StateGraph(AgentState)
+graph.add_node(<span class="tok-str">"route"</span>, route)
+graph.add_node(<span class="tok-str">"tool"</span>, answer_with_tool)
+graph.add_node(<span class="tok-str">"rag"</span>, answer_with_rag)
+graph.add_node(<span class="tok-str">"stop"</span>, stop)
+graph.set_entry_point(<span class="tok-str">"route"</span>)
+graph.add_conditional_edges(<span class="tok-str">"route"</span>, choose_next, {
+    <span class="tok-str">"tool"</span>: <span class="tok-str">"tool"</span>,
+    <span class="tok-str">"rag"</span>: <span class="tok-str">"rag"</span>,
+    <span class="tok-str">"stop"</span>: <span class="tok-str">"stop"</span>,
+})
+graph.add_edge(<span class="tok-str">"tool"</span>, END)
+graph.add_edge(<span class="tok-str">"rag"</span>, END)
+graph.add_edge(<span class="tok-str">"stop"</span>, END)
+
+app = graph.compile()
+print(app.invoke({<span class="tok-str">"question"</span>: <span class="tok-str">"How much GPU memory do I need?"</span>}))</code></pre>
+</figure>
+<p>예상 output입니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">output</span>graph-output.txt</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code>{'question': 'How much GPU memory do I need?',
+ 'route': 'tool',
+ 'answer': 'Use the VRAM estimator tool for model memory questions.'}</code></pre>
+</figure>
+<p>LangGraph는 application이 더 이상 single pipe가 아닐 때 사용합니다. conditional branch, human approval, retry, memory, checkpointing, multiple agents가 필요하면 giant function보다 graph가 보통 더 명확합니다.</p>
+<h3>실전 결합 흐름</h3>
+<p>실제 local assistant에서 모듈들이 어떻게 맞물리는지 보면 다음과 같습니다.</p>
+<ol>
+<li>User가 묻습니다: 12GB GPU로 local RAG용 7B model을 돌릴 수 있나?</li>
+<li>LangGraph는 GPU memory 언급을 보고 tool path로 route합니다.</li>
+<li>Tool이 raw model memory를 추정하고 KV cache overhead를 경고합니다.</li>
+<li>Retriever가 safe model setting에 대한 local lab policy를 가져옵니다.</li>
+<li>Prompt가 tool result와 retrieved policy를 결합합니다.</li>
+<li>Model이 recommendation과 source note로 답합니다.</li>
+</ol>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">text</span>combined-flow.txt</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code>User question
+  -&gt; LangGraph route node
+  -&gt; Tool: estimate_weight_memory(7, 4)
+  -&gt; Retriever: search local GPU/RAG policy
+  -&gt; Prompt: combine question + tool result + docs
+  -&gt; Chat model
+  -&gt; Parser
+  -&gt; Answer with recommendation and sources</code></pre>
+</figure>
+<h2 id="project">Mini project layout</h2>
+<p>예제가 커지면 책임별로 나누세요. 이 layout은 가정용 PC lab에는 충분히 작고, portfolio project로 발전시키기에도 충분히 진지합니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">text</span>project-tree.txt</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code>lang-lab/
+  src/
+    models.py        # ChatOllama, embeddings, provider config
+    prompts.py       # ChatPromptTemplate definitions
+    rag.py           # load, split, embed, retrieve
+    tools.py         # @tool functions
+    graph.py         # StateGraph workflow
+  docs/
+    policy.txt
+  tests/
+    test_tools.py
+  run_chat.py
+  run_rag.py
+  run_graph.py</code></pre>
+</figure>
+<p>기억할 모양은 이것입니다. core abstraction, provider call, retrieval module, tool, graph orchestration입니다. 이름은 커 보이지만 맡은 일은 작습니다.</p>
+<h3>다음 모듈을 고르는 방법</h3>
+<p>실제 app을 만들 때 모든 것을 한 번에 추가하지 마세요. problem이 필요한 module을 끌어오게 하세요.</p>
+<table>
+<thead>
+<tr><th>문제가...</th><th>추가할 것</th><th>이유</th></tr>
+</thead>
+<tbody>
+<tr><td>model이 format을 틀립니다.</td><td>Output parser / structured output</td><td>응답에는 더 좋은 분위기가 아니라 contract가 필요합니다.</td></tr>
+<tr><td>답이 우리 file에서 나와야 합니다.</td><td>Loader + splitter + retriever</td><td>생성 전에 evidence가 필요합니다.</td></tr>
+<tr><td>정확한 계산이나 lookup이 필요합니다.</td><td>@tool</td><td>정확한 일은 Python이 하고 model은 설명하게 합니다.</td></tr>
+<tr><td>app에 가능한 path가 여러 개입니다.</td><td>LangGraph router</td><td>branching은 prompt spaghetti가 아니라 state에 있어야 합니다.</td></tr>
+<tr><td>action 전에 사람이 approve해야 합니다.</td><td>LangGraph interrupt / approval state</td><td>approval은 prompt 문장이 아니라 workflow step입니다.</td></tr>
+<tr><td>같은 index가 여러 app을 구동합니다.</td><td>Server-backed vector store</td><td>local in-memory prototype은 금방 한계가 옵니다.</td></tr>
+<tr><td>agent가 file을 edit하거나 test를 실행합니다.</td><td>Narrow tools + graph + logs</td><td>action에는 boundary, audit, rollback이 필요합니다.</td></tr>
+</tbody>
+</table>
+<h3>추천 학습 순서</h3>
+<ol>
+<li>Plain chat chain: prompt, model, parser.</li>
+<li>Structured output: model이 predictable shape를 반환하게 강제합니다.</li>
+<li>Tiny RAG: text file 하나, retriever 하나, source가 있는 answer 하나.</li>
+<li>One safe tool: 정확한 calculation 또는 read-only lookup.</li>
+<li>Router graph: chat vs RAG vs tool 결정.</li>
+<li>Agent workflow: inspect, plan, call tool, summarize.</li>
+<li>Approval and logging: 반복 사용해도 안전하게 만듭니다.</li>
+</ol>
+<p>이 순서대로 가면 각 Lang module이 왜 존재하는지 이해한 뒤 의존하게 됩니다. full agent template부터 시작해서 어느 부분이 깨졌는지 헤매는 것보다 훨씬 낫습니다.</p>
+<div class="callout">
+<p>Security note. model output은 untrusted로 다루세요. model이 생성한 string을 file path, SQL filter, shell command, deserializer에 바로 넣지 마세요. tool이 늘어날수록 지루한 validation이 중요해집니다.</p>
+</div>
+</div>
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">더 깊게 보기</span>
+<h3>먼저 local LLM lab 만들기</h3>
+<p>이 글은 Lang module을 설명합니다. consumer GPU lab은 일반 PC에서 local model, MCP server, Goose-style coding agent를 실행하는 방법을 보여줍니다.</p>
+</div>
+<a class="btn btn-primary" href="consumer-gpu-onprem-llm-agent-lab.html">lab 열기 <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+<div class="related">
+<span class="eyebrow">관련 글</span>
+<h2>계속 이어서 보기</h2>
+<div class="related-grid">
+<a class="rel-card" href="langchain-core-explained.html">
+<span class="cat-tag">Python Stack</span>
+<h3>LangChain core 설명: LLM, prompt, LCEL</h3>
+</a>
+<a class="rel-card" href="langgraph-stateful-workflows.html">
+<span class="cat-tag">Python Stack</span>
+<h3>LangGraph: stateful, resumable agent workflow</h3>
+</a>
+</div>
+</div>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>know-how는 안에, cloud는 밖에</h2>
+<p>local LLM, RAG, agent system을 위한 무료 심화 archive입니다.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>탐색</h4>
+<a href="../../index.html">허브 홈</a>
+<a href="../index.html">저널</a>
+<a href="../portfolio.html">포트폴리오</a>
+</div>
+<div class="foot-col">
+<h4>사이트</h4>
+<a href="../about.html">소개</a>
+<a href="../contact.html">연락</a>
+<a href="../privacy.html">개인정보</a>
+<a href="../terms.html">이용약관</a>
+<a href="../disclosure.html">공개 고지</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · 열린 한국어 AI 교육</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig&&fig.querySelector('pre code');
+      if(!code)return;
+      navigator.clipboard&&navigator.clipboard.writeText(code.innerText).then(function(){
+        btn.textContent='Copied';
+        btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1300);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 모델 계통도 — 40년의 진화</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700;800&family=Noto+Serif+KR:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#15202A;--ink2:#2A3942;--bg:#EEF2F5;--line:#D5DEE4;--line2:#C6D2DA;--teal:#0E7C72;--teal-d:#0B6258;--mint:#5EC8BC;--tint:#E1F0EE;--tint2:#F2F6F8;--muted:#7A8893;--muted2:#5A6873;--muted3:#46545E;--red:#B0392E;--amber:#C77D2E;--purple:#7A5BD0;--mono:'JetBrains Mono','Consolas',monospace;--sans:'Noto Sans KR',system-ui,sans-serif;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden;background:#0c1116;font-family:var(--sans);color:var(--ink)}
+  .deck{position:fixed;inset:0;background:#0c1116;overflow:hidden}
+  .stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform:translate(-50%,-50%);transform-origin:center center}
+  .slide{position:absolute;inset:0;opacity:0;visibility:hidden;background:var(--bg);display:flex;flex-direction:column;overflow:hidden;transition:opacity .5s ease}
+  .slide.active{opacity:1;visibility:visible} .slide.dark{background:var(--ink);color:#fff}
+  .bar{display:flex;align-items:center;gap:16px;padding:24px 90px;background:#fff;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:23px;letter-spacing:.1em;color:var(--teal)}
+  .bar .sq{width:10px;height:10px;background:var(--teal);display:inline-block} .bar .r{margin-left:auto;color:var(--muted)}
+  .body{flex:1;padding:40px 90px;display:flex;flex-direction:column;justify-content:center}
+  h2.t{font-weight:700;letter-spacing:-.02em;line-height:1.12;color:var(--ink);font-size:46px}
+  .eyebrow{font-family:var(--mono);font-size:24px;letter-spacing:.1em;color:var(--teal)}
+  .lede{font-size:29px;line-height:1.55;color:var(--ink2)} p.s{font-size:24px;line-height:1.5;color:var(--muted2)}
+  strong{color:var(--ink)} em{font-style:italic}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px} .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px} .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px} .grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  .card{background:#fff;border:1px solid var(--line);padding:20px 24px} .card.t{border-top:4px solid var(--teal)} .card.l{border-left:5px solid var(--teal)}
+  .card h4{font-size:22px;font-weight:700;margin-bottom:8px} .card p{font-size:19px;line-height:1.42;color:var(--muted3)}
+  .k{font-family:var(--mono);font-size:19px;color:var(--teal)}
+  .dark-box{background:var(--ink);color:#fff;padding:22px 34px;display:flex;gap:16px;align-items:center} .dark-box .lab{font-family:var(--mono);font-size:21px;color:var(--mint);flex-shrink:0} .dark-box span.x{font-size:23px;line-height:1.5}
+  .tealbox{background:var(--tint);border:1px solid #9FD3CC;padding:18px 26px}
+  .tag{display:inline-block;font-family:var(--mono);font-size:17px;padding:4px 11px;background:var(--tint);color:var(--teal-d);border:1px solid #9FD3CC;margin:2px} .tag.d{background:#fff;color:var(--muted3);border-color:var(--line2)}
+  table.tb{width:100%;border-collapse:collapse;font-size:20px} table.tb th{background:var(--ink);color:#fff;font-family:var(--mono);font-size:17px;font-weight:500;padding:11px 14px;text-align:left;letter-spacing:.04em} table.tb td{padding:10px 14px;border-bottom:1px solid var(--line);color:var(--ink2)} table.tb tr:nth-child(even) td{background:#fff} table.tb .mono{font-family:var(--mono);color:var(--teal-d)} table.tb .h{color:var(--ink);font-weight:700} table.tb .yr{font-family:var(--mono);color:var(--muted2);font-size:18px}
+  .note{font-size:19px;color:var(--muted);font-style:italic}
+  .body.sim{justify-content:flex-start;padding-top:26px} .slide.active .body.sim>*{animation:none}
+  .controls{display:flex;align-items:center;gap:14px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+  input[type=range]{width:900px;height:8px;accent-color:#0E7C72;cursor:pointer}
+  .stat{font-family:var(--mono);font-size:19px;color:var(--ink2);background:#fff;border:1px solid var(--line);padding:9px 16px;border-radius:8px} .stat b{color:var(--teal-d)}
+  .simbox{background:#fff;border:1px solid var(--line);margin-top:8px}
+  .navbar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;background:#000;color:#fff;border-radius:999px;padding:6px;font-family:var(--mono);font-size:15px;z-index:50;opacity:.85}
+  .navbar button{background:transparent;border:none;color:#fff;font-size:16px;cursor:pointer;padding:6px 12px;border-radius:999px} .navbar button:hover{background:rgba(255,255,255,.15)} .navbar .ct{padding:0 10px} .navbar .kb{opacity:.5;font-size:13px;padding-left:8px;border-left:1px solid rgba(255,255,255,.2);margin-left:4px}
+  .deck.presenting .navbar{display:none}
+  #gate{display:none} #gate svg{width:100%;height:100%;display:block}
+  #gate .hint{position:absolute;bottom:5.5%;left:0;right:0;text-align:center;font-family:var(--mono);font-size:24px;letter-spacing:2px;color:var(--mint);animation:pulse 1.9s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.4}50%{opacity:.95}}
+  .card{transition:transform .22s ease, box-shadow .22s ease} .card:hover{transform:translateY(-5px);box-shadow:0 12px 30px rgba(21,32,42,.12)}
+  .slide.active .body>*{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
+  .slide.active .body>*:nth-child(2){animation-delay:.07s}.slide.active .body>*:nth-child(3){animation-delay:.14s}.slide.active .body>*:nth-child(4){animation-delay:.21s}.slide.active .body>*:nth-child(5){animation-delay:.28s}
+  @keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  #gate g circle{animation:nodepulse 2.2s ease-in-out infinite} @keyframes nodepulse{0%,100%{opacity:1}50%{opacity:.45}}
+  svg .flow{stroke-dasharray:6 8;animation:dashflow 1.2s linear infinite} @keyframes dashflow{to{stroke-dashoffset:-28}}
+  .progress{position:fixed;left:0;top:0;height:4px;width:0;background:linear-gradient(90deg,#0E7C72,#5EC8BC);z-index:60;transition:width .5s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 12px rgba(94,200,188,.55)}
+  @media (prefers-reduced-motion:reduce){.slide.active .body>*,#gate g circle,svg .flow{animation:none}}
+.eduhome{position:fixed;left:16px;top:14px;z-index:80;font-family:var(--mono),monospace;font-size:15px;color:#fff;background:rgba(21,32,42,.85);border:1px solid rgba(255,255,255,.22);padding:7px 14px;border-radius:999px;text-decoration:none;opacity:.55;transition:opacity .15s} .eduhome:hover{opacity:1} .deck.presenting .eduhome{display:none}
+</style>
+</head>
+<body>
+<div class="deck" id="deck"><a class="eduhome" href="../" title="AI EDU 자료실로 돌아가기">⌂ 자료실</a><div class="stage" id="stage">
+
+  <!-- COVER -->
+  <section class="slide dark" data-label="표지">
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 110px;position:relative;overflow:hidden">
+      <svg viewBox="0 0 1920 1080" style="position:absolute;inset:0;width:100%;height:100%;opacity:.5" preserveAspectRatio="xMidYMid slice"><defs><pattern id="g" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#22323d" stroke-width="1"/></pattern></defs><rect width="1920" height="1080" fill="url(#g)"/><g stroke="#0E7C72" stroke-width="1.4" opacity=".5" fill="none"><path d="M1380 540 H1500 M1500 540 V300 M1500 540 V780 M1500 300 H1640 M1500 780 H1640 M1640 300 V200 M1640 300 V400 M1640 780 V680 M1640 780 V880"/></g><g fill="#5EC8BC" opacity=".7"><circle cx="1380" cy="540" r="9"/><circle cx="1640" cy="200" r="7"/><circle cx="1640" cy="400" r="7"/><circle cx="1640" cy="680" r="7"/><circle cx="1640" cy="880" r="7"/></g></svg>
+      <div style="position:relative">
+        <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:24px;color:var(--mint);letter-spacing:.06em;margin-bottom:54px"><span>AI × History · 11</span><span style="color:var(--muted)">1986 → 2026</span></div>
+        <div style="display:inline-flex;align-items:center;gap:14px;font-family:var(--mono);font-size:26px;letter-spacing:.1em;color:var(--teal);margin-bottom:28px"><span style="width:12px;height:12px;background:var(--teal);display:inline-block"></span>AI 모델 계통도 · 9 패밀리의 40년</div>
+        <h1 style="font-size:80px;font-weight:800;letter-spacing:-.03em;line-height:1.06;color:#F4F6F8">하나의 뿌리,<br><span style="color:var(--mint)">여러 갈래</span>의 진화</h1>
+        <p style="margin-top:30px;max-width:1480px;font-size:30px;line-height:1.6;color:#AFC0CA">역전파(1986)에서 시작해 CNN·Transformer·LLM·RL·트리·GNN까지 — <strong style="color:#fff">9개 가족</strong>이 어떻게 갈라지고 합쳐졌나.</p>
+        <div style="margin-top:42px"><span class="tag" style="font-size:19px;padding:6px 14px;background:rgba(14,124,114,.15);color:#5EC8BC;border-color:#0E7C72">계통도</span><span class="tag d" style="font-size:19px;padding:6px 14px;background:transparent;color:#9FB2BD;border-color:#3a4f5a">시대별 King</span><span class="tag d" style="font-size:19px;padding:6px 14px;background:transparent;color:#9FB2BD;border-color:#3a4f5a">5가지 통찰</span></div>
+        <div style="margin-top:34px;font-family:var(--mono);font-size:21px;color:var(--muted)">알고리즘 상세 → 03 · 신경망 원리 → 07 · 날짜는 대표 논문/발표 기준</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 전체 계통도 -->
+  <section class="slide" data-label="전체 계통도">
+    <div class="bar"><span class="sq"></span>한 장 계통도<span class="r">9 패밀리 × 시간</span></div>
+    <div class="body" style="padding-top:28px;padding-bottom:24px">
+      <h2 class="t" style="font-size:40px">한 페이지 계통도 — 공통 뿌리에서 갈라지다</h2>
+      <div style="flex:1;margin-top:18px;background:#fff;border:1px solid var(--line);padding:18px 24px;display:flex;align-items:center">
+        <svg viewBox="0 0 1700 540" style="width:100%;font-family:var(--mono)">
+          <!-- root -->
+          <rect x="20" y="240" width="180" height="64" rx="8" fill="#15202A"/><text x="110" y="270" text-anchor="middle" font-size="19" fill="#fff">역전파</text><text x="110" y="293" text-anchor="middle" font-size="15" fill="#5EC8BC">1986</text>
+          <!-- spine -->
+          <line x1="200" y1="272" x2="320" y2="272" class="flow" stroke="#0E7C72" stroke-width="2.5"/>
+          <line x1="320" y1="60" x2="320" y2="500" stroke="#C6D2DA" stroke-width="2"/>
+          <!-- branches -->
+          <g font-size="16">
+            <!-- CNN -->
+            <line x1="320" y1="80" x2="430" y2="80" stroke="#0E7C72" stroke-width="2"/><rect x="430" y="56" width="430" height="46" rx="6" fill="#E1F0EE" stroke="#0E7C72"/><text x="446" y="84" fill="#0B6258">CNN  LeNet'98 → AlexNet'12 → ResNet'15</text>
+            <!-- ViT -->
+            <line x1="320" y1="135" x2="430" y2="135" stroke="#0E7C72" stroke-width="2"/><rect x="430" y="111" width="430" height="46" rx="6" fill="#E1F0EE" stroke="#0E7C72"/><text x="446" y="139" fill="#0B6258">Vision Transformer  ViT'20 → DINOv2'23</text>
+            <!-- LLM -->
+            <line x1="320" y1="190" x2="430" y2="190" stroke="#0E7C72" stroke-width="2.5"/><rect x="430" y="166" width="560" height="46" rx="6" fill="#15202A"/><text x="446" y="194" fill="#fff">Decoder LLM  Transformer'17 → GPT-3'20 → ChatGPT'22 → R1'25</text>
+            <!-- TS -->
+            <line x1="320" y1="245" x2="430" y2="245" stroke="#0E7C72" stroke-width="2"/><rect x="430" y="221" width="430" height="46" rx="6" fill="#E1F0EE" stroke="#0E7C72"/><text x="446" y="249" fill="#0B6258">Time Series  LSTM'97 → Informer'21 → PatchTST'23</text>
+            <!-- Gen -->
+            <line x1="320" y1="300" x2="430" y2="300" stroke="#0E7C72" stroke-width="2"/><rect x="430" y="276" width="430" height="46" rx="6" fill="#E1F0EE" stroke="#0E7C72"/><text x="446" y="304" fill="#0B6258">Generation  GAN'14 → DDPM'20 → SD'22</text>
+            <!-- RL -->
+            <line x1="320" y1="355" x2="430" y2="355" stroke="#0E7C72" stroke-width="2"/><rect x="430" y="331" width="430" height="46" rx="6" fill="#E1F0EE" stroke="#0E7C72"/><text x="446" y="359" fill="#0B6258">RL  DQN'15 → AlphaGo'16 → PPO'17</text>
+            <!-- Tree -->
+            <line x1="320" y1="410" x2="430" y2="410" stroke="#0E7C72" stroke-width="2"/><rect x="430" y="386" width="430" height="46" rx="6" fill="#FBF3E5" stroke="#C77D2E"/><text x="446" y="414" fill="#9A5A14">Tree  RF'01 → XGBoost'16 → TabPFN'22  (비신경망)</text>
+            <!-- GNN -->
+            <line x1="320" y1="465" x2="430" y2="465" stroke="#0E7C72" stroke-width="2"/><rect x="430" y="441" width="430" height="46" rx="6" fill="#E1F0EE" stroke="#0E7C72"/><text x="446" y="469" fill="#0B6258">GNN  GCN'17 → GraphSAGE'17 → GAT'18</text>
+            <!-- Anomaly + Multimodal cluster on right -->
+            <rect x="1010" y="166" width="300" height="46" rx="6" fill="#F0E9FB" stroke="#7A5BD0"/><text x="1026" y="194" fill="#5B3FA8">Multimodal · VLA  CLIP'21 → VLA'23+</text>
+            <rect x="1010" y="386" width="300" height="46" rx="6" fill="#FBF3E5" stroke="#C77D2E"/><text x="1026" y="414" fill="#9A5A14">Anomaly  iForest'08 → PatchCore'22</text>
+          </g>
+          <text x="1340" y="270" font-size="17" fill="#7A8893">→ 대부분</text>
+          <text x="1340" y="295" font-size="17" fill="#7A8893">행렬곱 + 역전파</text>
+          <text x="1340" y="320" font-size="17" fill="#7A8893">위의 변형</text>
+        </svg>
+      </div>
+      <p class="note" style="margin-top:10px">연도는 대표 논문/공개 기준의 어림선 — 정확 시점은 03 참고문헌에서.</p>
+    </div>
+  </section>
+
+  <!-- 시대별 King -->
+  <section class="slide" data-label="시대별 King">
+    <div class="bar"><span class="sq"></span>시대별 King<span class="r">그 시기를 정의한 모델</span></div>
+    <div class="body">
+      <h2 class="t">시대별 King — 흐름을 바꾼 변곡점</h2>
+      <table class="tb" style="margin-top:20px">
+        <tr><th>시기</th><th>King</th><th>무엇을 바꿨나</th></tr>
+        <tr><td class="yr">1986</td><td class="h">역전파 대중화</td><td>다층 신경망을 실제로 학습 가능하게 — 모든 것의 토대</td></tr>
+        <tr><td class="yr">2012</td><td class="h">AlexNet</td><td>딥러닝 + GPU로 이미지 인식 도약 — "딥러닝 시대" 개막</td></tr>
+        <tr><td class="yr">2015</td><td class="h">ResNet</td><td>잔차 연결로 초깊은 망 학습 — 깊이의 한계를 풂</td></tr>
+        <tr><td class="yr">2017</td><td class="h">Transformer</td><td>"Attention is All You Need" — 이후 LLM·ViT의 공통 뼈대</td></tr>
+        <tr><td class="yr">2020</td><td class="h">GPT-3</td><td>규모(스케일)의 힘 — few-shot으로 범용성 입증</td></tr>
+        <tr><td class="yr">2022</td><td class="h">ChatGPT</td><td>RLHF 정렬 + 대화 UX — AI를 모두의 도구로</td></tr>
+        <tr><td class="yr">2025</td><td class="h">추론형(R1 등)</td><td>강화학습 기반 추론 — "생각하는 시간"으로 난제 해결</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ★ 타임라인 LIVE -->
+  <section class="slide" data-label="타임라인 LIVE">
+    <div class="bar"><span class="sq"></span>★ 타임라인 LIVE<span class="r">연도를 끌어 40년을 훑는다</span></div>
+    <div class="body sim no-advance">
+      <h2 class="t" style="font-size:36px;text-align:center">슬라이더를 움직이면 — 그 해까지 등장한 모델이 켜진다</h2>
+      <div class="simbox no-advance" style="padding:18px;margin-top:14px"><svg id="tlSvg" viewBox="0 0 1700 360" style="width:100%;display:block"></svg></div>
+      <div class="controls">
+        <span class="stat" style="font-size:22px">연도 <b id="tlYear">2026</b></span>
+        <input type="range" id="tlRange" min="1986" max="2026" value="2026" step="1">
+        <button class="btn sec" id="tlPlay" style="font-family:var(--mono);font-size:18px;padding:9px 16px;border:1px solid var(--line2);border-radius:8px;background:#fff;cursor:pointer">▶ 재생</button>
+      </div>
+      <div style="display:flex;justify-content:center;margin-top:8px"><div class="stat" id="tlKing" style="font-size:20px">—</div></div>
+      <p class="note" style="text-align:center;margin-top:10px">진한 점=그 해까지 등장한 모델 · 별표=그 시기를 정의한 King. 1986 역전파에서 2025 추론형까지.</p>
+    </div>
+  </section>
+
+  <!-- 9 패밀리 deep dive (1) -->
+  <section class="slide" data-label="패밀리 ①~⑤">
+    <div class="bar"><span class="sq"></span>9 패밀리<span class="r">① ~ ⑤</span></div>
+    <div class="body">
+      <h2 class="t">패밀리 deep dive — 각 가족의 진화 한 줄</h2>
+      <div class="grid5" style="margin-top:22px;align-items:stretch">
+        <div class="card t"><div class="k">① CNN</div><h4 style="margin-top:5px;font-size:20px">Vision</h4><p>LeNet → AlexNet → ResNet. <strong>국소 필터</strong>로 이미지. 결함검사의 토대.</p></div>
+        <div class="card t"><div class="k">② ViT</div><h4 style="margin-top:5px;font-size:20px">Vision-T</h4><p>이미지를 패치 토큰으로. <strong>DINOv2</strong> 자기지도 → 라벨없는 특징.</p></div>
+        <div class="card t" style="border-top-color:#15202A"><div class="k" style="color:#15202A">③ LLM</div><h4 style="margin-top:5px;font-size:20px">Language</h4><p>Transformer → GPT-3 → ChatGPT → 추론형. <strong>범용 언어</strong>.</p></div>
+        <div class="card t"><div class="k">④ Time Series</div><h4 style="margin-top:5px;font-size:20px">예측</h4><p>LSTM → Informer → <strong>PatchTST</strong>. 센서 시계열 예측·PdM.</p></div>
+        <div class="card t"><div class="k">⑤ Generation</div><h4 style="margin-top:5px;font-size:20px">생성</h4><p>GAN → <strong>Diffusion</strong>(DDPM/SD). 데이터 증강·이미지 생성.</p></div>
+      </div>
+      <div class="dark-box" style="margin-top:22px"><span class="lab">관찰</span><span class="x">②③⑤가 모두 <strong style="color:var(--mint)">Transformer 계열</strong>로 수렴 — 2017 이후 "하나의 뼈대, 여러 응용"이 큰 흐름입니다.</span></div>
+    </div>
+  </section>
+
+  <!-- 9 패밀리 deep dive (2) -->
+  <section class="slide" data-label="패밀리 ⑥~⑩">
+    <div class="bar"><span class="sq"></span>9 패밀리<span class="r">⑥ ~ ⑩</span></div>
+    <div class="body">
+      <h2 class="t">패밀리 deep dive — 제어·표·그래프·검출·로봇</h2>
+      <div class="grid5" style="margin-top:22px;align-items:stretch">
+        <div class="card t"><div class="k">⑥ RL</div><h4 style="margin-top:5px;font-size:20px">제어</h4><p>DQN → AlphaGo → <strong>PPO</strong>. 레시피 최적화·정렬(RLHF).</p></div>
+        <div class="card t" style="border-top-color:#C77D2E"><div class="k" style="color:#9A5A14">⑦ Tree</div><h4 style="margin-top:5px;font-size:20px">표 데이터</h4><p>RF → <strong>XGBoost</strong> → TabPFN. 표의 왕(비신경망). SHAP로 설명.</p></div>
+        <div class="card t"><div class="k">⑧ GNN</div><h4 style="margin-top:5px;font-size:20px">그래프</h4><p>GCN → GraphSAGE → <strong>GAT</strong>. 공정 흐름=그래프 학습.</p></div>
+        <div class="card t" style="border-top-color:#C77D2E"><div class="k" style="color:#9A5A14">⑨ Anomaly</div><h4 style="margin-top:5px;font-size:20px">검출</h4><p>iForest → <strong>PatchCore</strong>. 정상만으로 이상 검출.</p></div>
+        <div class="card t" style="border-top-color:#7A5BD0"><div class="k" style="color:#5B3FA8">⑩ VLA</div><h4 style="margin-top:5px;font-size:20px">로봇</h4><p>CLIP → <strong>VLA</strong>. 보고·듣고·행동. Physical AI.</p></div>
+      </div>
+      <div class="tealbox" style="margin-top:22px"><div class="k" style="margin-bottom:6px">두 갈래의 공존</div><div style="font-size:22px;color:var(--ink2);line-height:1.5">⑦ 트리는 <strong>비신경망</strong>이지만 표 데이터에서 여전히 강력 — "딥러닝이 전부"가 아니라 <strong>문제에 맞는 도구</strong>가 핵심입니다.</div></div>
+    </div>
+  </section>
+
+  <!-- 5가지 통찰 -->
+  <section class="slide dark" data-label="5가지 통찰">
+    <div class="body" style="justify-content:center">
+      <div class="eyebrow" style="color:var(--mint)">40년 흐름의 5가지 핵심 통찰</div>
+      <h2 style="font-size:46px;font-weight:800;color:#fff;margin-top:14px;line-height:1.2">계통도가 말하는 다섯 가지</h2>
+      <div style="margin-top:30px;display:flex;flex-direction:column;gap:14px;max-width:1680px">
+        <div style="border:1px solid #2C3A44;border-left:4px solid #5EC8BC;padding:16px 24px;display:flex;gap:18px;align-items:baseline"><span class="k" style="color:var(--mint);flex-shrink:0">①</span><span style="font-size:23px;color:#D4E0E5;line-height:1.45"><strong style="color:#fff">하나의 뿌리</strong> — 거의 모두 역전파 + 행렬곱 위의 변형. 07을 알면 큰 그림이 잡힌다.</span></div>
+        <div style="border:1px solid #2C3A44;border-left:4px solid #5EC8BC;padding:16px 24px;display:flex;gap:18px;align-items:baseline"><span class="k" style="color:var(--mint);flex-shrink:0">②</span><span style="font-size:23px;color:#D4E0E5;line-height:1.45"><strong style="color:#fff">수렴</strong> — 2017 Transformer 이후 비전·언어·생성이 한 뼈대로 모였다.</span></div>
+        <div style="border:1px solid #2C3A44;border-left:4px solid #5EC8BC;padding:16px 24px;display:flex;gap:18px;align-items:baseline"><span class="k" style="color:var(--mint);flex-shrink:0">③</span><span style="font-size:23px;color:#D4E0E5;line-height:1.45"><strong style="color:#fff">규모의 힘</strong> — 같은 구조라도 데이터·파라미터를 키우자 질적 도약(GPT-3).</span></div>
+        <div style="border:1px solid #2C3A44;border-left:4px solid #5EC8BC;padding:16px 24px;display:flex;gap:18px;align-items:baseline"><span class="k" style="color:var(--mint);flex-shrink:0">④</span><span style="font-size:23px;color:#D4E0E5;line-height:1.45"><strong style="color:#fff">딥러닝이 전부는 아니다</strong> — 표 데이터는 트리가 여전히 강자. 도구는 문제에 맞춰.</span></div>
+        <div style="border:1px solid #2C3A44;border-left:4px solid #5EC8BC;padding:16px 24px;display:flex;gap:18px;align-items:baseline"><span class="k" style="color:var(--mint);flex-shrink:0">⑤</span><span style="font-size:23px;color:#D4E0E5;line-height:1.45"><strong style="color:#fff">물리세계로</strong> — 인식·언어를 넘어 로봇·자율차(VLA)가 다음 갈래.</span></div>
+      </div>
+      <p style="font-size:24px;color:#AFC0CA;margin-top:26px;max-width:1620px;line-height:1.55">각 알고리즘의 상세·사례는 <strong style="color:#fff">03 심화</strong>, 신경망 원리·실습은 <strong style="color:#fff">07 · 신경망_역전파_LIVE</strong>로.</p>
+    </div>
+  </section>
+
+</div><!-- /stage --></div>
+<div class="progress" id="prog"></div>
+<div class="navbar" id="navbar"><button id="prev">‹</button><span class="ct"><b id="cur">1</b> / <span id="tot">1</span></span><button id="next">›</button><span class="kb">← → 이동 · R 처음 · F5 전체화면</span></div>
+<div id="gate">
+  <svg viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid meet"><defs><pattern id="gg" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#22323d" stroke-width="1"/></pattern></defs><rect width="1280" height="720" fill="#15202A"/><rect width="1280" height="720" fill="url(#gg)" opacity=".45"/><g stroke="#0E7C72" stroke-width="1.4" opacity=".5" fill="none"><path d="M930 360 H1020 M1020 360 V230 M1020 360 V490 M1020 230 H1110 M1020 490 H1110 M1110 230 V170 M1110 230 V290 M1110 490 V430 M1110 490 V550"/></g><g fill="#5EC8BC" opacity=".7"><circle cx="930" cy="360" r="8"/><circle cx="1110" cy="170" r="6"/><circle cx="1110" cy="290" r="6"/><circle cx="1110" cy="430" r="6"/><circle cx="1110" cy="550" r="6"/></g>
+  <rect x="80" y="61" width="13" height="13" fill="#0E7C72"/><text x="105" y="73" font-family="'JetBrains Mono',monospace" font-size="21" letter-spacing="1.5" fill="#5EC8BC">AI × History · 11</text>
+  <rect x="81" y="291" width="11" height="11" fill="#0E7C72"/><text x="103" y="302" font-family="'JetBrains Mono',monospace" font-size="23" letter-spacing="2" fill="#0E7C72">AI 모델 계통도 · 9 패밀리의 40년</text>
+  <text x="76" y="402" font-family="'Noto Sans KR',sans-serif" font-size="76" font-weight="800" letter-spacing="-2" fill="#F4F6F8">하나의 뿌리,</text>
+  <text x="76" y="496" font-family="'Noto Sans KR',sans-serif" font-size="76" font-weight="800" letter-spacing="-2" fill="#F4F6F8"><tspan fill="#5EC8BC">여러 갈래</tspan>의 진화</text>
+  <text x="80" y="588" font-family="'JetBrains Mono',monospace" font-size="22" fill="#9FB2BD">역전파 1986 → 추론형 LLM 2026</text>
+  <text x="80" y="652" font-family="'JetBrains Mono',monospace" font-size="20" letter-spacing="1" fill="#7A8893">계통도 · 시대별 King · 5가지 통찰</text></svg>
+  <div class="hint">▶ 클릭 · Space · → 키로 시작 &nbsp;|&nbsp; F5 전체화면</div>
+</div>
+<script>
+(function(){
+  var stage=document.getElementById('stage'),deck=document.getElementById('deck');
+  function fit(){var s=Math.min(window.innerWidth/1920,window.innerHeight/1080);stage.style.transform='translate(-50%,-50%) scale('+s+')';}
+  window.addEventListener('resize',fit);fit();
+  var slides=[].slice.call(document.querySelectorAll('.slide')),idx=0;
+  document.getElementById('tot').textContent=slides.length;
+  var stoppers=[];
+  function go(n){idx=Math.max(0,Math.min(slides.length-1,n));for(var i=0;i<slides.length;i++)slides[i].classList.toggle('active',i===idx);document.getElementById('cur').textContent=idx+1;var pg=document.getElementById('prog');if(pg)pg.style.width=((idx+1)/slides.length*100)+'%';for(var s=0;s<stoppers.length;s++)stoppers[s]();}
+  go(0);
+  document.getElementById('prev').onclick=function(){go(idx-1)};document.getElementById('next').onclick=function(){go(idx+1)};
+  stage.addEventListener('click',function(e){if(e.target.closest('button,input,a,.sim,.no-advance,.navbar'))return;go(idx+1);});
+  var pres=false;function fsEl(){return document.fullscreenElement||document.webkitFullscreenElement;}
+  function setPres(v){pres=v;deck.classList.toggle('presenting',v);}
+  document.addEventListener('fullscreenchange',function(){setPres(!!fsEl());});document.addEventListener('webkitfullscreenchange',function(){setPres(!!fsEl());});
+  document.addEventListener('keydown',function(e){if(e.metaKey||e.ctrlKey||e.altKey)return;var k=e.key;
+    if(k==='F5'||e.keyCode===116){e.preventDefault();if(pres||fsEl()){if(fsEl())(document.exitFullscreen||document.webkitExitFullscreen).call(document);else setPres(false);}else{var el=deck;var r=el.requestFullscreen||el.webkitRequestFullscreen;if(r){try{var p=r.call(el);if(p&&p.catch)p.catch(function(){setPres(true);});}catch(_){setPres(true);}}else setPres(true);}return;}
+    if(k==='ArrowRight'||k==='PageDown'||k===' '||k==='Spacebar'){go(idx+1);e.preventDefault();}else if(k==='ArrowLeft'||k==='PageUp'){go(idx-1);e.preventDefault();}else if(k==='Home'){go(0);}else if(k==='End'){go(slides.length-1);}else if(k==='r'||k==='R'){go(0);}else if(/^[0-9]$/.test(k)){var n=k==='0'?9:parseInt(k,10)-1;if(n<slides.length)go(n);}
+  },false);
+  var gate=document.getElementById('gate');if(gate)gate.remove();
+
+  /* ===================== 인터랙티브 타임라인 ===================== */
+  (function(){
+    var svg=document.getElementById('tlSvg');if(!svg)return;
+    var NS='http://www.w3.org/2000/svg';
+    function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
+    var M=[
+      {y:1986,n:'역전파',king:1},{y:1997,n:'LSTM'},{y:1998,n:'LeNet'},{y:2001,n:'Random Forest'},
+      {y:2012,n:'AlexNet',king:1},{y:2014,n:'GAN'},{y:2015,n:'ResNet/DQN',king:1},{y:2016,n:'XGBoost/AlphaGo'},
+      {y:2017,n:'Transformer',king:1},{y:2018,n:'GAT'},{y:2020,n:'GPT-3/ViT/DDPM',king:1},{y:2021,n:'CLIP'},
+      {y:2022,n:'ChatGPT/SD',king:1},{y:2023,n:'PatchTST/DINOv2/VLA'},{y:2025,n:'추론형 R1',king:1}
+    ];
+    var KINGS=[{y:1986,t:'역전파 — 다층 학습의 토대'},{y:2012,t:'AlexNet — 딥러닝 시대 개막'},{y:2015,t:'ResNet — 깊이의 한계를 풂'},{y:2017,t:'Transformer — 공통 뼈대'},{y:2020,t:'GPT-3 — 규모의 힘'},{y:2022,t:'ChatGPT — 모두의 도구'},{y:2025,t:'추론형 — 생각하는 AI'}];
+    var Y0=1986,Y1=2026;
+    function PX(y){return 60+(y-Y0)/(Y1-Y0)*1580;}
+    var cur=2026,timer=null;
+    function curKing(y){var k=KINGS[0];for(var i=0;i<KINGS.length;i++)if(KINGS[i].y<=y)k=KINGS[i];return k;}
+    function render(){
+      svg.innerHTML='';
+      svg.appendChild(el('line',{x1:60,y1:210,x2:1640,y2:210,stroke:'#C6D2DA','stroke-width':3}));
+      svg.appendChild(el('line',{x1:60,y1:210,x2:PX(cur),y2:210,stroke:'#0E7C72','stroke-width':4}));
+      // decade ticks
+      for(var yr=1990;yr<=2020;yr+=10){svg.appendChild(el('line',{x1:PX(yr),y1:205,x2:PX(yr),y2:215,stroke:'#9FB2BD'}));var tt=el('text',{x:PX(yr),y:250,'font-family':'monospace','font-size':16,fill:'#9FB2BD','text-anchor':'middle'});tt.textContent=yr;svg.appendChild(tt);}
+      var cnt=0;
+      for(var i=0;i<M.length;i++){var on=M[i].y<=cur;if(on)cnt++;var up=(i%2===0);var ty=up?150:270;
+        svg.appendChild(el('line',{x1:PX(M[i].y),y1:210,x2:PX(M[i].y),y2:up?ty+18:ty-18,stroke:on?'#0E7C72':'#E2E9ED','stroke-width':1.5}));
+        svg.appendChild(el('circle',{cx:PX(M[i].y),cy:210,r:M[i].king?9:6,fill:on?(M[i].king?'#0B6258':'#0E7C72'):'#E2E9ED',stroke:'#fff','stroke-width':2}));
+        var lab=el('text',{x:PX(M[i].y),y:up?ty:ty+6,'font-family':'monospace','font-size':15,fill:on?'#15202A':'#C6D2DA','text-anchor':'middle'});lab.textContent=(M[i].king?'★ ':'')+M[i].n;svg.appendChild(lab);
+        var yl=el('text',{x:PX(M[i].y),y:up?ty-20:ty+24,'font-family':'monospace','font-size':13,fill:on?'#0E7C72':'#C6D2DA','text-anchor':'middle'});yl.textContent=M[i].y;svg.appendChild(yl);
+      }
+      // marker
+      svg.appendChild(el('circle',{cx:PX(cur),cy:210,r:11,fill:'#C77D2E',stroke:'#fff','stroke-width':3}));
+      document.getElementById('tlYear').textContent=cur;
+      var k=curKing(cur);
+      document.getElementById('tlKing').innerHTML='현재 시기의 King → <b>'+k.t+'</b> · 등장 모델 <b>'+cnt+'</b>개';
+    }
+    var range=document.getElementById('tlRange');
+    range.oninput=function(){stop();cur=+this.value;render();};
+    range.addEventListener('keydown',function(e){e.stopPropagation();}); // 화살표가 슬라이드 넘김과 충돌 방지
+    function stop(){if(timer){clearInterval(timer);timer=null;document.getElementById('tlPlay').textContent='▶ 재생';}}
+    stoppers.push(stop);
+    document.getElementById('tlPlay').onclick=function(){if(timer){stop();return;}if(cur>=2026)cur=1986;this.textContent='⏸ 정지';timer=setInterval(function(){cur+=1;if(cur>2026){cur=2026;range.value=cur;render();stop();return;}range.value=cur;render();},220);};
+    render();
+  })();
+})();
+</script>
+</body>
+</html>

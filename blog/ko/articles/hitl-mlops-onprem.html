@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>폐쇄망 에이전트의 사람 검증과 MLOps 운영 - AI Edu Archive 한국어</title>
+<meta content="폐쇄망 에이전트가 상태 변경 작업 전에 사람 승인으로 멈춰야 하는 이유와 LangGraph interrupt(), PostgresSaver, 감사 로그, 드리프트 감시로 운영하는 방법." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/hitl-mlops-onprem.html" rel="canonical"/><link href="https://ai-edu-archive.example.com/blog/articles/hitl-mlops-onprem.html" hreflang="en" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/ko/articles/hitl-mlops-onprem.html" hreflang="ko" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/articles/hitl-mlops-onprem.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+ 오픈 그래프 
+<meta content="article" property="og:type"/>
+<meta content="폐쇄망 에이전트의 사람 검증과 MLOps 운영 - AI Edu Archive 한국어" property="og:title"/>
+<meta content="폐쇄망 에이전트가 상태 변경 작업 전에 사람 승인으로 멈춰야 하는 이유와 LangGraph interrupt(), PostgresSaver, 감사 로그, 드리프트 감시로 운영하는 방법." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="https://ai-edu-archive.example.com/blog/ko/articles/hitl-mlops-onprem.html" property="og:url"/>
+<meta content="ko_KR" property="og:locale"/>
+<meta content="en_US" property="og:locale:alternate"/>
+<meta content="2026-07-04" property="article:published_time"/>
+<meta content="AI Edu Archive" property="article:author"/>
+<meta content="에이전트 &amp; MCP" property="article:section"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="폐쇄망 에이전트의 사람 검증과 MLOps 운영 - AI Edu Archive 한국어" name="twitter:title"/>
+<meta content="폐쇄망 에이전트가 상태 변경 작업 전에 사람 승인으로 멈춰야 하는 이유와 LangGraph interrupt(), PostgresSaver, 감사 로그, 드리프트 감시로 운영하는 방법." name="twitter:description"/>
+ JSON-LD: 기사 스키마 
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "폐쇄망 에이전트의 사람 검증과 MLOps 운영",
+  "description": "폐쇄망 에이전트가 상태 변경 작업 전에 사람 승인으로 멈춰야 하는 이유와 LangGraph interrupt(), PostgresSaver, 감사 로그, 드리프트 감시로 운영하는 방법.",
+  "inLanguage": "ko",
+  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/ko/articles/hitl-mlops-onprem.html"
+  },
+  "name": "폐쇄망 에이전트의 사람 검증과 MLOps 운영",
+  "url": "https://ai-edu-archive.example.com/blog/ko/articles/hitl-mlops-onprem.html"
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/blog.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive 홈" class="brand" href="../../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="주요 메뉴" class="nav-links">
+<a href="../../../index.html#courses">강의</a>
+<a href="../index.html">글</a>
+<a href="../about.html">소개</a>
+<div aria-label="언어 선택" class="language-switch"><a href="../../articles/hitl-mlops-onprem.html" lang="en" title="English">🇺🇸 EN</a><a aria-current="true" href="hitl-mlops-onprem.html" lang="ko" title="한국어">🇰🇷 KO</a><a href="../../articles/hitl-mlops-onprem.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a><a href="../../articles/hitl-mlops-onprem.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a><a href="../../articles/hitl-mlops-onprem.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a><a href="../../articles/hitl-mlops-onprem.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a><a href="../../articles/hitl-mlops-onprem.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a></div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article itemscope="" itemtype="https://schema.org/Article">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="탐색경로" class="breadcrumb">
+<a href="../../../index.html">홈</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">저널</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">온프레미스 에이전트의 HITL과 MLOps</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag" data-cat="agents">에이전트 &amp; MCP</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-04" itemprop="datePublished">2026년 7월 4일</time>
+<span class="post-dot"></span>
+<span class="rt">12분 읽기</span>
+</div>
+<h1 itemprop="headline">폐쇄망 에이전트의 사람 검증과 MLOps 운영</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>반도체 공정 엔지니어 · Air-gapped LLM / RAG / Agents</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="목차" class="toc">
+<div class="toc-title">이 페이지에서</div>
+<ol>
+<li><a href="#why-approval">에이전트가 실행하기 전에 사람 승인 게이트가 필요한 이유</a></li>
+<li><a href="#gate">로 만드는 승인 게이트<code>interrupt()</code></a></li>
+<li><a href="#state">지속 상태: MemorySaver가 아니라 PostgresSaver가 필요한 이유</a></li>
+<li><a href="#audit">감사 로그와 승인 이력</a></li>
+<li><a href="#drift">재학습, 드리프트 감시, MLOps 루프</a></li>
+</ol>
+</nav>
+<div class="article-body" itemprop="articleBody">
+<p>도구를 호출할 수 있는 에이전트는 공장을 바꿀 수 있습니다. 팹에서 도구 호출은 추상적인 개념이 아닙니다. 레시피 파라미터를 쓰고, MES에 lot hold를 걸고, 증착 장비의 정비 티켓을 열 수 있습니다. LLM이 이런 작업을 스스로 실행할 수 있는 순간, 질문은 더 이상 답변이 좋은지가 아니라 실행 전에 누가 승인했는지가 됩니다. 이 글의 운영 원칙은 단순합니다. 온프레미스 에이전트는 모든 상태 변경 작업 전에 사람 승인을 위해 멈춰야 하며, 그 멈춤은 프로세스 재시작 이후에도 유지되어야 합니다.</p>
+<h2 id="why-approval">에이전트가 실행하기 전에 사람 승인 게이트가 필요한 이유</h2>
+<p>공개 인터넷에서 잘못된 에이전트 행동은 보통 낭비된 API 호출로 끝납니다. 하지만 폐쇄된 팹 네트워크 안에서는 영향 범위가 물리적입니다. LLM은 그럴듯하지만 틀린 setpoint를 만들 수 있고, 모호한 SOP를 잘못 읽을 수 있으며, 각각은 맞는 두 단계를 위험한 세 번째 단계로 연결할 수 있습니다. 이런 문제는 정확도 지표가 아니라 챔버를 아는 엔지니어가 잡아냅니다. 따라서 설계 목표는 더 똑똑한 모델만이 아닙니다. 실행 전에 사람이 전체 맥락을 보고 제안된 작업을 검토하는 신뢰할 수 있는 제어 지점이 필요합니다.</p>
+<p>구체적으로 에이전트의 도구를 두 종류로 나눕니다.</p>
+<ul>
+<li>읽기 도구 — MES 조회, 레시피 읽기, 장비 로그 가져오기. 라인을 변경하지 않으므로 자유롭게 실행할 수 있습니다.</li>
+<li>쓰기 도구 — 파라미터 설정, lot hold, 작업 지시 발행. 반드시 승인 게이트를 통과해야 하며, 지정된 사람이 resume하기 전에는 실행되지 않습니다.</li>
+</ul>
+<blockquote>읽기 에이전트는 정확해야 합니다. 쓰기 에이전트는 멈출 수 있어야 하며, 모든 멈춤에는 사람의 이름이 붙어야 합니다.</blockquote>
+<h2 id="gate">로 만드는 승인 게이트<code>interrupt()</code></h2>
+<p>LangGraph는 이 패턴에 필요한 primitive를 제공합니다. 노드 안에서 interrupt(payload)를 호출하면 런타임이 전체 graph state를 저장하고, payload를 호출자에게 보여준 뒤 실행을 멈춥니다. 이후 노드는 실행되지 않습니다. 그래프는 몇 분이 지나도, 서버가 재시작되어도, 누군가 Command(resume=...)로 재개하기 전까지 멈춘 상태로 남습니다. resume 값은 interrupt()의 반환값이 되므로 사람의 결정이 그대로 노드 로직으로 돌아옵니다.</p>
+<p>운영 환경에서 특히 중요한 동작이 있습니다. resume하면 LangGraph는 노드를 interrupt() 다음 줄에서 이어서 실행하지 않고, 노드 처음부터 다시 실행합니다. 그래서 실제 side effect, 특히 실제 쓰기 작업은 반드시 interrupt가 반환된 뒤에 두어야 합니다. interrupt 위쪽 코드는 여러 번 실행되어도 안전해야 합니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> approval_gate.py</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># Approval gate for a state-changing (write) tool call.</span>
+<span class="tok-com"># interrupt / Command live in langgraph.types (2026 API).</span>
+<span class="tok-kw">from</span> typing <span class="tok-kw">import</span> TypedDict
+<span class="tok-kw">from</span> langgraph.graph <span class="tok-kw">import</span> StateGraph, START, END
+<span class="tok-kw">from</span> langgraph.types <span class="tok-kw">import</span> interrupt, Command
+
+
+<span class="tok-kw">class</span> <span class="tok-fn">AgentState</span>(TypedDict):
+    action: dict        <span class="tok-com"># proposed write, e.g. {"tool": "set_recipe", "param": ...}</span>
+    approved_by: str
+    result: str
+
+
+<span class="tok-kw">def</span> <span class="tok-fn">human_gate</span>(state: AgentState) -&gt; Command:
+    <span class="tok-com"># Pause here. Everything above must be side-effect free,</span>
+    <span class="tok-com"># because the node re-runs from the top on resume.</span>
+    decision = <span class="tok-fn">interrupt</span>({
+        <span class="tok-str">"review"</span>: <span class="tok-str">"Approve this write to the line?"</span>,
+        <span class="tok-str">"action"</span>: state[<span class="tok-str">"action"</span>],
+    })
+    <span class="tok-kw">if</span> <span class="tok-kw">not</span> decision[<span class="tok-str">"approve"</span>]:
+        <span class="tok-kw">return</span> <span class="tok-fn">Command</span>(goto=END, update={<span class="tok-str">"result"</span>: <span class="tok-str">"rejected"</span>})
+    <span class="tok-kw">return</span> <span class="tok-fn">Command</span>(
+        goto=<span class="tok-str">"execute"</span>,
+        update={<span class="tok-str">"approved_by"</span>: decision[<span class="tok-str">"by"</span>]},  <span class="tok-com"># who signed off</span>
+    )
+
+
+<span class="tok-kw">def</span> <span class="tok-fn">execute</span>(state: AgentState) -&gt; dict:
+    <span class="tok-com"># The real side effect runs ONLY after approval.</span>
+    out = <span class="tok-fn">run_write_tool</span>(state[<span class="tok-str">"action"</span>])       <span class="tok-com"># MES / recipe API</span>
+    <span class="tok-kw">return</span> {<span class="tok-str">"result"</span>: out}
+
+
+builder = <span class="tok-fn">StateGraph</span>(AgentState)
+builder.<span class="tok-fn">add_node</span>(<span class="tok-str">"human_gate"</span>, human_gate)
+builder.<span class="tok-fn">add_node</span>(<span class="tok-str">"execute"</span>, execute)
+builder.<span class="tok-fn">add_edge</span>(START, <span class="tok-str">"human_gate"</span>)
+builder.<span class="tok-fn">add_edge</span>(<span class="tok-str">"execute"</span>, END)</code></pre>
+</figure>
+<p>interrupt를 쓰려면 graph compile 시 checkpointer가 필요합니다. checkpointer가 없으면 멈춘 상태를 저장할 곳이 없습니다. 이 checkpointer가 신뢰성의 핵심이고, 온프레미스 선택이 가장 중요해지는 지점입니다.</p>
+<h2 id="state">지속 상태: MemorySaver가 아니라 PostgresSaver가 필요한 이유</h2>
+<p>많은 튜토리얼은 InMemorySaver, 예전 이름으로 MemorySaver를 사용합니다. 체크포인트를 Python dictionary에 저장하므로 notebook 데모에는 좋지만 운영에는 맞지 않습니다. 승인 대기 중 프로세스가 재시작되면 멈춰 있던 그래프가 사라집니다. 엔지니어가 검토하던 hold도 사라지고, 그런 일이 있었다는 기록도 남지 않습니다. 24시간 돌아가고 뒤에서 서비스가 재배포되는 팹에서는 인메모리 상태가 곧 데이터 손실 버그가 됩니다.</p>
+<p>온프레미스 Postgres와 함께 PostgresSaver를 사용합니다. 멈춘 상태는 이제 우리 네트워크 안의 데이터베이스 row가 됩니다. 재시작 후에도 살아 있고, 운영 데이터와 함께 백업되며, 화요일에 보류된 승인은 수요일 아침에도 그대로 남아 있습니다. 처음 한 번 .setup()을 실행해 checkpoint table을 만들고, thread_id를 키로 사용해 같은 대화를 정확히 멈춘 지점에서 다시 불러옵니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> durable_run.py</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># Durable checkpoints on an on-prem Postgres — survives restarts.</span>
+<span class="tok-kw">from</span> langgraph.checkpoint.postgres <span class="tok-kw">import</span> PostgresSaver
+
+DB_URI = <span class="tok-str">"postgresql://agent:pw@postgres.fab.local:5432/agentdb"</span>
+
+<span class="tok-kw">with</span> PostgresSaver.<span class="tok-fn">from_conn_string</span>(DB_URI) <span class="tok-kw">as</span> checkpointer:
+    checkpointer.<span class="tok-fn">setup</span>()                       <span class="tok-com"># once: create checkpoint tables</span>
+    graph = builder.<span class="tok-fn">compile</span>(checkpointer=checkpointer)
+
+    config = {<span class="tok-str">"configurable"</span>: {<span class="tok-str">"thread_id"</span>: <span class="tok-str">"lot-A17-hold"</span>}}
+
+    <span class="tok-com"># 1) Run until the gate. It pauses and persists to Postgres.</span>
+    <span class="tok-kw">for</span> chunk <span class="tok-kw">in</span> graph.<span class="tok-fn">stream</span>(
+        {<span class="tok-str">"action"</span>: {<span class="tok-str">"tool"</span>: <span class="tok-str">"place_hold"</span>, <span class="tok-str">"lot"</span>: <span class="tok-str">"A17"</span>}},
+        config,
+        stream_mode=<span class="tok-str">"values"</span>,
+    ):
+        <span class="tok-fn">print</span>(chunk)
+
+    <span class="tok-com"># 2) Later — even after a restart — inspect what is pending.</span>
+    snapshot = graph.<span class="tok-fn">get_state</span>(config)
+    <span class="tok-fn">print</span>(snapshot.next)               <span class="tok-com"># ('human_gate',) -&gt; awaiting approval</span>
+
+    <span class="tok-com"># 3) A named engineer approves; the write runs only now.</span>
+    graph.<span class="tok-fn">invoke</span>(
+        <span class="tok-fn">Command</span>(resume={<span class="tok-str">"approve"</span>: <span class="tok-kw">True</span>, <span class="tok-str">"by"</span>: <span class="tok-str">"kim.eng"</span>}),
+        config,
+    )</code></pre>
+</figure>
+<h2 id="audit">감사 로그와 승인 이력</h2>
+<p>모든 pause가 durable checkpoint가 되면 별도의 control plane 없이도 감사 이력을 만들 수 있습니다. checkpoint는 제안된 작업과 state를 기록하고, resume payload는 누가 어떤 결정을 내렸는지 기록합니다. write tool이 실행되기 전에 resume 순간 append-only log에 둘 다 남기세요. 규제 대상 라인이라면 각 기록에는 제안된 tool call, 검토자 ID, 승인 또는 거부, timestamp, 전체 에이전트 transcript와 연결되는 thread_id가 들어가야 합니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> audit_log.py</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># Append-only audit record, written at the moment of decision.</span>
+<span class="tok-kw">import</span> json, time, logging
+
+audit = logging.<span class="tok-fn">getLogger</span>(<span class="tok-str">"agent.audit"</span>)   <span class="tok-com"># ships to on-prem log store</span>
+
+
+<span class="tok-kw">def</span> <span class="tok-fn">resume_with_audit</span>(graph, config, decision: dict) -&gt; dict:
+    snapshot = graph.<span class="tok-fn">get_state</span>(config)
+    proposed = snapshot.values[<span class="tok-str">"action"</span>]
+    audit.<span class="tok-fn">info</span>(json.<span class="tok-fn">dumps</span>({
+        <span class="tok-str">"thread_id"</span>: config[<span class="tok-str">"configurable"</span>][<span class="tok-str">"thread_id"</span>],
+        <span class="tok-str">"action"</span>: proposed,
+        <span class="tok-str">"decision"</span>: <span class="tok-str">"approve"</span> <span class="tok-kw">if</span> decision[<span class="tok-str">"approve"</span>] <span class="tok-kw">else</span> <span class="tok-str">"reject"</span>,
+        <span class="tok-str">"by"</span>: decision[<span class="tok-str">"by"</span>],
+        <span class="tok-str">"ts"</span>: time.<span class="tok-fn">time</span>(),
+    }))
+    <span class="tok-kw">return</span> graph.<span class="tok-fn">invoke</span>(<span class="tok-fn">Command</span>(resume=decision), config)</code></pre>
+</figure>
+<p>이제 라인의 모든 쓰기 작업 뒤에는 이름과 timestamp가 남고, 그 기록은 작업 자체와 같은 네트워크 안에 저장됩니다. 감사자나 불량 lot 이후의 post-mortem이 실제로 필요로 하는 기록이 바로 이것입니다.</p>
+<figure>
+<div aria-label="인간 참여형(Human-In-The-Loop) 승인 흐름도" class="diagram">
+<svg aria-label="Agent proposes a write, the graph interrupts and persists to Postgres, a human approves or rejects, then the write executes and is logged." role="img" viewbox="0 0 640 260" width="100%">
+<rect fill="#FCFBF8" height="258" rx="12" stroke="#E8E4DB" width="638" x="1" y="1"></rect>
+<!-- Agent box -->
+<rect fill="#FFFFFF" height="52" rx="9" stroke="#DBD5C8" width="112" x="26" y="104"></rect>
+<text fill="#3A382F" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="82" y="127">Agent</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="82" y="145">쓰기 제안</text>
+<!-- Gate / interrupt -->
+<rect fill="#FBEDE7" height="52" rx="9" stroke="#D97757" width="120" x="186" y="104"></rect>
+<text fill="#B24A28" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="246" y="127">interrupt()</text>
+<text fill="#B24A28" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="246" y="145">gate · pause</text>
+<!-- Postgres persistence (below the gate) -->
+<rect fill="#FFFFFF" height="40" rx="9" stroke="#DBD5C8" width="120" x="186" y="196"></rect>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="246" y="221">PostgresSaver</text>
+<!-- Human -->
+<rect fill="#FFFFFF" height="52" rx="9" stroke="#DBD5C8" width="120" x="354" y="104"></rect>
+<text fill="#3A382F" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="414" y="127">Engineer</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="414" y="145">승인 / 거부</text>
+<!-- Execute -->
+<rect fill="#FFFFFF" height="52" rx="9" stroke="#DBD5C8" width="96" x="522" y="104"></rect>
+<text fill="#3A382F" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="570" y="127">Execute</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="570" y="145">+ log</text>
+<!-- Arrows -->
+<defs>
+<marker id="ah" markerheight="9" markerwidth="9" orient="auto" refx="7" refy="3">
+<path d="M0 0 L7 3 L0 6 Z" fill="#8A8578"></path>
+</marker>
+</defs>
+<line marker-end="url(#ah)" stroke="#8A8578" stroke-width="1.6" x1="138" x2="182" y1="130" y2="130"></line>
+<line marker-end="url(#ah)" stroke="#8A8578" stroke-width="1.6" x1="306" x2="350" y1="130" y2="130"></line>
+<line marker-end="url(#ah)" stroke="#8A8578" stroke-width="1.6" x1="474" x2="518" y1="130" y2="130"></line>
+<line marker-end="url(#ah)" stroke="#8A8578" stroke-width="1.6" x1="246" x2="246" y1="156" y2="192"></line>
+<text fill="#3A382F" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="320" y="34">읽기 도구는 자유롭게 · 모든 쓰기는 게이트 통과</text>
+</svg>
+</div>
+<figcaption>그림 1. 쓰기 경로: 제안 → interrupt로 중지하고 Postgres에 상태 저장 → 사람 승인 → 실행과 로그 기록.</figcaption>
+</figure>
+<h2 id="drift">재학습, 드리프트 감시, MLOps 루프</h2>
+<p>승인 게이트는 가장 좋은 데이터 소스이기도 합니다. 모든 거부는 사람이 잡아낸 모델 오류의 labeled example입니다. tool별, shift별로 reject rate를 시간에 따라 추적하세요. 거부율 상승은 에이전트가 실제 라인 운영 방식에서 벗어나기 시작했다는 가장 이른 신호일 때가 많습니다. 새 레시피 family, 바뀐 SOP, 재구성된 chamber가 원인일 수 있습니다.</p>
+<p>팹은 air-gapped 환경이므로 MLOps loop도 전부 온프레미스에 남아야 합니다. telemetry는 네트워크 밖으로 나가지 않고, managed retraining service도 필요하지 않습니다. 실용적인 루프는 다음과 같습니다.</p>
+<ul>
+<li>관찰 — 도구별·shift별 거부율과 read-tool 검색 품질을 대시보드로 보고, 임계값을 넘으면 알림을 냅니다.</li>
+<li>수집 — 거부된 작업의 감사 로그와 엔지니어가 내린 올바른 결정을 모읍니다.</li>
+<li>갱신 — 먼저 RAG corpus를 다시 색인화합니다. 비용이 낮고 대부분의 drift를 고칠 수 있기 때문입니다. 검색만으로 부족할 때만 local model fine-tuning을 검토합니다.</li>
+<li>릴리스 게이트 — 새 model version도 상태 변경 작업처럼 다룹니다. shadow 평가를 거치고, 과거 승인 이력과 비교한 뒤, 승인 후 서비스에 투입합니다.</li>
+</ul>
+<p>이 흐름에 cloud MLOps 플랫폼은 필요하지 않습니다. 필요한 것은 durable checkpoint store, 솔직한 audit log, 그리고 현장의 사람이 이미 이해하는 metric인 reject rate입니다.</p>
+<hr/>
+<p>패턴은 작지만 핵심은 분명합니다. 읽기는 자유롭게, 쓰기는 게이트 뒤에서, pause는 Postgres에 저장하고, 누가 결정했는지 기록합니다. 이렇게 만든 에이전트는 정확하기만 한 시스템이 아닙니다. 책임 추적이 가능하고, 재시작에도 안전하며, 실제 라인 가까이에 둘 수 있을 만큼 통제 가능한 시스템입니다. 아래 심화 deck은 이 글이 전제로 삼는 tool wiring까지 포함해 전체 agent-and-MCP 구성을 slide by slide로 설명합니다.</p>
+</div>
+ 심층적인 데크 링크 
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">더 깊게 보기</span>
+<h3>이 주제의 전체 과정 보기</h3>
+<p>이 글은 현장 노트입니다. 인터랙티브 deck에서는 다이어그램과 실습 예제를 통해 전체 주제를 slide by slide로 따라갑니다.</p>
+</div>
+<a class="btn btn-primary" href="../../../llm_apply/LLM_slide.html">deck 열기 <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+ 공유 
+<div class="share">
+<span class="lbl">공유</span>
+<button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">공유 / 링크 복사</button>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+</div>
+ 저자 바이오 카드(E-E-A-T) 
+<aside class="author-card">
+<span aria-hidden="true" class="avatar">AE</span>
+<div class="a-body">
+<div class="k">저자 소개</div>
+<h3>AI Edu Archive</h3>
+<p>물리학 박사(IGZO / graphene 반도체 물성)이며 증착 공정을 수행하는 반도체 공정 엔지니어입니다. 팹을 위한 air-gapped LLM, RAG, agent 시스템과 강화학습·이상탐지 도구를 구축합니다. 이곳에서는 공정 know-how를 네트워크 밖으로 나가지 않는 온프레미스 지식 자산으로 바꾸는 방법을 씁니다.</p>
+<a href="../about.html">저자에 대해 더 보기</a>
+</div>
+</aside>
+ 관련된 
+<section aria-label="관련 기사" class="related">
+<span class="eyebrow">계속 읽기</span>
+<h2>저널의 관련 글</h2>
+<div class="related-grid">
+<a class="rel-card" href="langchain-core-explained.html">
+<span class="cat-tag" data-cat="agents">에이전트 &amp; MCP</span>
+<h3>온프레미스 스택을 위한 LangChain 핵심 설명</h3>
+</a>
+<a class="rel-card" href="rag-over-sealed-documents.html">
+<span class="cat-tag" data-cat="rag">RAG</span>
+<h3>네트워크를 떠나지 않는 폐쇄망 문서 RAG</h3>
+</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>무료로 깊게, 열린 방식으로</h2>
+<p>강의와 저널의 모든 콘텐츠는 회원가입 없이 무료로 읽을 수 있습니다.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>탐색</h4>
+<a href="../../index.html">허브 홈</a>
+<a href="../../../index.html#courses">모든 강의</a>
+<a href="../index.html">저널</a>
+</div>
+<div class="foot-col">
+<h4>강의</h4>
+<a href="../../../overview/index.html">Fab AI</a>
+<a href="../../../watsonx/index.html">Air-gapped LLM</a>
+<a href="../../../llm_apply/LLM_slide.html">Enterprise LLM</a>
+</div>
+<div class="foot-col">
+<h4>사이트</h4>
+<a href="../about.html">소개</a>
+<a href="../contact.html">연락</a>
+<a href="../privacy.html">개인정보</a>
+<a href="../terms.html">이용약관</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · 열린 한국어 AI 교육</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig?fig.querySelector('pre'):null;
+      if(!code)return;
+      var text=code.innerText;
+      var done=function(){
+        btn.textContent='Copied';btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1600);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done,function(){});
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

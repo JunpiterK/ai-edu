@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+ ∨ SEO ​ 
+<title>하이브리드 검색: 벡터 + 지식 그래프 - AI Edu Archive 한국어</title>
+<meta content="벡터 검색만으로는 관계와 정확한 사실을 놓치는 이유, 그리고 벡터는 후보를 찾고 지식 그래프는 검증과 확장을 맡는 하이브리드 검색 패턴." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/hybrid-retrieval-vector-graph.html" rel="canonical"/><link href="https://ai-edu-archive.example.com/blog/articles/hybrid-retrieval-vector-graph.html" hreflang="en" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/ko/articles/hybrid-retrieval-vector-graph.html" hreflang="ko" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/articles/hybrid-retrieval-vector-graph.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+ 오픈 그래프 
+<meta content="article" property="og:type"/>
+<meta content="하이브리드 검색: 벡터 + 지식 그래프 - AI Edu Archive 한국어" property="og:title"/>
+<meta content="벡터 검색만으로는 관계와 정확한 사실을 놓치는 이유, 그리고 벡터는 후보를 찾고 지식 그래프는 검증과 확장을 맡는 하이브리드 검색 패턴." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="https://ai-edu-archive.example.com/blog/ko/articles/hybrid-retrieval-vector-graph.html" property="og:url"/>
+<meta content="ko_KR" property="og:locale"/>
+<meta content="en_US" property="og:locale:alternate"/>
+<meta content="2026-07-04" property="article:published_time"/>
+<meta content="AI Edu Archive" property="article:author"/>
+<meta content="RAG" property="article:section"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="하이브리드 검색: 벡터 + 지식 그래프 - AI Edu Archive 한국어" name="twitter:title"/>
+<meta content="벡터 검색만으로는 관계와 정확한 사실을 놓치는 이유, 그리고 벡터는 후보를 찾고 지식 그래프는 검증과 확장을 맡는 하이브리드 검색 패턴." name="twitter:description"/>
+ JSON-LD: 기사 스키마 
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "하이브리드 검색: 벡터 + 지식 그래프",
+  "description": "벡터 검색만으로는 관계와 정확한 사실을 놓치는 이유, 그리고 벡터는 후보를 찾고 지식 그래프는 검증과 확장을 맡는 하이브리드 검색 패턴.",
+  "inLanguage": "ko",
+  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/ko/articles/hybrid-retrieval-vector-graph.html"
+  },
+  "name": "하이브리드 검색: 벡터 + 지식 그래프",
+  "url": "https://ai-edu-archive.example.com/blog/ko/articles/hybrid-retrieval-vector-graph.html"
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/blog.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive 홈" class="brand" href="../../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="주요 메뉴" class="nav-links">
+<a href="../../../index.html#courses">강의</a>
+<a href="../index.html">글</a>
+<a href="../about.html">소개</a>
+<div aria-label="언어 선택" class="language-switch"><a href="../../articles/hybrid-retrieval-vector-graph.html" lang="en" title="English">🇺🇸 EN</a><a aria-current="true" href="hybrid-retrieval-vector-graph.html" lang="ko" title="한국어">🇰🇷 KO</a><a href="../../articles/hybrid-retrieval-vector-graph.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a><a href="../../articles/hybrid-retrieval-vector-graph.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a><a href="../../articles/hybrid-retrieval-vector-graph.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a><a href="../../articles/hybrid-retrieval-vector-graph.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a><a href="../../articles/hybrid-retrieval-vector-graph.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a></div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article itemscope="" itemtype="https://schema.org/Article">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="탐색경로" class="breadcrumb">
+<a href="../../../index.html">홈</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">저널</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">하이브리드 검색</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag" data-cat="rag">RAG</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-04" itemprop="datePublished">2026년 7월 4일</time>
+<span class="post-dot"></span>
+<span class="rt">12분 읽기</span>
+</div>
+<h1 itemprop="headline">하이브리드 검색: 벡터 + 지식 그래프</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>반도체 공정 엔지니어 · Air-gapped LLM / RAG / Agents</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="목차" class="toc">
+<div class="toc-title">이 페이지에서</div>
+<ol>
+<li><a href="#where-vectors-break">벡터 검색이 약해지는 지점</a></li>
+<li><a href="#what-graphs-add">지식 그래프가 더해주는 것</a></li>
+<li><a href="#the-pattern">패턴: 후보 → 검증 → 확장</a></li>
+<li><a href="#code">LangChain으로 연결하기</a></li>
+<li><a href="#rerank">병합 결과 다시 순위화하기</a></li>
+</ol>
+</nav>
+<div class="article-body" itemprop="articleBody">
+<p>벡터 저장소는 유사도 엔진이지 사실 엔진이 아닙니다. EV-03에서 고장 난 RF generator model을 공유하는 chamber가 무엇인지 물으면, 벡터 검색은 질문과 비슷하게 들리는 문단을 돌려줄 수는 있지만 실제로 같은 부품을 공유하는 chamber를 보장하지는 못합니다. 답변이 정비 의사결정으로 이어질 수 있는 팹 네트워크에서는 이 차이가 중요합니다. 이 글의 주장은 단순합니다. 관계와 정확한 사실을 묻는 질문에는 벡터 검색과 지식 그래프를 함께 써야 합니다. 벡터는 후보를 찾고, 그래프는 검증하고 확장합니다.</p>
+<h2 id="where-vectors-break">벡터 검색이 약해지는 지점</h2>
+<p>Dense retrieval은 query를 embedding한 뒤 cosine similarity가 가장 높은 chunk를 반환합니다. load-lock purge sequence를 설명해 달라는 식의 의미 기반 질문에는 매우 좋습니다. 하지만 제조 지식에서 반복적으로 나타나는 세 지점에서는 약합니다.</p>
+<ul>
+<li>관계 — recipe A와 같은 source에서 실행되는 recipe는 무엇인가 같은 질문은 similarity score가 아니라 graph traversal 문제입니다. 가까운 텍스트와 연결된 entity는 다릅니다.</li>
+<li>정확한 사실 — part number, torque value, interlock ID는 작은 차이가 중요합니다. embedding은 PN-4471과 PN-4741을 vector space에서 가깝게 놓을 수 있지만, 현장에서는 전혀 다른 부품입니다.</li>
+<li>Multi-hop — 이 valve가 recall되면 어떤 SOP가 영향을 받는가라는 질문에는 valve → chamber → tool → SOP가 필요합니다. 각 hop은 vector index가 만들 수 없는 join입니다.</li>
+</ul>
+<p>k를 키우고 reranker를 붙이면 일부 문제를 가릴 수는 있습니다. 그러나 여전히 lookup을 위해 만들어지지 않은 similarity index에게 lookup을 맡기는 구조입니다.</p>
+<blockquote>벡터는 문서가 무엇에 관한 것인지 알려줍니다. 그래프는 어떤 것이 무엇과 연결되어 있는지 알려줍니다. 팹 질문에는 보통 둘 다 필요합니다.</blockquote>
+<h2 id="what-graphs-add">지식 그래프가 더해주는 것</h2>
+<p>지식 그래프는 entity를 node로, 관계를 typed edge로 저장합니다: (:Tool)-[:HAS_CHAMBER]-&gt;(:Chamber)-[:USES_PART]-&gt;(:Part). Cypher로 query하면 결과는 정확하고 결정적입니다. embedding blur도 없고, ranking 추정도 없으며, 존재하는 edge만 따라갑니다. 이것이 바로 벡터가 어려워하는 질문의 모양입니다. 대신 coverage가 trade-off입니다. 그래프는 추출해 넣은 entity와 relationship만 알고, fuzzy semantic matching은 하지 않습니다. 둘 중 하나만으로는 충분하지 않지만 함께 쓰면 서로의 빈틈을 메울 수 있습니다.</p>
+<p>두 저장소 모두 plant network 안에서만 운영할 수 있습니다. embedding model은 local weights로 실행하고, Neo4j 같은 graph database도 on-prem으로 운영합니다. Hybrid retrieval에는 외부 egress가 필요하지 않습니다. air-gapped fab에서 가장 중요한 조건입니다.</p>
+<h2 id="the-pattern">패턴: 후보 → 검증 → 확장</h2>
+<p>신뢰할 수 있는 패턴은 둘 다 실행하고 운에 맡기는 방식이 아닙니다. 다음과 같은 pipeline입니다.</p>
+<ul>
+<li>후보 — 문서 chunk에 대한 vector search가 의미적으로 관련 있는 passage를 반환합니다. 이것이 recall layer입니다.</li>
+<li>검증과 확장 — 그 chunk에 언급된 entity를 뽑고, graph에서 정확한 fact와 이웃을 조회합니다. 공유 부품, 영향받는 SOP, chamber가 속한 tool 같은 정보가 여기에 해당합니다.</li>
+<li>병합과 재순위화 — 두 result set을 합치고 다시 순위를 매겨, 상위 context가 의미적으로도 맞고 사실 관계로도 연결되게 만듭니다.</li>
+</ul>
+<figure>
+<div aria-label="하이브리드 검색 흐름도" class="diagram">
+<svg aria-label="Query fans out to a vector retriever and a graph retriever; results merge and are reranked before the LLM answers." role="img" viewbox="0 0 640 260" width="100%">
+<rect fill="#FCFBF8" height="258" rx="12" stroke="#E8E4DB" width="638" x="1" y="1"></rect>
+<!-- query -->
+<rect fill="#FBEDE7" height="44" rx="9" stroke="#D97757" width="104" x="24" y="108"></rect>
+<text fill="#7A3A22" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="76" y="129">Query</text>
+<text fill="#9A7A6A" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="76" y="146">질의</text>
+<!-- vector retriever -->
+<rect fill="#FCFBF8" height="52" rx="9" stroke="#DBD5C8" width="176" x="196" y="42"></rect>
+<text fill="#3A3833" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="284" y="63">Vector retriever</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="284" y="80">candidates</text>
+<!-- graph retriever -->
+<rect fill="#FCFBF8" height="52" rx="9" stroke="#DBD5C8" width="176" x="196" y="166"></rect>
+<text fill="#3A3833" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="284" y="187">Graph retriever</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="284" y="204">verify + expand</text>
+<!-- merge/rerank -->
+<rect fill="#FCFBF8" height="52" rx="9" stroke="#DBD5C8" width="104" x="424" y="104"></rect>
+<text fill="#3A3833" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="476" y="126">Merge +</text>
+<text fill="#3A3833" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="476" y="143">rerank</text>
+<!-- LLM -->
+<rect fill="#FBEDE7" height="44" rx="9" stroke="#D97757" width="56" x="560" y="108"></rect>
+<text fill="#7A3A22" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="588" y="134">LLM</text>
+<!-- arrows -->
+<g fill="none" stroke="#B8AE9C" stroke-width="1.6">
+<path d="M128 122 L196 74" marker-end="url(#ah)"></path>
+<path d="M128 138 L196 190" marker-end="url(#ah)"></path>
+<path d="M372 68 L424 118" marker-end="url(#ah)"></path>
+<path d="M372 192 L424 142" marker-end="url(#ah)"></path>
+<path d="M528 130 L560 130" marker-end="url(#ah)"></path>
+</g>
+<defs>
+<marker id="ah" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="4">
+<path d="M0 0 L8 4 L0 8 z" fill="#B8AE9C"></path>
+</marker>
+</defs>
+</svg>
+</div>
+<figcaption>그림 1. query가 두 retriever로 나뉘고, 결과는 병합·재순위화된 뒤 on-prem LLM으로 전달됩니다.</figcaption>
+</figure>
+<h2 id="code">LangChain으로 연결하기</h2>
+<p>아래 예시는 현재 분리된 package인 langchain_neo4j, langchain_huggingface, langchain_core를 사용합니다. legacy langchain.embeddings나 LLMChain은 쓰지 않습니다. 먼저 두 store를 모두 on-prem으로 연결합니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> stores.py</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># Vector store + graph, both running inside the plant network</span>
+<span class="tok-kw">from</span> langchain_huggingface <span class="tok-kw">import</span> HuggingFaceEmbeddings
+<span class="tok-kw">from</span> langchain_neo4j <span class="tok-kw">import</span> Neo4jVector, Neo4jGraph
+
+embed = <span class="tok-fn">HuggingFaceEmbeddings</span>(model_name=<span class="tok-str">"/opt/models/bge-m3"</span>)  <span class="tok-com"># local weights</span>
+
+<span class="tok-com"># Vector index over document chunks already loaded into Neo4j</span>
+vector = Neo4jVector.<span class="tok-fn">from_existing_index</span>(
+    embed,
+    url=<span class="tok-str">"bolt://neo4j.fab.local:7687"</span>,
+    username=<span class="tok-str">"neo4j"</span>,
+    password=<span class="tok-str">"***"</span>,
+    index_name=<span class="tok-str">"doc_chunks"</span>,
+)
+
+<span class="tok-com"># Same database, queried as a graph for exact facts and relationships</span>
+graph = <span class="tok-fn">Neo4jGraph</span>(
+    url=<span class="tok-str">"bolt://neo4j.fab.local:7687"</span>,
+    username=<span class="tok-str">"neo4j"</span>,
+    password=<span class="tok-str">"***"</span>,
+)</code></pre>
+</figure>
+<p>다음으로 graph를 LangChain retriever처럼 동작하게 하는 작은 custom retriever를 만듭니다. 이 retriever는 query를 받아 parameterised Cypher로 정확한 entity와 연결된 fact를 찾고, 결과를 Document 객체로 반환합니다. 운영 환경에서는 별도의 entity extraction 단계를 추가하는 것이 좋습니다. 여기서는 query parameter를 사용해 예제를 구체적이고 injection-safe하게 유지합니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> graph_retriever.py</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain_core.retrievers <span class="tok-kw">import</span> BaseRetriever
+<span class="tok-kw">from</span> langchain_core.documents <span class="tok-kw">import</span> Document
+<span class="tok-kw">from</span> langchain_core.callbacks <span class="tok-kw">import</span> CallbackManagerForRetrieverRun
+
+<span class="tok-kw">class</span> <span class="tok-fn">GraphFactRetriever</span>(BaseRetriever):
+    <span class="tok-str">"""Expand a query into exact facts + neighbours via Cypher."""</span>
+    graph: <span class="tok-fn">object</span>
+    k: <span class="tok-fn">int</span> = <span class="tok-num">6</span>
+
+    <span class="tok-kw">def</span> <span class="tok-fn">_get_relevant_documents</span>(
+        self, query: <span class="tok-fn">str</span>, *, run_manager: CallbackManagerForRetrieverRun
+    ) -&gt; <span class="tok-fn">list</span>[Document]:
+        <span class="tok-com"># Match parts/tools named in the query, return connected SOPs</span>
+        cypher = <span class="tok-str">"""
+        MATCH (p:Part)&lt;-[:USES_PART]-(c:Chamber)&lt;-[:HAS_CHAMBER]-(t:Tool)
+        WHERE toLower(p.name) CONTAINS toLower($q)
+        OPTIONAL MATCH (c)-[:GOVERNED_BY]-&gt;(s:SOP)
+        RETURN t.name AS tool, c.name AS chamber,
+               p.name AS part, collect(s.title) AS sops LIMIT $k
+        """</span>
+        rows = self.graph.<span class="tok-fn">query</span>(cypher, params={<span class="tok-str">"q"</span>: query, <span class="tok-str">"k"</span>: self.k})
+        <span class="tok-kw">return</span> [
+            <span class="tok-fn">Document</span>(
+                page_content=(
+                    <span class="tok-str">f"Tool {r['tool']} · chamber {r['chamber']} "</span>
+                    <span class="tok-str">f"uses {r['part']}. SOPs: {', '.join(r['sops'])}"</span>
+                ),
+                metadata={<span class="tok-str">"source"</span>: <span class="tok-str">"graph"</span>},
+            )
+            <span class="tok-kw">for</span> r <span class="tok-kw">in</span> rows
+        ]</code></pre>
+</figure>
+<p>두 retriever가 같은 interface를 사용하면 EnsembleRetriever로 결과를 합칠 수 있습니다. Reciprocal Rank Fusion으로 두 결과 목록을 병합하므로 어느 한 retriever에서 높은 순위를 받은 문서도 살아남을 수 있습니다. weight를 조정하면 넓은 recall에는 vector를, fact-heavy corpus에는 graph를 더 강하게 반영할 수 있습니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> ensemble.py</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain.retrievers <span class="tok-kw">import</span> EnsembleRetriever
+
+vec_ret = vector.<span class="tok-fn">as_retriever</span>(search_kwargs={<span class="tok-str">"k"</span>: <span class="tok-num">6</span>})
+graph_ret = <span class="tok-fn">GraphFactRetriever</span>(graph=graph, k=<span class="tok-num">6</span>)
+
+<span class="tok-com"># RRF fusion — a hit ranked high by either retriever survives</span>
+hybrid = <span class="tok-fn">EnsembleRetriever</span>(
+    retrievers=[vec_ret, graph_ret],
+    weights=[<span class="tok-num">0.6</span>, <span class="tok-num">0.4</span>],
+)
+
+docs = hybrid.<span class="tok-fn">invoke</span>(<span class="tok-str">"which chambers share the RF generator on EV-03?"</span>)</code></pre>
+</figure>
+<h2 id="rerank">병합 결과 다시 순위화하기</h2>
+<p>RRF fusion은 content-aware가 아니라 rank-based입니다. prompt에 들어가기 전에 정말 관련 있는 context를 위로 올리려면 ensemble을 ContextualCompressionRetriever로 감싸고 cross-encoder reranker를 붙입니다. reranker도 local weights로 실행하므로 외부 API가 필요하지 않습니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> rerank.py</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain.retrievers <span class="tok-kw">import</span> ContextualCompressionRetriever
+<span class="tok-kw">from</span> langchain.retrievers.document_compressors <span class="tok-kw">import</span> CrossEncoderReranker
+<span class="tok-kw">from</span> langchain_community.cross_encoders <span class="tok-kw">import</span> HuggingFaceCrossEncoder
+
+reranker = <span class="tok-fn">CrossEncoderReranker</span>(
+    model=<span class="tok-fn">HuggingFaceCrossEncoder</span>(model_name=<span class="tok-str">"/opt/models/bge-reranker-v2-m3"</span>),
+    top_n=<span class="tok-num">4</span>,
+)
+
+retriever = <span class="tok-fn">ContextualCompressionRetriever</span>(
+    base_compressor=reranker,
+    base_retriever=hybrid,   <span class="tok-com"># the vector+graph ensemble</span>
+)
+
+context = retriever.<span class="tok-fn">invoke</span>(<span class="tok-str">"which chambers share the RF generator on EV-03?"</span>)
+<span class="tok-com"># context now: semantically relevant AND factually connected, top-4</span></code></pre>
+</figure>
+<p>이 context를 일반 LCEL chain, 즉 prompt, on-prem LLM, parser에 그대로 넣으면 됩니다. Hybrid retriever는 plain retriever의 drop-in replacement입니다. downstream chain은 context가 어떻게 조립되었는지 알 필요가 없습니다.</p>
+<hr/>
+<p>Vector-only RAG는 설명형 질문에는 좋은 기본값이지만 관계와 정확한 사실을 묻는 질문에는 잘못된 도구가 될 수 있습니다. 벡터는 recall, graph는 검증된 구조, reranker는 최종 순서 정리에 쓰면 네트워크를 떠나지 않고도 그 간격을 줄일 수 있습니다. 이미 MES나 asset database에 구조화 데이터가 있다면 그래프는 절반쯤 만들어져 있는 셈입니다. 아래 deck은 전체 retrieval stack을 slide by slide로 설명합니다.</p>
+</div>
+ 심층적인 데크 링크 
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">더 깊게 보기</span>
+<h3>이 주제의 전체 과정 보기</h3>
+<p>이 글은 현장 노트입니다. 인터랙티브 deck에서는 다이어그램과 실습 예제로 전체 retrieval stack을 slide by slide로 따라갑니다.</p>
+</div>
+<a class="btn btn-primary" href="../../../watsonx/index.html">deck 열기 <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+ 공유 
+<div class="share">
+<span class="lbl">공유</span>
+<button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">공유 / 링크 복사</button>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+</div>
+ 저자 바이오 카드(E-E-A-T) 
+<aside class="author-card">
+<span aria-hidden="true" class="avatar">AE</span>
+<div class="a-body">
+<div class="k">저자 소개</div>
+<h3>AI Edu Archive</h3>
+<p>물리학 박사(IGZO / graphene 반도체 물성)이며 증착 공정을 수행하는 반도체 공정 엔지니어입니다. 팹을 위한 air-gapped LLM, RAG, agent 시스템과 강화학습·이상탐지 도구를 구축합니다. 이곳에서는 공정 know-how를 네트워크 밖으로 나가지 않는 온프레미스 지식 자산으로 바꾸는 방법을 씁니다.</p>
+<a href="../about.html">저자에 대해 더 보기</a>
+</div>
+</aside>
+ 관련된 
+<section aria-label="관련 기사" class="related">
+<span class="eyebrow">계속 읽기</span>
+<h2>저널의 관련 글</h2>
+<div class="related-grid">
+<a class="rel-card" href="rag-over-sealed-documents.html">
+<span class="cat-tag" data-cat="rag">RAG</span>
+<h3>폐쇄망 내부 문서 위에 RAG 구축하기</h3>
+</a>
+<a class="rel-card" href="chunking-technical-docs.html">
+<span class="cat-tag" data-cat="rag">RAG</span>
+<h3>의미를 찢지 않고 기술 문서 chunking하기</h3>
+</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>무료로 깊게, 열린 방식으로</h2>
+<p>강의와 저널의 모든 콘텐츠는 회원가입 없이 무료로 읽을 수 있습니다.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>탐색</h4>
+<a href="../../index.html">허브 홈</a>
+<a href="../../../index.html#courses">모든 강의</a>
+<a href="../index.html">저널</a>
+</div>
+<div class="foot-col">
+<h4>강의</h4>
+<a href="../../../overview/index.html">Fab AI</a>
+<a href="../../../watsonx/index.html">Air-gapped LLM</a>
+<a href="../../../llm_apply/LLM_slide.html">Enterprise LLM</a>
+</div>
+<div class="foot-col">
+<h4>사이트</h4>
+<a href="../about.html">소개</a>
+<a href="../contact.html">연락</a>
+<a href="../privacy.html">개인정보</a>
+<a href="../terms.html">이용약관</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · 열린 한국어 AI 교육</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig?fig.querySelector('pre'):null;
+      if(!code)return;
+      var text=code.innerText;
+      var done=function(){
+        btn.textContent='Copied';btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1600);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done,function(){});
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

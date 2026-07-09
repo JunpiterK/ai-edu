@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+ ∨ SEO ​ 
+<title>암묵지를 공장 지식 자산으로 바꾸는 로드맵 - AI Edu Archive 한국어</title>
+<meta content="문서화되지 않은 공장 know-how를 온프레미스 LLM/RAG 지식 자산으로 바꾸는 단계별 로드맵: PoC, Pilot, Scale, Embed와 산출물, exit gate, risk." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/knowledge-asset-roadmap.html" rel="canonical"/><link href="https://ai-edu-archive.example.com/blog/articles/knowledge-asset-roadmap.html" hreflang="en" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/ko/articles/knowledge-asset-roadmap.html" hreflang="ko" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/articles/knowledge-asset-roadmap.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+ 오픈 그래프 
+<meta content="article" property="og:type"/>
+<meta content="암묵지를 공장 지식 자산으로 바꾸는 로드맵 - AI Edu Archive 한국어" property="og:title"/>
+<meta content="문서화되지 않은 공장 know-how를 온프레미스 LLM/RAG 지식 자산으로 바꾸는 단계별 로드맵: PoC, Pilot, Scale, Embed와 산출물, exit gate, risk." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="https://ai-edu-archive.example.com/blog/ko/articles/knowledge-asset-roadmap.html" property="og:url"/>
+<meta content="ko_KR" property="og:locale"/>
+<meta content="en_US" property="og:locale:alternate"/>
+<meta content="2026-07-04" property="article:published_time"/>
+<meta content="AI Edu Archive" property="article:author"/>
+<meta content="제조 AI" property="article:section"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="암묵지를 공장 지식 자산으로 바꾸는 로드맵 - AI Edu Archive 한국어" name="twitter:title"/>
+<meta content="문서화되지 않은 공장 know-how를 온프레미스 LLM/RAG 지식 자산으로 바꾸는 단계별 로드맵: PoC, Pilot, Scale, Embed와 산출물, exit gate, risk." name="twitter:description"/>
+ JSON-LD: 기사 스키마 
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "암묵지를 공장 지식 자산으로 바꾸는 로드맵",
+  "description": "문서화되지 않은 공장 know-how를 온프레미스 LLM/RAG 지식 자산으로 바꾸는 단계별 로드맵: PoC, Pilot, Scale, Embed와 산출물, exit gate, risk.",
+  "inLanguage": "ko",
+  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/ko/articles/knowledge-asset-roadmap.html"
+  },
+  "name": "암묵지를 공장 지식 자산으로 바꾸는 로드맵",
+  "url": "https://ai-edu-archive.example.com/blog/ko/articles/knowledge-asset-roadmap.html"
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/blog.css" rel="stylesheet"/>
+<style>
+  .tbl-wrap{max-width:var(--readw);margin:26px auto;overflow-x:auto;
+    border:1px solid var(--line);border-radius:12px;background:var(--card-2);
+    box-shadow:var(--shadow-sm)}
+  table.tbl{border-collapse:collapse;width:100%;min-width:560px;
+    font-family:var(--sans);font-size:15px;line-height:1.5}
+  table.tbl caption{caption-side:top;text-align:left;padding:14px 16px 4px;
+    font-family:var(--mono);font-size:12px;letter-spacing:.02em;color:var(--muted)}
+  table.tbl th,table.tbl td{padding:11px 14px;text-align:left;
+    border-bottom:1px solid var(--line);vertical-align:top}
+  table.tbl thead th{background:var(--paper-2);color:var(--ink);
+    font-weight:600;font-size:13.5px;white-space:nowrap;
+    border-bottom:1.5px solid var(--line-2)}
+  table.tbl tbody tr:last-child td{border-bottom:none}
+  table.tbl tbody tr:hover{background:#FCFAF6}
+  table.tbl td.name{font-weight:600;color:var(--ink);white-space:nowrap}
+  table.tbl .ok{color:#0B6258;font-weight:600}
+  table.tbl .no{color:var(--coral-deep);font-weight:600}
+  table.tbl code{font-family:var(--mono);font-size:13px;background:var(--paper-2);
+    padding:1px 5px;border-radius:5px}
+  @media(max-width:640px){
+    table.tbl{font-size:14px}
+    table.tbl th,table.tbl td{padding:9px 11px}
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive 홈" class="brand" href="../../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="주요 메뉴" class="nav-links">
+<a href="../../../index.html#courses">강의</a>
+<a href="../index.html">글</a>
+<a href="../about.html">소개</a>
+<div aria-label="언어 선택" class="language-switch"><a href="../../articles/knowledge-asset-roadmap.html" lang="en" title="English">🇺🇸 EN</a><a aria-current="true" href="knowledge-asset-roadmap.html" lang="ko" title="한국어">🇰🇷 KO</a><a href="../../articles/knowledge-asset-roadmap.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a><a href="../../articles/knowledge-asset-roadmap.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a><a href="../../articles/knowledge-asset-roadmap.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a><a href="../../articles/knowledge-asset-roadmap.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a><a href="../../articles/knowledge-asset-roadmap.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a></div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article data-cat="mfg onprem" itemscope="" itemtype="https://schema.org/Article">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="탐색경로" class="breadcrumb">
+<a href="../../../index.html">홈</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">저널</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">암묵지에서 지식 자산으로</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag">제조 AI</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-04" itemprop="datePublished">2026년 7월 4일</time>
+<span class="post-dot"></span>
+<span class="rt">11분 읽기</span>
+</div>
+<h1 itemprop="headline">암묵지를 공장 지식 자산으로 바꾸는 로드맵</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>반도체 공정 엔지니어 · Air-gapped LLM / RAG / Agents</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="목차" class="toc">
+<div class="toc-title">이 페이지에서</div>
+<ol>
+<li><a href="#moat">문서화되지 않은 해자</a></li>
+<li><a href="#roadmap">4단계 로드맵</a></li>
+<li><a href="#stages">산출물, 게이트, 리스크</a></li>
+<li><a href="#embed">지속되는 시스템으로 만들기</a></li>
+</ol>
+</nav>
+<div class="article-body" itemprop="articleBody">
+<p>공장에서 가장 가치 있는 것은 어딘가에 완벽히 문서화되어 있지 않습니다. 곧 고장 날 펌프 소리를 알아듣는 operator, 습한 날 어떤 recipe가 drift되는지 아는 process engineer, 3년 전 해결책을 기억하는 technician 안에 있습니다. 이것이 암묵지입니다. 그 사람들이 퇴직하거나 이동하거나 하루 쉬기만 해도 공장의 실행력은 눈에 띄게 약해질 수 있습니다. 이 글은 그런 know-how를 폐쇄형 LLM과 RAG로 durable한 온프레미스 지식 자산으로 바꾸는 단계적이고 낮은 risk의 roadmap을 설명합니다. 데이터는 네트워크 밖으로 나가지 않습니다.</p>
+<h2 id="moat">문서화되지 않은 해자</h2>
+<p>두 공장이 같은 장비를 사고, 같은 소재를 쓰고, 같은 공개 specification을 따라도 yield는 달라질 수 있습니다. 그 차이는 know-how입니다. 우리 라인에서 실제로 작동하는 것에 대한 누적된 판단입니다. 이 차이는 진짜 경쟁력의 해자이지만, 시스템이 아니라 사람 안에 저장되어 있기 때문에 매우 취약합니다. 문서화는 도움이 되지만 가장 풍부한 지식은 조건부이고, 흩어져 있으며, 늘 바쁩니다. shift log, ticket comment, chat thread, maintenance action을 닫을 때 남긴 반 문장 속에 숨어 있습니다.</p>
+<p>온프레미스 LLM은 capture의 경제성을 바꿉니다. 사람들에게 완성도 높은 procedure를 새로 쓰라고 요구하는 대신, 이미 하던 방식대로 일하게 둡니다. log를 남기고, annotation을 달고, ticket을 닫고, 예외를 논의하게 둡니다. 그리고 이미 존재하는 자료를 읽고 그 위에서 질문에 답하는 retrieval layer를 만듭니다. know-how는 제자리에서 capture됩니다. 어려운 것은 모델이 아니라, 제조 조직이 검증되지 않은 시스템에 라인을 걸지 않고도 흡수할 수 있는 순서로 rollout하는 일입니다.</p>
+<blockquote>암묵지는 재무제표에는 보이지 않는 해자입니다. 그리고 그것을 지닌 사람이 문밖으로 나가는 날 함께 사라질 수 있습니다.</blockquote>
+<h2 id="roadmap">4단계 로드맵</h2>
+<p>이것을 한 번 출시하고 끝나는 project가 아니라 성숙해지는 capability로 다루세요. 각 단계는 명확한 exit gate를 통과해야 다음 단계로 갈 권리를 얻습니다. exit gate는 진행할지, 반복할지, 멈출지를 결정하는 측정 가능한 기준입니다. 어느 단계에서도 외부 인터넷을 거치지 않습니다. model, embedding, index, log, evaluation은 모두 air gap 안에 남습니다.</p>
+<figure>
+<div aria-label="4단계 로드맵 다이어그램" class="diagram">
+<svg aria-label="A horizontal roadmap of four stages — PoC, Pilot, Scale, Embed — with an exit gate between each stage and a widening scope arrow beneath." role="img" viewbox="0 0 640 250" width="100%">
+<rect fill="#FCFBF8" height="248" rx="12" stroke="#E8E4DB" width="638" x="1" y="1"></rect>
+<!-- stage cards -->
+<g font-family="Inter, sans-serif">
+<rect fill="#F6EAE1" height="86" rx="10" stroke="#DBD5C8" width="128" x="24" y="40"></rect>
+<text fill="#1F1E1C" font-size="16" font-weight="600" text-anchor="middle" x="88" y="72">PoC</text>
+<text fill="#6B6862" font-size="13" text-anchor="middle" x="88" y="94">1개 domain</text>
+<text fill="#6B6862" font-size="13" text-anchor="middle" x="88" y="112">4-6주</text>
+<rect fill="#F6EAE1" height="86" rx="10" stroke="#DBD5C8" width="128" x="184" y="40"></rect>
+<text fill="#1F1E1C" font-size="16" font-weight="600" text-anchor="middle" x="248" y="72">Pilot</text>
+<text fill="#6B6862" font-size="13" text-anchor="middle" x="248" y="94">1개 line / team</text>
+<text fill="#6B6862" font-size="13" text-anchor="middle" x="248" y="112">1분기</text>
+<rect fill="#F6EAE1" height="86" rx="10" stroke="#DBD5C8" width="128" x="344" y="40"></rect>
+<text fill="#1F1E1C" font-size="16" font-weight="600" text-anchor="middle" x="408" y="72">Scale</text>
+<text fill="#6B6862" font-size="13" text-anchor="middle" x="408" y="94">공장 전체</text>
+<text fill="#6B6862" font-size="13" text-anchor="middle" x="408" y="112">2-3분기</text>
+<rect fill="#EDE7DA" height="86" rx="10" stroke="#DBD5C8" width="112" x="504" y="40"></rect>
+<text fill="#1F1E1C" font-size="16" font-weight="600" text-anchor="middle" x="560" y="72">Embed</text>
+<text fill="#6B6862" font-size="13" text-anchor="middle" x="560" y="94">상시</text>
+<text fill="#6B6862" font-size="13" text-anchor="middle" x="560" y="112">소유됨</text>
+</g>
+<!-- gates between cards -->
+<g fill="#C15F3C" font-family="JetBrains Mono, monospace" font-size="13">
+<text text-anchor="middle" x="168" y="88">→</text>
+<text text-anchor="middle" x="328" y="88">→</text>
+<text text-anchor="middle" x="488" y="88">→</text>
+<text text-anchor="middle" x="168" y="150">gate</text>
+<text text-anchor="middle" x="328" y="150">gate</text>
+<text text-anchor="middle" x="488" y="150">gate</text>
+</g>
+<!-- widening scope arrow -->
+<g font-family="Inter, sans-serif">
+<path d="M24 196 L604 196" stroke="#DBD5C8" stroke-width="1.5"></path>
+<path d="M30 188 L24 196 L30 204" fill="none" stroke="#DBD5C8" stroke-width="1.5"></path>
+<path d="M598 188 L604 196 L598 204" fill="none" stroke="#DBD5C8" stroke-width="1.5"></path>
+<text fill="#6B6862" font-size="13" text-anchor="middle" x="120" y="222">좁게, 버릴 수 있게</text>
+<text fill="#6B6862" font-size="13" text-anchor="middle" x="512" y="222">넓게, 운영에 쓰이게</text>
+</g>
+</svg>
+</div>
+<figcaption>그림 1. 왼쪽에서 오른쪽으로 갈수록 범위와 책임이 커집니다. 각 화살표는 다음 단계로 가기 위해 통과해야 하는 exit gate입니다.</figcaption>
+</figure>
+<h2 id="stages">산출물, 게이트, 리스크</h2>
+<p>단계의 목적은 다음의 더 큰 투자가 정당한지 배우는 데 필요한 최소한의 노력을 쓰는 것입니다. 아래 표는 같은 roadmap을 작업 기준으로 정리한 것입니다. 무엇을 만들고, 다음 단계로 가려면 어떤 기준을 넘어야 하며, 각 단계에서 가장 자주 실패를 만드는 risk가 무엇인지 보여줍니다.</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<caption>표 1. 온프레미스 지식 자산을 위한 단계별 roadmap.</caption>
+<thead>
+<tr>
+<th scope="col">단계</th>
+<th scope="col">산출물</th>
+<th scope="col">Exit gate</th>
+<th scope="col">주요 리스크</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name">1 · PoC
+개념 검증</td>
+<td>하나의 좁은 corpus, 예를 들어 특정 장비의 maintenance log와 SOP 위에서 약 20개의 실제 질문에 source citation과 함께 답하는 retrieval demo.</td>
+<td>고정된 질문 set에서 두 명의 domain expert가 보기에 keyword search보다 더 자주 useful and grounded한 답을 낸다.</td>
+<td>대표성보다 화려한 demo를 추구함; 깨끗한 source document가 없는 domain을 선택함.</td>
+</tr>
+<tr>
+<td class="name">2 · Pilot
+라인 시범 운영</td>
+<td>한 line 또는 team을 위한 hardened tool: access control, source freshness, feedback button, weekly answer-quality log.</td>
+<td>실제 user가 시키지 않아도 다시 사용한다. time-to-answer 또는 first-time-right가 개선되고, unsafe answer가 거의 0에 가깝다.</td>
+<td>현장 owner가 없음; stale document가 retrieval을 오염시킴; 끝나지 않는 pilot이 됨.</td>
+</tr>
+<tr>
+<td class="name">3 · Scale
+공장 확산</td>
+<td>여러 domain 색인, MES/log/wiki ingestion pipeline, monitoring, document governance process를 포함한 plant-wide coverage.</td>
+<td>team 전반의 adoption, 공장이 의존할 수 있는 SLA, 검토를 견디는 cost/accuracy profile.</td>
+<td>corpus가 커질수록 retrieval quality가 감소함; governance와 permission이 따라가지 못함; infra가 bottleneck이 됨.</td>
+</tr>
+<tr>
+<td class="name">4 · Embed
+일상 운영</td>
+<td>capture가 daily work의 일부가 되고, named team이 ownership을 가지며, refresh와 evaluation이 schedule에 따라 돈다.</td>
+<td>새 know-how가 자연스럽게 들어오고 quality가 상시 metric으로 추적되어 system이 heroics 없이 개선된다.</td>
+<td>완료된 것으로 취급함; evaluation이 중단됨; 한 사람에게 dependency가 몰림.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="poc-detail">PoC를 의도적으로 작게 유지하는 이유</h3>
+<p>가장 흔한 유혹은 처음부터 모든 것을 색인화하는 것입니다. 참아야 합니다. PoC는 단 하나의 질문에 가장 싸게 답하기 위해 존재합니다. 지저분한 실제 문서 위의 retrieval이 지금 사람들이 하는 방식보다 나은가? 이해하고 있는 한 domain으로 corpus를 제한하고, build 전에 evaluation question을 먼저 쓰고, domain expert가 결과를 채점하게 하세요. 여기서 실패하면 몇 주를 쓴 것이지 몇 분기를 쓴 것이 아닙니다. 필요한 scaffolding은 작습니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> poc_eval.py</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># PoC gate: is grounded retrieval beating today's baseline?</span>
+<span class="tok-com"># All local — weights, embeddings, and index stay inside the air gap.</span>
+questions = <span class="tok-fn">load_expert_questions</span>(<span class="tok-str">"tool_A_maintenance.yaml"</span>)  <span class="tok-com"># written first</span>
+
+wins = <span class="tok-num">0</span>
+<span class="tok-kw">for</span> q <span class="tok-kw">in</span> questions:
+    hits   = index.<span class="tok-fn">similarity_search</span>(q.text, k=<span class="tok-num">4</span>)   <span class="tok-com"># on-prem vector store</span>
+    answer = llm.<span class="tok-fn">invoke</span>(<span class="tok-fn">prompt</span>(q.text, hits))       <span class="tok-com"># on-prem LLM, no egress</span>
+    <span class="tok-kw">if</span> <span class="tok-fn">expert_grade</span>(answer, q, cite=hits) == <span class="tok-str">"grounded_and_useful"</span>:
+        wins += <span class="tok-num">1</span>
+
+<span class="tok-com"># Advance only if experts prefer it to keyword search on the fixed set.</span>
+<span class="tok-kw">assert</span> wins / <span class="tok-fn">len</span>(questions) &gt; baseline_keyword_score</code></pre>
+</figure>
+<h3 id="pilot-detail">Pilot은 신뢰를 얻거나 잃는 지점</h3>
+<p>demo에서 shift가 실제로 의존하는 tool로 넘어가는 순간 난이도가 달라집니다. model은 쉬운 부분이고, 진짜 일은 운영입니다. contractor가 proprietary recipe를 query하지 못하게 하는 access control, 폐기된 SOP가 답변으로 다시 떠오르지 않게 하는 source freshness, 틀린 답변이 조용히 신뢰를 깎아먹지 않고 기록되고 수정되게 하는 feedback loop가 필요합니다. Pilot이 살아남는 가장 큰 예측 변수는 IT만이 아니라 현장에 이름이 걸린 owner가 있고, 그 사람이 answer quality를 자기 책임으로 여기는지입니다.</p>
+<h3 id="scale-detail">Scale은 조용한 실패 모드를 드러낸다</h3>
+<p>한 장비 log에서 잘 동작하던 시스템도 공장 전체로 넓히면 급격히 나빠질 수 있습니다. corpus가 커지면 retrieval은 거의 중복되거나 서로 모순되는 문서를 함께 가져오고, model은 그것을 자신 있게 섞어 말합니다. 그래서 scale 단계에서는 document governance가 선택 사항이 아닙니다. source ownership, versioning, stale content retirement가 필요합니다. 지식 자산은 그 아래 source만큼만 신뢰할 수 있습니다. retrieval stack을 만드는 만큼 source를 깨끗하게 유지하는 데도 노력을 배정해야 합니다.</p>
+<h2 id="embed">지속되는 시스템으로 만들기</h2>
+<p>마지막 단계는 많은 조직이 건너뛰지만, 오래 가는 asset과 버려진 pilot을 가르는 단계입니다. Embedding은 capture가 daily work에 엮이는 것을 뜻합니다. technician이 ticket을 닫는 행동이 별도 노력 없이 시스템을 먹이는 일이 됩니다. 이름이 지정된 team이 refresh, evaluation, access를 소유합니다. evaluation은 일회성 launch checkpoint가 아니라 dashboard의 상시 metric이 되어 조용한 regression을 잡아냅니다. 측정되고, 소유되고, 계속 공급되는 air-gapped knowledge asset은 복리처럼 좋아집니다. 완료라고 선언된 시스템은 launch 행사가 끝나는 날부터 낡기 시작합니다.</p>
+<p>이 일은 moonshot이 아닙니다. 순서가 필요합니다. 작은 것에서 가치를 증명하고, 실제 user를 위해 단단하게 만들고, governance가 버틸 수 있는 만큼만 coverage를 넓힌 뒤, maintenance를 지루하고 일상적인 일로 만드세요. 그렇게 하면 뛰어난 사람이 떠날 때 함께 사라지던 know-how가 공장이 소유하는 자산이 됩니다. 온프레미스에 있고, air gap 뒤에 있으며, 분기마다 좋아지는 자산입니다.</p>
+<hr/>
+<p>이 글은 전략 layer입니다. 팹에서 AI가 어디에 들어가는지, 그리고 온프레미스 capture를 가능하게 하는 air-gapped LLM stack을 전체적으로 보려면 아래 deck에서 slide by slide로 이어서 볼 수 있습니다.</p>
+</div>
+ 심층적인 데크 링크 
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">더 깊게 보기</span>
+<h3>Fab AI 전체 그림에서 이 글의 위치</h3>
+<p>이 글은 전략에 대한 현장 노트입니다. 인터랙티브 deck은 제조 AI landscape를 다루며, 지식 자산이 다른 use case들 사이에서 어디에 위치하는지도 slide by slide로 보여줍니다.</p>
+</div>
+<a class="btn btn-primary" href="../../../overview/index.html">deck 열기 <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+ 공유 
+<div class="share">
+<span class="lbl">공유</span>
+<button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">공유 / 링크 복사</button>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+</div>
+ 저자 바이오 카드(E-E-A-T) 
+<aside class="author-card">
+<span aria-hidden="true" class="avatar">AE</span>
+<div class="a-body">
+<div class="k">저자 소개</div>
+<h3>AI Edu Archive</h3>
+<p>물리학 박사(IGZO / graphene 반도체 물성)이며 증착 공정을 수행하는 반도체 공정 엔지니어입니다. 팹을 위한 air-gapped LLM, RAG, agent 시스템과 강화학습·이상탐지 도구를 구축합니다. 이곳에서는 공정 know-how를 네트워크 밖으로 나가지 않는 온프레미스 지식 자산으로 바꾸는 방법을 씁니다.</p>
+<a href="../about.html">저자에 대해 더 보기</a>
+</div>
+</aside>
+ 관련된 
+<section aria-label="관련 기사" class="related">
+<span class="eyebrow">계속 읽기</span>
+<h2>저널의 관련 글</h2>
+<div class="related-grid">
+<a class="rel-card" href="why-air-gapped-llm-manufacturing.html">
+<span class="cat-tag">온프레미스 LLM</span>
+<h3>제조업체가 LLM을 air-gapped로 운영해야 하는 이유</h3>
+</a>
+<a class="rel-card" href="rag-over-sealed-documents.html">
+<span class="cat-tag">RAG</span>
+<h3>폐쇄망 내부 문서 위에 RAG 구축하기</h3>
+</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>무료로 깊게, 열린 방식으로</h2>
+<p>강의와 저널의 모든 콘텐츠는 회원가입 없이 무료로 읽을 수 있습니다.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>탐색</h4>
+<a href="../../index.html">허브 홈</a>
+<a href="../../../index.html#courses">모든 강의</a>
+<a href="../index.html">저널</a>
+</div>
+<div class="foot-col">
+<h4>강의</h4>
+<a href="../../../overview/index.html">Fab AI</a>
+<a href="../../../watsonx/index.html">Air-gapped LLM</a>
+<a href="../../../llm_apply/LLM_slide.html">Enterprise LLM</a>
+</div>
+<div class="foot-col">
+<h4>사이트</h4>
+<a href="../about.html">소개</a>
+<a href="../contact.html">연락</a>
+<a href="../privacy.html">개인정보</a>
+<a href="../terms.html">이용약관</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · 열린 한국어 AI 교육</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  // one-click copy for code figures
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig?fig.querySelector('pre'):null;
+      if(!code)return;
+      var text=code.innerText;
+      var done=function(){
+        btn.textContent='Copied';btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1600);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done,function(){});
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

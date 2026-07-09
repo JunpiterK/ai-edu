@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+ ="SEO =" 
+<title>RAG stack 구성요소별 설명 - AI Edu Archive 한국어</title>
+<meta content="LangChain RAG stack을 구성요소별로 설명합니다: DocumentLoader, TextSplitter, embedding, VectorStore, Retriever, LCEL 조립을 local document Q&amp;A 기준으로 구현하는 방법." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/langchain-rag-components.html" rel="canonical"/><link href="https://ai-edu-archive.example.com/blog/articles/langchain-rag-components.html" hreflang="en" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/ko/articles/langchain-rag-components.html" hreflang="ko" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/articles/langchain-rag-components.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+ 오픈 그래프 
+<meta content="article" property="og:type"/>
+<meta content="RAG stack 구성요소별 설명 - AI Edu Archive 한국어" property="og:title"/>
+<meta content="LangChain RAG stack을 구성요소별로 설명합니다: DocumentLoader, TextSplitter, embedding, VectorStore, Retriever, LCEL 조립을 local document Q&amp;A 기준으로 구현하는 방법." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="https://ai-edu-archive.example.com/blog/ko/articles/langchain-rag-components.html" property="og:url"/>
+<meta content="ko_KR" property="og:locale"/>
+<meta content="en_US" property="og:locale:alternate"/>
+<meta content="2026-07-04" property="article:published_time"/>
+<meta content="AI Edu Archive" property="article:author"/>
+<meta content="Python Stack" property="article:section"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="RAG stack 구성요소별 설명 - AI Edu Archive 한국어" name="twitter:title"/>
+<meta content="LangChain RAG stack을 구성요소별로 설명합니다: DocumentLoader, TextSplitter, embedding, VectorStore, Retriever, LCEL 조립을 local document Q&amp;A 기준으로 구현하는 방법." name="twitter:description"/>
+ JSON-LD: 기사 스키마 
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "RAG stack 구성요소별 설명",
+  "description": "LangChain RAG stack을 구성요소별로 설명합니다: DocumentLoader, TextSplitter, embedding, VectorStore, Retriever, LCEL 조립을 local document Q&A 기준으로 구현하는 방법.",
+  "inLanguage": "ko",
+  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/ko/articles/langchain-rag-components.html"
+  },
+  "name": "RAG stack 구성요소별 설명",
+  "url": "https://ai-edu-archive.example.com/blog/ko/articles/langchain-rag-components.html"
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/blog.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive 홈" class="brand" href="../../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="주요 메뉴" class="nav-links">
+<a href="../../../index.html#courses">강의</a>
+<a href="../index.html">글</a>
+<a href="../about.html">소개</a>
+<div aria-label="언어 선택" class="language-switch"><a href="../../articles/langchain-rag-components.html" lang="en" title="English">🇺🇸 EN</a><a aria-current="true" href="langchain-rag-components.html" lang="ko" title="한국어">🇰🇷 KO</a><a href="../../articles/langchain-rag-components.html" lang="en" title="English shown for now">🇪🇸 ES</a><a href="../../articles/langchain-rag-components.html" lang="en" title="English shown for now">🇨🇳 ZH</a><a href="../../articles/langchain-rag-components.html" lang="en" title="English shown for now">🇯🇵 JA</a><a href="../../articles/langchain-rag-components.html" lang="en" title="English shown for now">🇩🇪 DE</a><a href="../../articles/langchain-rag-components.html" lang="en" title="English shown for now">🇫🇷 FR</a></div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article itemscope="" itemtype="https://schema.org/Article">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="탐색경로" class="breadcrumb">
+<a href="../../../index.html">홈</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">저널</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">RAG 구성요소</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag" data-cat="python rag">Python Stack</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-04" itemprop="datePublished">2026년 7월 4일</time>
+<span class="post-dot"></span>
+<span class="rt">13분 읽기</span>
+</div>
+<h1 itemprop="headline">RAG stack 구성요소별 설명</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>Semiconductor process engineer · Air-gapped LLM / RAG / Agents</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="목차" class="toc">
+<div class="toc-title">On this page</div>
+<ol>
+<li><a href="#loader">1. DocumentLoader: 문서를 가져오기</a></li>
+<li><a href="#splitter">2. TextSplitter: chunk로 자르기</a></li>
+<li><a href="#embeddings">3. Embeddings: text를 vector로 바꾸기</a></li>
+<li><a href="#store">4. VectorStore: vector 저장하기</a></li>
+<li><a href="#retriever">5. Retriever: 맞는 chunk 가져오기</a></li>
+<li><a href="#assemble">LCEL로 조립하기</a></li>
+</ol>
+</nav>
+<div class="article-body" itemprop="articleBody">
+<p>RAG는 기능 하나가 아닙니다. private document를 model이 답하기 전에 useful context로 바꾸는 작은 pipeline입니다. 구성요소 하나가 약하면 전체 system이 불안정하게 느껴집니다.</p>
+<p>역할을 나누면 stack이 쉬워집니다. loader는 source material을 읽습니다. splitter는 chunk를 만듭니다. embedding model은 chunk를 vector로 바꿉니다. vector store는 그것을 index합니다. retriever는 질문에 맞는 chunk를 고릅니다. LCEL은 context, prompt, model, parser를 연결합니다.</p>
+<h2 id="loader">1. DocumentLoader: 문서를 가져오기</h2>
+<p>무엇을 하는가. Loader는 PDF, HTML, CSV, Markdown, text, database export 같은 source file을 읽고 page_content와 metadata가 있는 LangChain Document object를 반환합니다.</p>
+<p>언제 쓰는가. source material이 Python string 밖에 있으면 loader를 씁니다. 실제 RAG에서 metadata는 선택이 아닙니다. source path, page, section, equipment, document version, permission scope가 나중에 중요해집니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            load.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># Split package (2026): loaders live in langchain_community</span>
+<span class="tok-kw">from</span> langchain_community.document_loaders <span class="tok-kw">import</span> PyPDFLoader, DirectoryLoader
+
+<span class="tok-com"># One equipment manual</span>
+docs = <span class="tok-fn">PyPDFLoader</span>(<span class="tok-str">"/kb/etcher_A3_manual.pdf"</span>).<span class="tok-fn">load</span>()
+
+<span class="tok-com"># A whole SOP archive — parse every PDF under the tree</span>
+loader = <span class="tok-fn">DirectoryLoader</span>(
+    <span class="tok-str">"/kb/sops"</span>,
+    glob=<span class="tok-str">"**/*.pdf"</span>,
+    loader_cls=PyPDFLoader,
+    show_progress=<span class="tok-kw">True</span>,
+)
+<span class="tok-kw">for</span> doc <span class="tok-kw">in</span> loader.<span class="tok-fn">lazy_load</span>():        <span class="tok-com"># stream, don't load all at once</span>
+    <span class="tok-fn">print</span>(doc.metadata[<span class="tok-str">"source"</span>], doc.metadata.<span class="tok-fn">get</span>(<span class="tok-str">"page"</span>))</code></pre>
+</figure>
+<p>구현 note. PDF부터 시작하지 말고 plain text나 Markdown으로 먼저 시작하세요. PDF extraction 품질은 편차가 크고, extraction이 나쁘면 retrieval 문제가 model 문제처럼 보입니다.</p>
+<h2 id="splitter">2. TextSplitter: chunk로 자르기</h2>
+<p>무엇을 하는가. Splitter는 긴 document를 retrieve 가능하고 prompt에 넣을 수 있는 chunk로 나눕니다. 단순히 글자 수를 세는 것이 아니라 의미를 보존해야 합니다.</p>
+<p>언제 쓰는가. 거의 모든 RAG system에서 splitter를 씁니다. manual 전체는 너무 크고, 너무 작은 fragment는 context를 잃습니다. 좋은 splitter는 heading, procedure step, table을 설명 text 가까이에 둡니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            분할.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># Its own package since 0.3: langchain_text_splitters</span>
+<span class="tok-kw">from</span> langchain_text_splitters <span class="tok-kw">import</span> RecursiveCharacterTextSplitter
+
+splitter = <span class="tok-fn">RecursiveCharacterTextSplitter</span>(
+    chunk_size=<span class="tok-num">800</span>,        <span class="tok-com"># characters, not tokens</span>
+    chunk_overlap=<span class="tok-num">120</span>,      <span class="tok-com"># ~15% carry-over across the seam</span>
+    add_start_index=<span class="tok-kw">True</span>,   <span class="tok-com"># record char offset in metadata</span>
+)
+
+chunks = splitter.<span class="tok-fn">split_documents</span>(docs)   <span class="tok-com"># List[Document] -&gt; List[Document]</span>
+<span class="tok-fn">print</span>(<span class="tok-fn">len</span>(docs), <span class="tok-str">"docs -&gt;"</span>, <span class="tok-fn">len</span>(chunks), <span class="tok-str">"chunks"</span>)</code></pre>
+</figure>
+<blockquote>
+        청킹은 검색 품질을 가장 많이 변경하는 하나의 손잡이입니다. 너무 크고
+        블러 삽입; 너무 작으면 단계가 주변 레시피를 잃습니다.
+        <cite>— 블로그 기본값이 아닌 자신의 매뉴얼에 맞춰 Chunk_size를 조정하세요.</cite>
+</blockquote>
+<p>구현 note. RecursiveCharacterTextSplitter가 안전한 기본값입니다. 기술 문서에서는 실제 retrieved chunk를 본 뒤 chunk_size와 overlap을 조정하세요.</p>
+<h2 id="embeddings">3. Embeddings: text를 vector로 바꾸기</h2>
+<p>무엇을 하는가. Embedding model은 text를 vector로 mapping해 semantic similarity를 검색할 수 있게 합니다. 의미가 비슷한 query와 chunk는 vector space에서 가까워야 합니다.</p>
+<p>언제 쓰는가. keyword search가 너무 brittle할 때 embedding을 씁니다. paraphrase, synonym, 한국어/영어가 섞인 기술 표현에 강합니다. 하지만 exact fact, part number, relationship을 보장하지는 않습니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            embed.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># Option A: local Ollama server (langchain_ollama package)</span>
+<span class="tok-kw">from</span> langchain_ollama <span class="tok-kw">import</span> OllamaEmbeddings
+embed = <span class="tok-fn">OllamaEmbeddings</span>(model=<span class="tok-str">"bge-m3"</span>)   <span class="tok-com"># pulled once, runs offline</span>
+
+<span class="tok-com"># Option B: weights straight from disk (langchain_huggingface package)</span>
+<span class="tok-kw">from</span> langchain_huggingface <span class="tok-kw">import</span> HuggingFaceEmbeddings
+embed = <span class="tok-fn">HuggingFaceEmbeddings</span>(
+    model_name=<span class="tok-str">"/opt/models/bge-m3"</span>,          <span class="tok-com"># local path, no download</span>
+    model_kwargs={<span class="tok-str">"device"</span>: <span class="tok-str">"cuda"</span>},
+    encode_kwargs={<span class="tok-str">"normalize_embeddings"</span>: <span class="tok-kw">True</span>},
+)
+
+vec = embed.<span class="tok-fn">embed_query</span>(<span class="tok-str">"chamber pressure drift after PM"</span>)
+<span class="tok-fn">print</span>(<span class="tok-fn">len</span>(vec))   <span class="tok-com"># e.g. 1024 dimensions</span></code></pre>
+</figure>
+<p>구현 note. 가정용 PC에서는 local embedding model부터 쓰세요. chunking을 평가하는 동안 embedding model을 고정해야 어떤 변화가 효과가 있었는지 알 수 있습니다.</p>
+<h2 id="store">4. VectorStore: vector 저장하기</h2>
+<p>무엇을 하는가. Vector store는 embedding과 metadata를 저장하고 similarity search를 수행합니다. Chroma는 prototype에 쉽고, 여러 app이 같은 index를 공유하면 Qdrant, Postgres/pgvector 같은 server-backed store가 더 적합합니다.</p>
+<p>언제 쓰는가. document를 반복해서 검색해야 하면 vector store를 씁니다. one-off summary라면 필요 없을 수도 있지만 knowledge base라면 필요합니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            store.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># Dedicated package since 0.3: langchain_chroma (not langchain_community)</span>
+<span class="tok-kw">from</span> langchain_chroma <span class="tok-kw">import</span> Chroma
+
+<span class="tok-com"># Build once — embeds every chunk and writes the index to disk</span>
+store = Chroma.<span class="tok-fn">from_documents</span>(
+    documents=chunks,
+    embedding=embed,
+    persist_directory=<span class="tok-str">"/kb/index"</span>,      <span class="tok-com"># auto-persists, no .persist() call</span>
+    collection_name=<span class="tok-str">"fab_sops"</span>,
+)
+
+<span class="tok-com"># Later runs: reopen the same index, no rebuild</span>
+store = <span class="tok-fn">Chroma</span>(
+    persist_directory=<span class="tok-str">"/kb/index"</span>,
+    embedding_function=embed,
+    collection_name=<span class="tok-str">"fab_sops"</span>,
+)</code></pre>
+</figure>
+<p>구현 note. index를 persist하고 collection name을 versioning하세요. source corpus가 바뀌었는데 index name이 그대로면 debugging이 괴로워집니다.</p>
+<h2 id="retriever">5. Retriever: 맞는 chunk 가져오기</h2>
+<p>무엇을 하는가. Retriever는 application이 보는 search interface입니다. 나머지 chain은 retriever.invoke(question)을 호출해 Document를 받을 뿐 backend가 Chroma인지 Qdrant인지 BM25인지 hybrid search인지 몰라도 됩니다.</p>
+<p>언제 쓰는가. model이 답하기 전에 evidence가 필요하면 retriever를 씁니다. 특정 tool, date range, product, document type, permission scope를 묻는 경우 metadata filter를 추가하세요.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            검색.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># Diversity-aware retrieval so results aren't near-duplicates</span>
+retriever = store.<span class="tok-fn">as_retriever</span>(
+    search_type=<span class="tok-str">"mmr"</span>,
+    search_kwargs={<span class="tok-str">"k"</span>: <span class="tok-num">4</span>, <span class="tok-str">"fetch_k"</span>: <span class="tok-num">20</span>},
+)
+
+hits = retriever.<span class="tok-fn">invoke</span>(<span class="tok-str">"how to recover chamber pressure after PM"</span>)
+<span class="tok-kw">for</span> h <span class="tok-kw">in</span> hits:
+    <span class="tok-fn">print</span>(h.metadata[<span class="tok-str">"source"</span>], <span class="tok-str">"—"</span>, h.page_content[:<span class="tok-num">80</span>])</code></pre>
+</figure>
+<p>구현 note. retrieved chunk를 항상 직접 확인하세요. 많은 RAG 실패는 fluent answer를 입은 retrieval failure입니다.</p>
+<h2 id="assemble">LCEL로 조립하기</h2>
+<p>최종 chain은 평범한 LCEL입니다. context를 retrieve하고, question을 보존하고, prompt를 formatting하고, local model을 호출하고, answer를 parse합니다. model은 context에서만 답하고 가능하면 source를 cite해야 합니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            rag_chain.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain_ollama <span class="tok-kw">import</span> ChatOllama
+<span class="tok-kw">from</span> langchain_core.prompts <span class="tok-kw">import</span> ChatPromptTemplate
+<span class="tok-kw">from</span> langchain_core.runnables <span class="tok-kw">import</span> RunnablePassthrough
+<span class="tok-kw">from</span> langchain_core.output_parsers <span class="tok-kw">import</span> StrOutputParser
+
+llm = <span class="tok-fn">ChatOllama</span>(model=<span class="tok-str">"qwen2.5:14b"</span>, temperature=<span class="tok-num">0</span>)   <span class="tok-com"># local, no egress</span>
+
+prompt = ChatPromptTemplate.<span class="tok-fn">from_template</span>(
+    <span class="tok-str">"Answer only from the context. Cite the source path.\n\n"</span>
+    <span class="tok-str">"Context:\n{context}\n\nQuestion: {question}"</span>
+)
+
+<span class="tok-kw">def</span> <span class="tok-fn">format_docs</span>(docs):
+    <span class="tok-kw">return</span> <span class="tok-str">"\n\n"</span>.<span class="tok-fn">join</span>(
+        <span class="tok-str">f"[{d.metadata['source']}] {d.page_content}"</span> <span class="tok-kw">for</span> d <span class="tok-kw">in</span> docs
+    )
+
+<span class="tok-com"># The pipe: retrieve -&gt; format -&gt; prompt -&gt; model -&gt; text</span>
+rag = (
+    {<span class="tok-str">"context"</span>: retriever | format_docs, <span class="tok-str">"question"</span>: <span class="tok-fn">RunnablePassthrough</span>()}
+    | prompt
+    | llm
+    | <span class="tok-fn">StrOutputParser</span>()
+)
+
+<span class="tok-fn">print</span>(rag.<span class="tok-fn">invoke</span>(<span class="tok-str">"How do I recover chamber pressure after a PM?"</span>))</code></pre>
+</figure>
+<p>핵심 습관은 RAG를 component by component로 debug하는 것입니다. 답이 나쁘면 LLM을 탓하기 전에 loading, splitting, embedding, indexing, retrieval, prompting 중 어디가 실패했는지 확인하세요.</p>
+<figure>
+<div aria-label="RAG 파이프라인 구성요소 다이어그램" class="diagram">
+<svg aria-label="Six-stage RAG pipeline: DocumentLoader, TextSplitter, Embeddings, VectorStore, Retriever, LLM, all inside the air-gapped network" role="img" viewbox="0 0 700 300" width="100%">
+<rect fill="#FCFBF8" height="298" rx="12" stroke="#E8E4DB" width="698" x="1" y="1"></rect>
+<!-- air-gap boundary -->
+<rect fill="#F6F3EC" height="180" rx="10" stroke="#D97757" stroke-dasharray="5 4" width="652" x="24" y="60"></rect>
+<text fill="#D97757" font-family="JetBrains Mono, monospace" font-size="13" x="40" y="82">air-gapped network · 폐쇄망</text>
+<!-- indexing row (build once) -->
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" font-weight="600" x="40" y="118">Index (build once)</text>
+<g fill="#33312E" font-family="Inter, sans-serif" font-size="13">
+<rect fill="#FCFBF8" height="48" rx="8" stroke="#DBD5C8" width="118" x="40" y="124"></rect>
+<text font-weight="600" text-anchor="middle" x="99" y="143">Loader</text>
+<text fill="#8A857C" font-size="13" text-anchor="middle" x="99" y="165">PDF → Docs</text>
+<rect fill="#FCFBF8" height="48" rx="8" stroke="#DBD5C8" width="118" x="188" y="124"></rect>
+<text font-weight="600" text-anchor="middle" x="247" y="143">Splitter</text>
+<text fill="#8A857C" font-size="13" text-anchor="middle" x="247" y="165">Docs → chunks</text>
+<rect fill="#FCFBF8" height="48" rx="8" stroke="#DBD5C8" width="118" x="336" y="124"></rect>
+<text font-weight="600" text-anchor="middle" x="395" y="143">Embeddings</text>
+<text fill="#8A857C" font-size="13" text-anchor="middle" x="395" y="165">text → vectors</text>
+<rect fill="#F4E8E2" height="48" rx="8" stroke="#D97757" width="152" x="484" y="124"></rect>
+<text fill="#B4471F" font-weight="600" text-anchor="middle" x="560" y="143">VectorStore</text>
+<text fill="#B4471F" font-size="13" text-anchor="middle" x="560" y="165">Chroma on disk</text>
+</g>
+<!-- arrows indexing -->
+<g fill="none" marker-end="url(#ah)" stroke="#B9B3A6" stroke-width="1.5">
+<path d="M158 149 H186"></path>
+<path d="M306 149 H334"></path>
+<path d="M454 149 H482"></path>
+</g>
+<!-- query row -->
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" font-weight="600" x="40" y="200">Query (each question)</text>
+<g fill="#33312E" font-family="Inter, sans-serif" font-size="13">
+<rect fill="#FCFBF8" height="22" rx="6" stroke="#DBD5C8" width="150" x="40" y="208"></rect>
+<text font-size="13" text-anchor="middle" x="115" y="224">question 질문</text>
+<rect fill="#F4E8E2" height="30" rx="8" stroke="#D97757" width="118" x="336" y="204"></rect>
+<text fill="#B4471F" font-weight="600" text-anchor="middle" x="395" y="223">Retriever</text>
+<rect fill="#FCFBF8" height="30" rx="8" stroke="#DBD5C8" width="152" x="484" y="204"></rect>
+<text font-weight="600" text-anchor="middle" x="560" y="223">LLM (ChatOllama)</text>
+</g>
+<!-- arrows query -->
+<g fill="none" marker-end="url(#ah)" stroke="#B9B3A6" stroke-width="1.5">
+<path d="M190 219 H334"></path>
+<path d="M454 219 H482"></path>
+</g>
+<!-- store feeds retriever -->
+<path d="M560 170 V204" fill="none" marker-end="url(#ahc)" stroke="#D97757" stroke-width="1.5"></path>
+<defs>
+<marker id="ah" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="3">
+<path d="M0 0 L6 3 L0 6 Z" fill="#B9B3A6"></path>
+</marker>
+<marker id="ahc" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="3">
+<path d="M0 0 L6 3 L0 6 Z" fill="#D97757"></path>
+</marker>
+</defs>
+<text fill="#8A857C" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="350" y="270">load → split → embed → store → retrieve → generate  ·  assembled with the LCEL pipe |</text>
+</svg>
+</div>
+<figcaption>그림 1. 두 단계로 구성된 RAG 스택: 인덱스를 한 번 빌드한 다음(맨 위 행), 검색 및 생성을 통해 각 질문에 답합니다(맨 아래 행). 인싱은 한 번, Q의 것은 매우 큽니다. 모든 것은 에어 갭 내부에 유지됩니다.</figcaption>
+</figure>
+<hr/>
+<p>이 글은 현장 노트입니다. 인터랙티브 deck은 local RAG design을 diagram과 구현 예제로 slide by slide 설명합니다.</p>
+</div>
+ 심층적인 데크 링크 
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">더 깊게 보기</span>
+<h3>이 주제의 전체 과정 보기</h3>
+<p>물리학 박사(IGZO / graphene 반도체 물성)이며 증착 공정을 수행하는 반도체 공정 엔지니어입니다. 팹을 위한 air-gapped LLM, RAG, agent system을 구축합니다.</p>
+</div>
+<a class="btn btn-primary" href="../../../watsonx/index.html">데크를 열어보세요 <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+ 공유 
+<div class="share">
+<span class="lbl">공유</span>
+<button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">공유/링크 복사</button>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">엑스 / 트위터</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">링크드인</a>
+</div>
+ 저자 바이오 카드(E-E-A-T) 
+<aside class="author-card">
+<span aria-hidden="true" class="avatar">AE</span>
+<div class="a-body">
+<div class="k">저자 소개</div>
+<h3>AI Edu Archive</h3>
+<p>강의와 저널의 모든 콘텐츠는 회원가입 없이 무료로 읽을 수 있습니다.</p>
+<a href="../about.html">저자에 대해 더 알아보기 →</a>
+</div>
+</aside>
+ 관련된 
+<section aria-label="관련 기사" class="related">
+<span class="eyebrow">계속 읽기</span>
+<h2>저널의 관련 글</h2>
+<div class="related-grid">
+<a class="rel-card" href="langchain-core-explained.html">
+<span class="cat-tag" data-cat="python rag">파이썬 스택</span>
+<h3>폐쇄망 내부 문서 위에 RAG 구축하기</h3>
+</a>
+<a class="rel-card" href="chunking-technical-docs.html">
+<span class="cat-tag" data-cat="rag">RAG</span>
+<h3>의미를 찢지 않고 기술 문서 chunking하기</h3>
+</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>무료로 깊게, 열린 방식으로</h2>
+<p>아래 관련 글은 sealed document RAG와 technical chunking strategy로 이어집니다.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>탐구하다</h4>
+<a href="../../index.html">허브 홈</a>
+<a href="../../../index.html#courses">모든 강좌</a>
+<a href="../index.html">저널</a>
+</div>
+<div class="foot-col">
+<h4>학습</h4>
+<a href="../../../overview/index.html">팹 AI</a>
+<a href="../../../watsonx/index.html">에어갭 LLM</a>
+<a href="../../../llm_apply/LLM_slide.html">엔터프라이즈 LLM</a>
+</div>
+<div class="foot-col">
+<h4>사이트</h4>
+<a href="../about.html">소개</a>
+<a href="../contact.html">연락하다</a>
+<a href="../privacy.html">개인정보</a>
+<a href="../terms.html">이용약관</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · 열린 한국어 AI 교육</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  // one-click copy for code figures
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig?fig.querySelector('pre'):null;
+      if(!code)return;
+      var text=code.innerText;
+      var done=function(){
+        btn.textContent='Copied';btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1600);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done,function(){});
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

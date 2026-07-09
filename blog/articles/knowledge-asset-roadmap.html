@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- ══ SEO ══════════════════════════════════════════════════════════ -->
+<title>From tribal knowledge to a plant knowledge asset - AI Edu Archive Journal</title>
+<meta content="A staged roadmap for turning undocumented plant know-how into an on-prem LLM/RAG knowledge asset: PoC, Pilot, Scale, Embed, with deliverables, exit gates, and risks." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/knowledge-asset-roadmap.html" rel="canonical"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/knowledge-asset-roadmap.html" hreflang="ko" rel="alternate"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/knowledge-asset-roadmap.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+<!-- Open Graph -->
+<meta content="article" property="og:type"/>
+<meta content="From tribal knowledge to a plant knowledge asset - AI Edu Archive Journal" property="og:title"/>
+<meta content="A staged roadmap for turning undocumented plant know-how into an on-prem LLM/RAG knowledge asset: PoC, Pilot, Scale, Embed, with deliverables, exit gates, and risks." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="https://ai-edu-archive.example.com/blog/articles/knowledge-asset-roadmap.html" property="og:url"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="ko_KR" property="og:locale:alternate"/>
+<meta content="2026-07-04" property="article:published_time"/>
+<meta content="AI Edu Archive" property="article:author"/>
+<meta content="Manufacturing AI" property="article:section"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="From tribal knowledge to a plant knowledge asset - AI Edu Archive Journal" name="twitter:title"/>
+<meta content="A staged roadmap for turning undocumented plant know-how into an on-prem LLM/RAG knowledge asset: PoC, Pilot, Scale, Embed, with deliverables, exit gates, and risks." name="twitter:description"/>
+<!-- JSON-LD: Article schema -->
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "From tribal knowledge to a plant knowledge asset",
+  "description": "A staged roadmap for turning undocumented plant know-how into an on-prem LLM/RAG knowledge asset: PoC, Pilot, Scale, Embed, with deliverables, exit gates, and risks.",
+  "inLanguage": "en",
+  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/articles/knowledge-asset-roadmap.html"
+  },
+  "name": "From tribal knowledge to a plant knowledge asset",
+  "url": "https://ai-edu-archive.example.com/blog/articles/knowledge-asset-roadmap.html"
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../assets/blog.css" rel="stylesheet"/>
+<style>
+  .tbl-wrap{max-width:var(--readw);margin:26px auto;overflow-x:auto;
+    border:1px solid var(--line);border-radius:12px;background:var(--card-2);
+    box-shadow:var(--shadow-sm)}
+  table.tbl{border-collapse:collapse;width:100%;min-width:560px;
+    font-family:var(--sans);font-size:15px;line-height:1.5}
+  table.tbl caption{caption-side:top;text-align:left;padding:14px 16px 4px;
+    font-family:var(--mono);font-size:12px;letter-spacing:.02em;color:var(--muted)}
+  table.tbl th,table.tbl td{padding:11px 14px;text-align:left;
+    border-bottom:1px solid var(--line);vertical-align:top}
+  table.tbl thead th{background:var(--paper-2);color:var(--ink);
+    font-weight:600;font-size:13.5px;white-space:nowrap;
+    border-bottom:1.5px solid var(--line-2)}
+  table.tbl tbody tr:last-child td{border-bottom:none}
+  table.tbl tbody tr:hover{background:#FCFAF6}
+  table.tbl td.name{font-weight:600;color:var(--ink);white-space:nowrap}
+  table.tbl .ok{color:#0B6258;font-weight:600}
+  table.tbl .no{color:var(--coral-deep);font-weight:600}
+  table.tbl code{font-family:var(--mono);font-size:13px;background:var(--paper-2);
+    padding:1px 5px;border-radius:5px}
+  @media(max-width:640px){
+    table.tbl{font-size:14px}
+    table.tbl th,table.tbl td{padding:9px 11px}
+  }
+</style>
+<link href="https://ai-edu-archive.example.com/blog/articles/knowledge-asset-roadmap.html" hreflang="en" rel="alternate"/></head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive home" class="brand" href="../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="Primary" class="nav-links">
+<a href="../../index.html#courses">Courses</a>
+<a href="../index.html">Articles</a>
+<a href="../about.html">About</a>
+<div aria-label="Language selector" class="language-switch">
+<a aria-current="true" href="knowledge-asset-roadmap.html" lang="en" title="English">🇺🇸 EN</a>
+<a href="../ko/articles/knowledge-asset-roadmap.html" lang="ko" title="한국어">🇰🇷 KO</a>
+<a href="knowledge-asset-roadmap.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a>
+<a href="knowledge-asset-roadmap.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a>
+<a href="knowledge-asset-roadmap.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a>
+<a href="knowledge-asset-roadmap.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a>
+<a href="knowledge-asset-roadmap.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a>
+</div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article data-cat="mfg onprem" itemscope="" itemtype="https://schema.org/Article">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="Breadcrumb" class="breadcrumb">
+<a href="../../index.html">Home</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">Journal</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">Tribal knowledge to a knowledge asset</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag">Manufacturing AI</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-04" itemprop="datePublished">Jul 4, 2026</time>
+<span class="post-dot"></span>
+<span class="rt">11 min read</span>
+</div>
+<h1 itemprop="headline">From tribal knowledge to a plant knowledge asset</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>Semiconductor process engineer · Air-gapped LLM / RAG / Agents</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="Table of contents" class="toc">
+<div class="toc-title">On this page</div>
+<ol>
+<li><a href="#moat">The undocumented moat</a></li>
+<li><a href="#roadmap">A four-stage roadmap</a></li>
+<li><a href="#stages">Deliverables, gates, and risks</a></li>
+<li><a href="#embed">Making it stick</a></li>
+</ol>
+</nav>
+<div class="article-body" itemprop="articleBody">
+<p>The most valuable thing in your plant is not written down anywhere. It lives in the operator who hears a pump about to fail, the process engineer who knows which recipe drifts on humid days, and the technician who remembers the fix from three years ago. This is tribal knowledge. When those people retire, transfer, or take a day off, the plant becomes measurably worse at its job. This article lays out a staged, low-risk roadmap for turning that know-how into a durable, on-prem knowledge asset using a closed LLM and retrieval-augmented generation, without letting the data leave your network.</p>
+<h2 id="moat">The undocumented moat</h2>
+<p>Two plants can buy the same tools, run the same materials, and follow the same published specs, yet still hit different yields. The gap is know-how: accumulated judgment about what actually works on your line. That gap is a genuine competitive moat, but it is fragile because it lives in people instead of systems. Documentation helps, but the richest knowledge is conditional, scattered, and busy. It hides in shift logs, ticket comments, chat threads, and the half-sentence someone adds while closing a maintenance action.</p>
+<p>An on-prem LLM changes the economics of capture. Instead of asking people to author polished procedures, you let them keep working the way they already do: logging, annotating, closing tickets, and discussing exceptions. Then you build a retrieval layer that reads what already exists and answers questions over it. The know-how is captured in place. The hard part is not the model; it is sequencing the rollout so a manufacturing organization can absorb it without betting the line on an unproven system.</p>
+<blockquote>Tribal knowledge is a moat you cannot see on the balance sheet, and one you lose the day the person carrying it walks out the door.</blockquote>
+<h2 id="roadmap">A four-stage roadmap</h2>
+<p>Treat this as a capability that matures, not a project that ships once. Each stage earns the right to the next by clearing an explicit exit gate, a measurable bar that decides whether you proceed, iterate, or stop. Nothing touches the external internet at any stage: models, embeddings, indexes, logs, and evaluations all stay inside the air gap.</p>
+<figure>
+<div aria-label="Four-stage roadmap diagram" class="diagram">
+<svg aria-label="A horizontal roadmap of four stages — PoC, Pilot, Scale, Embed — with an exit gate between each stage and a widening scope arrow beneath." role="img" viewbox="0 0 640 250" width="100%">
+<rect fill="#FCFBF8" height="248" rx="12" stroke="#E8E4DB" width="638" x="1" y="1"></rect>
+<!-- stage cards -->
+<g font-family="Inter, sans-serif">
+<rect fill="#F6EAE1" height="86" rx="10" stroke="#DBD5C8" width="128" x="24" y="40"></rect>
+<text fill="#1F1E1C" font-size="16" font-weight="600" text-anchor="middle" x="88" y="72">PoC</text>
+<text fill="#6B6862" font-size="13" text-anchor="middle" x="88" y="94">1 domain</text>
+<text fill="#6B6862" font-size="13" text-anchor="middle" x="88" y="112">4-6 weeks</text>
+<rect fill="#F6EAE1" height="86" rx="10" stroke="#DBD5C8" width="128" x="184" y="40"></rect>
+<text fill="#1F1E1C" font-size="16" font-weight="600" text-anchor="middle" x="248" y="72">Pilot</text>
+<text fill="#6B6862" font-size="13" text-anchor="middle" x="248" y="94">1 line / team</text>
+<text fill="#6B6862" font-size="13" text-anchor="middle" x="248" y="112">1 quarter</text>
+<rect fill="#F6EAE1" height="86" rx="10" stroke="#DBD5C8" width="128" x="344" y="40"></rect>
+<text fill="#1F1E1C" font-size="16" font-weight="600" text-anchor="middle" x="408" y="72">Scale</text>
+<text fill="#6B6862" font-size="13" text-anchor="middle" x="408" y="94">plant-wide</text>
+<text fill="#6B6862" font-size="13" text-anchor="middle" x="408" y="112">2-3 quarters</text>
+<rect fill="#EDE7DA" height="86" rx="10" stroke="#DBD5C8" width="112" x="504" y="40"></rect>
+<text fill="#1F1E1C" font-size="16" font-weight="600" text-anchor="middle" x="560" y="72">Embed</text>
+<text fill="#6B6862" font-size="13" text-anchor="middle" x="560" y="94">ongoing</text>
+<text fill="#6B6862" font-size="13" text-anchor="middle" x="560" y="112">owned</text>
+</g>
+<!-- gates between cards -->
+<g fill="#C15F3C" font-family="JetBrains Mono, monospace" font-size="13">
+<text text-anchor="middle" x="168" y="88">→</text>
+<text text-anchor="middle" x="328" y="88">→</text>
+<text text-anchor="middle" x="488" y="88">→</text>
+<text text-anchor="middle" x="168" y="150">gate</text>
+<text text-anchor="middle" x="328" y="150">gate</text>
+<text text-anchor="middle" x="488" y="150">gate</text>
+</g>
+<!-- widening scope arrow -->
+<g font-family="Inter, sans-serif">
+<path d="M24 196 L604 196" stroke="#DBD5C8" stroke-width="1.5"></path>
+<path d="M30 188 L24 196 L30 204" fill="none" stroke="#DBD5C8" stroke-width="1.5"></path>
+<path d="M598 188 L604 196 L598 204" fill="none" stroke="#DBD5C8" stroke-width="1.5"></path>
+<text fill="#6B6862" font-size="13" text-anchor="middle" x="120" y="222">narrow, disposable</text>
+<text fill="#6B6862" font-size="13" text-anchor="middle" x="512" y="222">wide, load-bearing</text>
+</g>
+</svg>
+</div>
+<figcaption>Figure 1. Scope widens and stakes rise from left to right; each arrow is an exit gate you must clear to proceed.</figcaption>
+</figure>
+<h2 id="stages">Deliverables, gates, and risks</h2>
+<p>The point of stages is to spend the least effort needed to learn whether the next, larger commitment is justified. Below is the same roadmap as a working table: what you build, the bar you must clear to advance, and the risk that most often kills that stage.</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<caption>Table 1. Stage-by-stage roadmap for an on-prem knowledge asset.</caption>
+<thead>
+<tr>
+<th scope="col">Stage</th>
+<th scope="col">Deliverable</th>
+<th scope="col">Exit gate</th>
+<th scope="col">Top risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name">1 · PoC
+Concept proof</td>
+<td>A retrieval demo over one narrow corpus, such as one tool's maintenance logs and SOPs, answering about 20 real questions with cited sources.</td>
+<td>On a fixed question set, answers are useful and grounded more often than keyword search, judged by two domain experts.</td>
+<td>Chasing a flashy demo instead of a representative one; choosing a domain with no clean source documents.</td>
+</tr>
+<tr>
+<td class="name">2 · Pilot
+Line trial</td>
+<td>A hardened tool for one line or team: access control, source freshness, a feedback button, and an answer-quality log reviewed weekly.</td>
+<td>Real users return unprompted; measured lift in time-to-answer or first-time-right; near-zero unsafe answers.</td>
+<td>No owner on the plant side; stale documents poisoning retrieval; a pilot that never ends.</td>
+</tr>
+<tr>
+<td class="name">3 · Scale
+Plant rollout</td>
+<td>Plant-wide coverage: multiple domains indexed, ingestion pipelines from MES, logs, and wikis, monitoring, and document governance.</td>
+<td>Adoption across teams, an SLA the plant relies on, and a cost/accuracy profile that survives scrutiny.</td>
+<td>Retrieval quality decays as the corpus grows; governance and permissions cannot keep up; infra becomes a bottleneck.</td>
+</tr>
+<tr>
+<td class="name">4 · Embed
+Routine ownership</td>
+<td>Capture becomes part of daily work, ownership sits with a named team, and refresh plus evaluation run on a schedule.</td>
+<td>The system improves without heroics: new know-how flows in and quality is tracked as a standing metric.</td>
+<td>Treating it as done; letting evaluation lapse; creating single-person dependency.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="poc-detail">Why the PoC stays deliberately small</h3>
+<p>A tempting mistake is to index everything at once. Resist it. The PoC exists to answer one question as cheaply as possible: does retrieval over our messy real documents beat what people do today? Keep the corpus to a single domain you understand, write the evaluation questions before you build, and have experts grade the output. If it fails here, you have spent weeks, not quarters. The scaffolding is small:</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> poc_eval.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># PoC gate: is grounded retrieval beating today's baseline?</span>
+<span class="tok-com"># All local — weights, embeddings, and index stay inside the air gap.</span>
+questions = <span class="tok-fn">load_expert_questions</span>(<span class="tok-str">"tool_A_maintenance.yaml"</span>)  <span class="tok-com"># written first</span>
+
+wins = <span class="tok-num">0</span>
+<span class="tok-kw">for</span> q <span class="tok-kw">in</span> questions:
+    hits   = index.<span class="tok-fn">similarity_search</span>(q.text, k=<span class="tok-num">4</span>)   <span class="tok-com"># on-prem vector store</span>
+    answer = llm.<span class="tok-fn">invoke</span>(<span class="tok-fn">prompt</span>(q.text, hits))       <span class="tok-com"># on-prem LLM, no egress</span>
+    <span class="tok-kw">if</span> <span class="tok-fn">expert_grade</span>(answer, q, cite=hits) == <span class="tok-str">"grounded_and_useful"</span>:
+        wins += <span class="tok-num">1</span>
+
+<span class="tok-com"># Advance only if experts prefer it to keyword search on the fixed set.</span>
+<span class="tok-kw">assert</span> wins / <span class="tok-fn">len</span>(questions) &gt; baseline_keyword_score</code></pre>
+</figure>
+<h3 id="pilot-detail">The Pilot is where trust is won or lost</h3>
+<p>Moving from a demo to a tool a shift actually leans on is a step change. The model is the easy part; the work is operational. You need access control so a contractor cannot query proprietary recipes, source freshness so a superseded SOP does not resurface as an answer, and a feedback loop so wrong answers get logged and fixed instead of eroding trust in silence. The single biggest predictor of pilot survival is a named owner on the plant floor, not only in IT, who treats answer quality as their responsibility.</p>
+<h3 id="scale-detail">Scale surfaces the quiet failure modes</h3>
+<p>What works over one tool's logs can degrade badly over the whole plant. As the corpus grows, retrieval pulls in near-duplicate and contradictory documents, and the model confidently blends them. This is why document governance, clear ownership, versioning, and retirement of stale content, stops being optional at scale. A knowledge asset is only as trustworthy as the sources beneath it. Budget as much effort for keeping sources clean as for the retrieval stack itself.</p>
+<h2 id="embed">Making it stick</h2>
+<p>The final stage is the one most organizations skip, and it is the one that separates a lasting asset from an abandoned pilot. Embedding means capture is woven into daily work: a technician closing a ticket is, without extra effort, feeding the system. A named team owns refresh, evaluation, and access. Evaluation becomes a standing dashboard metric, not a one-time launch checkpoint, so quiet regressions get caught. An air-gapped knowledge asset that is measured, owned, and fed keeps compounding; one declared done starts decaying the day the launch celebration ends.</p>
+<p>None of this requires a moonshot. It requires sequencing: prove value on something small, harden it for real users, widen coverage only as governance can bear it, and then make maintenance boring and routine. Done that way, the know-how that used to leave with your best people becomes something the plant owns, on-prem, behind the air gap, and improving every quarter.</p>
+<hr/>
+<p>This is the strategy layer. To see the full picture of AI in the fab, and the air-gapped LLM stack that makes on-prem capture possible, the deck below walks the whole subject slide by slide.</p>
+</div>
+<!-- deep-dive deck link -->
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">Go deeper</span>
+<h3>See where this fits in the fab AI picture</h3>
+<p>This article is a field note on strategy. The interactive deck walks the landscape of AI in manufacturing, including where a knowledge asset sits among the other use cases, slide by slide.</p>
+</div>
+<a class="btn btn-primary" href="../../overview/index.html">Open the deck <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+<!-- share -->
+<div class="share">
+<span class="lbl">Share</span>
+<button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+</div>
+<!-- author bio card (E-E-A-T) -->
+<aside class="author-card">
+<span aria-hidden="true" class="avatar">AE</span>
+<div class="a-body">
+<div class="k">About the author</div>
+<h3>AI Edu Archive</h3>
+<p>PhD in physics (IGZO / graphene semiconductor properties) and a semiconductor process engineer working on deposition. Builds air-gapped LLM, RAG, and agent systems, plus reinforcement-learning and anomaly-detection tooling, for the fab. Writes here about turning process know-how into an on-prem knowledge asset that never leaves the network.</p>
+<a href="../about.html">More about the author</a>
+</div>
+</aside>
+<!-- related -->
+<section aria-label="Related articles" class="related">
+<span class="eyebrow">Keep reading</span>
+<h2>Related from the Journal</h2>
+<div class="related-grid">
+<a class="rel-card" href="why-air-gapped-llm-manufacturing.html">
+<span class="cat-tag">On-Prem LLM</span>
+<h3>Why manufacturers must run LLMs air-gapped</h3>
+</a>
+<a class="rel-card" href="rag-over-sealed-documents.html">
+<span class="cat-tag">RAG</span>
+<h3>Building RAG over sealed internal documents</h3>
+</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>Free, in-depth, and open.</h2>
+<p>Everything here, courses and journal alike, is free to read with no signup.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>Explore</h4>
+<a href="../../index.html">Hub home</a>
+<a href="../../index.html#courses">All courses</a>
+<a href="../index.html">Journal</a>
+</div>
+<div class="foot-col">
+<h4>Courses</h4>
+<a href="../../overview/index.html">Fab AI</a>
+<a href="../../watsonx/index.html">Air-gapped LLM</a>
+<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
+</div>
+<div class="foot-col">
+<h4>Site</h4>
+<a href="../about.html">About</a>
+<a href="../contact.html">Contact</a>
+<a href="../privacy.html">Privacy</a>
+<a href="../terms.html">Terms</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  // one-click copy for code figures
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig?fig.querySelector('pre'):null;
+      if(!code)return;
+      var text=code.innerText;
+      var done=function(){
+        btn.textContent='Copied';btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1600);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done,function(){});
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

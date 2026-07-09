@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+ ∨ SEO ​ 
+<title>공정 know-how를 위한 지식 그래프 - AI Edu Archive 한국어</title>
+<meta content="Fab 공정 know-how를 질의 가능한 지식 그래프로 바꾸는 방법: RDF triple, TBox/ABox, 표준 ontology 재사용, 감사 가능한 PROV-O provenance." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/knowledge-graph-process.html" rel="canonical"/><link href="https://ai-edu-archive.example.com/blog/articles/knowledge-graph-process.html" hreflang="en" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/ko/articles/knowledge-graph-process.html" hreflang="ko" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/articles/knowledge-graph-process.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+ 오픈 그래프 
+<meta content="article" property="og:type"/>
+<meta content="공정 know-how를 위한 지식 그래프 - AI Edu Archive 한국어" property="og:title"/>
+<meta content="Fab 공정 know-how를 질의 가능한 지식 그래프로 바꾸는 방법: RDF triple, TBox/ABox, 표준 ontology 재사용, 감사 가능한 PROV-O provenance." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="https://ai-edu-archive.example.com/blog/ko/articles/knowledge-graph-process.html" property="og:url"/>
+<meta content="ko_KR" property="og:locale"/>
+<meta content="en_US" property="og:locale:alternate"/>
+<meta content="2026-07-04" property="article:published_time"/>
+<meta content="AI Edu Archive" property="article:author"/>
+<meta content="RAG" property="article:section"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="공정 know-how를 위한 지식 그래프 - AI Edu Archive 한국어" name="twitter:title"/>
+<meta content="Fab 공정 know-how를 질의 가능한 지식 그래프로 바꾸는 방법: RDF triple, TBox/ABox, 표준 ontology 재사용, 감사 가능한 PROV-O provenance." name="twitter:description"/>
+ JSON-LD: 기사 스키마 
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "공정 know-how를 위한 지식 그래프",
+  "description": "Fab 공정 know-how를 질의 가능한 지식 그래프로 바꾸는 방법: RDF triple, TBox/ABox, 표준 ontology 재사용, 감사 가능한 PROV-O provenance.",
+  "inLanguage": "ko",
+  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/ko/articles/knowledge-graph-process.html"
+  },
+  "name": "공정 know-how를 위한 지식 그래프",
+  "url": "https://ai-edu-archive.example.com/blog/ko/articles/knowledge-graph-process.html"
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/blog.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive 홈" class="brand" href="../../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="주요 메뉴" class="nav-links">
+<a href="../../../index.html#courses">강의</a>
+<a href="../index.html">글</a>
+<a href="../about.html">소개</a>
+<div aria-label="언어 선택" class="language-switch"><a href="../../articles/knowledge-graph-process.html" lang="en" title="English">🇺🇸 EN</a><a aria-current="true" href="knowledge-graph-process.html" lang="ko" title="한국어">🇰🇷 KO</a><a href="../../articles/knowledge-graph-process.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a><a href="../../articles/knowledge-graph-process.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a><a href="../../articles/knowledge-graph-process.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a><a href="../../articles/knowledge-graph-process.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a><a href="../../articles/knowledge-graph-process.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a></div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article data-cat="rag" itemscope="" itemtype="https://schema.org/Article">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="탐색경로" class="breadcrumb">
+<a href="../../../index.html">홈</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">저널</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">공정 know-how를 위한 지식 그래프</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag">RAG</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-04" itemprop="datePublished">2026년 7월 4일</time>
+<span class="post-dot"></span>
+<span class="rt">12분 읽기</span>
+</div>
+<h1 itemprop="headline">공정 know-how를 위한 지식 그래프</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>반도체 공정 엔지니어 · Air-gapped LLM / RAG / Agents</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="목차" class="toc">
+<div class="toc-title">이 페이지에서</div>
+<ol>
+<li><a href="#why">왜 표가 아니라 그래프인가</a></li>
+<li><a href="#triples">Triple: subject-predicate-object</a></li>
+<li><a href="#tbox-abox">TBox와 ABox: schema와 fact</a></li>
+<li><a href="#reuse">표준 ontology 재사용</a></li>
+<li><a href="#prov">PROV-O: 감사를 위한 provenance</a></li>
+<li><a href="#load">rdflib로 triple 로딩하기</a></li>
+<li><a href="#query">SPARQL로 질의하기</a></li>
+</ol>
+</nav>
+<div class="article-body" itemprop="articleBody">
+<p>공정 specification은 list가 아니라 relationship의 web입니다. Etch recipe는 chamber에 속하고, 그 chamber는 equipment group 안에 있으며, 특정 shift에 lot이 그 chamber에서 실행되고, deviation report는 lot과 recipe를 함께 참조합니다. 이것을 spreadsheet로 평평하게 만들면 연결이 사라집니다. 지식 그래프는 이 관계를 명시적으로 보존하고, equipment, recipe, lot, report, provenance 경계를 넘나드는 질문을 가능하게 합니다.</p>
+<h2 id="why">왜 표가 아니라 그래프인가</h2>
+<p>관계형 table은 schema가 고정되어 있고 join이 미리 알려져 있을 때 훌륭합니다. Fab know-how는 보통 그렇게 단정하지 않습니다. 새로운 equipment type, failure mode, process relationship, exception case가 계속 등장합니다. 예를 들어 나중에 particle excursion을 보인 chamber를 한 번이라도 거친 lot은 무엇인가 같은 질문은 table이 다루기 어려운 multi-hop join입니다. 그래프는 각 fact를 edge로 저장하므로 새 relationship을 추가해도 중앙 schema를 바꿀 필요가 없습니다. 모든 node와 edge가 안정적인 identifier를 가지기 때문에 여러 source가 같은 entity를 충돌 없이 설명할 수 있습니다.</p>
+<blockquote>표는 설계할 때 예상한 질문에 답합니다. 그래프는 아직 생각하지 못한 질문에도 답할 수 있습니다.</blockquote>
+<h2 id="triples">Triple: subject-predicate-object</h2>
+<p>그래프 안의 모든 것은 triple입니다. subject, predicate, object로 이루어집니다. Chamber-A ran Lot-4471. Lot-4471 usedRecipe Etch-Std-7. 각 triple은 하나의 atomic fact이고, fact들은 subject와 object를 공유하면서 graph를 이룹니다. 문장처럼 읽어도 몇 개의 triple만으로 실제 fab 구조를 설명할 수 있습니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">turtle</span> fab_facts.ttl</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># Turtle: each line is one subject–predicate–object triple</span>
+<span class="tok-dec">@prefix</span> fab: <span class="tok-str">&lt;http://fab.local/onto#&gt;</span> .
+<span class="tok-dec">@prefix</span> ex:  <span class="tok-str">&lt;http://fab.local/id/&gt;</span> .
+<span class="tok-dec">@prefix</span> xsd: <span class="tok-str">&lt;http://www.w3.org/2001/XMLSchema#&gt;</span> .
+
+ex:Chamber-A   fab:inEquipmentGroup  ex:PECVD-Group-2 .
+ex:Chamber-A   fab:ranLot            ex:Lot-4471 .
+ex:Lot-4471    fab:usedRecipe        ex:Etch-Std-7 .
+ex:Lot-4471    fab:onProduct         ex:Panel-Gen8 .
+ex:Etch-Std-7  fab:hasStepPressure   <span class="tok-str">"5.0"</span>^^xsd:decimal .</code></pre>
+</figure>
+<p>ex:Lot-4471이 한 triple에서는 object로, 다음 triple에서는 subject로 등장하는 점을 보세요. 이 공유 identifier가 고립된 fact를 traversable graph로 바꾸는 연결부입니다.</p>
+<h2 id="tbox-abox">TBox와 ABox: schema와 fact</h2>
+<p>동작하는 ontology에는 두 layer가 있습니다. TBox, terminology box는 허용되는 type과 relationship을 정의합니다. Chamber는 Equipment의 한 종류이고, ranLot은 Chamber와 Lot을 연결합니다. ABox, assertion box는 실제 instance를 담습니다. Chamber-A는 Chamber이고 Lot-4471을 실행했습니다. 둘을 분리하면 모든 fact를 schema에 대해 validate할 수 있고, reasoner가 새로운 fact를 infer할 수도 있습니다. ranLot의 domain이 Equipment라면 ranLot 관계를 가진 것은 자동으로 equipment로 분류됩니다.</p>
+<ul>
+<li>TBox — fab:Chamber rdfs:subClassOf fab:Equipment. 한 번 정의하면 거의 바뀌지 않습니다.</li>
+<li>ABox — ex:Chamber-A rdf:type fab:Chamber. 새 lot, recipe, report가 들어올 때마다 shift 단위로 계속 커집니다.</li>
+</ul>
+<h2 id="reuse">표준 ontology 재사용</h2>
+<p>이미 세상이 model로 만들어 둔 concept에 대해 새 vocabulary를 만들 필요는 없습니다. 표준 ontology를 재사용하면 graph가 interoperable해지고 설계 노력이 줄어듭니다. 규제 대상 fab에서는 provenance와 measurement 용어가 auditor가 이미 인식하는 언어와 맞아떨어지는 장점도 있습니다. 알아둘 만한 것들은 다음과 같습니다.</p>
+<ul>
+<li>rdf: / rdfs: — base layer입니다. rdf:type, subclass, label, comment 같은 기본 표현을 제공합니다.</li>
+<li>PROV-O (prov:) — W3C provenance ontology입니다. 누가 또는 무엇이 어떤 fact를, 어떤 source에서, 언제 만들었는지 표현합니다.</li>
+<li>QUDT 또는 OM — unit과 quantity를 표현합니다. 5.0이 단순 숫자가 아니라 5.0 mTorr임을 명확히 합니다.</li>
+<li>SOSA/SSN — sensor와 observation을 표현합니다. equipment telemetry와 metrology에 잘 맞습니다.</li>
+</ul>
+<p>정말 fab-specific한 것, 예를 들어 Chamber, Recipe, Lot, ProcessStep, ToolGroup만 직접 정의하고 나머지는 표준 vocabulary에서 가져오세요. 이렇게 하면 model이 작아지고, audit하기 쉬워지며, 나중에 다른 system과 연결하기도 쉬워집니다.</p>
+<h2 id="prov">PROV-O: 감사를 위한 provenance</h2>
+<p>규제 대상 fab에서 source가 없는 fact는 liability입니다. graph가 어떤 lot이 특정 recipe를 실행했다고 말하면 auditor는 누가 그렇게 말했는지, 어떤 record에서 온 것인지, 언제 assert되었는지를 묻습니다. PROV-O는 여기에 정확히 답합니다. prov:Entity는 대상, prov:Activity는 그것을 만든 process, prov:Agent는 책임 있는 사람 또는 system입니다. 여기에 prov:wasGeneratedBy, prov:wasDerivedFrom, prov:wasAttributedTo 같은 predicate를 붙이면 graph는 단순 주장이 아니라 evidence가 됩니다.</p>
+<figure>
+<div aria-label="팹 트리플에 대한 PROV-O 출처 다이어그램" class="diagram">
+<svg aria-label="A fact entity was generated by an ingest activity, derived from a MES export, and attributed to an engineer agent" role="img" viewbox="0 0 720 260" width="100%">
+<rect fill="#FCFBF8" height="258" rx="12" stroke="#E8E4DB" width="718" x="1" y="1"></rect>
+<text fill="#3A3833" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="360" y="30">하나의 asserted fact 주변 PROV-O</text>
+<!-- Entity: the fact -->
+<rect fill="#F5F0EE" height="58" rx="9" stroke="#CBBBB8" width="180" x="270" y="58"></rect>
+<text fill="#3A3833" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="360" y="82">prov:Entity</text>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="360" y="101">Lot-4471 usedRecipe</text>
+<!-- Activity -->
+<rect fill="#EEF1F5" height="58" rx="9" stroke="#B8C2CB" width="176" x="44" y="170"></rect>
+<text fill="#3A3833" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="132" y="194">prov:Activity</text>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="132" y="213">MES-Ingest-Run</text>
+<!-- Derived-from entity -->
+<rect fill="#EEF3EE" height="58" rx="9" stroke="#B8CBB8" width="176" x="272" y="170"></rect>
+<text fill="#3A3833" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="360" y="194">source record</text>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="360" y="213">MES-Export-9F</text>
+<!-- Agent -->
+<rect fill="#F0EEF5" height="58" rx="9" stroke="#C0B8CB" width="176" x="500" y="170"></rect>
+<text fill="#3A3833" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="588" y="194">prov:Agent</text>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="588" y="213">Eng-K · MES-svc</text>
+<!-- edges -->
+<g fill="none" stroke="#C15F3C" stroke-width="1.6">
+<path d="M300 116 L150 168" marker-end="url(#ah)"></path>
+<path d="M360 116 L360 168" marker-end="url(#ah)"></path>
+<path d="M420 116 L575 168" marker-end="url(#ah)"></path>
+</g>
+<defs>
+<marker id="ah" markerheight="9" markerwidth="9" orient="auto" refx="6" refy="3">
+<path d="M0 0 L6 3 L0 6 Z" fill="#C15F3C"></path>
+</marker>
+</defs>
+<text fill="#8A5A46" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="188" y="146">wasGeneratedBy</text>
+<text fill="#8A5A46" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="360" y="146">wasDerivedFrom</text>
+<text fill="#8A5A46" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="540" y="146">wasAttributedTo</text>
+</svg>
+</div>
+<figcaption>그림 1. PROV-O는 각 asserted fact를 생성 activity, source record, responsible agent와 함께 감쌉니다.</figcaption>
+</figure>
+<h2 id="load">rdflib로 triple 로딩하기</h2>
+<p>Air-gapped host에서도 rdflib만 있으면 pure Python으로 graph를 만들고 저장하고 query할 수 있습니다. namespace를 한 번 bind하고, graph.add(...)에 (subject, predicate, object) tuple을 넣어 triple을 추가한 뒤, assert한 fact에 PROV-O provenance를 붙이면 됩니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> build_graph.py</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># rdflib 7.x — build a small fab graph with PROV-O provenance</span>
+<span class="tok-kw">from</span> rdflib <span class="tok-kw">import</span> Graph, Namespace, Literal, URIRef
+<span class="tok-kw">from</span> rdflib.namespace <span class="tok-kw">import</span> RDF, RDFS, PROV, XSD
+
+FAB = <span class="tok-fn">Namespace</span>(<span class="tok-str">"http://fab.local/onto#"</span>)   <span class="tok-com"># our TBox terms</span>
+EX  = <span class="tok-fn">Namespace</span>(<span class="tok-str">"http://fab.local/id/"</span>)     <span class="tok-com"># instance IDs (ABox)</span>
+
+g = <span class="tok-fn">Graph</span>()
+<span class="tok-kw">for</span> prefix, ns <span class="tok-kw">in</span> [(<span class="tok-str">"fab"</span>, FAB), (<span class="tok-str">"ex"</span>, EX), (<span class="tok-str">"prov"</span>, PROV)]:
+    g.<span class="tok-fn">bind</span>(prefix, ns)              <span class="tok-com"># compact prefixes in Turtle output</span>
+
+<span class="tok-com"># --- TBox: types &amp; relationships (defined once) ---</span>
+g.<span class="tok-fn">add</span>((FAB.Chamber, RDFS.subClassOf, FAB.Equipment))
+
+<span class="tok-com"># --- ABox: facts about real entities ---</span>
+g.<span class="tok-fn">add</span>((EX[<span class="tok-str">"Chamber-A"</span>], RDF.type,       FAB.Chamber))
+g.<span class="tok-fn">add</span>((EX[<span class="tok-str">"Chamber-A"</span>], FAB.ranLot,      EX[<span class="tok-str">"Lot-4471"</span>]))
+g.<span class="tok-fn">add</span>((EX[<span class="tok-str">"Lot-4471"</span>],  FAB.usedRecipe,  EX[<span class="tok-str">"Etch-Std-7"</span>]))
+g.<span class="tok-fn">add</span>((EX[<span class="tok-str">"Etch-Std-7"</span>], FAB.stepPressure,
+       <span class="tok-fn">Literal</span>(<span class="tok-str">"5.0"</span>, datatype=XSD.decimal)))
+
+<span class="tok-com"># --- PROV-O: where this fact came from ---</span>
+fact = EX[<span class="tok-str">"Lot-4471"</span>]
+g.<span class="tok-fn">add</span>((fact, PROV.wasGeneratedBy, EX[<span class="tok-str">"MES-Ingest-Run"</span>]))
+g.<span class="tok-fn">add</span>((fact, PROV.wasDerivedFrom, EX[<span class="tok-str">"MES-Export-9F"</span>]))
+g.<span class="tok-fn">add</span>((fact, PROV.wasAttributedTo, EX[<span class="tok-str">"Eng-K"</span>]))
+
+g.<span class="tok-fn">serialize</span>(destination=<span class="tok-str">"fab_kg.ttl"</span>, format=<span class="tok-str">"turtle"</span>)</code></pre>
+</figure>
+<p>모든 triple을 손으로 만들 필요는 없습니다. 기존 RDF를 ingest할 수도 있습니다. 이미 RDF를 내보내는 MES export가 있다면 g.parse("export.ttl", format="turtle")로 같은 graph에 merge할 수 있습니다.</p>
+<h2 id="query">SPARQL로 질의하기</h2>
+<p>SPARQL은 graph의 SQL입니다. variable이 들어간 triple pattern을 설명하면 engine이 일치하는 binding을 반환합니다. fact와 provenance가 같은 graph에 있으므로 하나의 query가 답과 source를 함께 반환할 수 있습니다. 이것이 결과를 auditable하게 만드는 핵심입니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> query_graph.py</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># SPARQL over the graph built above (rdflib 7.x)</span>
+<span class="tok-kw">from</span> rdflib <span class="tok-kw">import</span> Graph
+
+g = <span class="tok-fn">Graph</span>().<span class="tok-fn">parse</span>(<span class="tok-str">"fab_kg.ttl"</span>, format=<span class="tok-str">"turtle"</span>)
+
+q = <span class="tok-str">"""
+PREFIX fab:  &lt;http://fab.local/onto#&gt;
+PREFIX prov: &lt;http://www.w3.org/ns/prov#&gt;
+
+SELECT ?chamber ?lot ?source WHERE {
+    ?chamber fab:ranLot     ?lot .
+    ?lot     fab:usedRecipe ?recipe .
+    OPTIONAL { ?lot prov:wasDerivedFrom ?source . }
+    FILTER (?recipe = &lt;http://fab.local/id/Etch-Std-7&gt;)
+}
+"""</span>
+
+<span class="tok-kw">for</span> row <span class="tok-kw">in</span> g.<span class="tok-fn">query</span>(q):
+    <span class="tok-fn">print</span>(row.chamber, row.lot, row.source)   <span class="tok-com"># bound by variable name</span></code></pre>
+</figure>
+<p>inline PREFIX 대신 g.query(q, initNs={"fab": FAB})처럼 namespace를 programmatically 전달할 수도 있고, initBindings로 값을 미리 묶어 reusable query를 parameterise할 수도 있습니다. OPTIONAL block은 provenance가 기록되지 않은 lot도 결과에 나타나게 합니다. 이후 ungoverned로 flag할 수 있고, 바로 그 gap이 audit에서 드러나야 하는 부분입니다.</p>
+<hr/>
+<p>작게 시작하세요. Chamber, Recipe, Lot 세 entity type부터 model하고, 첫날부터 provenance에는 PROV-O를 재사용하며, data가 들어올 때마다 ABox를 키우면 됩니다. 이렇게 만든 graph는 GraphRAG의 backbone이 됩니다. LLM은 loose text chunk가 아니라 source가 붙은 connected fact를 retrieve합니다. 전체 과정에서는 modelling, ontology 선택, query pattern을 end to end로 다룹니다.</p>
+</div>
+ 심층적인 데크 링크 
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">더 깊게 보기</span>
+<h3>이 주제의 전체 과정 보기</h3>
+<p>이 글은 현장 노트입니다. 인터랙티브 deck은 knowledge graph, ontology, provenance를 diagram과 worked example로 slide by slide 설명합니다.</p>
+</div>
+<a class="btn btn-primary" href="../../../watsonx/index.html">deck 열기 <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+ 공유 
+<div class="share">
+<span class="lbl">공유</span>
+<button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">공유 / 링크 복사</button>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+</div>
+ 저자 바이오 카드(E-E-A-T) 
+<aside class="author-card">
+<span aria-hidden="true" class="avatar">AE</span>
+<div class="a-body">
+<div class="k">저자 소개</div>
+<h3>AI Edu Archive</h3>
+<p>물리학 박사(IGZO / graphene 반도체 물성)이며 증착 공정을 수행하는 반도체 공정 엔지니어입니다. 팹을 위한 air-gapped LLM, RAG, agent 시스템과 강화학습·이상탐지 도구를 구축합니다. 이곳에서는 공정 know-how를 네트워크 밖으로 나가지 않는 온프레미스 지식 자산으로 바꾸는 방법을 씁니다.</p>
+<a href="../about.html">저자에 대해 더 보기</a>
+</div>
+</aside>
+ 관련된 
+<section aria-label="관련 기사" class="related">
+<span class="eyebrow">계속 읽기</span>
+<h2>저널의 관련 글</h2>
+<div class="related-grid">
+<a class="rel-card" href="rag-over-sealed-documents.html">
+<span class="cat-tag">RAG</span>
+<h3>폐쇄망 내부 문서 위에 RAG 구축하기</h3>
+</a>
+<a class="rel-card" href="chunking-technical-docs.html">
+<span class="cat-tag">RAG</span>
+<h3>검색이 실제로 작동하도록 기술 문서 chunking하기</h3>
+</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>무료로 깊게, 열린 방식으로</h2>
+<p>강의와 저널의 모든 콘텐츠는 회원가입 없이 무료로 읽을 수 있습니다.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>탐색</h4>
+<a href="../../index.html">허브 홈</a>
+<a href="../../../index.html#courses">모든 강의</a>
+<a href="../index.html">저널</a>
+</div>
+<div class="foot-col">
+<h4>강의</h4>
+<a href="../../../overview/index.html">Fab AI</a>
+<a href="../../../watsonx/index.html">Air-gapped LLM</a>
+<a href="../../../llm_apply/LLM_slide.html">Enterprise LLM</a>
+</div>
+<div class="foot-col">
+<h4>사이트</h4>
+<a href="../about.html">소개</a>
+<a href="../contact.html">연락</a>
+<a href="../privacy.html">개인정보</a>
+<a href="../terms.html">이용약관</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · 열린 한국어 AI 교육</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig?fig.querySelector('pre'):null;
+      if(!code)return;
+      var text=code.innerText;
+      var done=function(){
+        btn.textContent='Copied';btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1600);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done,function(){});
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

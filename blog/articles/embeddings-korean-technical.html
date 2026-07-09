@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- ══ SEO ══════════════════════════════════════════════════════════ -->
+<title>Embeddings for Korean and technical text - AI Edu Archive Journal</title>
+<meta content="Choosing a local embedding model such as bge-m3 or multilingual-e5 for mixed Korean-English documents and technical jargon inside an air-gapped fab." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/embeddings-korean-technical.html" rel="canonical"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/embeddings-korean-technical.html" hreflang="ko" rel="alternate"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/embeddings-korean-technical.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+<!-- Open Graph -->
+<meta content="article" property="og:type"/>
+<meta content="Embeddings for Korean and technical text - AI Edu Archive Journal" property="og:title"/>
+<meta content="Choosing a local embedding model such as bge-m3 or multilingual-e5 for mixed Korean-English documents and technical jargon inside an air-gapped fab." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="https://ai-edu-archive.example.com/blog/articles/embeddings-korean-technical.html" property="og:url"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="ko_KR" property="og:locale:alternate"/>
+<meta content="2026-07-04" property="article:published_time"/>
+<meta content="AI Edu Archive" property="article:author"/>
+<meta content="RAG" property="article:section"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Embeddings for Korean and technical text - AI Edu Archive Journal" name="twitter:title"/>
+<meta content="Choosing a local embedding model such as bge-m3 or multilingual-e5 for mixed Korean-English documents and technical jargon inside an air-gapped fab." name="twitter:description"/>
+<!-- JSON-LD: Article schema -->
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Embeddings for Korean and technical text",
+  "description": "Choosing a local embedding model such as bge-m3 or multilingual-e5 for mixed Korean-English documents and technical jargon inside an air-gapped fab.",
+  "inLanguage": "en",
+  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/articles/embeddings-korean-technical.html"
+  },
+  "name": "Embeddings for Korean and technical text",
+  "url": "https://ai-edu-archive.example.com/blog/articles/embeddings-korean-technical.html"
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../assets/blog.css" rel="stylesheet"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/embeddings-korean-technical.html" hreflang="en" rel="alternate"/></head>
+<body data-cat="rag">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive — home" class="brand" href="../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="Primary" class="nav-links">
+<a href="../../index.html#courses">Courses</a>
+<a href="../index.html">Articles</a>
+<a href="../about.html">About</a>
+<div aria-label="Language selector" class="language-switch">
+<a aria-current="true" href="embeddings-korean-technical.html" lang="en" title="English">🇺🇸 EN</a>
+<a href="../ko/articles/embeddings-korean-technical.html" lang="ko" title="한국어">🇰🇷 KO</a>
+<a href="embeddings-korean-technical.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a>
+<a href="embeddings-korean-technical.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a>
+<a href="embeddings-korean-technical.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a>
+<a href="embeddings-korean-technical.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a>
+<a href="embeddings-korean-technical.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a>
+</div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article itemscope="" itemtype="https://schema.org/Article">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="Breadcrumb" class="breadcrumb">
+<a href="../../index.html">Home</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">Journal</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">Embeddings for Korean and technical text</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag">RAG</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-04" itemprop="datePublished">Jul 4, 2026</time>
+<span class="post-dot"></span>
+<span class="rt">10 min read</span>
+</div>
+<h1 itemprop="headline">Embeddings for Korean and technical text</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>Semiconductor process engineer · Air-gapped LLM / RAG / Agents</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="Table of contents" class="toc">
+<div class="toc-title">On this page</div>
+<ol>
+<li>Why the embedding model decides your RAG quality</li>
+<li>The two candidates: bge-m3 and multilingual-e5</li>
+<li>Mixed Korean-English and technical jargon</li>
+<li>Dimension, normalization, and similarity</li>
+<li>Loading a local model offline</li>
+<li>Evaluate before you commit</li>
+</ol>
+</nav>
+<div class="article-body" itemprop="articleBody">
+<p>The retriever is only as good as its vectors. In an air-gapped fab, you cannot call a hosted embedding API. The model weights have to live inside the network, on your own GPU. That constraint narrows the field and forces a decision many RAG tutorials skip: which embedding model actually understands your documents, including Korean, English, part numbers, chamber IDs, and internal abbreviations.</p>
+<h2 id="why">Why the embedding model decides your RAG quality</h2>
+<p>An embedding model maps text to a vector so that similar meaning lands nearby. Retrieval is nearest-neighbor search over those vectors. If the model places a Korean question far from the English passage that answers it, no amount of downstream prompt engineering can recover the missing chunk. When an on-prem RAG system feels weak, embedding choice is often the first thing to fix.</p>
+<blockquote>You can swap the LLM later. The embedding model silently defines the boundary of what your retriever can ever find.</blockquote>
+<h2 id="candidates">The two candidates: bge-m3 and multilingual-e5</h2>
+<p>For a Korean-English mix that must run fully offline, two open-weight families are the practical starting points. Both are usable under permissive licenses and small enough to serve on a single GPU.</p>
+<ul>
+<li>bge-m3 (BAAI): about 560M parameters, 1024-dimensional dense vectors, context up to 8192 tokens, and support for 100+ languages. It does not require a query instruction prefix, so queries and passages are embedded the same way.</li>
+<li>multilingual-e5-large (intfloat): also 1024-dimensional and strongly multilingual, but it requires prefixes. Every query should start with query: and every stored passage with passage:. Forget the prefix and similarity quality degrades quietly.</li>
+</ul>
+<p>Recent multilingual retrieval benchmarks often favor bge-m3 on Korean-heavy tasks, and its longer context helps when one SOP section exceeds what a 512-token model would keep. For a first air-gapped build, bge-m3 is the safer default. multilingual-e5 remains a useful second opinion when you evaluate on your own data.</p>
+<h2 id="jargon">Mixed Korean-English and technical jargon</h2>
+<p>General multilingual models handle ordinary bilingual text well. The fab-specific problem is vocabulary the model may never have seen: a chamber name such as PECVD-03B, a defect code, or an internal acronym. A subword tokenizer can fragment these terms, and documents that look obviously related to an engineer may land far apart in vector space. Three mitigations are practical, in order of effort.</p>
+<ul>
+<li>Keep identifiers in the chunk text. Do not strip part numbers, chamber IDs, or defect codes during preprocessing. They are strong retrieval anchors when a query names them exactly.</li>
+<li>Add a hybrid keyword channel. Pair dense vectors with BM25 or another sparse channel so exact-match terms such as lot IDs remain findable even when the dense model misses them.</li>
+<li>Fine-tune only if evaluation proves you need it. Domain fine-tuning is real work and a maintenance burden inside a sealed network. Treat it as a last resort, not the starting point.</li>
+</ul>
+<h2 id="normalize">Dimension, normalization, and similarity</h2>
+<p>Both models output 1024-dimensional vectors. Two settings matter more than the number itself.</p>
+<ul>
+<li>Normalize vectors. Set normalize_embeddings=True. When every vector has unit length, dot product and cosine similarity become equivalent, and many vector stores can use fast inner-product indexes.</li>
+<li>Stay consistent. Use the same metric for indexing and querying. If you change the embedding model, re-embed the entire corpus; old and new vector spaces are not comparable.</li>
+</ul>
+<figure>
+<div aria-label="Embedding and retrieval pipeline diagram" class="diagram">
+<svg aria-label="Korean-English SOP text is chunked, embedded by a local model into 1024-dim normalized vectors, indexed with cosine similarity, and retrieved by a query vector — all inside the air gap." role="img" viewbox="0 0 640 260" width="100%">
+<rect fill="#FCFBF8" height="258" rx="12" stroke="#E8E4DB" width="638" x="1" y="1"></rect>
+<rect fill="#F4EFE6" height="92" rx="9" stroke="#E0D6C4" width="600" x="20" y="150"></rect>
+<text fill="#8A6D3B" font-family="JetBrains Mono, monospace" font-size="13" x="36" y="172">air-gapped network · 폐쇄망</text>
+<rect fill="#FFFFFF" height="60" rx="8" stroke="#DBD5C8" width="120" x="34" y="66"></rect>
+<text fill="#3A3833" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="94" y="92">한/EN SOP</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="94" y="110">chunks</text>
+<rect fill="#FFFFFF" height="60" rx="8" stroke="#DBD5C8" width="130" x="196" y="66"></rect>
+<text fill="#3A3833" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="261" y="90">bge-m3</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="261" y="110">local weights</text>
+<rect fill="#FFFFFF" height="60" rx="8" stroke="#DBD5C8" width="130" x="368" y="66"></rect>
+<text fill="#3A3833" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="433" y="90">1024-dim</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="433" y="110">normalized</text>
+<rect fill="#FBEDE7" height="60" rx="8" stroke="#E4B7A3" width="104" x="516" y="66"></rect>
+<text fill="#C15F3C" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="568" y="90">vector</text>
+<text fill="#C15F3C" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="568" y="110">index</text>
+<line marker-end="url(#ar)" stroke="#C7BFAE" stroke-width="2" x1="154" x2="194" y1="96" y2="96"></line>
+<line marker-end="url(#ar)" stroke="#C7BFAE" stroke-width="2" x1="326" x2="366" y1="96" y2="96"></line>
+<line marker-end="url(#ar)" stroke="#C7BFAE" stroke-width="2" x1="498" x2="514" y1="96" y2="96"></line>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="320" y="200">query → same model → cosine nearest-neighbor → top-k chunks</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="320" y="222">질의 → 동일 모델 → 코사인 최근접 → 상위 k개</text>
+<defs>
+<marker id="ar" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="3">
+<path d="M0 0 L6 3 L0 6 Z" fill="#C7BFAE"></path>
+</marker>
+</defs>
+</svg>
+</div>
+<figcaption>Figure 1. The whole embedding and retrieval loop stays inside the air gap. Weights load from local disk, and runtime never downloads from the internet.</figcaption>
+</figure>
+<h2 id="code">Loading a local model offline</h2>
+<p>The current non-deprecated way to run Hugging Face embedding models through LangChain is the dedicated langchain-huggingface package. Point it at the local directory where you copied the weights. Runtime should not call the network.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">Python</span>
+            embeddings_hf.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># Local bge-m3 via the current langchain-huggingface package</span>
+<span class="tok-com"># pip install langchain-huggingface (pulls sentence-transformers)</span>
+<span class="tok-kw">from</span> langchain_huggingface <span class="tok-kw">import</span> HuggingFaceEmbeddings
+
+embed = <span class="tok-fn">HuggingFaceEmbeddings</span>(
+    model_name=<span class="tok-str">"/opt/models/bge-m3"</span>,          <span class="tok-com"># weights on local disk</span>
+    model_kwargs={<span class="tok-str">"device"</span>: <span class="tok-str">"cuda"</span>},
+    encode_kwargs={<span class="tok-str">"normalize_embeddings"</span>: <span class="tok-kw">True</span>},  <span class="tok-com"># unit length → cosine</span>
+)
+
+vec = embed.<span class="tok-fn">embed_query</span>(<span class="tok-str">"PECVD-03B 챔버 압력 이상 대응 절차"</span>)
+<span class="tok-fn">print</span>(<span class="tok-fn">len</span>(vec))  <span class="tok-com"># 1024</span></code></pre>
+</figure>
+<p>bge-m3 does not require query or passage prefixes, so embed_query and embed_documents can receive raw text. If you choose multilingual-e5 instead, you must add prefixes yourself before embedding. Forgetting query: and passage: is a quiet failure mode.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">Python</span>
+            embeddings_e5_prefix.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># multilingual-e5 REQUIRES query:/passage: prefixes</span>
+<span class="tok-kw">from</span> langchain_huggingface <span class="tok-kw">import</span> HuggingFaceEmbeddings
+
+e5 = <span class="tok-fn">HuggingFaceEmbeddings</span>(
+    model_name=<span class="tok-str">"/opt/models/multilingual-e5-large"</span>,
+    encode_kwargs={<span class="tok-str">"normalize_embeddings"</span>: <span class="tok-kw">True</span>},
+)
+
+<span class="tok-kw">def</span> <span class="tok-fn">embed_passages</span>(texts):
+    <span class="tok-kw">return</span> e5.<span class="tok-fn">embed_documents</span>([<span class="tok-str">f"passage: {t}"</span> <span class="tok-kw">for</span> t <span class="tok-kw">in</span> texts])
+
+<span class="tok-kw">def</span> <span class="tok-fn">embed_question</span>(q):
+    <span class="tok-kw">return</span> e5.<span class="tok-fn">embed_query</span>(<span class="tok-str">f"query: {q}"</span>)</code></pre>
+</figure>
+<p>If your shop has standardized on local models served by Ollama, embedding models can also be reached through langchain-ollama. Use the dedicated package rather than older community imports.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">Python</span>
+            embeddings_ollama.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># Same weights served by a local Ollama instance</span>
+<span class="tok-com"># pip install langchain-ollama</span>
+<span class="tok-kw">from</span> langchain_ollama <span class="tok-kw">import</span> OllamaEmbeddings
+
+embed = <span class="tok-fn">OllamaEmbeddings</span>(
+    model=<span class="tok-str">"bge-m3"</span>,
+    base_url=<span class="tok-str">"http://127.0.0.1:11434"</span>,  <span class="tok-com"># stays on the host</span>
+)
+
+vecs = embed.<span class="tok-fn">embed_documents</span>([<span class="tok-str">"증착 공정 SOP"</span>, <span class="tok-str">"deposition recipe"</span>])</code></pre>
+</figure>
+<p>Then wire the chosen embedder into a local vector store. Chroma now lives in the langchain-chroma package; older langchain_community.vectorstores imports are deprecated.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">Python</span>
+            index_local.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># pip install langchain-chroma</span>
+<span class="tok-kw">from</span> langchain_chroma <span class="tok-kw">import</span> Chroma
+
+store = Chroma.<span class="tok-fn">from_documents</span>(
+    docs, embed,                              <span class="tok-com"># embed from the snippets above</span>
+    collection_metadata={<span class="tok-str">"hnsw:space"</span>: <span class="tok-str">"cosine"</span>},  <span class="tok-com"># match normalization</span>
+    persist_directory=<span class="tok-str">"/data/kb"</span>,             <span class="tok-com"># on-prem, no egress</span>
+)
+hits = store.<span class="tok-fn">similarity_search</span>(<span class="tok-str">"챔버 압력 이상"</span>, k=<span class="tok-num">4</span>)</code></pre>
+</figure>
+<h2 id="evaluate">Evaluate before you commit</h2>
+<p>Do not pick the model from a leaderboard alone. Assemble 30-50 real questions engineers ask, in the languages they actually use, and record which SOP section should answer each one. Then measure whether each candidate retrieves that section in top-k. This small evaluation set is one of the most valuable artifacts in the project.</p>
+<hr/>
+<p>Embeddings are the quiet foundation of on-prem RAG. Get the model, normalization, and jargon handling right, and the rest of the pipeline has stable ground to stand on. The full course below walks the retrieval stack end to end.</p>
+</div>
+<!-- deep-dive deck link -->
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">Go deeper</span>
+<h3>Take the full course on air-gapped LLM and RAG</h3>
+<p>This article is a field note. The interactive deck walks the whole retrieval and embedding stack slide by slide, with diagrams and worked examples.</p>
+</div>
+<a class="btn btn-primary" href="../../watsonx/index.html">Open the deck <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+<!-- share -->
+<div class="share">
+<span class="lbl">Share</span>
+<button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+</div>
+<!-- author bio card (E-E-A-T) -->
+<aside class="author-card">
+<span aria-hidden="true" class="avatar">AE</span>
+<div class="a-body">
+<div class="k">About the author</div>
+<h3>AI Edu Archive</h3>
+<p>PhD in physics (IGZO / graphene semiconductor properties) and a semiconductor process engineer working on deposition. Builds air-gapped LLM, RAG, and agent systems, plus reinforcement-learning and anomaly-detection tooling, for the fab. Writes here about turning process know-how into on-prem knowledge assets without letting it leave the network.</p>
+<a href="../about.html">More about the author →</a>
+</div>
+</aside>
+<!-- related -->
+<section aria-label="Related articles" class="related">
+<span class="eyebrow">Keep reading</span>
+<h2>Related from the Journal</h2>
+<div class="related-grid">
+<a class="rel-card" href="rag-over-sealed-documents.html">
+<span class="cat-tag">RAG</span>
+<h3>RAG over sealed documents: search inside the air gap</h3>
+</a>
+<a class="rel-card" href="why-air-gapped-llm-manufacturing.html">
+<span class="cat-tag">On-Prem LLM</span>
+<h3>Why air-gapped LLM fits manufacturing</h3>
+</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>Free, in-depth, and open.</h2>
+<p>Everything here, courses and journal alike, is free to read with no signup.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>Explore</h4>
+<a href="../../index.html">Hub home</a>
+<a href="../../index.html#courses">All courses</a>
+<a href="../index.html">Journal</a>
+</div>
+<div class="foot-col">
+<h4>Courses</h4>
+<a href="../../overview/index.html">Fab AI</a>
+<a href="../../watsonx/index.html">Air-gapped LLM</a>
+<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
+</div>
+<div class="foot-col">
+<h4>Site</h4>
+<a href="../about.html">About</a>
+<a href="../contact.html">Contact</a>
+<a href="../privacy.html">Privacy</a>
+<a href="../terms.html">Terms</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig?fig.querySelector('pre'):null;
+      if(!code)return;
+      var text=code.innerText;
+      var done=function(){
+        btn.textContent='Copied';btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1600);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done,function(){});
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

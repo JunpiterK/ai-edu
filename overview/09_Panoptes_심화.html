@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>가상 계측(VM) 심화 — Panoptes 공개 사례</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700;800&family=Noto+Serif+KR:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#15202A;--ink2:#2A3942;--bg:#EEF2F5;--line:#D5DEE4;--line2:#C6D2DA;--teal:#0E7C72;--teal-d:#0B6258;--mint:#5EC8BC;--tint:#E1F0EE;--tint2:#F2F6F8;--muted:#7A8893;--muted2:#5A6873;--muted3:#46545E;--red:#B0392E;--amber:#C77D2E;--purple:#7A5BD0;--mono:'JetBrains Mono','Consolas',monospace;--sans:'Noto Sans KR',system-ui,sans-serif;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden;background:#0c1116;font-family:var(--sans);color:var(--ink)}
+  .deck{position:fixed;inset:0;background:#0c1116;overflow:hidden}
+  .stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform:translate(-50%,-50%);transform-origin:center center}
+  .slide{position:absolute;inset:0;opacity:0;visibility:hidden;background:var(--bg);display:flex;flex-direction:column;overflow:hidden;transition:opacity .5s ease}
+  .slide.active{opacity:1;visibility:visible} .slide.dark{background:var(--ink);color:#fff}
+  .bar{display:flex;align-items:center;gap:16px;padding:24px 90px;background:#fff;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:23px;letter-spacing:.1em;color:var(--teal)}
+  .bar .sq{width:10px;height:10px;background:var(--teal);display:inline-block} .bar .r{margin-left:auto;color:var(--muted)}
+  .body{flex:1;padding:44px 90px;display:flex;flex-direction:column;justify-content:center}
+  h2.t{font-weight:700;letter-spacing:-.02em;line-height:1.12;color:var(--ink);font-size:46px}
+  .eyebrow{font-family:var(--mono);font-size:24px;letter-spacing:.1em;color:var(--teal)}
+  .lede{font-size:29px;line-height:1.55;color:var(--ink2)} p.s{font-size:24px;line-height:1.5;color:var(--muted2)}
+  strong{color:var(--ink)} em{font-style:italic}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px} .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px} .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .card{background:#fff;border:1px solid var(--line);padding:22px 26px} .card.t{border-top:4px solid var(--teal)} .card.l{border-left:5px solid var(--teal)}
+  .card h4{font-size:23px;font-weight:700;margin-bottom:9px} .card p{font-size:20px;line-height:1.45;color:var(--muted3)}
+  .k{font-family:var(--mono);font-size:20px;color:var(--teal)}
+  .dark-box{background:var(--ink);color:#fff;padding:22px 34px;display:flex;gap:16px;align-items:center} .dark-box .lab{font-family:var(--mono);font-size:21px;color:var(--mint);flex-shrink:0} .dark-box span.x{font-size:23px;line-height:1.5}
+  .tealbox{background:var(--tint);border:1px solid #9FD3CC;padding:20px 28px}
+  .tag{display:inline-block;font-family:var(--mono);font-size:18px;padding:5px 13px;background:var(--tint);color:var(--teal-d);border:1px solid #9FD3CC;margin:3px} .tag.d{background:#fff;color:var(--muted3);border-color:var(--line2)}
+  .codebox{background:var(--ink);color:#E5F4F1;font-family:var(--mono);font-size:20px;line-height:1.6;padding:22px 28px;white-space:pre-wrap} .codebox .g{color:var(--mint)} .codebox .m{color:var(--muted)} .codebox .r{color:#F0B6AC} .codebox .y{color:#E8C98A}
+  table.tb{width:100%;border-collapse:collapse;font-size:21px} table.tb th{background:var(--ink);color:#fff;font-family:var(--mono);font-size:18px;font-weight:500;padding:13px 16px;text-align:left;letter-spacing:.04em} table.tb td{padding:12px 16px;border-bottom:1px solid var(--line);color:var(--ink2)} table.tb tr:nth-child(even) td{background:#fff} table.tb .mono{font-family:var(--mono);color:var(--teal-d)}
+  .pill{display:inline-block;font-family:var(--mono);font-size:16px;padding:3px 11px;border-radius:999px;font-weight:700}
+  .p-a{background:#E1F0EE;color:#0B6258;border:1px solid #9FD3CC} .p-b{background:#FBEDD9;color:#9A5A14;border:1px solid #E6C089} .p-x{background:#F3E4E1;color:#8E2E25;border:1px solid #DDA9A1}
+  .note{font-size:20px;color:var(--muted);font-style:italic}
+  .body.sim{justify-content:flex-start;padding-top:26px} .slide.active .body.sim>*{animation:none}
+  .controls{display:flex;align-items:center;gap:12px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+  .btn{font-family:var(--mono);font-size:19px;padding:10px 20px;border:none;border-radius:8px;background:var(--teal);color:#fff;cursor:pointer;transition:background .15s} .btn:hover{background:var(--teal-d)} .btn.sec{background:#fff;color:var(--ink2);border:1px solid var(--line2)} .btn.sec:hover{background:var(--tint2)} .btn.on{background:var(--ink)}
+  .stat{font-family:var(--mono);font-size:19px;color:var(--ink2);background:#fff;border:1px solid var(--line);padding:9px 16px;border-radius:8px} .stat b{color:var(--teal-d)}
+  .simbox{background:#fff;border:1px solid var(--line);margin-top:8px}
+  .navbar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;background:#000;color:#fff;border-radius:999px;padding:6px;font-family:var(--mono);font-size:15px;z-index:50;opacity:.85}
+  .navbar button{background:transparent;border:none;color:#fff;font-size:16px;cursor:pointer;padding:6px 12px;border-radius:999px} .navbar button:hover{background:rgba(255,255,255,.15)} .navbar .ct{padding:0 10px} .navbar .kb{opacity:.5;font-size:13px;padding-left:8px;border-left:1px solid rgba(255,255,255,.2);margin-left:4px}
+  .deck.presenting .navbar{display:none}
+  #gate{display:none} #gate svg{width:100%;height:100%;display:block}
+  #gate .hint{position:absolute;bottom:5.5%;left:0;right:0;text-align:center;font-family:var(--mono);font-size:24px;letter-spacing:2px;color:var(--mint);animation:pulse 1.9s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.4}50%{opacity:.95}}
+  .card{transition:transform .22s ease, box-shadow .22s ease} .card:hover{transform:translateY(-5px);box-shadow:0 12px 30px rgba(21,32,42,.12)}
+  .slide.active .body>*{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
+  .slide.active .body>*:nth-child(2){animation-delay:.07s}.slide.active .body>*:nth-child(3){animation-delay:.14s}.slide.active .body>*:nth-child(4){animation-delay:.21s}.slide.active .body>*:nth-child(5){animation-delay:.28s}
+  @keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  #gate g circle{animation:nodepulse 2.2s ease-in-out infinite} @keyframes nodepulse{0%,100%{opacity:1}50%{opacity:.45}}
+  .progress{position:fixed;left:0;top:0;height:4px;width:0;background:linear-gradient(90deg,#0E7C72,#5EC8BC);z-index:60;transition:width .5s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 12px rgba(94,200,188,.55)}
+  @media (prefers-reduced-motion:reduce){.slide.active .body>*,#gate g circle{animation:none}}
+.eduhome{position:fixed;left:16px;top:14px;z-index:80;font-family:var(--mono),monospace;font-size:15px;color:#fff;background:rgba(21,32,42,.85);border:1px solid rgba(255,255,255,.22);padding:7px 14px;border-radius:999px;text-decoration:none;opacity:.55;transition:opacity .15s} .eduhome:hover{opacity:1} .deck.presenting .eduhome{display:none}
+</style>
+</head>
+<body>
+<div class="deck" id="deck"><a class="eduhome" href="../" title="AI EDU 자료실로 돌아가기">⌂ 자료실</a><div class="stage" id="stage">
+
+  <!-- COVER -->
+  <section class="slide dark" data-label="표지">
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 110px;position:relative;overflow:hidden">
+      <svg viewBox="0 0 1920 1080" style="position:absolute;inset:0;width:100%;height:100%;opacity:.5" preserveAspectRatio="xMidYMid slice"><defs><pattern id="g" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#22323d" stroke-width="1"/></pattern></defs><rect width="1920" height="1080" fill="url(#g)"/><g opacity=".5"><circle cx="1560" cy="280" r="120" fill="none" stroke="#0E7C72" stroke-width="1.5"/><circle cx="1560" cy="280" r="70" fill="none" stroke="#5EC8BC" stroke-width="1.5"/><circle cx="1560" cy="280" r="14" fill="#5EC8BC"/><line x1="1560" y1="160" x2="1560" y2="400" stroke="#0E7C72" stroke-width="1"/><line x1="1440" y1="280" x2="1680" y2="280" stroke="#0E7C72" stroke-width="1"/></g></svg>
+      <div style="position:relative">
+        <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:24px;color:var(--mint);letter-spacing:.06em;margin-bottom:54px"><span>AI × FAB · Case Study 09</span><span style="color:var(--muted)">공개 사실만 · 추측 금지</span></div>
+        <div style="display:inline-flex;align-items:center;gap:14px;font-family:var(--mono);font-size:26px;letter-spacing:.1em;color:var(--teal);margin-bottom:28px"><span style="width:12px;height:12px;background:var(--teal);display:inline-block"></span>가상 계측(VM) 심화 · Panoptes 공개 사례</div>
+        <h1 style="font-size:78px;font-weight:800;letter-spacing:-.03em;line-height:1.06;color:#F4F6F8">측정하지 않고<br><span style="color:var(--mint)">측정값을 추정</span>한다</h1>
+        <p style="margin-top:30px;max-width:1480px;font-size:30px;line-height:1.6;color:#AFC0CA">SK hynix <strong style="color:#fff">Panoptes</strong>는 공개된 VM 사례입니다. 이 자료는 <strong style="color:#fff">외부에서 검증 가능한 사실</strong>과 학술 일반론만 다루고, 비공개 내부는 추측하지 않습니다.</p>
+        <div style="margin-top:42px"><span class="tag" style="font-size:20px;padding:7px 16px;background:rgba(14,124,114,.15);color:#5EC8BC;border-color:#0E7C72">가상 계측 VM</span><span class="tag d" style="font-size:20px;padding:7px 16px;background:transparent;color:#9FB2BD;border-color:#3a4f5a">아키텍처</span><span class="tag d" style="font-size:20px;padding:7px 16px;background:transparent;color:#9FB2BD;border-color:#3a4f5a">알고리즘</span><span class="tag d" style="font-size:20px;padding:7px 16px;background:transparent;color:#9FB2BD;border-color:#3a4f5a">신뢰도 보정</span></div>
+        <div style="margin-top:36px;font-family:var(--mono);font-size:21px;color:var(--muted)">신경망 원리 → 07 · VM 한 줄 소개 → 01·02</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 공개된 것 -->
+  <section class="slide" data-label="공개 사실">
+    <div class="bar"><span class="sq"></span>① 무엇이 공개되었나<span class="r">사실 vs 추측</span></div>
+    <div class="body">
+      <h2 class="t">Panoptes — 외부에서 확인 가능한 것만</h2>
+      <div class="grid2" style="margin-top:22px;align-items:stretch">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="card l"><h4>이름의 어원</h4><p>그리스 신화 <em>판옵테스</em>(100개의 눈을 가진 거인) — "모든 wafer를 다 본다"는 VM의 지향을 담은 작명.</p></div>
+          <div class="card l"><h4><span class="pill p-a">검증 가능</span> &nbsp;공개 사실</h4><p>SK hynix가 자체 VM 시스템을 <strong>Panoptes</strong>로 부르며 운영한다고 공개 발표·기사에서 언급. "계측을 줄이고 AI로 추정"이라는 방향성.</p></div>
+          <div class="card l"><h4><span class="pill p-b">부분 공개</span> &nbsp;개략 정보</h4><p>VM이 수율·생산성에 기여한다는 정성적 언급 — 구체 수치·구조는 대부분 비공개.</p></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;justify-content:center">
+          <div class="dark-box" style="border-left:5px solid var(--red)"><span class="lab" style="color:#F0B6AC">추측 금지</span><span class="x"><span class="pill p-x">비공개</span> 모델 구조·정확도 수치·센서 목록·학습 규모는 <strong style="color:#fff">공개되지 않았습니다.</strong> 이 자료는 그 영역을 <strong style="color:var(--mint)">지어내지 않습니다.</strong></span></div>
+          <div class="tealbox"><div class="k" style="margin-bottom:8px">그래서 이 자료가 가르치는 것</div><div style="font-size:22px;color:var(--ink2);line-height:1.5">Panoptes라는 이름을 빌려, <strong>VM이 일반적으로 어떻게 동작하는가</strong>(학술·산업 표준)를 배웁니다. 특정 회사의 비밀이 아니라 <strong>VM이라는 기술 그 자체</strong>.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 왜 VM -->
+  <section class="slide" data-label="왜 VM">
+    <div class="bar"><span class="sq"></span>② 왜 VM인가<span class="r">측정 부담</span></div>
+    <div class="body">
+      <h2 class="t">왜 VM이 필요한가 — 측정의 두 손실</h2>
+      <div class="grid3" style="margin-top:24px;align-items:stretch">
+        <div class="card t"><div class="k">현실</div><h4 style="margin-top:6px">전수 계측은 불가</h4><p>한 lot의 모든 wafer를 다 재면 <strong>느리고 비쌈</strong>. 그래서 일부만 표본 측정.</p></div>
+        <div class="card t"><div class="k">손실 ①</div><h4 style="margin-top:6px">못 본 wafer</h4><p>표본 사이의 wafer는 <strong>측정값이 없음</strong> → 이상이 늦게 발견.</p></div>
+        <div class="card t"><div class="k">손실 ②</div><h4 style="margin-top:6px">지연된 피드백</h4><p>계측 대기 동안 같은 오차가 <strong>계속 누적</strong> → 제어가 늦음.</p></div>
+      </div>
+      <div class="dark-box" style="margin-top:22px"><span class="lab">VM의 해법</span><span class="x">공정 센서값으로 <strong style="color:var(--mint)">매 wafer의 측정값을 즉시 추정</strong> → 측정 안 한 wafer도 추정치 확보, 피드백(APC)을 빠르게. 미세화로 공차가 줄수록 이 압력은 커집니다.</span></div>
+    </div>
+  </section>
+
+  <!-- 일반 아키텍처 -->
+  <section class="slide" data-label="아키텍처">
+    <div class="bar"><span class="sq"></span>③ 일반 아키텍처<span class="r">학술 표준</span></div>
+    <div class="body">
+      <h2 class="t">VM 일반 데이터 플로우 — 학술 표준 구조</h2>
+      <div class="grid2" style="margin-top:22px;align-items:stretch">
+        <div class="codebox">[장비 센서/FDC]  ── 공정 중 신호
+        ↓ 특징 추출(요약 통계)
+   <span class="g">특징 벡터 (수십~수백)</span>
+        ↓
+   [VM 모델]  ── 신경망/트리/회귀
+        ↓
+   <span class="y">추정 측정값 + 신뢰도</span>
+        ↓
+   ┌───────────┴───────────┐
+ [APC 피드백]        [실측과 비교 시
+ 즉시 보정            → 모델 보정]</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="card l"><h4>입력 — wafer 한 장의 흔적</h4><p>압력·온도·RF·가스유량 시계열을 <strong>요약 특징</strong>으로. wafer마다 고유한 "공정 지문".</p></div>
+          <div class="card l"><h4>출력 — 추정값 + 신뢰도</h4><p>두께 등 추정치 <strong>하나만</strong>이 아니라 "<strong>얼마나 믿을만한가</strong>"를 함께 — 이게 운영의 핵심.</p></div>
+          <div class="card l"><h4>폐루프 — 가끔의 실측으로 보정</h4><p>드물게 실제 계측과 비교해 <strong>드리프트를 추적</strong>하고 모델을 갱신.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 알고리즘 일반 -->
+  <section class="slide" data-label="알고리즘">
+    <div class="bar"><span class="sq"></span>④ 알고리즘<span class="r">학계·산업 일반</span></div>
+    <div class="body">
+      <h2 class="t">VM 알고리즘 일반 — 자주 쓰이는 4가지</h2>
+      <table class="tb" style="margin-top:22px">
+        <tr><th>계열</th><th>대표</th><th>장점</th><th>약점</th></tr>
+        <tr><td class="mono">선형/정규화 회귀</td><td>PLS, Ridge</td><td>해석 쉬움·빠름·안정</td><td>비선형 관계 약함</td></tr>
+        <tr><td class="mono">트리 부스팅</td><td>XGBoost·LightGBM</td><td>표 데이터 강함, SHAP로 설명</td><td>외삽·시계열에 약함</td></tr>
+        <tr><td class="mono">신경망</td><td>MLP·CNN·시계열망</td><td>복잡한 비선형, 대용량</td><td>데이터·튜닝 부담, 설명성</td></tr>
+        <tr><td class="mono">가우시안 프로세스</td><td>GP 회귀</td><td><strong>불확실성</strong>을 자연히 출력</td><td>대규모에 비용 큼</td></tr>
+      </table>
+      <div class="tealbox" style="margin-top:20px"><div class="k" style="margin-bottom:6px">한 예측이 만들어지는 과정 (개념)</div><div style="font-size:22px;color:var(--ink2);line-height:1.5">센서 특징 → 모델 → 추정 두께 + "이 추정의 신뢰구간". 신경망 계열이면 그 안은 곧 <strong>07의 행렬곱·역전파</strong>입니다.</div></div>
+      <p class="note" style="margin-top:12px">특정 제품이 어떤 알고리즘을 쓰는지는 비공개 — 위는 학술·산업에서 일반적인 선택지입니다.</p>
+    </div>
+  </section>
+
+  <!-- 신뢰도 보정 -->
+  <section class="slide" data-label="신뢰도 보정">
+    <div class="bar"><span class="sq"></span>④ 알고리즘<span class="r">Calibration</span></div>
+    <div class="body">
+      <h2 class="t">신뢰도 보정 — VM에서 진짜 어려운 부분</h2>
+      <div class="grid2" style="margin-top:22px;align-items:stretch">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="card l"><h4>왜 정확도보다 신뢰도?</h4><p>VM 추정으로 <strong>실측을 건너뛸지</strong>를 결정해야 함. "이 추정 믿어도 되나"가 틀리면 불량을 놓침 → <strong>신뢰도 자체가 정확해야</strong>.</p></div>
+          <div class="card l"><h4>보정(Calibration)이란</h4><p>"90% 확신"이라고 말한 예측이 <strong>실제로 90% 맞아야</strong> 보정된 모델. 과신·과소신을 교정.</p></div>
+          <div class="dark-box"><span class="lab">운영</span><span class="x">신뢰도 높으면 실측 생략, 낮으면 <strong style="color:var(--mint)">실측으로 회부</strong> — 측정 부담을 줄이면서 안전을 지키는 손잡이.</span></div>
+        </div>
+        <div class="codebox">예측: 두께 = 21.3 nm
+신뢰도: <span class="g">0.94</span>  → 실측 생략 OK
+
+예측: 두께 = 19.8 nm
+신뢰도: <span class="r">0.61</span>  → <span class="y">실측으로 회부</span>
+
+<span class="m"># 보정 점검</span>
+"0.9 확신" 예측들 중
+  실제 적중률이 ~0.9 인가?
+   YES → 신뢰 가능한 손잡이
+   NO  → <span class="r">재보정 필요</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ★ 캘리브레이션 LIVE -->
+  <section class="slide" data-label="캘리브레이션 LIVE">
+    <div class="bar"><span class="sq"></span>★ 캘리브레이션 LIVE<span class="r">보정된 모델 vs 과신 모델</span></div>
+    <div class="body sim no-advance">
+      <h2 class="t" style="font-size:36px;text-align:center">신뢰도 곡선 — "90% 확신"이 정말 90% 맞는가</h2>
+      <div style="display:flex;gap:46px;justify-content:center;align-items:flex-start;margin-top:16px">
+        <div class="simbox no-advance" style="padding:14px"><svg id="caSvg" viewBox="0 0 440 400" style="width:440px;height:400px;display:block"></svg></div>
+        <div style="width:660px;display:flex;flex-direction:column;gap:14px">
+          <div class="controls" style="justify-content:flex-start;margin-top:0">
+            <button class="btn on" id="caCal">보정된 모델</button>
+            <button class="btn sec" id="caOver">과신 모델</button>
+          </div>
+          <div class="card l"><h4>읽는 법</h4><p>점이 <strong>대각선 위</strong>면 = 말한 신뢰도 = 실제 적중률 → <strong>보정됨</strong>. 대각선 <strong>아래로 처지면</strong> = 과신(말은 90%인데 실제 70%).</p></div>
+          <div class="stat" id="caEce" style="font-size:20px">보정 오차(ECE): <b>—</b></div>
+          <div class="dark-box" id="caRoute"><span class="lab">운영 영향</span><span class="x" id="caRouteX">—</span></div>
+          <p class="note">과신 모델은 "믿어도 된다"고 잘못 말해 <strong>실측을 생략</strong>시키고 → 불량을 놓칩니다. 그래서 정확도보다 <strong>보정</strong>이 먼저.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 운영 패턴 -->
+  <section class="slide" data-label="운영 패턴">
+    <div class="bar"><span class="sq"></span>⑤ 운영<span class="r">wafer 1장의 여정</span></div>
+    <div class="body">
+      <h2 class="t">wafer 1장이 VM을 통과하는 일반 흐름</h2>
+      <div class="grid4" style="margin-top:24px;align-items:stretch">
+        <div class="card t"><div class="k">1</div><h4 style="margin-top:6px">공정 + 수집</h4><p>장비가 처리하며 <strong>센서 신호</strong>를 실시간 기록.</p></div>
+        <div class="card t"><div class="k">2</div><h4 style="margin-top:6px">추정</h4><p>특징 추출 → 모델이 <strong>측정값 + 신뢰도</strong> 출력 (ms).</p></div>
+        <div class="card t"><div class="k">3</div><h4 style="margin-top:6px">분기</h4><p>신뢰도↑ → 통과 / 신뢰도↓ → <strong>실측 회부</strong>.</p></div>
+        <div class="card t"><div class="k">4</div><h4 style="margin-top:6px">피드백·보정</h4><p>추정으로 <strong>APC 보정</strong>, 실측 들어오면 모델 갱신.</p></div>
+      </div>
+      <div class="dark-box" style="margin-top:22px"><span class="lab">효과</span><span class="x">측정 안 한 wafer도 추정치 확보 → <strong style="color:var(--mint)">사각지대 축소 + 빠른 피드백</strong>. 이것이 VM(그리고 Panoptes 같은 시스템)이 노리는 가치입니다.</span></div>
+    </div>
+  </section>
+
+  <!-- 요약 -->
+  <section class="slide dark" data-label="요약">
+    <div class="body" style="justify-content:center">
+      <div class="eyebrow" style="color:var(--mint)">VM 심화 정리</div>
+      <h2 style="font-size:50px;font-weight:800;color:#fff;margin-top:16px;line-height:1.2">"공개 사실 + 학술 일반론"으로 배운 VM</h2>
+      <div style="margin-top:34px;display:grid;grid-template-columns:repeat(2,1fr);gap:18px;max-width:1560px">
+        <div style="border:1px solid #2C3A44;border-left:4px solid #0E7C72;padding:20px 26px"><div class="k" style="color:var(--mint)">왜</div><div style="font-size:21px;color:#C9D6DC;margin-top:8px;line-height:1.5">전수 측정 불가 → 못 본 wafer·지연 피드백 손실을 VM이 메운다</div></div>
+        <div style="border:1px solid #2C3A44;border-left:4px solid #0E7C72;padding:20px 26px"><div class="k" style="color:var(--mint)">어떻게</div><div style="font-size:21px;color:#C9D6DC;margin-top:8px;line-height:1.5">센서 특징 → 모델 → 추정값 + 신뢰도 → 분기·보정 폐루프</div></div>
+        <div style="border:1px solid #2C3A44;border-left:4px solid #0E7C72;padding:20px 26px"><div class="k" style="color:var(--mint)">핵심 난점</div><div style="font-size:21px;color:#C9D6DC;margin-top:8px;line-height:1.5">정확도보다 <strong style="color:#fff">신뢰도 보정</strong> — 실측 생략 판단의 토대</div></div>
+        <div style="border:1px solid #2C3A44;border-left:4px solid #5EC8BC;padding:20px 26px"><div class="k" style="color:var(--mint)">태도</div><div style="font-size:21px;color:#C9D6DC;margin-top:8px;line-height:1.5">비공개 영역은 <strong style="color:#fff">추측하지 않는다</strong> — 사실과 일반론만</div></div>
+      </div>
+      <p style="font-size:26px;color:#AFC0CA;margin-top:34px;max-width:1560px;line-height:1.6">VM 모델 내부의 신경망·역전파를 직접 보려면 → <strong style="color:#fff">07 · 신경망_역전파_LIVE</strong>. 알고리즘 계보 → <strong style="color:#fff">03·11</strong>.</p>
+    </div>
+  </section>
+
+</div><!-- /stage --></div>
+<div class="progress" id="prog"></div>
+<div class="navbar" id="navbar"><button id="prev">‹</button><span class="ct"><b id="cur">1</b> / <span id="tot">1</span></span><button id="next">›</button><span class="kb">← → 이동 · R 처음 · F5 전체화면</span></div>
+<div id="gate">
+  <svg viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid meet"><defs><pattern id="gg" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#22323d" stroke-width="1"/></pattern></defs><rect width="1280" height="720" fill="#15202A"/><rect width="1280" height="720" fill="url(#gg)" opacity=".45"/><g opacity=".55"><circle cx="1050" cy="200" r="95" fill="none" stroke="#0E7C72" stroke-width="1.5"/><circle cx="1050" cy="200" r="55" fill="none" stroke="#5EC8BC" stroke-width="1.5"/><circle cx="1050" cy="200" r="11" fill="#5EC8BC"/><line x1="1050" y1="105" x2="1050" y2="295" stroke="#0E7C72" stroke-width="1"/><line x1="955" y1="200" x2="1145" y2="200" stroke="#0E7C72" stroke-width="1"/></g>
+  <rect x="80" y="61" width="13" height="13" fill="#0E7C72"/><text x="105" y="73" font-family="'JetBrains Mono',monospace" font-size="21" letter-spacing="1.5" fill="#5EC8BC">AI × FAB · Case Study 09</text>
+  <rect x="81" y="291" width="11" height="11" fill="#0E7C72"/><text x="103" y="302" font-family="'JetBrains Mono',monospace" font-size="23" letter-spacing="2" fill="#0E7C72">가상 계측(VM) 심화 · Panoptes 공개 사례</text>
+  <text x="76" y="402" font-family="'Noto Sans KR',sans-serif" font-size="76" font-weight="800" letter-spacing="-2" fill="#F4F6F8">측정하지 않고</text>
+  <text x="76" y="496" font-family="'Noto Sans KR',sans-serif" font-size="76" font-weight="800" letter-spacing="-2" fill="#F4F6F8"><tspan fill="#5EC8BC">측정값을 추정</tspan>한다</text>
+  <text x="80" y="588" font-family="'JetBrains Mono',monospace" font-size="22" fill="#9FB2BD">공개 사실 + 학술 일반론 · 추측 금지</text>
+  <text x="80" y="652" font-family="'JetBrains Mono',monospace" font-size="20" letter-spacing="1" fill="#7A8893">VM 아키텍처 · 알고리즘 · 신뢰도 보정</text></svg>
+  <div class="hint">▶ 클릭 · Space · → 키로 시작 &nbsp;|&nbsp; F5 전체화면</div>
+</div>
+<script>
+(function(){
+  var stage=document.getElementById('stage'),deck=document.getElementById('deck');
+  function fit(){var s=Math.min(window.innerWidth/1920,window.innerHeight/1080);stage.style.transform='translate(-50%,-50%) scale('+s+')';}
+  window.addEventListener('resize',fit);fit();
+  var slides=[].slice.call(document.querySelectorAll('.slide')),idx=0;
+  document.getElementById('tot').textContent=slides.length;
+  var stoppers=[];
+  function go(n){idx=Math.max(0,Math.min(slides.length-1,n));for(var i=0;i<slides.length;i++)slides[i].classList.toggle('active',i===idx);document.getElementById('cur').textContent=idx+1;var pg=document.getElementById('prog');if(pg)pg.style.width=((idx+1)/slides.length*100)+'%';for(var s=0;s<stoppers.length;s++)stoppers[s]();}
+  go(0);
+  document.getElementById('prev').onclick=function(){go(idx-1)};document.getElementById('next').onclick=function(){go(idx+1)};
+  stage.addEventListener('click',function(e){if(e.target.closest('button,input,a,.sim,.no-advance,.navbar'))return;go(idx+1);});
+  var pres=false;function fsEl(){return document.fullscreenElement||document.webkitFullscreenElement;}
+  function setPres(v){pres=v;deck.classList.toggle('presenting',v);}
+  document.addEventListener('fullscreenchange',function(){setPres(!!fsEl());});document.addEventListener('webkitfullscreenchange',function(){setPres(!!fsEl());});
+  document.addEventListener('keydown',function(e){if(e.metaKey||e.ctrlKey||e.altKey)return;var k=e.key;
+    if(k==='F5'||e.keyCode===116){e.preventDefault();if(pres||fsEl()){if(fsEl())(document.exitFullscreen||document.webkitExitFullscreen).call(document);else setPres(false);}else{var el=deck;var r=el.requestFullscreen||el.webkitRequestFullscreen;if(r){try{var p=r.call(el);if(p&&p.catch)p.catch(function(){setPres(true);});}catch(_){setPres(true);}}else setPres(true);}return;}
+    if(k==='ArrowRight'||k==='PageDown'||k===' '||k==='Spacebar'){go(idx+1);e.preventDefault();}else if(k==='ArrowLeft'||k==='PageUp'){go(idx-1);e.preventDefault();}else if(k==='Home'){go(0);}else if(k==='End'){go(slides.length-1);}else if(k==='r'||k==='R'){go(0);}else if(/^[0-9]$/.test(k)){var n=k==='0'?9:parseInt(k,10)-1;if(n<slides.length)go(n);}
+  },false);
+  var gate=document.getElementById('gate');if(gate)gate.remove();
+
+  /* ===================== 캘리브레이션(신뢰도 보정) ===================== */
+  (function(){
+    var svg=document.getElementById('caSvg');if(!svg)return;
+    var NS='http://www.w3.org/2000/svg';
+    function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
+    var bins=[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9];
+    var mode='cal';
+    function actual(c){return mode==='cal'?c:Math.max(0,c-0.22*c-0.04);} // 과신: 실제 적중률이 신뢰도보다 낮음
+    function PX(p){return 50+p*350;}function PY(p){return 360-p*330;}
+    function render(){
+      svg.innerHTML='';
+      svg.appendChild(el('rect',{x:0,y:0,width:440,height:400,fill:'#fff'}));
+      // axes
+      svg.appendChild(el('line',{x1:50,y1:360,x2:400,y2:360,stroke:'#C6D2DA'}));
+      svg.appendChild(el('line',{x1:50,y1:30,x2:50,y2:360,stroke:'#C6D2DA'}));
+      var ax=el('text',{x:225,y:392,'font-family':'monospace','font-size':14,fill:'#7A8893','text-anchor':'middle'});ax.textContent='모델이 말한 신뢰도 →';svg.appendChild(ax);
+      var ay=el('text',{x:18,y:200,'font-family':'monospace','font-size':14,fill:'#7A8893','text-anchor':'middle',transform:'rotate(-90 18 200)'});ay.textContent='실제 적중률 →';svg.appendChild(ay);
+      // perfect diagonal
+      svg.appendChild(el('line',{x1:PX(0),y1:PY(0),x2:PX(1),y2:PY(1),stroke:'#C6D2DA','stroke-width':2,'stroke-dasharray':'6 5'}));
+      var dl=el('text',{x:PX(0.72),y:PY(0.86),'font-family':'monospace','font-size':13,fill:'#9FB2BD'});dl.textContent='완벽 보정';svg.appendChild(dl);
+      // bars + points
+      var ece=0;
+      for(var i=0;i<bins.length;i++){var c=bins[i],a=actual(c);ece+=Math.abs(c-a);
+        svg.appendChild(el('line',{x1:PX(c),y1:PY(c),x2:PX(c),y2:PY(a),stroke:(mode==='cal'?'#9FD3CC':'#E0A39B'),'stroke-width':2}));
+        svg.appendChild(el('circle',{cx:PX(c),cy:PY(a),r:6,fill:(mode==='cal'?'#0E7C72':'#B0392E'),stroke:'#fff','stroke-width':1.5}));
+      }
+      ece/=bins.length;
+      document.getElementById('caEce').innerHTML='보정 오차(ECE): <b style="color:'+(mode==='cal'?'#0E7C72':'#B0392E')+'">'+ece.toFixed(3)+'</b> '+(mode==='cal'?'(작을수록 좋음 — 신뢰 가능)':'(큼 — 위험)');
+      var rx=document.getElementById('caRouteX');
+      if(mode==='cal')rx.innerHTML='신뢰도 90%면 실제로 ~90% 적중 → <strong style="color:var(--mint)">실측 생략 판단을 믿을 수 있음.</strong>';
+      else rx.innerHTML='90%라 말하지만 실제 ~66% → 잘못된 "생략" 결정 → <strong style="color:#F0B6AC">불량 누락 위험.</strong> 재보정 필요.';
+    }
+    document.getElementById('caCal').onclick=function(){mode='cal';this.className='btn on';document.getElementById('caOver').className='btn sec';render();};
+    document.getElementById('caOver').onclick=function(){mode='over';this.className='btn on';document.getElementById('caCal').className='btn sec';render();};
+    render();
+  })();
+})();
+</script>
+</body>
+</html>

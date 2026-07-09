@@ -1,0 +1,422 @@
+HTML
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+ ="SEO =" 
+<title>RAG용 기술 문서 청킹 전략 - AI Edu Archive 한국어</title>
+<meta content="온프레미스 RAG에서 SOP, 매뉴얼, 스펙시트를 안전하게 청킹하는 방법: 재귀 분할, 구조 기반 분할, 청크 크기, 오버랩, 표와 코드, 메타데이터." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/chunking-technical-docs.html" rel="canonical"/><link href="https://ai-edu-archive.example.com/blog/articles/chunking-technical-docs.html" hreflang="en" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/ko/articles/chunking-technical-docs.html" hreflang="ko" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/articles/chunking-technical-docs.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+ 오픈 그래프 
+<meta content="article" property="og:type"/>
+<meta content="RAG용 기술 문서 청킹 전략 - AI Edu Archive 한국어" property="og:title"/>
+<meta content="온프레미스 RAG에서 SOP, 매뉴얼, 스펙시트를 안전하게 청킹하는 방법: 재귀 분할, 구조 기반 분할, 청크 크기, 오버랩, 표와 코드, 메타데이터." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="https://ai-edu-archive.example.com/blog/ko/articles/chunking-technical-docs.html" property="og:url"/>
+<meta content="ko_KR" property="og:locale"/>
+<meta content="en_US" property="og:locale:alternate"/>
+<meta content="2026-07-04" property="article:published_time"/>
+<meta content="AI Edu Archive" property="article:author"/>
+<meta content="RAG" property="article:section"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="RAG용 기술 문서 청킹 전략 - AI Edu Archive 한국어" name="twitter:title"/>
+<meta content="온프레미스 RAG에서 SOP, 매뉴얼, 스펙시트를 안전하게 청킹하는 방법: 재귀 분할, 구조 기반 분할, 청크 크기, 오버랩, 표와 코드, 메타데이터." name="twitter:description"/>
+ JSON-LD: 기사 스키마 
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "RAG용 기술 문서 청킹 전략",
+  "description": "온프레미스 RAG에서 SOP, 매뉴얼, 스펙시트를 안전하게 청킹하는 방법: 재귀 분할, 구조 기반 분할, 청크 크기, 오버랩, 표와 코드, 메타데이터.",
+  "inLanguage": "ko",
+  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/ko/articles/chunking-technical-docs.html"
+  },
+  "name": "RAG용 기술 문서 청킹 전략",
+  "url": "https://ai-edu-archive.example.com/blog/ko/articles/chunking-technical-docs.html"
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/blog.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive — 홈" class="brand" href="../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="주요 메뉴" class="nav-links">
+<a href="../../../index.html#courses">강의</a>
+<a href="../index.html">글</a>
+<a href="../about.html">소개</a>
+<div aria-label="언어 선택" class="language-switch"><a href="../../articles/chunking-technical-docs.html" lang="en" title="English">🇺🇸 EN</a><a aria-current="true" href="chunking-technical-docs.html" lang="ko" title="한국어">🇰🇷 KO</a><a href="../../articles/chunking-technical-docs.html" lang="en" title="스페인어판은 추후 추가 예정이며 현재는 영어로 표시됩니다">🇪🇸 ES</a><a href="../../articles/chunking-technical-docs.html" lang="en" title="중국어판은 추후 추가 예정이며 현재는 영어로 표시됩니다">🇨🇳 ZH</a><a href="../../articles/chunking-technical-docs.html" lang="en" title="일본어판은 추후 추가 예정이며 현재는 영어로 표시됩니다">🇯🇵 JA</a><a href="../../articles/chunking-technical-docs.html" lang="en" title="독일어판은 추후 추가 예정이며 현재는 영어로 표시됩니다">🇩🇪 DE</a><a href="../../articles/chunking-technical-docs.html" lang="en" title="프랑스어판은 추후 추가 예정이며 현재는 영어로 표시됩니다">🇫🇷 FR</a></div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article itemscope="" itemtype="https://schema.org/Article">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="탐색경로" class="breadcrumb">
+<a href="../../index.html">홈</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">저널</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">RAG용 기술 문서 청킹 전략</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag" data-cat="rag">RAG</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-04" itemprop="datePublished">2026년 7월 4일</time>
+<span class="post-dot"></span>
+<span class="rt">10분 읽기</span>
+</div>
+<h1 itemprop="headline">RAG용 기술 문서 청킹 전략</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>반도체 공정 엔지니어 · Air-gapped LLM/RAG/에이전트</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="목차" class="toc">
+<div class="toc-title">이 페이지에서</div>
+<ol>
+<li>청킹이 RAG 품질을 결정하는 이유</li>
+<li>기준선으로 쓰는 재귀 분할기</li>
+<li>문서 구조를 기준으로 먼저 나누기</li>
+<li>청크 크기와 오버랩의 절충</li>
+<li>표, 수식, 코드 블록 다루기</li>
+<li>메타데이터가 청크를 검색 가능하게 만든다</li>
+</ol>
+</nav>
+<div class="article-body" itemprop="articleBody">
+<p>검색 품질은 결국 검색기가 반환하는 청크의 품질을 넘지 못합니다. 폐쇄망 팹의 코퍼스는 블로그 글이 아닙니다. 번호가 붙은 절차, 표, 수식, 공차가 들어 있는 SOP, 설비 매뉴얼, 스펙시트입니다. 단순 문자 수 기준으로 자르면 이 구조가 쉽게 깨집니다. 이 글은 문서 조각 하나가 독립적으로 읽혀도 의미를 유지하도록 기술 문서를 자르는 방법을 다룹니다.</p>
+<h2 id="why">청킹이 RAG 품질을 결정하는 이유</h2>
+<p>RAG 시스템은 각 청크를 벡터로 임베딩하고, 질의 시 질문과 가장 가까운 청크를 반환합니다. 경고 문구가 해당 단계와 떨어지거나, 토크 값이 적용 대상 패스너와 분리되면 검색기는 “비슷한 영역”을 찾았더라도 모델에는 불완전하거나 위험한 조각을 넘길 수 있습니다. 실패는 조용합니다. 답변은 유창하지만, 절차를 아는 엔지니어는 빠진 조항을 알아봅니다.</p>
+<p>기술 문서는 일반 산문보다 어렵습니다. 의미가 구조 안에 있기 때문입니다. 단계 번호, 표의 행, 제목 아래의 하위 조항이 모두 의미의 일부입니다. 좋은 청킹은 그 구조를 가로질러 자르지 않고 보존합니다.</p>
+<blockquote>청크는 사람이 그것만 따로 읽어도 올바르게 행동할 수 있는 가장 작은 범위여야 합니다.</blockquote>
+<h2 id="recursive">기준선으로 쓰는 재귀 분할기</h2>
+<p>처음 기준선으로 삼기 좋은 도구는 RecursiveCharacterTextSplitter입니다. 이 분할기는 문단, 줄, 문장, 단어처럼 우선순위가 있는 구분자를 순서대로 시도하고, 조각이 목표 크기를 넘을 때만 더 작은 경계로 내려갑니다. 매뉴얼에서는 이 순서가 유용합니다. 가능한 한 문단을 유지하고, 정말 필요할 때만 더 잘게 나누기 때문입니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            recursive_split.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># langchain-text-splitters is its own package now — no legacy imports</span>
+<span class="tok-kw">from</span> langchain_text_splitters <span class="tok-kw">import</span> RecursiveCharacterTextSplitter
+
+splitter = <span class="tok-fn">RecursiveCharacterTextSplitter</span>(
+    chunk_size=<span class="tok-num">800</span>,          <span class="tok-com"># characters, not tokens, by default</span>
+    chunk_overlap=<span class="tok-num">120</span>,       <span class="tok-com"># carry context across the seam</span>
+    separators=[<span class="tok-str">"\n\n"</span>, <span class="tok-str">"\n"</span>, <span class="tok-str">". "</span>, <span class="tok-str">" "</span>, <span class="tok-str">""</span>],
+    add_start_index=<span class="tok-kw">True</span>,     <span class="tok-com"># store each chunk's char offset in metadata</span>
+)
+
+<span class="tok-kw">with</span> <span class="tok-fn">open</span>(<span class="tok-str">"sop_etch_clean.txt"</span>, encoding=<span class="tok-str">"utf-8"</span>) <span class="tok-kw">as</span> f:
+    docs = splitter.<span class="tok-fn">create_documents</span>([f.<span class="tok-fn">read</span>()])
+
+<span class="tok-fn">print</span>(docs[<span class="tok-num">0</span>].page_content[:<span class="tok-num">80</span>], docs[<span class="tok-num">0</span>].metadata)</code></pre>
+</figure>
+<p>임베딩 모델의 컨텍스트 창을 고려한다면 문자 수보다 토큰 수가 중요합니다. 같은 클래스는 토큰 기준 생성자를 제공합니다. 로컬 토크나이저를 넘기면 크기를 토큰 단위로 계산하므로, 모델이 실제로 보는 길이에 맞춰 청크를 만들 수 있습니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            token_aware_split.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain_text_splitters <span class="tok-kw">import</span> RecursiveCharacterTextSplitter
+<span class="tok-kw">from</span> transformers <span class="tok-kw">import</span> AutoTokenizer   <span class="tok-com"># local weights, no egress</span>
+
+tok = AutoTokenizer.<span class="tok-fn">from_pretrained</span>(<span class="tok-str">"/opt/models/bge-m3"</span>)
+
+splitter = RecursiveCharacterTextSplitter.<span class="tok-fn">from_huggingface_tokenizer</span>(
+    tok,
+    chunk_size=<span class="tok-num">256</span>,          <span class="tok-com"># tokens now, matched to the embedder</span>
+    chunk_overlap=<span class="tok-num">32</span>,
+)
+chunks = splitter.<span class="tok-fn">split_text</span>(raw_manual_text)</code></pre>
+</figure>
+<h2 id="structure">문서 구조를 기준으로 먼저 나누기</h2>
+<p>재귀 분할기는 내용의 의미를 모릅니다. 제목과 일반 문장을 구분하지 못합니다. 변환된 매뉴얼의 Markdown 제목이나 SOP의 절 번호처럼 실제 구조가 있다면, 먼저 구조 기준으로 나누고 각 섹션 안에서 재귀 분할기를 적용하는 편이 좋습니다. 이 2단계 패턴은 청크를 제목에 묶어 두고, 제목을 메타데이터로 함께 전달할 수 있게 합니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            structure_first.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain_text_splitters <span class="tok-kw">import</span> (
+    MarkdownHeaderTextSplitter,
+    RecursiveCharacterTextSplitter,
+)
+
+<span class="tok-com"># Pass 1: split on headings, keeping them as metadata</span>
+header_splitter = <span class="tok-fn">MarkdownHeaderTextSplitter</span>(
+    headers_to_split_on=[
+        (<span class="tok-str">"#"</span>,   <span class="tok-str">"doc"</span>),
+        (<span class="tok-str">"##"</span>,  <span class="tok-str">"section"</span>),
+        (<span class="tok-str">"###"</span>, <span class="tok-str">"step"</span>),
+    ],
+    strip_headers=<span class="tok-kw">False</span>,   <span class="tok-com"># keep the heading text inside the chunk too</span>
+)
+sections = header_splitter.<span class="tok-fn">split_text</span>(markdown_manual)
+
+<span class="tok-com"># Pass 2: keep long sections under the size limit; metadata is preserved</span>
+splitter = <span class="tok-fn">RecursiveCharacterTextSplitter</span>(chunk_size=<span class="tok-num">800</span>, chunk_overlap=<span class="tok-num">120</span>)
+docs = splitter.<span class="tok-fn">split_documents</span>(sections)</code></pre>
+</figure>
+<p>코드와 구조화된 설정은 별도 구분자가 필요합니다. 재귀 분할기는 언어별 프로필을 제공하므로 Python 코드를 함수 중간이 아니라 def와 class 경계에서 나눌 수 있습니다. 매뉴얼 안에 레시피 스크립트, PLC 스니펫, 설정 예제가 포함될 때 특히 중요합니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            code_aware_split.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain_text_splitters <span class="tok-kw">import</span> RecursiveCharacterTextSplitter, Language
+
+code_splitter = RecursiveCharacterTextSplitter.<span class="tok-fn">from_language</span>(
+    language=Language.PYTHON,
+    chunk_size=<span class="tok-num">500</span>,
+    chunk_overlap=<span class="tok-num">0</span>,
+)
+code_chunks = code_splitter.<span class="tok-fn">split_text</span>(recipe_script_source)</code></pre>
+</figure>
+<h2 id="size">청크 크기와 오버랩의 절충</h2>
+<p>보편적인 청크 크기는 없습니다. 코퍼스와 임베더에 맞춰 조정해야 합니다. 작은 청크는 의미가 촘촘해 정확히 검색되지만 주변 맥락을 잃을 수 있습니다. 큰 청크는 맥락을 보존하지만 하나의 임베딩이 너무 많은 아이디어를 평균내므로 필요한 공차나 조건이 노이즈 속에 묻힐 수 있습니다.</p>
+<ul>
+<li>오버랩은 중요한 사실이 경계에서 잘리는 것을 막는 보험입니다. 10-20% 정도 겹치게 만들면 경계 근처의 값이 이웃 청크에도 온전하게 들어갑니다. 대신 저장 공간과 중복 검색 결과가 늘어납니다.</li>
+<li>크기는 임베더에 맞춥니다. 짧은 passage에 맞춰 학습된 모델에 2,000 토큰짜리 청크를 넣는다고 성능이 좋아지지 않습니다. 임베더가 잘 처리하도록 조정된 길이에 가깝게 유지하세요.</li>
+<li>추측하지 말고 평가합니다. 실제 팹 질문을 모아 top-k 안에 올바른 조항이 들어오는지 측정하세요. 청크 크기는 복사하는 기본값이 아니라 조정해야 하는 손잡이입니다.</li>
+</ul>
+<figure>
+<div aria-label="청킹 파이프라인 다이어그램" class="diagram">
+<svg aria-label="Two-pass chunking pipeline: source document splits on structure, then each section splits recursively with overlap, and every chunk carries metadata into the vector store" role="img" viewbox="0 0 704 300" width="100%">
+<rect fill="#FCFBF8" height="298" rx="12" stroke="#E8E4DB" width="702" x="1" y="1"></rect>
+<!-- Source -->
+<rect fill="#F3EFE6" height="76" rx="10" stroke="#DBD5C8" width="120" x="28" y="112"></rect>
+<text fill="#3A3733" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="88" y="144">SOP / manual</text>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="88" y="164">.md / .pdf</text>
+<!-- arrow 1 -->
+<line stroke="#C15F3C" stroke-width="2" x1="150" x2="196" y1="150" y2="150"></line>
+<path d="M196 150 l-9 -5 v10 Z" fill="#C15F3C"></path>
+<!-- Pass 1 -->
+<rect fill="#FCFBF8" height="100" rx="10" stroke="#D97757" width="140" x="200" y="100"></rect>
+<text fill="#C15F3C" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="270" y="128">Pass 1</text>
+<text fill="#3A3733" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="270" y="150">split on</text>
+<text fill="#3A3733" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="270" y="168">headings</text>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="270" y="188">→ sections</text>
+<!-- arrow 2 -->
+<line stroke="#C15F3C" stroke-width="2" x1="342" x2="388" y1="150" y2="150"></line>
+<path d="M388 150 l-9 -5 v10 Z" fill="#C15F3C"></path>
+<!-- Pass 2 -->
+<rect fill="#FCFBF8" height="100" rx="10" stroke="#D97757" width="140" x="392" y="100"></rect>
+<text fill="#C15F3C" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="462" y="128">Pass 2</text>
+<text fill="#3A3733" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="462" y="150">recursive +</text>
+<text fill="#3A3733" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="462" y="168">overlap</text>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="462" y="188">→ chunks</text>
+<!-- arrow 3 -->
+<line stroke="#C15F3C" stroke-width="2" x1="534" x2="580" y1="150" y2="150"></line>
+<path d="M580 150 l-9 -5 v10 Z" fill="#C15F3C"></path>
+<!-- Vector store -->
+<rect fill="#F3EFE6" height="76" rx="10" stroke="#DBD5C8" width="96" x="584" y="112"></rect>
+<text fill="#3A3733" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="632" y="144">vector</text>
+<text fill="#3A3733" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="632" y="164">store</text>
+<!-- metadata rail -->
+<rect fill="#F3EFE6" height="40" rx="8" stroke="#DBD5C8" width="332" x="200" y="232"></rect>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="366" y="257">metadata: section · step · start_index · source</text>
+<line stroke="#B7B1A4" stroke-dasharray="4 4" stroke-width="1.5" x1="366" x2="366" y1="200" y2="232"></line>
+<text fill="#3A3733" font-family="Fraunces, serif" font-size="17" font-weight="600" text-anchor="middle" x="352" y="46">Two-pass chunking: structure first, size second</text>
+</svg>
+</div>
+<figcaption>그림 1. 구조를 먼저 인식해 나눈 뒤, 각 섹션 안에서 크기 제한 재귀 분할을 수행합니다. 메타데이터는 모든 청크와 함께 이동합니다.</figcaption>
+</figure>
+<h2 id="hard">표, 수식, 코드 블록 다루기</h2>
+<p>문자 수 기준 분할이 가장 큰 피해를 주는 지점이 여기입니다. 표가 헤더 행과 데이터 행 사이에서 잘리면 열 이름 없는 숫자만 남습니다. 수식과 공차도 연산자, 단위, 조건이 분리되면 쓸 수 없어집니다. 다음 세 가지 규칙으로 구조를 보호해야 합니다.</p>
+<ul>
+<li>표: 각 표를 원자 단위로 다룹니다. 문서 변환 단계에서 표를 추출하고 Markdown 또는 짧은 자연어 요약으로 직렬화하며, 내보내는 모든 행 그룹에 헤더 행을 붙입니다.</li>
+<li>수식과 공차: 표현식 내부를 자르지 않습니다. 수식 구분자를 separator 목록에 넣어 분할기가 수식을 가로지르지 않고 주변에서 자르도록 만듭니다.</li>
+<li>코드와 레시피 스니펫: 언어 인식 분할기를 사용해 함수, 클래스, 레시피 블록이 통째로 유지되게 합니다.</li>
+</ul>
+<p>실전에서는 분할 단계가 아니라 변환 단계에서 구조를 파싱해야 합니다. PDF를 텍스트로 바꿀 때 이미 표, 코드 펜스, 수식을 태그해 두면, 분할기는 문서 전체를 평평한 문자열로 보지 않고 유형별 전략으로 라우팅할 수 있습니다.</p>
+<h2 id="metadata">메타데이터가 청크를 검색 가능하게 만든다</h2>
+<p>메타데이터 없는 청크는 고아입니다. 원본 파일, 섹션 제목, 개정, 페이지, 문자 오프셋을 붙이면 최근접 벡터 검색이 필터링, 인용, 감사가 가능한 검색으로 바뀝니다. 규제된 팹에서는 신뢰할 수 있는 답변과 사용할 수 없는 답변의 차이가 여기서 갈립니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            Attach_metadata.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain_text_splitters <span class="tok-kw">import</span> RecursiveCharacterTextSplitter
+<span class="tok-kw">from</span> langchain_core.documents <span class="tok-kw">import</span> Document
+
+splitter = <span class="tok-fn">RecursiveCharacterTextSplitter</span>(
+    chunk_size=<span class="tok-num">800</span>, chunk_overlap=<span class="tok-num">120</span>, add_start_index=<span class="tok-kw">True</span>,
+)
+
+<span class="tok-com"># create_documents pairs each text with its own metadata dict</span>
+docs: <span class="tok-fn">list</span>[Document] = splitter.<span class="tok-fn">create_documents</span>(
+    texts=[section_text],
+    metadatas=[{
+        <span class="tok-str">"source"</span>: <span class="tok-str">"SOP-ETCH-014"</span>,
+        <span class="tok-str">"revision"</span>: <span class="tok-str">"C"</span>,
+        <span class="tok-str">"section"</span>: <span class="tok-str">"5. Chamber clean"</span>,
+    }],
+)
+
+<span class="tok-kw">for</span> d <span class="tok-kw">in</span> docs:
+    <span class="tok-com"># start_index added by the splitter; source/revision from our dict</span>
+    <span class="tok-fn">print</span>(d.metadata[<span class="tok-str">"source"</span>], d.metadata[<span class="tok-str">"start_index"</span>])</code></pre>
+</figure>
+<hr/>
+<p>청킹은 화려하지 않지만 RAG 구축에서 수익률이 높은 레버입니다. 재귀 분할기로 시작하고, 크기 조정 전에 실제 구조를 먼저 나누며, 표와 수식은 원자 단위로 보호하고, 모든 청크에 메타데이터를 붙이세요. 이 네 가지가 맞으면 임베딩, 검색, 생성 단계가 함께 일할 만한 기반을 갖게 됩니다.</p>
+</div>
+ 심층적인 데크 링크 
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">더 깊이 들어가세요</span>
+<h3>이 주제의 전체 과정 보기</h3>
+<p>이 글은 현장 노트입니다. 연결된 인터랙티브 슬라이드에서는 같은 주제를 다이어그램과 실행 예제로 더 자세히 설명합니다.</p>
+</div>
+<a class="btn btn-primary" href="../../../watsonx/index.html">데크를 열어보세요 <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+ 공유 
+<div class="share">
+<span class="lbl">공유</span>
+<button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">공유/링크 복사</button>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">엑스 / 트위터</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">링크드인</a>
+</div>
+ 저자 바이오 카드(E-E-A-T) 
+<aside class="author-card">
+<span aria-hidden="true" class="avatar">AE</span>
+<div class="a-body">
+<div class="k">저자 소개</div>
+<h3>AI Edu Archive</h3>
+<p>물리학 박사(IGZO / 그래핀 반도체 물성)이며 증착 공정을 다루는 반도체 프로세스 엔지니어입니다. 폐쇄망 LLM, RAG, 에이전트 시스템과 강화학습·이상탐지 도구를 팹 환경에 맞게 만드는 작업을 합니다. 이곳에는 공정 노하우를 외부로 내보내지 않고 온프레미스 지식 자산으로 바꾸는 방법을 씁니다.</p>
+<a href="../about.html">저자에 대해 더 알아보기 →</a>
+</div>
+</aside>
+ 관련된 
+<section aria-label="관련 기사" class="related">
+<span class="eyebrow">계속 읽으세요</span>
+<h2>저널의 관련 글</h2>
+<div class="related-grid">
+<a class="rel-card" href="rag-over-sealed-documents.html">
+<span class="cat-tag" data-cat="rag">RAG</span>
+<h3>폐쇄망 문서 기반 RAG: SOP, 스펙시트, 설비 로그</h3>
+</a>
+<a class="rel-card" href="agents-mcp-mes.html">
+<span class="cat-tag" data-cat="agents">에이전트 및 MCP</span>
+<h3>MCP로 에이전트를 사내 시스템에 연결하기</h3>
+</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>무료로 깊게, 열린 방식으로</h2>
+<p>강좌와 저널 글은 모두 가입 없이 무료로 읽을 수 있습니다.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>탐구하다</h4>
+<a href="../../index.html">허브 홈</a>
+<a href="../../../index.html#courses">모든 강좌</a>
+<a href="../index.html">저널</a>
+</div>
+<div class="foot-col">
+<h4>학습</h4>
+<a href="../../../overview/index.html">팹 AI</a>
+<a href="../../../watsonx/index.html">에어갭 LLM</a>
+<a href="../../../llm_apply/LLM_slide.html">엔터프라이즈 LLM</a>
+</div>
+<div class="foot-col">
+<h4>사이트</h4>
+<a href="../about.html">소개</a>
+<a href="../contact.html">연락하다</a>
+<a href="../privacy.html">개인정보</a>
+<a href="../terms.html">이용약관</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · 한국형 AI 교육 공개</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig?fig.querySelector('pre'):null;
+      if(!code)return;
+      var text=code.innerText;
+      var done=function(){
+        btn.textContent='Copied';btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1600);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done,function(){});
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+# Deny-by-default: only sources that the site actually publishes are tracked.
+# (build_site.py's include list is the source of truth — keep them in sync)
+/*
+!/.gitignore
+!/README.md
+!/CONTRIBUTING.md
+!/LICENSE.md
+!/index.html
+!/build_site.py
+!/tools/
+!/overview/
+!/watsonX/
+!/LLM_apply/
+!/blog/
+
+# overview: published lessons only
+/overview/*
+!/overview/index.html
+!/overview/08_GPU_TPU_NPU.html
+!/overview/09_Panoptes_심화.html
+!/overview/11_AI_모델_계통도.html
+
+# watsonX / LLM_apply: published slides only
+/watsonX/*
+!/watsonX/index.html
+/LLM_apply/*
+!/LLM_apply/LLM_slide.html
+!/LLM_apply/RAG_BUILD_SLIDE.html
+!/LLM_apply/AGENT_OPS_SLIDE.html
+
+# blog: public articles/pages, minus internal editorial docs
+blog/MONETIZATION_STRATEGY.md
+blog/VOICE.md
+blog/I18N_ROADMAP.md
+blog/.translation_cache*
+
+# never: working files, backups, caches
+*backup*
+*_voicebackup*
+CLAUDE.md
+PROJECT_CONTEXT.md
+__pycache__/

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- ══ SEO ══════════════════════════════════════════════════════════ -->
+<title>Choosing an open model for air-gapped use - AI Edu Archive Journal</title>
+<meta content="How to choose an open-weight model for an air-gapped fab by checking license, GPU footprint, and benchmarks in the right order, including the EXAONE non-commercial license trap." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/choosing-open-models.html" rel="canonical"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/choosing-open-models.html" hreflang="ko" rel="alternate"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/choosing-open-models.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+<!-- Open Graph -->
+<meta content="article" property="og:type"/>
+<meta content="Choosing an open model for air-gapped use - AI Edu Archive Journal" property="og:title"/>
+<meta content="How to choose an open-weight model for an air-gapped fab by checking license, GPU footprint, and benchmarks in the right order, including the EXAONE non-commercial license trap." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="https://ai-edu-archive.example.com/blog/articles/choosing-open-models.html" property="og:url"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="ko_KR" property="og:locale:alternate"/>
+<meta content="2026-07-04" property="article:published_time"/>
+<meta content="AI Edu Archive" property="article:author"/>
+<meta content="On-Prem LLM" property="article:section"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Choosing an open model for air-gapped use - AI Edu Archive Journal" name="twitter:title"/>
+<meta content="How to choose an open-weight model for an air-gapped fab by checking license, GPU footprint, and benchmarks in the right order, including the EXAONE non-commercial license trap." name="twitter:description"/>
+<!-- JSON-LD: Article schema -->
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Choosing an open model for air-gapped use",
+  "description": "How to choose an open-weight model for an air-gapped fab by checking license, GPU footprint, and benchmarks in the right order, including the EXAONE non-commercial license trap.",
+  "inLanguage": "en",
+  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/articles/choosing-open-models.html"
+  },
+  "name": "Choosing an open model for air-gapped use",
+  "url": "https://ai-edu-archive.example.com/blog/articles/choosing-open-models.html"
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../assets/blog.css" rel="stylesheet"/>
+<!-- article-scoped table styling, matched to the hub design system -->
+<style>
+  .tbl-wrap{max-width:var(--readw);margin:26px auto;overflow-x:auto;
+    border:1px solid var(--line);border-radius:12px;background:var(--card-2);
+    box-shadow:var(--shadow-sm)}
+  table.tbl{border-collapse:collapse;width:100%;min-width:560px;
+    font-family:var(--sans);font-size:15px;line-height:1.5}
+  table.tbl caption{caption-side:top;text-align:left;padding:14px 16px 4px;
+    font-family:var(--mono);font-size:12px;letter-spacing:.02em;color:var(--muted)}
+  table.tbl th,table.tbl td{padding:11px 14px;text-align:left;
+    border-bottom:1px solid var(--line);vertical-align:top}
+  table.tbl thead th{background:var(--paper-2);color:var(--ink);
+    font-weight:600;font-size:13.5px;white-space:nowrap;
+    border-bottom:1.5px solid var(--line-2)}
+  table.tbl tbody tr:last-child td{border-bottom:none}
+  table.tbl tbody tr:hover{background:#FCFAF6}
+  table.tbl td.name{font-weight:600;color:var(--ink);white-space:nowrap}
+  table.tbl .ok{color:#0B6258;font-weight:600}
+  table.tbl .no{color:var(--coral-deep);font-weight:600}
+  table.tbl code{font-family:var(--mono);font-size:13px;background:var(--paper-2);
+    padding:1px 5px;border-radius:5px}
+  @media(max-width:640px){
+    table.tbl{font-size:14px}
+    table.tbl th,table.tbl td{padding:9px 11px}
+  }
+</style>
+<link href="https://ai-edu-archive.example.com/blog/articles/choosing-open-models.html" hreflang="en" rel="alternate"/></head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive — home" class="brand" href="../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="Primary" class="nav-links">
+<a href="../../index.html#courses">Courses</a>
+<a href="../index.html">Articles</a>
+<a href="../about.html">About</a>
+<div aria-label="Language selector" class="language-switch">
+<a aria-current="true" href="choosing-open-models.html" lang="en" title="English">🇺🇸 EN</a>
+<a href="../ko/articles/choosing-open-models.html" lang="ko" title="한국어">🇰🇷 KO</a>
+<a href="choosing-open-models.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a>
+<a href="choosing-open-models.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a>
+<a href="choosing-open-models.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a>
+<a href="choosing-open-models.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a>
+<a href="choosing-open-models.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a>
+</div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article itemscope="" itemtype="https://schema.org/Article">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="Breadcrumb" class="breadcrumb">
+<a href="../../index.html">Home</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">Journal</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">Choosing an open model for air-gapped use</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag">On-Prem LLM</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-04" itemprop="datePublished">Jul 4, 2026</time>
+<span class="post-dot"></span>
+<span class="rt">10 min read</span>
+</div>
+<h1 itemprop="headline">Choosing an open model for air-gapped use</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>Semiconductor process engineer · Air-gapped LLM / RAG / Agents</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="Table of contents" class="toc">
+<div class="toc-title">On this page</div>
+<ol>
+<li>BYO-model: what “open” actually buys you</li>
+<li>License first: the filter before benchmarks</li>
+<li>The EXAONE trap: open weights, non-commercial license</li>
+<li>Sizing by GPU: what fits on what</li>
+<li>A decision path for the fab</li>
+</ol>
+</nav>
+<div class="article-body" itemprop="articleBody">
+<p>The weights may be free; the license is not always free for your use case. Once you accept that the model has to run inside the air gap, the next question is which model to copy in. For a manufacturer, the honest answer is that this is a procurement and governance decision before it is a benchmark decision. You are choosing a weight file you will host, audit, and defend for years. The useful order is license, GPU footprint, then benchmark.</p>
+<h2 id="byo">BYO-model: what “open” actually buys you</h2>
+<p>The organizing principle is BYO-model: bring your own model. An open-weight release ships the actual parameter files. You copy them across the air gap once, serve them on your own GPUs, and stop calling an external API. Capability becomes something you install, not something you rent by the token. That is the only shape that survives a sealed network.</p>
+<p>But “open weights” and “open license” are different claims. A model can be fully downloadable and still forbid the one thing a for-profit plant needs: commercial operation. Before any benchmark table, read the license as if it were a production dependency, because it is.</p>
+<h2 id="license">License first: the filter before benchmarks</h2>
+<p>For an air-gapped deployment, only a few license questions matter. They all reduce to what you may do without asking anyone else.</p>
+<ul>
+<li>Commercial use. Can a for-profit company run this in production? A permissive license such as Apache 2.0 or MIT says yes plainly. A community or NC license may not.</li>
+<li>Redistribution and naming. If you fine-tune and share the result, must you rename it or carry an attribution notice? Meta’s license, for instance, requires derivative models to keep Llama in the name and ship a notice file.</li>
+<li>User-count or field-of-use caps. Some licenses add thresholds, such as Llama’s 700M monthly active user clause, or use restrictions you must confirm you clear.</li>
+<li>Offline auditability. The license text must travel with the weights and hold up in an on-prem review. Click-through terms fetched at runtime do not help when there is no runtime internet.</li>
+</ul>
+<div class="tbl-wrap">
+<table class="tbl">
+<caption>Table 1. Open-model licensing at a glance. Verify the exact release you download.</caption>
+<thead>
+<tr>
+<th scope="col">Family</th>
+<th scope="col">License</th>
+<th scope="col">Commercial?</th>
+<th scope="col">Notable conditions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name">Qwen3</td>
+<td>Apache 2.0</td>
+<td class="ok">Yes</td>
+<td>Permissive; attribution only. Dense 0.6B-32B plus MoE variants.</td>
+</tr>
+<tr>
+<td class="name">DeepSeek V3 / R1</td>
+<td>MIT</td>
+<td class="ok">Yes</td>
+<td>Permissive; host, modify, and commercialize freely.</td>
+</tr>
+<tr>
+<td class="name">gpt-oss (OpenAI)</td>
+<td>Apache 2.0</td>
+<td class="ok">Yes</td>
+<td>Permissive. 20B / 120B open-weight releases.</td>
+</tr>
+<tr>
+<td class="name">Llama 3.3</td>
+<td>Llama Community</td>
+<td class="ok">Yes*</td>
+<td>*Derivative naming and notice requirements; 700M MAU threshold; acceptable use policy applies.</td>
+</tr>
+<tr>
+<td class="name">EXAONE (LG)</td>
+<td>EXAONE 1.x - NC</td>
+<td class="no">No</td>
+<td>Non-commercial / research and education only unless a separate production agreement exists.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>A downloadable weight file is not a usable production model until its license clears your legal team. For a fab, “non-commercial” is a disqualifier, not a footnote.</blockquote>
+<h2 id="exaone">The EXAONE trap: open weights, non-commercial license</h2>
+<p>This deserves its own section because it is an easy mistake to make in a Korean plant. LG’s EXAONE models can be strong and downloadable from Hugging Face, but some releases are under the EXAONE AI Model License with an NC restriction. NC means non-commercial. Research, academic, and educational use may be allowed; commercial deployment requires a separate arrangement with LG AI Research.</p>
+<p>For a self-learning pilot or a university lab, that may be fine. For a for-profit fab putting the model in front of process engineers to do real work, it is a disqualifier unless a separate commercial agreement exists. The trap is that nothing technical stops you from running it. The weights load, answers look good, and the issue appears later when an audit or customer security review checks the license. Read those two letters before you build.</p>
+<figure>
+<div aria-label="Decision diagram: from license clearance to model choice for air-gapped use" class="diagram">
+<svg aria-labelledby="cmTitle cmDesc" role="img" viewbox="0 0 660 300" width="100%">
+<title id="cmTitle">Choosing an open model: license clears first, then size</title>
+<desc id="cmDesc">A model release splits by license: non-commercial licenses like EXAONE NC are rejected for a for-profit plant, while permissive and community licenses pass to a GPU-size decision that maps a fab-fit tier and a heavy-reasoning tier.</desc>
+<rect fill="#FCFBF8" height="298" rx="14" stroke="#E8E4DB" width="658" x="1" y="1"></rect>
+<!-- start -->
+<rect fill="#FCFBF8" height="56" rx="9" stroke="#DBD5C8" width="126" x="26" y="122"></rect>
+<text fill="#3B3934" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="89" y="147">Open-weight</text>
+<text fill="#3B3934" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="89" y="165">release</text>
+<!-- license gate -->
+<rect fill="#FBF3EF" height="76" rx="9" stroke="#E7C9BC" width="150" x="196" y="112"></rect>
+<text fill="#9B4A2C" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600" text-anchor="middle" x="271" y="140">LICENSE GATE</text>
+<text fill="#8A4227" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="271" y="160">Commercial use</text>
+<text fill="#8A4227" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="271" y="177">allowed?</text>
+<line marker-end="url(#cmA)" stroke="#93908A" stroke-width="2" x1="152" x2="194" y1="150" y2="150"></line>
+<!-- reject path (NC) -->
+<rect fill="#FBECE6" height="52" rx="9" stroke="#E0A98F" width="150" x="196" y="228"></rect>
+<text fill="#C15F3C" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="271" y="250">Reject for the fab</text>
+<text fill="#C15F3C" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle" x="271" y="268">EXAONE NC · research-only</text>
+<line marker-end="url(#cmR)" stroke="#C15F3C" stroke-dasharray="6 5" stroke-width="2" x1="271" x2="271" y1="188" y2="226"></line>
+<text fill="#C15F3C" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600" text-anchor="start" x="299" y="212">NC ✕</text>
+<!-- pass -->
+<line marker-end="url(#cmG)" stroke="#0B6258" stroke-width="2" x1="346" x2="392" y1="150" y2="150"></line>
+<text fill="#0B6258" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600" text-anchor="middle" x="369" y="140">pass ✓</text>
+<!-- size gate -->
+<rect fill="#EEF6F4" height="76" rx="9" stroke="#A9D6CC" width="150" x="398" y="112"></rect>
+<text fill="#0B6258" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600" text-anchor="middle" x="473" y="140">GPU SIZING</text>
+<text fill="#0B6258" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="473" y="160">VRAM you</text>
+<text fill="#0B6258" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="473" y="177">actually have</text>
+<!-- two outcomes -->
+<rect fill="#FCFBF8" height="66" rx="9" stroke="#A9D6CC" width="70" x="576" y="72"></rect>
+<text fill="#0B6258" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" text-anchor="middle" x="611" y="98">Fab-fit</text>
+<text fill="#3F8378" font-family="Inter, sans-serif" font-size="11.5" text-anchor="middle" x="611" y="115">14B–32B</text>
+<text fill="#3F8378" font-family="Inter, sans-serif" font-size="11.5" text-anchor="middle" x="611" y="131">1 GPU</text>
+<rect fill="#FCFBF8" height="66" rx="9" stroke="#A9D6CC" width="70" x="576" y="162"></rect>
+<text fill="#0B6258" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" text-anchor="middle" x="611" y="188">Heavy</text>
+<text fill="#3F8378" font-family="Inter, sans-serif" font-size="11.5" text-anchor="middle" x="611" y="205">70B+ / MoE</text>
+<text fill="#3F8378" font-family="Inter, sans-serif" font-size="11.5" text-anchor="middle" x="611" y="221">multi-GPU</text>
+<line marker-end="url(#cmG)" stroke="#0B6258" stroke-width="2" x1="548" x2="574" y1="138" y2="112"></line>
+<line marker-end="url(#cmG)" stroke="#0B6258" stroke-width="2" x1="548" x2="574" y1="162" y2="188"></line>
+<defs>
+<marker id="cmA" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10"><path d="M0 0 L10 5 L0 10 z" fill="#93908A"></path></marker>
+<marker id="cmG" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10"><path d="M0 0 L10 5 L0 10 z" fill="#0B6258"></path></marker>
+<marker id="cmR" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10"><path d="M0 0 L10 5 L0 10 z" fill="#C15F3C"></path></marker>
+</defs>
+</svg>
+</div>
+<figcaption>Figure 1. License clears first; a non-commercial release is rejected for a for-profit plant regardless of quality. Only then does GPU footprint pick the tier.</figcaption>
+</figure>
+<h2 id="gpu">Sizing by GPU: what fits on what</h2>
+<p>Once a model family clears the license gate, the second filter is physical: how much VRAM you have and how much the model needs. The practical lever is quantization. Serving 4-bit (Q4) weights roughly halves 8-bit memory and cuts FP16 memory by about three quarters, usually with an acceptable quality tradeoff for grounded document Q&amp;A.</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<caption>Table 2. Approximate VRAM by model size. Weights only; add serving and KV-cache overhead.</caption>
+<thead>
+<tr>
+<th scope="col">Size</th>
+<th scope="col">FP16 (approx.)</th>
+<th scope="col">Q4 (approx.)</th>
+<th scope="col">Runs on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name">7-8B</td>
+<td>~16 GB</td>
+<td>~5-6 GB</td>
+<td>Consumer GPU (16-24 GB)</td>
+</tr>
+<tr>
+<td class="name">14B</td>
+<td>~28 GB</td>
+<td>~10 GB</td>
+<td>RTX 3090 / 4080-class</td>
+</tr>
+<tr>
+<td class="name">32B</td>
+<td>~65 GB</td>
+<td>~19-20 GB</td>
+<td>24 GB tight; 48 GB comfortable</td>
+</tr>
+<tr>
+<td class="name">70B</td>
+<td>~140 GB</td>
+<td>~40 GB</td>
+<td>1x 80 GB (Q4) or multi-GPU</td>
+</tr>
+<tr>
+<td class="name">120B MoE</td>
+<td>-</td>
+<td>native MXFP4</td>
+<td>~1x 80 GB (gpt-oss-120b)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Two planning footnotes matter. First, these numbers are weights only; leave headroom for the serving runtime and the KV cache, which grows with context length and concurrency. Second, Mixture-of-Experts (MoE) models change the math. gpt-oss-120b has 117B total parameters but activates only a smaller subset per token, so the serving footprint can be much lower than the headline size suggests. Size for real concurrency, not just parameter count.</p>
+<h2 id="pick">A decision path for the fab</h2>
+<p>Put the filters in order and most of the field narrows on its own. This is the concept, not a deployment recipe, but it captures the sequence a review will expect.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">Python</span>
+            choose_model.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># License clears first, then hardware, then benchmark. Air-gapped fab.</span>
+PERMISSIVE = {<span class="tok-str">"apache-2.0"</span>, <span class="tok-str">"mit"</span>}          <span class="tok-com"># run without asking</span>
+
+<span class="tok-kw">def</span> <span class="tok-fn">pick</span>(candidate, gpu_vram_gb):
+    <span class="tok-kw">if</span> candidate.license_class == <span class="tok-str">"non-commercial"</span>:
+        <span class="tok-kw">return</span> <span class="tok-str">"reject: NC — research-only (e.g. EXAONE)"</span>
+    <span class="tok-kw">if</span> candidate.license_id <span class="tok-kw">not in</span> PERMISSIVE:
+        <span class="tok-fn">require_legal_signoff</span>(candidate)     <span class="tok-com"># Llama: rename, notice, MAU cap</span>
+
+    need = candidate.<span class="tok-fn">vram_q4_gb</span>()             <span class="tok-com"># 4-bit footprint + overhead</span>
+    <span class="tok-kw">if</span> need &gt; gpu_vram_gb:
+        <span class="tok-kw">return</span> <span class="tok-str">"drop a size tier, or add a GPU"</span>
+
+    <span class="tok-kw">return</span> <span class="tok-fn">best_on_bench</span>(candidate, task=<span class="tok-str">"grounded_rag_qa"</span>)  <span class="tok-com"># only now, benchmark</span></code></pre>
+</figure>
+<p>For a first air-gapped pilot, the practical sweet spot is usually a permissively licensed 14B-32B dense model at Q4 on a single data-center GPU. That is enough capability for grounded document Q&amp;A while staying small enough to serve without a cluster. Move to 70B or MoE only when the task genuinely needs more reasoning and the VRAM budget supports it. Whatever you choose, copy the license text along with the weights; an air-gapped audit will ask for both.</p>
+<hr/>
+<p>Headline benchmarks should come last, not first. The license decides whether you may run the model at all. The GPU footprint decides whether you can run it. Only then should a leaderboard break the tie. Get that order right and the model you copy across the gap today is still defensible two years from now.</p>
+</div>
+<!-- deep-dive deck link -->
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">Go deeper</span>
+<h3>See open-model serving in the full air-gapped course</h3>
+<p>This article is a field note. The interactive deck walks weights, licensing, GPU sizing, and serving stacks end to end, with diagrams and worked examples.</p>
+</div>
+<a class="btn btn-primary" href="../../watsonx/index.html">Open the deck <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+<!-- share -->
+<div class="share">
+<span class="lbl">Share</span>
+<button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+</div>
+<!-- author bio card (E-E-A-T) -->
+<aside class="author-card">
+<span aria-hidden="true" class="avatar">AE</span>
+<div class="a-body">
+<div class="k">About the author</div>
+<h3>AI Edu Archive</h3>
+<p>PhD in physics (IGZO / graphene semiconductor properties) and a semiconductor process engineer working on deposition. Builds air-gapped LLM, RAG, and agent systems, plus reinforcement-learning and anomaly-detection tooling, for the fab. Writes here about turning process know-how into on-prem knowledge assets without letting it leave the network.</p>
+<a href="../about.html">More about the author →</a>
+</div>
+</aside>
+<!-- related -->
+<section aria-label="Related articles" class="related">
+<span class="eyebrow">Keep reading</span>
+<h2>Related from the Journal</h2>
+<div class="related-grid">
+<a class="rel-card" href="why-air-gapped-llm-manufacturing.html">
+<span class="cat-tag">On-Prem LLM</span>
+<h3>Why manufacturers must run LLMs air-gapped</h3>
+</a>
+<a class="rel-card" href="rag-over-sealed-documents.html">
+<span class="cat-tag">RAG</span>
+<h3>RAG over sealed documents: SOPs, specs, and equipment logs</h3>
+</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>Keep the know-how in. Keep the cloud out.</h2>
+<p>Everything here, courses and journal alike, is free to read with no signup.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>Explore</h4>
+<a href="../../index.html">Hub home</a>
+<a href="../../index.html#courses">All courses</a>
+<a href="../index.html">Journal</a>
+</div>
+<div class="foot-col">
+<h4>Courses</h4>
+<a href="../../overview/index.html">Fab AI</a>
+<a href="../../watsonx/index.html">Air-gapped LLM</a>
+<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
+</div>
+<div class="foot-col">
+<h4>Site</h4>
+<a href="../about.html">About</a>
+<a href="../contact.html">Contact</a>
+<a href="../privacy.html">Privacy</a>
+<a href="../terms.html">Terms</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  // one-click copy for code figures
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig?fig.querySelector('pre'):null;
+      if(!code)return;
+      var text=code.innerText;
+      var done=function(){
+        btn.textContent='Copied';btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1600);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done,function(){});
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

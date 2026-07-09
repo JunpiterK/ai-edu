@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- ══ SEO ══════════════════════════════════ -->
+<title>LangChain core, explained: LLMs, prompts, and LCEL pipelines - AI Edu Archive Journal</title>
+<meta content="A function-by-function guide to LangChain core: ChatModel calls, ChatPromptTemplate, output parsers, LCEL pipes, RunnableParallel, and RunnablePassthrough for local LLM/RAG apps." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/langchain-core-explained.html" rel="canonical"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/langchain-core-explained.html" hreflang="ko" rel="alternate"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/langchain-core-explained.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+<!-- Open Graph -->
+<meta content="article" property="og:type"/>
+<meta content="LangChain core, explained: LLMs, prompts, and LCEL pipelines - AI Edu Archive Journal" property="og:title"/>
+<meta content="A function-by-function guide to LangChain core: ChatModel calls, ChatPromptTemplate, output parsers, LCEL pipes, RunnableParallel, and RunnablePassthrough for local LLM/RAG apps." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="https://ai-edu-archive.example.com/blog/articles/langchain-core-explained.html" property="og:url"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="ko_KR" property="og:locale:alternate"/>
+<meta content="2026-07-04" property="article:published_time"/>
+<meta content="AI Edu Archive" property="article:author"/>
+<meta content="Python Stack" property="article:section"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="LangChain core, explained: LLMs, prompts, and LCEL pipelines - AI Edu Archive Journal" name="twitter:title"/>
+<meta content="A function-by-function guide to LangChain core: ChatModel calls, ChatPromptTemplate, output parsers, LCEL pipes, RunnableParallel, and RunnablePassthrough for local LLM/RAG apps." name="twitter:description"/>
+<!-- JSON-LD: Article schema -->
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "LangChain core, explained: LLMs, prompts, and LCEL pipelines",
+  "description": "A function-by-function guide to LangChain core: ChatModel calls, ChatPromptTemplate, output parsers, LCEL pipes, RunnableParallel, and RunnablePassthrough for local LLM/RAG apps.",
+  "inLanguage": "en",
+  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/articles/langchain-core-explained.html"
+  },
+  "name": "LangChain core, explained: LLMs, prompts, and LCEL pipelines",
+  "url": "https://ai-edu-archive.example.com/blog/articles/langchain-core-explained.html"
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../assets/blog.css" rel="stylesheet"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/langchain-core-explained.html" hreflang="en" rel="alternate"/></head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive home" class="brand" href="../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="Primary" class="nav-links">
+<a href="../../index.html#courses">Courses</a>
+<a href="../index.html">Articles</a>
+<a href="../about.html">About</a>
+<div aria-label="Language selector" class="language-switch">
+<a aria-current="true" href="langchain-core-explained.html" lang="en" title="English">🇺🇸 EN</a>
+<a href="../ko/articles/langchain-core-explained.html" lang="ko" title="한국어">🇰🇷 KO</a>
+<a href="langchain-core-explained.html" lang="en" title="English shown for now">🇪🇸 ES</a>
+<a href="langchain-core-explained.html" lang="en" title="English shown for now">🇨🇳 ZH</a>
+<a href="langchain-core-explained.html" lang="en" title="English shown for now">🇯🇵 JA</a>
+<a href="langchain-core-explained.html" lang="en" title="English shown for now">🇩🇪 DE</a>
+<a href="langchain-core-explained.html" lang="en" title="English shown for now">🇫🇷 FR</a>
+</div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article itemscope="" itemtype="https://schema.org/Article">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="Breadcrumb" class="breadcrumb">
+<a href="../../index.html">Home</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">Journal</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">LangChain core explained</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag">Python Stack</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-04" itemprop="datePublished">Jul 4, 2026</time>
+<span class="post-dot"></span>
+<span class="rt">14 min read</span>
+</div>
+<h1 itemprop="headline">LangChain core, explained: LLMs, prompts, and LCEL pipelines</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>Semiconductor process engineer · Air-gapped LLM / RAG / Agents</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="Table of contents" class="toc">
+<div class="toc-title">On this page</div>
+<ol>
+<li><a href="#why">What LangChain actually solves</a></li>
+<li><a href="#chatmodel">The ChatModel: connecting an on-prem model with ChatOllama</a></li>
+<li><a href="#prompt">Prompts: ChatPromptTemplate.from_messages</a></li>
+<li><a href="#parser">Output parsers: from loose text to typed objects</a></li>
+<li><a href="#lcel">LCEL and Runnable: the pipe that ties it together</a></li>
+<li><a href="#rag">Injecting context with RunnableParallel and RunnablePassthrough</a></li>
+<li><a href="#next">Next: from chains to agents</a></li>
+</ol>
+</nav>
+<div class="article-body" itemprop="articleBody">
+<p>LangChain core is not magic around an LLM. It is a small set of interfaces that make prompts, models, parsers, retrievers, and tools compose in the same way. Once you understand those interfaces, a local LLM app stops looking like a pile of callbacks and starts looking like a data pipeline.</p>
+<h2 id="why">What LangChain actually solves</h2>
+<p>The practical problem LangChain solves is replacement. You want to swap a local Ollama model for another provider, change a prompt without touching retrieval, replace a string parser with a JSON parser, or stream a chain without rewriting the chain. Core abstractions make those pieces interchangeable.</p>
+<p>For on-prem work, that matters because the stack changes often. A prototype may start with a 7B model on a gaming GPU, move to a larger quantized model, and later run behind an internal API. The application code should not collapse every time the model endpoint changes.</p>
+<blockquote>
+        LangChain's value is not any one class. It is that the prompt, the model, the
+        parser, and the retriever all speak the same interface — so you compose them
+        like Unix pipes.
+        <cite>— the whole point of LCEL</cite>
+</blockquote>
+<h2 id="chatmodel">The ChatModel: connecting an on-prem model with ChatOllama</h2>
+<p>The ChatModel is the model-facing abstraction. In a local lab, ChatOllama is usually the simplest starting point: it talks to an Ollama server and returns chat messages. You configure model name, temperature, and sometimes context length, then call invoke, stream, or batch through the same Runnable interface.</p>
+<p>The important mental model is that the model receives messages, not raw strings. System messages carry policy and role. Human messages carry the user's task. AI messages are prior responses. LangChain keeps that structure explicit instead of forcing you to hand-build JSON payloads for every provider.</p>
+<p>A prompt template turns variables into messages. ChatPromptTemplate.from_messages is the workhorse because it lets you write a system instruction once and inject user-specific fields at runtime. The result is a reusable Runnable: pass a dictionary in, get a prompt value out.</p>
+<ul>
+<li><code>invoke(x)</code> — one input, one full answer. Blocks until done.</li>
+<li><code>stream(x)</code> — yields tokens as they are produced, for live UIs.</li>
+<li><code>batch([x1, x2, …])</code> — many inputs at once, with built-in
+        concurrency. Ideal for labeling a stack of logs.</li>
+</ul>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            chat_model.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># pip install langchain-ollama  (LangChain 0.3+, Pydantic v2)</span>
+<span class="tok-kw">from</span> langchain_ollama <span class="tok-kw">import</span> ChatOllama
+
+llm = <span class="tok-fn">ChatOllama</span>(
+    model=<span class="tok-str">"llama3.1"</span>,                       <span class="tok-com"># local weights, pulled once</span>
+    base_url=<span class="tok-str">"http://gpu-node.fab.local:11434"</span>,  <span class="tok-com"># on-prem, no egress</span>
+    temperature=<span class="tok-num">0</span>,                            <span class="tok-com"># deterministic for process work</span>
+    num_predict=<span class="tok-num">512</span>,                          <span class="tok-com"># cap generated tokens</span>
+)
+
+<span class="tok-com"># invoke: one shot, full answer</span>
+msg = llm.<span class="tok-fn">invoke</span>(<span class="tok-str">"Summarize this alarm in one line: CVD-07 Ar MFC drift +3%."</span>)
+<span class="tok-fn">print</span>(msg.content)
+
+<span class="tok-com"># stream: token by token (live SOP assistant)</span>
+<span class="tok-kw">for</span> chunk <span class="tok-kw">in</span> llm.<span class="tok-fn">stream</span>(<span class="tok-str">"Explain plasma cleaning in two sentences."</span>):
+    <span class="tok-fn">print</span>(chunk.content, end=<span class="tok-str">""</span>, flush=<span class="tok-kw">True</span>)
+
+<span class="tok-com"># batch: label a stack of logs in one concurrent call</span>
+logs = [<span class="tok-str">"PM idle 12min"</span>, <span class="tok-str">"RF reflected power spike"</span>, <span class="tok-str">"chamber vent OK"</span>]
+answers = llm.<span class="tok-fn">batch</span>(logs)</code></pre>
+</figure>
+<p>Keep prompts boring and testable. Put stable behavior in the system message, user content in human messages, and retrieved context in a clearly named field. That makes it easier to see whether a wrong answer came from the model, the prompt, or the retrieved evidence.</p>
+<h2 id="prompt">Prompts: ChatPromptTemplate.from_messages</h2>
+<p>Models return messages. Applications often need strings, JSON, Pydantic objects, lists, or routing labels. Output parsers turn loose model output into the shape the rest of your program expects. StrOutputParser is the simplest case; structured parsers are the next step when format matters.</p>
+<p>For a blog workflow, a parser might return title, summary, slug, and tags. For a fab workflow, it might return risk_level, reason, and required_approval. The point is the same: downstream code should depend on a contract, not on a paragraph that merely looks right.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            prompt.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain_core.prompts <span class="tok-kw">import</span> ChatPromptTemplate
+
+prompt = ChatPromptTemplate.<span class="tok-fn">from_messages</span>([
+    (<span class="tok-str">"system"</span>, <span class="tok-str">"You are a fab process assistant. "</span>
+               <span class="tok-str">"Answer only from the given context. Reply in {language}."</span>),
+    (<span class="tok-str">"human"</span>,  <span class="tok-str">"Context:\n{context}\n\nQuestion: {question}"</span>),
+])
+
+<span class="tok-com"># Bind variables -&gt; a ready-to-send message list</span>
+messages = prompt.<span class="tok-fn">invoke</span>({
+    <span class="tok-str">"language"</span>: <span class="tok-str">"Korean"</span>,
+    <span class="tok-str">"context"</span>: <span class="tok-str">"SOP-CVD-07: purge 30s before vent."</span>,
+    <span class="tok-str">"question"</span>: <span class="tok-str">"How long is the purge?"</span>,
+})</code></pre>
+</figure>
+<p>LCEL, the LangChain Expression Language, is the pipe syntax: prompt | model | parser. Each piece is a Runnable. That gives the whole chain a shared interface: invoke for one input, batch for many inputs, stream for partial output, and composition for larger systems.</p>
+<h2 id="parser">Output parsers: from loose text to typed objects</h2>
+<p>This is why the syntax is worth learning. It is not just prettier function composition. It makes chains inspectable, swappable, and testable. When one piece changes, the surrounding pipeline usually stays the same.</p>
+<p>RunnableParallel and RunnablePassthrough are the bridge from simple chains to RAG-style chains. RunnablePassthrough keeps the user's question available. RunnableParallel lets you compute several fields at once, such as question and context. Then the prompt receives a tidy dictionary.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            parsers.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain_core.output_parsers <span class="tok-kw">import</span> StrOutputParser
+<span class="tok-kw">from</span> pydantic <span class="tok-kw">import</span> BaseModel, Field   <span class="tok-com"># Pydantic v2, native in 0.3+</span>
+
+<span class="tok-com"># 1) Plain string out</span>
+str_parser = <span class="tok-fn">StrOutputParser</span>()
+
+<span class="tok-com"># 2) Structured out: a typed schema the model must fill</span>
+<span class="tok-kw">class</span> <span class="tok-fn">AlarmTriage</span>(BaseModel):
+    severity: <span class="tok-fn">str</span> = <span class="tok-fn">Field</span>(description=<span class="tok-str">"low | medium | high"</span>)
+    subsystem: <span class="tok-fn">str</span> = <span class="tok-fn">Field</span>(description=<span class="tok-str">"e.g. gas, RF, vacuum"</span>)
+    action: <span class="tok-fn">str</span> = <span class="tok-fn">Field</span>(description=<span class="tok-str">"one recommended next step"</span>)
+
+triage_llm = llm.<span class="tok-fn">with_structured_output</span>(AlarmTriage)
+result = triage_llm.<span class="tok-fn">invoke</span>(<span class="tok-str">"RF reflected power spiked to 40W on ETCH-03."</span>)
+
+<span class="tok-fn">print</span>(result.severity, result.subsystem, result.action)  <span class="tok-com"># validated fields</span></code></pre>
+</figure>
+<p>A typical RAG chain looks like this: take the question, retrieve documents into context, keep the original question, format both into a prompt, call the model, parse the answer. No special RAG magic is required; it is the same Runnable composition with one branch doing retrieval.</p>
+<h2 id="lcel">LCEL and Runnable: the pipe that ties it together</h2>
+<p>The common mistake is hiding too much inside one function. If a function retrieves, formats, prompts, calls the model, parses, and logs, you cannot easily test the pieces. LCEL encourages small named steps.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            lcel_chain.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># prompt -&gt; model -&gt; parser, composed with the pipe (LCEL)</span>
+chain = prompt | llm | <span class="tok-fn">StrOutputParser</span>()
+
+<span class="tok-com"># The whole chain is itself a Runnable — same three methods:</span>
+chain.<span class="tok-fn">invoke</span>({<span class="tok-str">"language"</span>: <span class="tok-str">"Korean"</span>,
+             <span class="tok-str">"context"</span>: sop_text,
+             <span class="tok-str">"question"</span>: <span class="tok-str">"How long is the purge?"</span>})
+
+<span class="tok-kw">for</span> tok <span class="tok-kw">in</span> chain.<span class="tok-fn">stream</span>({...}):   <span class="tok-com"># streaming, for free</span>
+    <span class="tok-fn">print</span>(tok, end=<span class="tok-str">""</span>)
+
+chain.<span class="tok-fn">batch</span>([{...}, {...}])       <span class="tok-com"># batching, for free</span>
+<span class="tok-kw">await</span> chain.<span class="tok-fn">ainvoke</span>({...})        <span class="tok-com"># async, for free</span></code></pre>
+</figure>
+<p>Once a chain needs conditional routing, retries, human approval, or durable state, it is time to move from LangChain core to LangGraph. Core gives you composable steps. LangGraph gives you a state machine for deciding which step happens next.</p>
+<figure>
+<div aria-label="LCEL pipeline flow diagram" class="diagram">
+<svg aria-label="LCEL pipeline: input dict flows through prompt, model, and parser to a typed result, with streaming, batch, and async available across the whole pipe" role="img" viewbox="0 0 720 250" width="100%">
+<rect fill="#FCFBF8" height="248" rx="12" stroke="#E8E4DB" width="718" x="1" y="1"></rect>
+<!-- input -->
+<rect fill="#F3EFE6" height="58" rx="9" stroke="#DBD5C8" width="120" x="24" y="96"></rect>
+<text fill="#3A362F" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="84" y="120">input dict</text>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="84" y="140">{question…}</text>
+<!-- arrow 1 -->
+<line stroke="#C15F3C" stroke-width="2" x1="150" x2="188" y1="125" y2="125"></line>
+<path d="M188 125 l-9 -5 v10 z" fill="#C15F3C"></path>
+<text fill="#C15F3C" font-family="JetBrains Mono, monospace" font-size="15" font-weight="500" text-anchor="middle" x="169" y="112">|</text>
+<!-- prompt -->
+<rect fill="#FCFBF8" height="58" rx="9" stroke="#C15F3C" width="120" x="194" y="96"></rect>
+<text fill="#3A362F" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="254" y="120">prompt</text>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="254" y="140">messages</text>
+<!-- arrow 2 -->
+<line stroke="#C15F3C" stroke-width="2" x1="320" x2="358" y1="125" y2="125"></line>
+<path d="M358 125 l-9 -5 v10 z" fill="#C15F3C"></path>
+<text fill="#C15F3C" font-family="JetBrains Mono, monospace" font-size="15" font-weight="500" text-anchor="middle" x="339" y="112">|</text>
+<!-- model -->
+<rect fill="#FCFBF8" height="58" rx="9" stroke="#C15F3C" width="120" x="364" y="96"></rect>
+<text fill="#3A362F" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="424" y="120">model</text>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="424" y="140">ChatOllama</text>
+<!-- arrow 3 -->
+<line stroke="#C15F3C" stroke-width="2" x1="490" x2="528" y1="125" y2="125"></line>
+<path d="M528 125 l-9 -5 v10 z" fill="#C15F3C"></path>
+<text fill="#C15F3C" font-family="JetBrains Mono, monospace" font-size="15" font-weight="500" text-anchor="middle" x="509" y="112">|</text>
+<!-- parser -->
+<rect fill="#F3EFE6" height="58" rx="9" stroke="#DBD5C8" width="120" x="534" y="96"></rect>
+<text fill="#3A362F" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="594" y="120">parser</text>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="594" y="140">result</text>
+<!-- capabilities band -->
+<text fill="#3A362F" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="360" y="46">one Runnable interface across the whole pipe</text>
+<text fill="#8A6D3B" font-family="JetBrains Mono, monospace" font-size="14" text-anchor="middle" x="360" y="206">.invoke( )   .stream( )   .batch( )   .ainvoke( )</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="360" y="228">streaming · batching · async — inherited for free</text>
+</svg>
+</div>
+<figcaption>Figure 1. The LCEL pipe. Input flows left to right through
+        <code>prompt | model | parser</code>; because each stage is a Runnable, the
+        composed chain exposes invoke / stream / batch / async with no extra code.
+        LCEL 파이프 흐름도 — 각 단계가 Runnable이라 스트리밍·배치·비동기가 그대로 따라옵니다.</figcaption>
+</figure>
+<h2 id="rag">Injecting context with RunnableParallel and RunnablePassthrough</h2>
+<p>The clean progression is: plain chat chain, structured output, tiny RAG, one safe tool, router graph, approval workflow. Each layer adds a reasoned capability instead of piling complexity onto a single prompt.</p>
+<ul>
+<li><code>RunnableParallel</code> — runs several Runnables on the same input
+        concurrently and returns a dict of their outputs. A Y-fork in the chain.</li>
+<li><code>RunnablePassthrough</code> — forwards the input unchanged, so the raw
+        question survives alongside the freshly retrieved context.</li>
+</ul>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            rag_chain.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain_core.runnables <span class="tok-kw">import</span> RunnableParallel, RunnablePassthrough
+<span class="tok-kw">from</span> langchain_core.output_parsers <span class="tok-kw">import</span> StrOutputParser
+
+<span class="tok-com"># retriever = an on-prem vector store's .as_retriever() (also a Runnable)</span>
+<span class="tok-kw">def</span> <span class="tok-fn">format_docs</span>(docs):
+    <span class="tok-kw">return</span> <span class="tok-str">"\n\n"</span>.<span class="tok-fn">join</span>(d.page_content <span class="tok-kw">for</span> d <span class="tok-kw">in</span> docs)
+
+<span class="tok-com"># Fork: fetch context AND keep the question, in parallel</span>
+setup = <span class="tok-fn">RunnableParallel</span>(
+    context=retriever | format_docs,   <span class="tok-com"># retrieve, then flatten to text</span>
+    question=<span class="tok-fn">RunnablePassthrough</span>(),   <span class="tok-com"># pass the query straight through</span>
+)
+
+rag_chain = setup | prompt | llm | <span class="tok-fn">StrOutputParser</span>()
+
+rag_chain.<span class="tok-fn">invoke</span>(<span class="tok-str">"What purge time does SOP-CVD-07 require before vent?"</span>)</code></pre>
+</figure>
+<p>For local/on-prem portfolios, this article is the foundation. If you can explain ChatModel, PromptTemplate, Parser, Runnable, and LCEL clearly, then RAG, tools, MCP, and agents become straightforward extensions.</p>
+<hr/>
+<h2 id="next">Next: from chains to agents</h2>
+<p>This article is a field note. The interactive deck walks the local LLM and RAG stack slide by slide, with diagrams and implementation examples.</p>
+<p>PhD in physics (IGZO / graphene semiconductor properties) and a semiconductor process engineer working on deposition. Builds air-gapped LLM, RAG, and agent systems, plus reinforcement-learning and anomaly-detection tooling, for the fab. Writes here about turning process know-how into an on-prem knowledge asset that never leaves the network.</p>
+</div>
+<!-- deep-dive deck link -->
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">Go deeper</span>
+<h3>Take the full course on this topic</h3>
+<p>Everything here, courses and journal alike, is free to read with no signup.</p>
+</div>
+<a class="btn btn-primary" href="../../overview/index.html">Open the deck <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+<!-- share -->
+<div class="share">
+<span class="lbl">Share</span>
+<button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+</div>
+<!-- author bio card (E-E-A-T) -->
+<aside class="author-card">
+<span aria-hidden="true" class="avatar">AE</span>
+<div class="a-body">
+<div class="k">About the author</div>
+<h3>AI Edu Archive</h3>
+<p>The related articles below continue from core modules into implementation patterns and stateful workflows.</p>
+<a href="../about.html">More about the author →</a>
+</div>
+</aside>
+<!-- related -->
+<section aria-label="Related articles" class="related">
+<span class="eyebrow">Keep reading</span>
+<h2>Related from the Journal</h2>
+<div class="related-grid">
+<a class="rel-card" href="rag-over-sealed-documents.html">
+<span class="cat-tag">Python Stack</span>
+<h3>Lang modules implementation guide</h3>
+</a>
+<a class="rel-card" href="agents-mcp-mes.html">
+<span class="cat-tag">Python Stack</span>
+<h3>LangGraph: stateful, resumable agent workflows</h3>
+</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>Free, in-depth, and open.</h2>
+<p>A good rule: start with the smallest runnable chain that proves the behavior, then add retrieval, tools, and graph state only when the problem actually demands them.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>Explore</h4>
+<a href="../../index.html">Hub home</a>
+<a href="../../index.html#courses">All courses</a>
+<a href="../index.html">Journal</a>
+</div>
+<div class="foot-col">
+<h4>Courses</h4>
+<a href="../../overview/index.html">Fab AI</a>
+<a href="../../watsonx/index.html">Air-gapped LLM</a>
+<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
+</div>
+<div class="foot-col">
+<h4>Site</h4>
+<a href="../about.html">About</a>
+<a href="../contact.html">Contact</a>
+<a href="../privacy.html">Privacy</a>
+<a href="../terms.html">Terms</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  // one-click copy for code figures
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig?fig.querySelector('pre'):null;
+      if(!code)return;
+      var text=code.innerText;
+      var done=function(){
+        btn.textContent='Copied';btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1600);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done,function(){});
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

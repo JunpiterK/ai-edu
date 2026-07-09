@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+ ∨ SEO ​ 
+<title>제조업체가 LLM을 air-gapped로 운영해야 하는 이유 - AI Edu Archive 한국어</title>
+<meta content="Fab과 제조업체가 LLM을 폐쇄망 안에서 운영해야 하는 이유: data leakage risk, process know-how, local model capability, engineering checklist." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/why-air-gapped-llm-manufacturing.html" rel="canonical"/><link href="https://ai-edu-archive.example.com/blog/articles/why-air-gapped-llm-manufacturing.html" hreflang="en" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/ko/articles/why-air-gapped-llm-manufacturing.html" hreflang="ko" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/articles/why-air-gapped-llm-manufacturing.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+ 오픈 그래프 
+<meta content="article" property="og:type"/>
+<meta content="제조업체가 LLM을 air-gapped로 운영해야 하는 이유 - AI Edu Archive 한국어" property="og:title"/>
+<meta content="Fab과 제조업체가 LLM을 폐쇄망 안에서 운영해야 하는 이유: data leakage risk, process know-how, local model capability, engineering checklist." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="https://ai-edu-archive.example.com/blog/ko/articles/why-air-gapped-llm-manufacturing.html" property="og:url"/>
+<meta content="ko_KR" property="og:locale"/>
+<meta content="en_US" property="og:locale:alternate"/>
+<meta content="2026-07-04" property="article:published_time"/>
+<meta content="AI Edu Archive" property="article:author"/>
+<meta content="On-Prem LLM" property="article:section"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="제조업체가 LLM을 air-gapped로 운영해야 하는 이유 - AI Edu Archive 한국어" name="twitter:title"/>
+<meta content="Fab과 제조업체가 LLM을 폐쇄망 안에서 운영해야 하는 이유: data leakage risk, process know-how, local model capability, engineering checklist." name="twitter:description"/>
+ JSON-LD: 기사 스키마 
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "제조업체가 LLM을 air-gapped로 운영해야 하는 이유",
+  "description": "Fab과 제조업체가 LLM을 폐쇄망 안에서 운영해야 하는 이유: data leakage risk, process know-how, local model capability, engineering checklist.",
+  "inLanguage": "ko",
+  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/ko/articles/why-air-gapped-llm-manufacturing.html"
+  },
+  "name": "제조업체가 LLM을 air-gapped로 운영해야 하는 이유",
+  "url": "https://ai-edu-archive.example.com/blog/ko/articles/why-air-gapped-llm-manufacturing.html"
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/blog.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive 홈" class="brand" href="../../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="주요 메뉴" class="nav-links">
+<a href="../../../index.html#courses">강의</a>
+<a href="../index.html">글</a>
+<a href="../about.html">소개</a>
+<div aria-label="언어 선택" class="language-switch"><a href="../../articles/why-air-gapped-llm-manufacturing.html" lang="en" title="English">🇺🇸 EN</a><a aria-current="true" href="why-air-gapped-llm-manufacturing.html" lang="ko" title="한국어">🇰🇷 KO</a><a href="../../articles/why-air-gapped-llm-manufacturing.html" lang="en" title="English shown for now">🇪🇸 ES</a><a href="../../articles/why-air-gapped-llm-manufacturing.html" lang="en" title="English shown for now">🇨🇳 ZH</a><a href="../../articles/why-air-gapped-llm-manufacturing.html" lang="en" title="English shown for now">🇯🇵 JA</a><a href="../../articles/why-air-gapped-llm-manufacturing.html" lang="en" title="English shown for now">🇩🇪 DE</a><a href="../../articles/why-air-gapped-llm-manufacturing.html" lang="en" title="English shown for now">🇫🇷 FR</a></div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article itemscope="" itemtype="https://schema.org/Article">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="탐색경로" class="breadcrumb">
+<a href="../../../index.html">홈</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">저널</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">제조업체가 LLM을 air-gapped로 운영해야 하는 이유</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag">On-Prem LLM</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-04" itemprop="datePublished">2026년 07월 04일</time>
+<span class="post-dot"></span>
+<span class="rt">12분 읽기</span>
+</div>
+<h1 itemprop="headline">제조업체가 LLM을 air-gapped로 운영해야 하는 이유</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>반도체 공정 엔지니어 · Air-gapped LLM / RAG / Agents</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="목차" class="toc">
+<div class="toc-title">이 페이지에서</div>
+<ol>
+<li><a href="#risk">cloud LLM에 붙여넣을 때 실제로 나가는 것</a></li>
+<li><a href="#architecture">대안: model은 들어오고 data는 남는다</a></li>
+<li><a href="#myth">air-gapped는 약하다는 뜻인가? 이제는 아니다</a></li>
+<li><a href="#checklist">엔지니어를 위한 1차 checklist</a></li>
+<li><a href="#next">이 series가 이어지는 방향</a></li>
+</ol>
+</nav>
+<div class="article-body" itemprop="articleBody">
+<p><span class="lead-in">제가 처음으로 LLM을 학교에 두자고 제안했을 때
+      굉장한 보안요원이 10분 만에 그것을 죽였습니다. 그리고 그들의 말이 옳았습니다.</span> 나는 스케치했다
+      호스팅된 API의 프로세스 질문에 답하는 매끄러운 작은 도우미,
+      그리고 나는 질문 자체가 어디로 갈지 단 한 순간도 생각해 본 적이 없었습니다. 는
+      리뷰어가 한 가지 질문을 했습니다. "그래서 증착 방법은 순간 건물을 떠나게 됩니다.
+      누군가 입력한 거야?" 나는 대답이 없었다. 그 만남이 제가 이 글을 쓰는 이유입니다.</p>
+<p>내면화하는 데 너무 오랜 시간이 걸렸던 점은 다음과 같습니다. 팹이나 공정 공장에서는
+      증착 매개변수, 수율-불량 곡선, 실패의 특징
+      베테랑들이 한 눈에 읽는 그 문서화되지 않은 노하우 <em>~이다</em> 회사.
+      그리고 AI를 도입하면서 불편한 부분은 엔지니어가
+      실제 프로세스 질문을 클라우드 LLM에 넣는 것, 그 노하우는 이미 떠났습니다. 그래서
+      내가 처음에 잘못했다가 결국에는 옳은 일이 된 것이 이 글의 요점입니다.
+      조각: <strong>제조업체의 경우 모델은 데이터가 아니라 데이터에 접근해야 합니다.
+      모델에게.</strong> 공장의 노하우는 현재 회사이고, 클라우드 LLM 근무는
+      그 노하우가 있다는 문이 저와 통화하면서 처음으로 깨달았습니다.</p>
+<h2 id="risk">cloud LLM에 붙여넣을 때 실제로 나가는 것</h2>
+<p>"그냥 ChatGPT를 사용해 보세요"는 상자가 검색어처럼 보이기 때문에 무해하다고 느껴집니다.
+      바. 그렇지 않고 선의의 글을 보면서 문제의 형태를 배웠습니다.
+      동료가 해. 그는 실제 여행 기록(도구 ID, 레시피 단계,
+      실제 결함 수를 공개 모델로 변환하여 요약을 작성하는 데 도움을 얻습니다. 아니요
+      악의, 진정으로 빨리 움직이려고 노력합니다. 하지만 해당 프롬프트의 모든 문자는
+      <strong>아웃바운드 전송</strong> 우리 중 누구도 통제할 수 없는 인프라에
+      끝났어, 끝났어. 이제 사람들에게 순서대로 안내하는 노출은 다음과 같습니다.
+      우리를 물었다:</p>
+<ul>
+<li><strong>영업비밀 <em>~이다</em> 프롬프트.</strong> 유용한 것을 얻으려면
+        대답하려면 실제 문제(레시피, 도구, 방법)를 설명해야 합니다.
+        숫자. 대답을 좋게 만드는 맥락은 당신이 대답할 수 없는 정확한 맥락이다
+        보낼 여유가 있습니다. 다른 하나 없이는 하나도 가질 수 없어, 난 계속 과소평가했어
+        그.</li>
+<li><strong>수율 및 불량 데이터는 경쟁력 있는 정보입니다.</strong> 에이
+        결함률 표 또는 여행 타임라인을 통해 경쟁업체에게 정확한 위치를 알려줍니다.
+        귀하의 프로세스는 부드럽습니다. 일부러 유출하는 게 아니라 직접 유출하는 거죠
+        한 번에 "빠른 질문"을 할 수 있습니다.</li>
+<li><strong>NDA는 그것이 "단순한 챗봇이었다"는 사실에 신경 쓰지 않습니다.</strong> 고객
+        NDA와 많은 부문의 수출 통제 규정에서는 두 사항 사이에 선을 긋지 않습니다.
+        "파일을 이메일로 보냈습니다." 그리고 "모델에 붙여넣었습니다." 둘 다 제3자에게 공개됩니다.
+        파티. 나는 법적 검토를 통해 정확히 그 점을 확인했으며 이에 대해 논쟁의 여지가 없습니다.</li>
+<li><strong>국경을 넘으면 실을 잃어버린 것입니다.</strong> 는
+        바이트가 클라우드 지역에 도착하는 순간, 바이트가 어디에 살고 있는지, 누가 살고 있는지 알 수 없는 경우가 많습니다.
+        소환할 수도 있고, 조용히 다른 사람의 시스템에 알릴 수도 있습니다.</li>
+</ul>
+<p>이 중 어느 것도 악당이 필요하지 않습니다. 클라우드 LLM의 일반적이고 의미 있는 사용
+      <em>~이다</em> 누출 — 그 부분은 경찰이 어려운 부분입니다. 아무도 느끼지 못하기 때문이죠
+      마치 그들이 뭔가 잘못한 것처럼. 악이 있어야 합니다. 선의로 해독한 내용
+      Q의 민감한 정보·수율 데이터·NDA 대상 정보가 그대로 존재합니다.</p>
+<div class="callout">
+<p><strong>흔한 실수 ①: "로컬로 돌리니까 데이터는 안 나가겠지."</strong></p>
+<p>❌법적으로 LLM만 반응하면 무조건적으로 이야기한다고 믿는 것입니다. → 처음으로 군대를 담당하다
+        안심하고, 뒤늦게 <code>tcpdump</code>를 걸어보니 인퍼런스 엔진이 아니라 그
+        옆에 붙인 <strong>벡터 DB 클라이언트</strong>외부의 텔리메트리를 사용하는 방법
+        (Chroma의 PostHog 텔레메트리가 커뮤니티에서 반복적으로 보고되고 있음)
+        대표대표입니다). 모델은 조용한데 전화를 걸고 있을 겁니다.
+        → ✅ 분석하는 것은 다음과 같습니다: 그리드 전체를 포함하여 루프백·API 포트를 제외하고
+        이를 실제로 목격해 <em>아무것도 안 나가는지</em> 눈으로 확인하고, 임베딩·DB
+        텔리스의 텔리 옵트아웃(예: 텔리메트리 활성화 형식)을 독특하게 사용합니다.
+        맙니다. "안녕하고 있는 것"은 검증이 가정입니다.</p>
+</div>
+<blockquote>
+        물어볼 가치가 있는 프롬프트를 만드는 데이터는 결코 물어볼 수 없는 데이터와 동일합니다.
+        보낼 여유가 있습니다.
+      </blockquote>
+<h2 id="architecture">대안: model은 들어오고 data는 남는다</h2>
+<p>동일한 보안 검토를 최종적으로 해결한 수정 사항은 "LLM을 사용하지 않음"이 아니었습니다.
+      그것은 <strong>여행의 방향을 바꾸다</strong>. 배송하는 대신
+      호스팅된 모델로 데이터를 내보내면 개방형 모델이 전달됩니다. <em>~에</em> 그리고 봉사하다
+      울타리 안에 있어요. 그런 식으로 아키텍처를 다시 그렸을 때 리뷰어는
+      반대 의견은 사라졌습니다. 더 이상 논쟁할 아웃바운드 경로가 없었습니다.
+      전체 패턴은 하나의 다이어그램에 적합하며 세 부분으로 구성됩니다.</p>
+<ul>
+<li><strong>온프레미스 서비스.</strong> 개방형 모델(Llama, Qwen,
+        gpt-oss 및 피어)는 다음과 같은 서비스 스택 뒤의 자체 GPU에서 실행됩니다.
+        <code>vLLM</code> 또는 <code>Ollama</code>. 가중치는 복사한 파일입니다.
+        한 번; 집에 전화하는 것은 없습니다.</li>
+<li><strong>에어 갭 RAG.</strong> SOP, 사양 시트 및 장비
+        로그가 삽입되고 색인화됩니다. <em>장소 상에서</em>이므로 답변은 다음에 근거합니다.
+        문서가 떠나지 않고 자신의 문서.</li>
+<li><strong>내부 배선.</strong> 모델이 사내 시스템에 연결됨
+        (MES, 역사가) 감사 도구를 통해 — 경계 내에서 읽고 작동합니다.</li>
+</ul>
+<div class="callout">
+<p><strong>흔한 실수 ②: "그냥 <code>pip install</code>하고 모델 받으면 되겠지."</strong></p>
+<p>❌ 인터넷 있는 개발 환경에서 짠 코드를 그대로 폐쇄망에 들고 들어가는 것.
+        → 이게 폐쇄망 입문자가 가장 크게 데이는 지점이고, 저도 여기서 하루를 날렸습니다.
+        진짜 에어갭 안에서는 <code>pip</code>도, <code>huggingface</code> 자동
+        다운로드도 전부 죽습니다. 코드가 런타임에 몰래 모델 카드나 토크나이저를
+        받으러 나가려다 조용히 멈추거나 타임아웃 나는 걸, 배포 당일에야 발견하죠.
+        → ✅ 해결: <em>모든</em> 가중치·의존성을 반입 전에 미리 받아 사내 미러/오프라인
+        캐시로 옮기고, <code>HF_HUB_OFFLINE=1</code> 같은 오프라인 모드를 강제해
+        런타임에 밖으로 나가는 경로 자체를 없앱니다. 반입은 해시 검증된 단방향 매체로
+        한 번만. 커뮤니티의 에어갭 구축 가이드가 하나같이 강조하는 게 이 "미리 다
+        받아두기"입니다.</p>
+</div>
+<p>모든 것이 한 문장으로 요약됩니다. <strong>모델이 들어옵니다. 는
+      데이터는 절대로 나가지 않습니다.</strong> 모든 쿼리 — 질문, 검색된 컨텍스트,
+      답변, 심지어 로그까지 — 에어갭 내부에서 하나의 전체 주기를 완료합니다.
+      경계를 넘지 않으며 절대 넘지 않습니다. 그리고 내가 기대하지 않았던 실질적인 보상은 다음과 같습니다.
+      단일 폐쇄 루프는 보안 검토자에게 전달하는 정확한 그림이기도 합니다.
+      내 디자인의 첫 번째 버전은 그림을 그릴 수 없어서 망가졌습니다.
+      경계; 이것은 경계가 있기 때문에 승인됩니다. <em>~이다</em> 그림.
+      모델은 반입되고, 데이터·프롬프트·로그는 부품망 경계를 한 번도 부담하지 않습니다 —
+      감사한 곳에서 스테이크 그림이 하나로 끝납니다.</p>
+<figure>
+<div aria-label="에어 갭 경계 다이어그램: 외부에 호스팅된 클라우드 LLM, 내부에 온프레미스 LLM 및 RAG, 차단된 데이터 송신 경로" class="diagram">
+<svg aria-labelledby="agTitle agDesc" role="img" viewbox="0 0 640 340" width="100%">
+<title id="agTitle">The model comes in, the data stays</title>
+<desc id="agDesc">Open model weights are copied one-way into the air-gapped intranet, where an on-prem LLM and local RAG serve queries; process data and prompts never cross the boundary outward.</desc>
+<rect fill="#FCFBF8" height="338" rx="14" stroke="#E8E4DB" width="638" x="1" y="1"></rect>
+<!-- OUTSIDE / cloud zone -->
+<rect fill="#FBF3EF" height="292" rx="10" stroke="#E7C9BC" width="180" x="20" y="24"></rect>
+<text fill="#9B4A2C" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" text-anchor="middle" x="110" y="50">PUBLIC INTERNET</text>
+<text fill="#B07A64" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle" x="110" y="68">사외망 · 통제 밖</text>
+<rect fill="#FCFBF8" height="60" rx="9" stroke="#E7C9BC" width="132" x="44" y="92"></rect>
+<text fill="#8A4227" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="110" y="118">Hosted cloud</text>
+<text fill="#8A4227" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="110" y="137">LLM API</text>
+<!-- open-model source -->
+<rect fill="#FCFBF8" height="72" rx="9" stroke="#DBD5C8" width="132" x="44" y="196"></rect>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="110" y="222">Open-weight</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="110" y="240">model weights</text>
+<text fill="#93908A" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle" x="110" y="258">Llama · Qwen</text>
+<!-- air-gap boundary line -->
+<line stroke="#C15F3C" stroke-dasharray="7 6" stroke-width="2" x1="320" x2="320" y1="24" y2="316"></line>
+<text fill="#C15F3C" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600" text-anchor="middle" x="320" y="18">AIR GAP</text>
+<!-- INSIDE / air-gapped zone -->
+<rect fill="#EEF6F4" height="292" rx="10" stroke="#A9D6CC" width="260" x="360" y="24"></rect>
+<text fill="#0B6258" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" text-anchor="middle" x="490" y="50">AIR-GAPPED INTRANET</text>
+<text fill="#3F8378" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle" x="490" y="68">사내 폐쇄망 · 데이터 무반출</text>
+<rect fill="#FCFBF8" height="56" rx="9" stroke="#A9D6CC" width="208" x="386" y="92"></rect>
+<text fill="#0B6258" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="490" y="125">On-prem LLM serving (vLLM)</text>
+<rect fill="#FCFBF8" height="56" rx="9" stroke="#A9D6CC" width="208" x="386" y="162"></rect>
+<text fill="#0B6258" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="490" y="188">Local RAG</text>
+<text fill="#3F8378" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" x="490" y="206">SOPs · specs · equipment logs</text>
+<rect fill="#FCFBF8" height="56" rx="9" stroke="#A9D6CC" width="208" x="386" y="232"></rect>
+<text fill="#0B6258" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="490" y="265">Internal systems (MES)</text>
+<!-- one-way model import arrow (crosses boundary, allowed) -->
+<line marker-end="url(#agArrow)" stroke="#0B6258" stroke-width="2.5" x1="176" x2="384" y1="228" y2="150"></line>
+<text fill="#0B6258" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600" text-anchor="middle" x="286" y="205">weights in ▸ one-way</text>
+<!-- blocked data-egress arrow -->
+<line stroke="#C15F3C" stroke-dasharray="6 5" stroke-width="2.5" x1="384" x2="192" y1="112" y2="120"></line>
+<line stroke="#C15F3C" stroke-width="2.5" x1="300" x2="284" y1="108" y2="124"></line>
+<line stroke="#C15F3C" stroke-width="2.5" x1="284" x2="300" y1="108" y2="124"></line>
+<text fill="#C15F3C" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600" text-anchor="middle" x="250" y="98">data out ✕ blocked</text>
+<defs>
+<marker id="agArrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10 z" fill="#0B6258"></path>
+</marker>
+</defs>
+</svg>
+</div>
+<figcaption>그림 1. 모델 가중치는 공극을 가로질러 단방향으로 한 번 가져옵니다. 쿼리, 검색된 컨텍스트 및 프로세스 데이터는 내부에서 주기를 완료하고 다시 교차하지 않습니다. 모델은 반입, 데이터는 무반출.</figcaption>
+</figure>
+<h2 id="myth">air-gapped는 약하다는 뜻인가? 이제는 아니다</h2>
+<p>제가 매번 듣는 이의는 대개는 그 제안을 원하는 사람으로부터입니다.
+      호스팅 모델 — 온프레미스로 가는 것은 더 멍청한 모델에 안주한다는 뜻입니다. 몇 년
+      이전에는 나는 당신의 의견에 절반만 동의했을 것입니다. 지금은 아닙니다. 기초적인 문서 기반 작업의 경우 —
+      식물이 실제로 요구하는 것의 90%를 차지하는 검색량이 많은 Q&amp;A입니다.
+      잘 제공되는 오픈 웨이트 모델이면 충분하며 나는 회의적이었습니다.
+      답변이 나오기 시작하면 엔지니어들은 순위표에 대한 관심을 멈춥니다. 는
+      그것을 현실로 만든 변화는 <strong>BYO 모델</strong> (본인 모델 지참): 공개
+      Llama, Qwen 및 gpt-oss 선박 무게와 같은 제품군은 사용자가 직접 운영하므로 성능이 뛰어납니다.
+      토큰당 영원히 임대하는 것이 아니라 한 번 설치하면 됩니다.</p>
+<p>사람들이 벤치마크만 바라보기 때문에 놓치는 부분은 다음과 같습니다.
+      식물 특유의 장점은 <em>다른</em> 방법. 지금까지 본 적이 없는 클라우드 모델
+      귀하의 장비는 기록만 하고 절대 기록하지 않습니다. Air-Gapped RAG 시스템은 이를 직접 읽습니다.
+      프로세스에 대해 추측하는 약간 더 큰 모델은 다음과 같은 더 작은 모델에 패배합니다.
+      실제로는 항상 봉인된 문서에 근거합니다. 설명서대로 성능이
+      지금은 오래된 말입니다. 오픈 모델(Llama·Qwen·gpt-oss)로 충분하고, 제경험상
+      문서에 문제가 있는 답이 더 큰 모델의 설명보다 셉니다.</p>
+<div class="callout">
+<p><strong>일시적인 ③: "VRAM이 24GB이므로 이 모델에 들어가실래요."</strong></p>
+<p>❌ 모델 크기만 보고 GPU 용량을 줄이는 것. → r/LocalLLaMA 같은 데서
+        가장 흔하게 보이는 내용은, 해충 간단한 범위로 쩌렁쩌렁한 문서가 길어지는 것입니다.
+        홀더 <strong>KV멕시코</strong>오전 3시 30분에 폭발이 일어나며 OOM으로 계속해서.
+        컨테이너가 있는 곳 KV 코스프레가 공유하는 것보다 더 많은 메모리를 먹습니다(128K 입니다.
+        연인의 몇 배). "8B 8GB면 이어지니까"가 아니라 "8GB면 8B를 몇 K까지"로
+        생각해야 해요. → ✅ 통화: 실제로는 좀 성·컨텍스트 길이로 사이징하고, 모자라면
+        추출을 줄이거나 KV 체리를 INT8로 복잡화합니다.</p>
+<p><strong>흔한 실수 ④: "양자화? 4비트로 최대한 줄이면 이득이지."</strong></p>
+<p>❌ VRAM 아끼겠다고 무턱대고 유니버스 비트로 조이는 것입니다. → 표준 후처리 복잡화로
+        4비트까지 은은하면 반올림 과정에서 가능성·논리가 기대될 가능성보다 뚝 떨어지는 경우가
+        그렇죠. 벤치 점수만 보고해도 실제로는 품질이 좋지 않습니다.
+        → ✅ 제 기준은 Q4_K_M 정도가 크기와 반대되는 점을 가지며, 그 아래에는 원칙이 있습니다
+        <em>내 문서로</em> 품질을 재보고 결정합니다. 리더보드가 아니라 우리 RAG 답으로.</p>
+</div>
+<h2 id="checklist">엔지니어를 위한 1차 checklist</h2>
+<p>시작하기 위해 모든 것을 해결할 필요는 없습니다. 하지만 여기 내가 지금 짧은 목록이 있습니다
+      조종사보다 먼저 걸어가십시오. 그 위에 있는 모든 항목은 나 또는 전쟁을 벌이는 사람의 것입니다.
+      내가 믿는 이야기는 적어도 한 번은 틀렸어요:</p>
+<ul>
+<li><strong>모델 가져오기 절차 — <em>그리고</em> 라이센스.</strong> 가중치
+        통제된 단방향 경로(해시 검증 미디어/검토된 미디어)를 통해 한 번 입력
+        인바운드 게이트), 런타임 시 인터넷에서 아무것도 가져오지 않습니다. 하지만 라이센스를 읽어보세요
+        <em>~ 전에</em> 이후가 아닌 모델을 기반으로 구축합니다. "오픈 웨이트"는 "오픈 웨이트"가 아닙니다.
+        소스": 여러 인기 제품군에서 실제 문자열이 포함된 커뮤니티 라이센스를 제공합니다 —
+        사용 임계값, 경쟁사 및 사용 분야 제한, 교육 금지
+        다른 모델. 배송 후 법적으로 플래그를 지정하는 것은 나쁜 날입니다.</li>
+<li><strong>실제 동시성을 위한 GPU 크기 조정.</strong> 실제 크기
+        헤드라인 번호가 아닌 동시성과 컨텍스트 길이 — 그리고 KV를 기억하세요
+        단지 가중치가 아닌 캐시입니다(위의 OOM 스토리 참조). 하나의 현대
+        데이터센터 GPU는 이미 유능한 중형 개방형 모델을 실행하고 있습니다.</li>
+<li><strong>출구가 없는 엄격한 경계입니다.</strong> 제공 호스트에 경로가 없습니다.
+        밖으로. <em>확인하다</em> 패킷 캡처를 사용하여 이를 가정합니다.
+        에어 갭, 당신에게는 희망이 있습니다.</li>
+<li><strong>액세스 제어 및 감사.</strong> 누가, 어떤 문서를 쿼리할 수 있나요?
+        각 역할은 검색할 수 있으며 모든 통화에 대한 로그를 가져올 수 있습니다. 닫힌 루프는 다음 경우에만 계산됩니다.
+        그것은 또한 책임이 있는 일이다.</li>
+<li><strong>데이터 분류가 선행됩니다.</strong> 무엇이 허용되는지 결정
+        누군가가 어색한 질문을 한 후가 아니라 색인을 생성하기 전에 RAG 색인을 확인하세요.</li>
+</ul>
+<div class="callout">
+<p><strong>임시 지점 ⑤: "라이브러리 다 갈라졌는데 왜 안 뜨는 지" — CUDA/드라이버 지옥.</strong></p>
+<p>❌ 연금망 서버의 드라이버·CUDA 버전을 확인하고 서빙을 수행하는 것입니다.
+        → vLLM 같은 서빙 엔진의 GitHub 문제가 함께 도배돼 그리고(CUDA 12로 빌드된 게
+        13 위에 <code>libcudart.so.12</code> 못 찾거나 특정 NVIDIA 드라이버가
+        <code>--tensor-parallel-size</code>를 통째로 깨뜨리는 등), 분기된 정상한 코드가
+        나만의 서버에서만 겨울서 반나절을 태웠습니다. → ✅ 해결: 드라이버·CUDA·서빙
+        엔진 버전을 <em>사전에</em> 박아 검증하고, 다중 GPU면 텐서 병렬 구조가
+        실제 보이는 GPU 수와 일치지부터 확인합니다. "일단 최신으로 업데이트"가 안 됩니다.
+        버전을 처음부터 고정하는 게 답입니다.</p>
+<p><strong>일시적인 조언 ⑥: RAG는 세웠는데 검색이 헛도는 것 — 임베딩 언어 미스매치.</strong></p>
+<p>❌ 영어권 예제 그대로 영어 위주 임베딩 모델을 쓰고 영어 SOP를 인부싱하는 것입니다.
+        → 문서는 영어인데 임베딩이 English를 제대로 잡을 수 있다면, LLM이 아무리 좋아도
+        엉뚱한 수분 섭취량("답이 이상하다"의 범인이 사실 검색 중인 경우가 많죠).
+        → ✅ 문제 해결: <code>bge-m3</code>처럼 한국어 포함 다국어 검색이 검증된 임베딩을
+        쓰고, 반드시 <em>실제 우리 문서</em>로 검색 품질을 눈으로 확인한 뒤 넘어갑니다.</p>
+</div>
+<h3 id="snippet">이 주제의 전체 과정 보기</h3>
+<p>이는 배포가 아닌 개념이지만 형태를 보여줍니다.
+      로컬 검색, 네트워크 송신 없음.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            air_gapped_answer.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># Everything below runs inside the air gap — no outbound calls.</span>
+<span class="tok-kw">from</span> langchain_community.embeddings <span class="tok-kw">import</span> HuggingFaceEmbeddings
+<span class="tok-kw">from</span> langchain_community.vectorstores <span class="tok-kw">import</span> Chroma
+
+embed = <span class="tok-fn">HuggingFaceEmbeddings</span>(model_name=<span class="tok-str">"/opt/models/bge-m3"</span>)  <span class="tok-com"># local weights</span>
+kb    = <span class="tok-fn">Chroma</span>(persist_directory=<span class="tok-str">"./kb"</span>, embedding_function=embed)
+
+<span class="tok-kw">def</span> <span class="tok-fn">answer</span>(question, k=<span class="tok-num">4</span>):
+    hits = kb.<span class="tok-fn">similarity_search</span>(question, k=k)        <span class="tok-com"># retrieve from sealed docs</span>
+    <span class="tok-kw">return</span> llm.<span class="tok-fn">invoke</span>(<span class="tok-fn">prompt</span>(question, hits))       <span class="tok-com"># on-prem LLM, zero egress</span></code></pre>
+</figure>
+<hr/>
+<h2 id="next">이 series가 이어지는 방향</h2>
+<p>이 작품은 매뉴얼이 아니라 지도입니다. 그리고 솔직히 말해서 절반은 지도입니다.
+      내가 이미 갈퀴를 밟았으니 그럴 필요가 없습니다. 내가 하고 싶은 단 한 가지
+      논쟁의 여지가 없습니다. 프로세스 노하우가 자산이라면 LLM은
+      울타리. 여기에서 이 일지는 구체화됩니다 — <strong>개방형 모델 제공
+      에어 갭 뒤에 SOP 및 장비 로그 위에 RAG를 구축하고 배선합니다.
+      내부 시스템에 대한 에이전트</strong>, 모두 실제 Python으로, 흉터가 포함되어 있습니다. 만약 당신이
+      오히려 슬라이드별로 배치된 전체 아키텍처를 먼저 살펴보고 아래 데크를 참조하세요.
+      끝까지 걸어갑니다.</p>
+</div>
+ 심층적인 데크 링크 
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">더 깊게 보기</span>
+<h3>이 주제의 전체 과정 보기</h3>
+<p>이 글은 현장노트입니다. 대화형 데크는 다이어그램과 작업 예제를 통해 가져오기, 제공, RAG 및 MCP 도구 등 전체 폐쇄 루프 설계를 안내합니다. 관계로 연결됩니다.</p>
+</div>
+<a class="btn btn-primary" href="../../../watsonx/index.html">deck 열기 <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+ 공유 
+<div class="share">
+<span class="lbl">공유</span>
+<button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">공유/링크 복사</button>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">엑스 / 트위터</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">링크드인</a>
+</div>
+ 저자 바이오 카드(E-E-A-T) 
+<aside class="author-card">
+<span aria-hidden="true" class="avatar">AE</span>
+<div class="a-body">
+<div class="k">저자 소개</div>
+<h3>On-prem LLM serving</h3>
+<p>물리학 박사(IGZO / 그래핀 반도체 특성) 및 반도체
+        증착 작업을 수행하는 프로세스 엔지니어. 에어갭 LLM, RAG 및 에이전트 구축
+        강화 학습 및 이상 탐지 도구를 포함한 시스템
+        팹. 프로세스 노하우를 온프레미스 지식 자산으로 전환하는 방법에 대해 여기에 글을 씁니다.
+        결코 네트워크를 떠나지 않습니다.</p>
+<a href="../about.html">저자에 대해 더 알아보기 →</a>
+</div>
+</aside>
+ 관련된 
+<section aria-label="관련 기사" class="related">
+<span class="eyebrow">계속 읽기</span>
+<h2>저널의 관련 글</h2>
+<div class="related-grid">
+<a class="rel-card" href="onprem-llm-serving.html">
+<span class="cat-tag">온프레미스 LLM</span>
+<h3>On-prem LLM serving</h3>
+</a>
+<a class="rel-card" href="rag-over-sealed-documents.html">
+<span class="cat-tag">RAG</span>
+<h3>폐쇄망 내부 문서 RAG</h3>
+</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>know-how는 안에, cloud는 밖에</h2>
+<p>강의와 저널의 모든 콘텐츠는 회원가입 없이 무료로 읽을 수 있습니다.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>탐구하다</h4>
+<a href="../../index.html">허브 홈</a>
+<a href="../../../index.html#courses">모든 강좌</a>
+<a href="../index.html">저널</a>
+</div>
+<div class="foot-col">
+<h4>학습</h4>
+<a href="../../../overview/index.html">팹 AI</a>
+<a href="../../../watsonx/index.html">에어갭 LLM</a>
+<a href="../../../llm_apply/LLM_slide.html">엔터프라이즈 LLM</a>
+</div>
+<div class="foot-col">
+<h4>사이트</h4>
+<a href="../about.html">소개</a>
+<a href="../contact.html">연락하다</a>
+<a href="../privacy.html">개인정보</a>
+<a href="../terms.html">이용약관</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · 열린 한국어 AI 교육</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  // one-click copy for code figures
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig?fig.querySelector('pre'):null;
+      if(!code)return;
+      var text=code.innerText;
+      var done=function(){
+        btn.textContent='Copied';btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1600);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done,function(){});
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

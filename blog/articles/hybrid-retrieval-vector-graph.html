@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- ══ SEO ══════════════════════════════════════════════════════════ -->
+<title>Hybrid retrieval: vectors + knowledge graph - AI Edu Archive Journal</title>
+<meta content="Why vector search alone misses relationships and exact facts, and how to pair it with a knowledge graph: vectors find candidates, the graph verifies and expands." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/hybrid-retrieval-vector-graph.html" rel="canonical"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/hybrid-retrieval-vector-graph.html" hreflang="ko" rel="alternate"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/hybrid-retrieval-vector-graph.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+<!-- Open Graph -->
+<meta content="article" property="og:type"/>
+<meta content="Hybrid retrieval: vectors + knowledge graph - AI Edu Archive Journal" property="og:title"/>
+<meta content="Why vector search alone misses relationships and exact facts, and how to pair it with a knowledge graph: vectors find candidates, the graph verifies and expands." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="https://ai-edu-archive.example.com/blog/articles/hybrid-retrieval-vector-graph.html" property="og:url"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="ko_KR" property="og:locale:alternate"/>
+<meta content="2026-07-04" property="article:published_time"/>
+<meta content="AI Edu Archive" property="article:author"/>
+<meta content="RAG" property="article:section"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Hybrid retrieval: vectors + knowledge graph - AI Edu Archive Journal" name="twitter:title"/>
+<meta content="Why vector search alone misses relationships and exact facts, and how to pair it with a knowledge graph: vectors find candidates, the graph verifies and expands." name="twitter:description"/>
+<!-- JSON-LD: Article schema -->
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Hybrid retrieval: vectors + knowledge graph",
+  "description": "Why vector search alone misses relationships and exact facts, and how to pair it with a knowledge graph: vectors find candidates, the graph verifies and expands.",
+  "inLanguage": "en",
+  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/articles/hybrid-retrieval-vector-graph.html"
+  },
+  "name": "Hybrid retrieval: vectors + knowledge graph",
+  "url": "https://ai-edu-archive.example.com/blog/articles/hybrid-retrieval-vector-graph.html"
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../assets/blog.css" rel="stylesheet"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/hybrid-retrieval-vector-graph.html" hreflang="en" rel="alternate"/></head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive home" class="brand" href="../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="Primary" class="nav-links">
+<a href="../../index.html#courses">Courses</a>
+<a href="../index.html">Articles</a>
+<a href="../about.html">About</a>
+<div aria-label="Language selector" class="language-switch">
+<a aria-current="true" href="hybrid-retrieval-vector-graph.html" lang="en" title="English">🇺🇸 EN</a>
+<a href="../ko/articles/hybrid-retrieval-vector-graph.html" lang="ko" title="한국어">🇰🇷 KO</a>
+<a href="hybrid-retrieval-vector-graph.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a>
+<a href="hybrid-retrieval-vector-graph.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a>
+<a href="hybrid-retrieval-vector-graph.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a>
+<a href="hybrid-retrieval-vector-graph.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a>
+<a href="hybrid-retrieval-vector-graph.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a>
+</div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article itemscope="" itemtype="https://schema.org/Article">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="Breadcrumb" class="breadcrumb">
+<a href="../../index.html">Home</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">Journal</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">Hybrid retrieval</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag" data-cat="rag">RAG</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-04" itemprop="datePublished">Jul 4, 2026</time>
+<span class="post-dot"></span>
+<span class="rt">12 min read</span>
+</div>
+<h1 itemprop="headline">Hybrid retrieval: vectors + knowledge graph</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>Semiconductor process engineer · Air-gapped LLM / RAG / Agents</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="Table of contents" class="toc">
+<div class="toc-title">On this page</div>
+<ol>
+<li><a href="#where-vectors-break">Where vector search breaks</a></li>
+<li><a href="#what-graphs-add">What a knowledge graph adds</a></li>
+<li><a href="#the-pattern">The pattern: candidates → verify → expand</a></li>
+<li><a href="#code">Wiring it in LangChain</a></li>
+<li><a href="#rerank">Reranking the merged set</a></li>
+</ol>
+</nav>
+<div class="article-body" itemprop="articleBody">
+<p>A vector store is a similarity engine, not a fact engine. Ask it which chambers share the RF generator model that failed on EV-03, and it will return paragraphs that sound like the question, not the chambers that actually share that part. On a fab network, where an answer can feed a maintenance decision, that gap matters. This article makes a simple claim: for relationship and exact-fact questions, pair vector search with a knowledge graph. Vectors find candidates; the graph verifies and expands.</p>
+<h2 id="where-vectors-break">Where vector search breaks</h2>
+<p>Dense retrieval embeds a query and returns the nearest chunks by cosine similarity. That is excellent for a semantic question such as explain the purge sequence for the load-lock. It is weak in three places that show up constantly in manufacturing knowledge:</p>
+<ul>
+<li>Relationships — which recipes run on the same source as recipe A is a graph traversal, not a similarity score. Nearby text is not the same as a connected entity.</li>
+<li>Exact facts — part numbers, torque values, and interlock IDs are brittle. An embedding can place PN-4471 and PN-4741 near each other in vector space, but on the floor they are different parts.</li>
+<li>Multi-hop — which SOPs are affected if this valve is recalled needs valve → chamber → tool → SOP. Each hop is a join the vector index cannot make.</li>
+</ul>
+<p>You can hide part of the problem with a larger k and a reranker, but you are still asking a similarity index to perform a lookup it was never built to do.</p>
+<blockquote>Vectors tell you what a document is about. A graph tells you what a thing is connected to. Fab questions usually need both.</blockquote>
+<h2 id="what-graphs-add">What a knowledge graph adds</h2>
+<p>A knowledge graph stores entities as nodes and relationships as typed edges: (:Tool)-[:HAS_CHAMBER]-&gt;(:Chamber)-[:USES_PART]-&gt;(:Part). Querying it with Cypher is exact and deterministic: no embedding blur, no ranking guess, just the edges that exist. That is exactly the shape of the questions vectors struggle with. The trade-off is coverage. A graph only knows the entities and relationships you extracted into it, and it does not perform fuzzy semantic matching. Neither system is sufficient alone; together they cover each other's blind spots.</p>
+<p>Both stores can live entirely inside the plant network. The embedding model runs from local weights, and a graph database such as Neo4j runs on-prem. Hybrid retrieval does not require external egress, which is the point for an air-gapped fab.</p>
+<h2 id="the-pattern">The pattern: candidates → verify → expand</h2>
+<p>The reliable pattern is not run both and hope. It is a pipeline:</p>
+<ul>
+<li>Candidates — vector search over document chunks returns semantically relevant passages. This is the recall layer.</li>
+<li>Verify and expand — pull the entities mentioned in those chunks, then query the graph for exact facts and neighbours: shared parts, affected SOPs, and the tool a chamber belongs to.</li>
+<li>Merge and rerank — fuse both result sets and rerank so the top context is both semantically on-topic and factually connected.</li>
+</ul>
+<figure>
+<div aria-label="Hybrid retrieval flow diagram" class="diagram">
+<svg aria-label="Query fans out to a vector retriever and a graph retriever; results merge and are reranked before the LLM answers." role="img" viewbox="0 0 640 260" width="100%">
+<rect fill="#FCFBF8" height="258" rx="12" stroke="#E8E4DB" width="638" x="1" y="1"></rect>
+<!-- query -->
+<rect fill="#FBEDE7" height="44" rx="9" stroke="#D97757" width="104" x="24" y="108"></rect>
+<text fill="#7A3A22" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="76" y="129">Query</text>
+<text fill="#9A7A6A" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="76" y="146">query</text>
+<!-- vector retriever -->
+<rect fill="#FCFBF8" height="52" rx="9" stroke="#DBD5C8" width="176" x="196" y="42"></rect>
+<text fill="#3A3833" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="284" y="63">Vector retriever</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="284" y="80">candidates</text>
+<!-- graph retriever -->
+<rect fill="#FCFBF8" height="52" rx="9" stroke="#DBD5C8" width="176" x="196" y="166"></rect>
+<text fill="#3A3833" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="284" y="187">Graph retriever</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="284" y="204">verify + expand</text>
+<!-- merge/rerank -->
+<rect fill="#FCFBF8" height="52" rx="9" stroke="#DBD5C8" width="104" x="424" y="104"></rect>
+<text fill="#3A3833" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="476" y="126">Merge +</text>
+<text fill="#3A3833" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="476" y="143">rerank</text>
+<!-- LLM -->
+<rect fill="#FBEDE7" height="44" rx="9" stroke="#D97757" width="56" x="560" y="108"></rect>
+<text fill="#7A3A22" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="588" y="134">LLM</text>
+<!-- arrows -->
+<g fill="none" stroke="#B8AE9C" stroke-width="1.6">
+<path d="M128 122 L196 74" marker-end="url(#ah)"></path>
+<path d="M128 138 L196 190" marker-end="url(#ah)"></path>
+<path d="M372 68 L424 118" marker-end="url(#ah)"></path>
+<path d="M372 192 L424 142" marker-end="url(#ah)"></path>
+<path d="M528 130 L560 130" marker-end="url(#ah)"></path>
+</g>
+<defs>
+<marker id="ah" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="4">
+<path d="M0 0 L8 4 L0 8 z" fill="#B8AE9C"></path>
+</marker>
+</defs>
+</svg>
+</div>
+<figcaption>Figure 1. The query fans out to both retrievers; results merge and rerank before the on-prem LLM answers.</figcaption>
+</figure>
+<h2 id="code">Wiring it in LangChain</h2>
+<p>Everything below uses the current split packages: langchain_neo4j, langchain_huggingface, and langchain_core. No legacy langchain.embeddings or LLMChain. Start with the two stores, both running on-prem.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> stores.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># Vector store + graph, both running inside the plant network</span>
+<span class="tok-kw">from</span> langchain_huggingface <span class="tok-kw">import</span> HuggingFaceEmbeddings
+<span class="tok-kw">from</span> langchain_neo4j <span class="tok-kw">import</span> Neo4jVector, Neo4jGraph
+
+embed = <span class="tok-fn">HuggingFaceEmbeddings</span>(model_name=<span class="tok-str">"/opt/models/bge-m3"</span>)  <span class="tok-com"># local weights</span>
+
+<span class="tok-com"># Vector index over document chunks already loaded into Neo4j</span>
+vector = Neo4jVector.<span class="tok-fn">from_existing_index</span>(
+    embed,
+    url=<span class="tok-str">"bolt://neo4j.fab.local:7687"</span>,
+    username=<span class="tok-str">"neo4j"</span>,
+    password=<span class="tok-str">"***"</span>,
+    index_name=<span class="tok-str">"doc_chunks"</span>,
+)
+
+<span class="tok-com"># Same database, queried as a graph for exact facts and relationships</span>
+graph = <span class="tok-fn">Neo4jGraph</span>(
+    url=<span class="tok-str">"bolt://neo4j.fab.local:7687"</span>,
+    username=<span class="tok-str">"neo4j"</span>,
+    password=<span class="tok-str">"***"</span>,
+)</code></pre>
+</figure>
+<p>Next, build a small custom retriever that turns the graph into a LangChain retriever. It receives a query, finds exact entities and connected facts with parameterised Cypher, and returns them as Document objects. In production you would add a dedicated entity extraction step; here the query parameter keeps the example concrete and injection-safe.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> graph_retriever.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain_core.retrievers <span class="tok-kw">import</span> BaseRetriever
+<span class="tok-kw">from</span> langchain_core.documents <span class="tok-kw">import</span> Document
+<span class="tok-kw">from</span> langchain_core.callbacks <span class="tok-kw">import</span> CallbackManagerForRetrieverRun
+
+<span class="tok-kw">class</span> <span class="tok-fn">GraphFactRetriever</span>(BaseRetriever):
+    <span class="tok-str">"""Expand a query into exact facts + neighbours via Cypher."""</span>
+    graph: <span class="tok-fn">object</span>
+    k: <span class="tok-fn">int</span> = <span class="tok-num">6</span>
+
+    <span class="tok-kw">def</span> <span class="tok-fn">_get_relevant_documents</span>(
+        self, query: <span class="tok-fn">str</span>, *, run_manager: CallbackManagerForRetrieverRun
+    ) -&gt; <span class="tok-fn">list</span>[Document]:
+        <span class="tok-com"># Match parts/tools named in the query, return connected SOPs</span>
+        cypher = <span class="tok-str">"""
+        MATCH (p:Part)&lt;-[:USES_PART]-(c:Chamber)&lt;-[:HAS_CHAMBER]-(t:Tool)
+        WHERE toLower(p.name) CONTAINS toLower($q)
+        OPTIONAL MATCH (c)-[:GOVERNED_BY]-&gt;(s:SOP)
+        RETURN t.name AS tool, c.name AS chamber,
+               p.name AS part, collect(s.title) AS sops LIMIT $k
+        """</span>
+        rows = self.graph.<span class="tok-fn">query</span>(cypher, params={<span class="tok-str">"q"</span>: query, <span class="tok-str">"k"</span>: self.k})
+        <span class="tok-kw">return</span> [
+            <span class="tok-fn">Document</span>(
+                page_content=(
+                    <span class="tok-str">f"Tool {r['tool']} · chamber {r['chamber']} "</span>
+                    <span class="tok-str">f"uses {r['part']}. SOPs: {', '.join(r['sops'])}"</span>
+                ),
+                metadata={<span class="tok-str">"source"</span>: <span class="tok-str">"graph"</span>},
+            )
+            <span class="tok-kw">for</span> r <span class="tok-kw">in</span> rows
+        ]</code></pre>
+</figure>
+<p>With both retrievers speaking the same interface, EnsembleRetriever can fuse them. It merges the two result lists with Reciprocal Rank Fusion, so a document ranked highly by either retriever can survive. The weights let you lean more heavily on vectors for broad recall or on the graph for fact-heavy corpora.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> ensemble.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain.retrievers <span class="tok-kw">import</span> EnsembleRetriever
+
+vec_ret = vector.<span class="tok-fn">as_retriever</span>(search_kwargs={<span class="tok-str">"k"</span>: <span class="tok-num">6</span>})
+graph_ret = <span class="tok-fn">GraphFactRetriever</span>(graph=graph, k=<span class="tok-num">6</span>)
+
+<span class="tok-com"># RRF fusion — a hit ranked high by either retriever survives</span>
+hybrid = <span class="tok-fn">EnsembleRetriever</span>(
+    retrievers=[vec_ret, graph_ret],
+    weights=[<span class="tok-num">0.6</span>, <span class="tok-num">0.4</span>],
+)
+
+docs = hybrid.<span class="tok-fn">invoke</span>(<span class="tok-str">"which chambers share the RF generator on EV-03?"</span>)</code></pre>
+</figure>
+<h2 id="rerank">Reranking the merged set</h2>
+<p>RRF fusion is rank-based, not content-aware. To push the genuinely relevant context to the top before it reaches the prompt, wrap the ensemble in a ContextualCompressionRetriever with a cross-encoder reranker. The reranker also runs from local weights, so no external API is required.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> rerank.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain.retrievers <span class="tok-kw">import</span> ContextualCompressionRetriever
+<span class="tok-kw">from</span> langchain.retrievers.document_compressors <span class="tok-kw">import</span> CrossEncoderReranker
+<span class="tok-kw">from</span> langchain_community.cross_encoders <span class="tok-kw">import</span> HuggingFaceCrossEncoder
+
+reranker = <span class="tok-fn">CrossEncoderReranker</span>(
+    model=<span class="tok-fn">HuggingFaceCrossEncoder</span>(model_name=<span class="tok-str">"/opt/models/bge-reranker-v2-m3"</span>),
+    top_n=<span class="tok-num">4</span>,
+)
+
+retriever = <span class="tok-fn">ContextualCompressionRetriever</span>(
+    base_compressor=reranker,
+    base_retriever=hybrid,   <span class="tok-com"># the vector+graph ensemble</span>
+)
+
+context = retriever.<span class="tok-fn">invoke</span>(<span class="tok-str">"which chambers share the RF generator on EV-03?"</span>)
+<span class="tok-com"># context now: semantically relevant AND factually connected, top-4</span></code></pre>
+</figure>
+<p>Feed context into your normal LCEL chain, prompt, on-prem LLM, and parser, exactly as you would with a single-retriever RAG. The hybrid retriever is a drop-in replacement for the plain retriever; nothing downstream has to know how the context was assembled.</p>
+<hr/>
+<p>Vector-only RAG is the right default for explanation questions and the wrong tool for relationship and exact-fact questions. Pairing it with a knowledge graph, vectors for recall, graph for verified structure, and a reranker to settle the order, closes that gap without leaving the network. If your fab already has structured data in MES or an asset database, the graph is half-built. The deck below walks the full retrieval stack slide by slide.</p>
+</div>
+<!-- deep-dive deck link -->
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">Go deeper</span>
+<h3>Take the full course on this topic</h3>
+<p>This article is a field note. The interactive deck walks the whole retrieval stack slide by slide, with diagrams and worked examples.</p>
+</div>
+<a class="btn btn-primary" href="../../watsonx/index.html">Open the deck <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+<!-- share -->
+<div class="share">
+<span class="lbl">Share</span>
+<button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+</div>
+<!-- author bio card (E-E-A-T) -->
+<aside class="author-card">
+<span aria-hidden="true" class="avatar">AE</span>
+<div class="a-body">
+<div class="k">About the author</div>
+<h3>AI Edu Archive</h3>
+<p>PhD in physics (IGZO / graphene semiconductor properties) and a semiconductor process engineer working on deposition. Builds air-gapped LLM, RAG, and agent systems, plus reinforcement-learning and anomaly-detection tooling, for the fab. Writes here about turning process know-how into an on-prem knowledge asset that never leaves the network.</p>
+<a href="../about.html">More about the author</a>
+</div>
+</aside>
+<!-- related -->
+<section aria-label="Related articles" class="related">
+<span class="eyebrow">Keep reading</span>
+<h2>Related from the Journal</h2>
+<div class="related-grid">
+<a class="rel-card" href="rag-over-sealed-documents.html">
+<span class="cat-tag" data-cat="rag">RAG</span>
+<h3>Building RAG over sealed internal documents</h3>
+</a>
+<a class="rel-card" href="chunking-technical-docs.html">
+<span class="cat-tag" data-cat="rag">RAG</span>
+<h3>Chunking technical docs without shredding the meaning</h3>
+</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>Free, in-depth, and open.</h2>
+<p>Everything here, courses and journal alike, is free to read with no signup.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>Explore</h4>
+<a href="../../index.html">Hub home</a>
+<a href="../../index.html#courses">All courses</a>
+<a href="../index.html">Journal</a>
+</div>
+<div class="foot-col">
+<h4>Courses</h4>
+<a href="../../overview/index.html">Fab AI</a>
+<a href="../../watsonx/index.html">Air-gapped LLM</a>
+<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
+</div>
+<div class="foot-col">
+<h4>Site</h4>
+<a href="../about.html">About</a>
+<a href="../contact.html">Contact</a>
+<a href="../privacy.html">Privacy</a>
+<a href="../terms.html">Terms</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig?fig.querySelector('pre'):null;
+      if(!code)return;
+      var text=code.innerText;
+      var done=function(){
+        btn.textContent='Copied';btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1600);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done,function(){});
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- ══ SEO ══════════════════════════════════════════════════════════ -->
+<title>Serving LLMs on-prem: vLLM, Ollama, and GPU sizing - AI Edu Archive Journal</title>
+<meta content="A practical on-prem LLM serving guide: when to use vLLM or Ollama, OpenAI-compatible endpoints, GPU memory sizing, batching, concurrency, health checks, and operations." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/onprem-llm-serving.html" rel="canonical"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/onprem-llm-serving.html" hreflang="ko" rel="alternate"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/onprem-llm-serving.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+<!-- Open Graph -->
+<meta content="article" property="og:type"/>
+<meta content="Serving LLMs on-prem: vLLM, Ollama, and GPU sizing - AI Edu Archive Journal" property="og:title"/>
+<meta content="A practical on-prem LLM serving guide: when to use vLLM or Ollama, OpenAI-compatible endpoints, GPU memory sizing, batching, concurrency, health checks, and operations." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="https://ai-edu-archive.example.com/blog/articles/onprem-llm-serving.html" property="og:url"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="ko_KR" property="og:locale:alternate"/>
+<meta content="2026-07-04" property="article:published_time"/>
+<meta content="AI Edu Archive" property="article:author"/>
+<meta content="On-Prem LLM" property="article:section"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Serving LLMs on-prem: vLLM, Ollama, and GPU sizing - AI Edu Archive Journal" name="twitter:title"/>
+<meta content="A practical on-prem LLM serving guide: when to use vLLM or Ollama, OpenAI-compatible endpoints, GPU memory sizing, batching, concurrency, health checks, and operations." name="twitter:description"/>
+<!-- JSON-LD: Article schema -->
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Serving LLMs on-prem: vLLM, Ollama, and GPU sizing",
+  "description": "A practical on-prem LLM serving guide: when to use vLLM or Ollama, OpenAI-compatible endpoints, GPU memory sizing, batching, concurrency, health checks, and operations.",
+  "inLanguage": "en",
+  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/articles/onprem-llm-serving.html"
+  },
+  "name": "Serving LLMs on-prem: vLLM, Ollama, and GPU sizing",
+  "url": "https://ai-edu-archive.example.com/blog/articles/onprem-llm-serving.html"
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../assets/blog.css" rel="stylesheet"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/onprem-llm-serving.html" hreflang="en" rel="alternate"/></head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive home" class="brand" href="../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="Primary" class="nav-links">
+<a href="../../index.html#courses">Courses</a>
+<a href="../index.html">Articles</a>
+<a href="../about.html">About</a>
+<div aria-label="Language selector" class="language-switch">
+<a aria-current="true" href="onprem-llm-serving.html" lang="en" title="English">🇺🇸 EN</a>
+<a href="../ko/articles/onprem-llm-serving.html" lang="ko" title="한국어">🇰🇷 KO</a>
+<a href="onprem-llm-serving.html" lang="en" title="English shown for now">🇪🇸 ES</a>
+<a href="onprem-llm-serving.html" lang="en" title="English shown for now">🇨🇳 ZH</a>
+<a href="onprem-llm-serving.html" lang="en" title="English shown for now">🇯🇵 JA</a>
+<a href="onprem-llm-serving.html" lang="en" title="English shown for now">🇩🇪 DE</a>
+<a href="onprem-llm-serving.html" lang="en" title="English shown for now">🇫🇷 FR</a>
+</div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article itemscope="" itemtype="https://schema.org/Article">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="Breadcrumb" class="breadcrumb">
+<a href="../../index.html">Home</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">Journal</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">Serving LLMs on-prem: vLLM, Ollama, and GPU sizing</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag" data-cat="onprem">On-Prem LLM</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-04" itemprop="datePublished">Jul 4, 2026</time>
+<span class="post-dot"></span>
+<span class="rt">12 min read</span>
+</div>
+<h1 itemprop="headline">Serving LLMs on-prem: vLLM, Ollama, and GPU sizing</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>Semiconductor process engineer · Air-gapped LLM / RAG / Agents</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="Table of contents" class="toc">
+<div class="toc-title">On this page</div>
+<ol>
+<li><a href="#choice">vLLM or Ollama?</a></li>
+<li><a href="#endpoint">One endpoint, OpenAI-compatible</a></li>
+<li><a href="#sizing">GPU memory sizing</a></li>
+<li><a href="#concurrency">Batching and concurrency</a></li>
+<li><a href="#health">Health checks and operations</a></li>
+</ol>
+</nav>
+<div class="article-body" itemprop="articleBody">
+<p><span class="lead-in">A model that never leaves the fab network still has to run somewhere.</span>
+      On a manufacturing shop floor the constraint is rarely which open model is smartest —
+      it is how to put that model on a GPU box behind the air gap, keep it answering under
+      real concurrency, and prove it is healthy. This is a field guide to the two servers you
+      will actually reach for — <strong>vLLM</strong> and <strong>Ollama</strong> — and to the
+      memory arithmetic that decides whether a model fits your card at all.
+      폐쇄망(air-gapped) 안에서 오픈 모델을 GPU 서버에 올리는 실전 이야기입니다.</p>
+<h2 id="choice">vLLM or Ollama?</h2>
+<p>The two tools solve the same problem at different scales. <strong>Ollama</strong> is the
+      short path: one binary, GGUF-quantized weights pulled into a local store, and a server up
+      in seconds. It runs happily on a single workstation GPU — or even CPU — and is ideal for a
+      pilot, a bench test, or a small team hitting one shared box. <strong>vLLM</strong> is the
+      throughput engine: it uses paged-attention KV caching and continuous batching to serve many
+      concurrent requests on datacenter GPUs, and it exposes an OpenAI-compatible HTTP API out of
+      the box. 파일럿·단일 GPU는 Ollama, 다중 동시 요청·처리량은 vLLM.</p>
+<p>A useful rule of thumb for the fab: if fewer than a handful of engineers will query the
+      model interactively, start with Ollama. The moment a RAG service, an agent, or a dozen
+      analysts share the same server, the request queue is what breaks first — and that is exactly
+      what vLLM's continuous batching is built for.</p>
+<blockquote>
+        Pick Ollama to get answers today; move to vLLM when the queue, not the model, is your bottleneck.
+        <cite>— 폐쇄망 서빙 원칙</cite>
+</blockquote>
+<h3 id="start-ollama">Take the full course on this topic</h3>
+<p>Ollama pulls a model into a local blob store and serves it. On an air-gapped host you
+      pull once on a staging machine, copy the model directory over, and point
+      <code>OLLAMA_MODELS</code> at it — no egress at inference time.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">Shell</span>
+            start_ollama.sh
+          </span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># Weights live on-prem; the daemon binds to the LAN only.</span>
+<span class="tok-kw">export</span> OLLAMA_MODELS=<span class="tok-str">/opt/ollama/models</span>     <span class="tok-com"># pre-staged blob store</span>
+<span class="tok-kw">export</span> OLLAMA_HOST=<span class="tok-str">0.0.0.0:11434</span>          <span class="tok-com"># reachable from the RAG box</span>
+
+ollama serve &amp;                          <span class="tok-com"># OpenAI-compatible API at /v1</span>
+ollama pull llama3.1:8b-instruct-q4_K_M  <span class="tok-com"># 4-bit GGUF — run once, then air-gap</span>
+
+<span class="tok-com"># Smoke test the chat endpoint</span>
+curl http://localhost:11434/v1/chat/completions \
+  -H <span class="tok-str">"Content-Type: application/json"</span> \
+  -d <span class="tok-str">'{"model":"llama3.1:8b-instruct-q4_K_M",
+       "messages":[{"role":"user","content":"ping"}]}'</span></code></pre>
+</figure>
+<h3 id="start-vllm">AI Edu Archive</h3>
+<p>vLLM serves a Hugging Face model directory with a single command. Stage the weights on-prem,
+      then launch — <code>--gpu-memory-utilization</code> caps how much VRAM the KV cache may claim,
+      and <code>--max-model-len</code> bounds the context window so the cache math stays predictable.
+      <code>--tensor-parallel-size</code> shards one large model across several GPUs.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">Shell</span>
+            start_vllm.sh
+          </span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># Serve local weights; nothing is fetched at runtime.</span>
+<span class="tok-kw">export</span> VLLM_API_KEY=<span class="tok-str">fab-internal-key</span>       <span class="tok-com"># header-checked, keeps casual callers out</span>
+
+vllm serve <span class="tok-str">/opt/models/Llama-3.1-8B-Instruct</span> \
+  --host <span class="tok-num">0.0.0.0</span> --port <span class="tok-num">8000</span> \
+  --gpu-memory-utilization <span class="tok-num">0.90</span> \      <span class="tok-com"># leave headroom for the OS</span>
+  --max-model-len <span class="tok-num">8192</span> \                 <span class="tok-com"># caps KV-cache growth</span>
+  --tensor-parallel-size <span class="tok-num">1</span>              <span class="tok-com"># bump to shard across GPUs</span>
+
+<span class="tok-com"># Server now speaks the OpenAI protocol at http://HOST:8000/v1</span></code></pre>
+</figure>
+<h2 id="endpoint">One endpoint, OpenAI-compatible</h2>
+<p>The payoff of both servers is the same: an <strong>OpenAI-compatible</strong> HTTP surface at
+      <code>/v1</code>. Your RAG service, your agent, and your notebooks all talk one protocol, so
+      you can swap Ollama for vLLM — or one model for another — without touching application code.
+      In LangChain this means a single client class. For vLLM, use
+      <code>ChatOpenAI</code> from <code>langchain_openai</code> pointed at your on-prem
+      <code>base_url</code>; the API key is a placeholder because nothing leaves the network.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">Python</span>
+            connect_vllm.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># vLLM speaks the OpenAI protocol — point the client at the LAN.</span>
+<span class="tok-kw">from</span> langchain_openai <span class="tok-kw">import</span> ChatOpenAI
+
+llm = <span class="tok-fn">ChatOpenAI</span>(
+    model=<span class="tok-str">"/opt/models/Llama-3.1-8B-Instruct"</span>,   <span class="tok-com"># the served name</span>
+    base_url=<span class="tok-str">"http://gpu-01.fab.local:8000/v1"</span>,  <span class="tok-com"># on-prem only</span>
+    api_key=<span class="tok-str">"fab-internal-key"</span>,               <span class="tok-com"># matches VLLM_API_KEY</span>
+    temperature=<span class="tok-num">0</span>,
+    max_tokens=<span class="tok-num">512</span>,
+)
+
+print(llm.<span class="tok-fn">invoke</span>(<span class="tok-str">"State the purpose of an SPC control chart in one line."</span>).content)</code></pre>
+</figure>
+<p>Ollama has a first-class LangChain integration of its own —
+      <code>ChatOllama</code> from <code>langchain_ollama</code> — which talks the native Ollama API
+      and adds niceties like tool calling and a <code>num_ctx</code> knob for the context window.
+      Same three lines, different host.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">Python</span>
+            connect_ollama.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># Dedicated integration — install: pip install langchain-ollama</span>
+<span class="tok-kw">from</span> langchain_ollama <span class="tok-kw">import</span> ChatOllama
+
+llm = <span class="tok-fn">ChatOllama</span>(
+    model=<span class="tok-str">"llama3.1:8b-instruct-q4_K_M"</span>,
+    base_url=<span class="tok-str">"http://gpu-01.fab.local:11434"</span>,  <span class="tok-com"># default 11434</span>
+    temperature=<span class="tok-num">0</span>,
+    num_ctx=<span class="tok-num">8192</span>,                          <span class="tok-com"># override the 2048 default</span>
+)
+
+<span class="tok-com"># Same LangChain surface: invoke / stream / batch / bind_tools all work.</span>
+<span class="tok-kw">for</span> chunk <span class="tok-kw">in</span> llm.<span class="tok-fn">stream</span>(<span class="tok-str">"List three deposition-chamber fault modes."</span>):
+    print(chunk.content, end=<span class="tok-str">""</span>, flush=<span class="tok-kw">True</span>)</code></pre>
+</figure>
+<h2 id="sizing">GPU memory sizing</h2>
+<p>Before you download anything, do the arithmetic. VRAM demand splits into two parts:
+      <strong>weights</strong>, which are fixed, and the <strong>KV cache</strong>, which grows with
+      context length times concurrency. A serviceable back-of-envelope estimate for the weights:</p>
+<ul>
+<li><strong>Weights ≈ parameters × bytes-per-parameter.</strong> FP16 is 2 bytes,
+        8-bit is ~1 byte, 4-bit is ~0.5 byte. So an 8B model is roughly
+        <code>8 × 2 = 16 GB</code> at FP16, <code>~8 GB</code> at 8-bit, and
+        <code>~4 GB</code> at 4-bit. 파라미터 수 × 양자화 바이트.</li>
+<li><strong>KV cache</strong> is the swing factor — it scales with model layers, context
+        length, and the number of requests in flight. Budget an extra 20–40% of card VRAM for it,
+        and quantize it (<code>--kv-cache-dtype fp8</code> in vLLM) to roughly halve that footprint
+        when you need longer context or more concurrency.</li>
+<li><strong>Overhead.</strong> Leave 10–15% for the CUDA context, activations, and
+        fragmentation — this is why <code>--gpu-memory-utilization 0.90</code> is a sane default,
+        not <code>1.0</code>.</li>
+</ul>
+<p>Worked example: a 70B model at 4-bit is about <code>70 × 0.5 = 35 GB</code> of weights.
+      That will not fit one 24 GB card, comfortably fits one 48 GB card with modest context,
+      and wants two GPUs (<code>--tensor-parallel-size 2</code>) once you add real KV headroom.
+      The quantization tier is the lever that moves a model from "won't load" to "fits with room to serve."</p>
+<figure>
+<div aria-label="GPU VRAM budget diagram" class="diagram">
+<svg aria-label="Stacked VRAM budget showing weights, KV cache, and overhead for an 8-billion-parameter model at three quantization levels on a 24 gigabyte GPU" role="img" viewbox="0 0 640 250" width="100%">
+<rect fill="#FCFBF8" height="248" rx="12" stroke="#E8E4DB" width="638" x="1" y="1"></rect>
+<text fill="#2B2A28" font-family="Fraunces, serif" font-size="16" x="24" y="34">8B model on a 24 GB GPU — VRAM budget by quantization</text>
+<!-- axis baseline -->
+<line stroke="#DBD5C8" stroke-width="1" x1="150" x2="600" y1="210" y2="210"></line>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" x="150" y="229">0</text>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" x="576" y="229">24 GB</text>
+<!-- scale: 450px = 24GB  ->  18.75 px/GB, x0 = 150 -->
+<!-- FP16 row: weights 16GB=300, kv 5GB=94, overhead 2GB=38 -->
+<text fill="#2B2A28" font-family="JetBrains Mono, monospace" font-size="13" x="24" y="74">FP16</text>
+<rect fill="#D97757" height="26" rx="3" width="300" x="150" y="60"></rect>
+<rect fill="#E8B79E" height="26" rx="3" width="94" x="450" y="60"></rect>
+<rect fill="#CFC9BC" height="26" rx="3" width="38" x="544" y="60"></rect>
+<text fill="#FCFBF8" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="300" y="78">weights ~16</text>
+<!-- INT8 row: weights 8GB=150, kv 5GB=94, overhead 2GB=38 -->
+<text fill="#2B2A28" font-family="JetBrains Mono, monospace" font-size="13" x="24" y="124">INT8</text>
+<rect fill="#D97757" height="26" rx="3" width="150" x="150" y="110"></rect>
+<rect fill="#E8B79E" height="26" rx="3" width="94" x="300" y="110"></rect>
+<rect fill="#CFC9BC" height="26" rx="3" width="38" x="394" y="110"></rect>
+<text fill="#FCFBF8" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="225" y="128">weights ~8</text>
+<!-- INT4 row: weights 4GB=75, kv 5GB=94, overhead 2GB=38 -->
+<text fill="#2B2A28" font-family="JetBrains Mono, monospace" font-size="13" x="24" y="174">INT4</text>
+<rect fill="#D97757" height="26" rx="3" width="75" x="150" y="160"></rect>
+<rect fill="#E8B79E" height="26" rx="3" width="94" x="225" y="160"></rect>
+<rect fill="#CFC9BC" height="26" rx="3" width="38" x="319" y="160"></rect>
+<text fill="#FCFBF8" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="187" y="178">~4</text>
+<!-- legend -->
+<rect fill="#D97757" height="14" rx="2" width="14" x="150" y="191"></rect>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" x="170" y="203">weights</text>
+<rect fill="#E8B79E" height="14" rx="2" width="14" x="258" y="191"></rect>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" x="278" y="203">KV cache</text>
+<rect fill="#CFC9BC" height="14" rx="2" width="14" x="380" y="191"></rect>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" x="400" y="203">overhead</text>
+</svg>
+</div>
+<figcaption>Figure 1. Weights shrink with quantization; the KV-cache and overhead bands are
+        what decide how much context and concurrency you have left. 양자화가 낮아질수록 남는 VRAM이 KV 캐시·동시성 예산이 됩니다.</figcaption>
+</figure>
+<h2 id="concurrency">Batching and concurrency</h2>
+<p>A single request barely taxes a modern GPU; a shared service lives or dies on how it handles
+      the <em>second, tenth, and fiftieth</em> request arriving mid-generation. This is where the two
+      tools diverge sharply. Ollama processes requests largely sequentially by default — fine for a
+      few users, a growing queue under load. vLLM's <strong>continuous batching</strong> interleaves
+      new requests into the running batch token-by-token, so throughput scales with concurrency instead
+      of collapsing under it.</p>
+<p>Two levers matter on the vLLM side: <code>--max-num-seqs</code> caps how many sequences run
+      concurrently, and <code>--max-model-len</code> bounds per-sequence context. Raising concurrency
+      trades KV-cache memory for throughput — which is precisely why the sizing arithmetic above comes
+      first. On the client, favor <code>llm.batch([...])</code> over a Python loop so requests reach the
+      server together and the batcher can pack them.</p>
+<h2 id="health">Health checks and operations</h2>
+<p>An air-gapped service has no vendor dashboard watching it — you own liveness. Both servers give
+      you cheap signals: vLLM exposes <code>/health</code> (liveness), <code>/v1/models</code> (is the
+      model loaded and named as expected), and Prometheus <code>/metrics</code> for queue depth and
+      latency; Ollama answers a bare <code>GET /</code> and lists loaded models at <code>/api/tags</code>.
+      Wire the simplest one into your orchestrator's readiness probe.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">Shell</span>
+            healthcheck.sh
+          </span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># vLLM: liveness + is the expected model actually loaded?</span>
+curl -fsS http://gpu-01.fab.local:8000/health || echo <span class="tok-str">"DOWN"</span>
+curl -fsS http://gpu-01.fab.local:8000/v1/models | jq <span class="tok-str">'.data[].id'</span>
+
+<span class="tok-com"># Ollama: daemon up + models resident in VRAM</span>
+curl -fsS http://gpu-01.fab.local:11434/ || echo <span class="tok-str">"DOWN"</span>
+curl -fsS http://gpu-01.fab.local:11434/api/tags | jq <span class="tok-str">'.models[].name'</span></code></pre>
+</figure>
+<hr/>
+<p>The model you choose matters less than the discipline around it: stage weights offline, put an
+      OpenAI-compatible endpoint in front, size the card with the parameters-times-bytes rule before you
+      commit, and probe <code>/health</code> like you mean it. Start on Ollama to prove the workflow, graduate
+      to vLLM when concurrency is the constraint — and in both cases the knowledge never leaves the network.
+      온프렘 서빙은 모델 선택보다 운영 규율이 핵심입니다.</p>
+</div>
+<!-- deep-dive deck link -->
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">Go deeper</span>
+<h3>Take the full course on this topic</h3>
+<p>This article is a field note. The interactive deck walks the whole subject slide by slide, with diagrams and worked examples. 심화 자료로 이어집니다.</p>
+</div>
+<a class="btn btn-primary" href="../../watsonx/index.html">Open the deck <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+<!-- share -->
+<div class="share">
+<span class="lbl">Share</span>
+<button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+</div>
+<!-- author bio card (E-E-A-T) -->
+<aside class="author-card">
+<span aria-hidden="true" class="avatar">AE</span>
+<div class="a-body">
+<div class="k">About the author</div>
+<h3>Consumer GPU on-prem LLM agent lab</h3>
+<p>PhD in physics (IGZO / graphene semiconductor properties) and a semiconductor
+        process engineer working on deposition. Builds air-gapped LLM, RAG, and agent
+        systems — plus reinforcement-learning and anomaly-detection tooling — for the
+        fab. Writes here about turning process know-how into an on-prem knowledge asset
+        that never leaves the network.</p>
+<a href="../about.html">More about the author →</a>
+</div>
+</aside>
+<!-- related -->
+<section aria-label="Related articles" class="related">
+<span class="eyebrow">Keep reading</span>
+<h2>Related from the Journal</h2>
+<div class="related-grid">
+<a class="rel-card" href="rag-over-sealed-documents.html">
+<span class="cat-tag">RAG</span>
+<h3>Why manufacturers must run LLMs air-gapped</h3>
+</a>
+<a class="rel-card" href="why-air-gapped-llm-manufacturing.html">
+<span class="cat-tag">On-Prem LLM</span>
+<h3>Consumer GPU on-prem LLM agent lab</h3>
+</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>Free, in-depth, and open.</h2>
+<p>Everything here, courses and journal alike, is free to read with no signup.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>Explore</h4>
+<a href="../../index.html">Hub home</a>
+<a href="../../index.html#courses">All courses</a>
+<a href="../index.html">Journal</a>
+</div>
+<div class="foot-col">
+<h4>Courses</h4>
+<a href="../../overview/index.html">Fab AI</a>
+<a href="../../watsonx/index.html">Air-gapped LLM</a>
+<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
+</div>
+<div class="foot-col">
+<h4>Site</h4>
+<a href="../about.html">About</a>
+<a href="../contact.html">Contact</a>
+<a href="../privacy.html">Privacy</a>
+<a href="../terms.html">Terms</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  // one-click copy for code figures
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig?fig.querySelector('pre'):null;
+      if(!code)return;
+      var text=code.innerText;
+      var done=function(){
+        btn.textContent='Copied';btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1600);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done,function(){});
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

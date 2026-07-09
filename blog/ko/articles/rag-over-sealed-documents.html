@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+ ∨ SEO ​ 
+<title>폐쇄망 내부 문서 위에 RAG 구축하기 - AI Edu Archive 한국어</title>
+<meta content="문서가 네트워크 밖으로 나가지 않는 상태에서 RAG를 구축하는 방법: ingestion, chunking, embedding, retrieval, local serving, source citation, 실전 tip." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/rag-over-sealed-documents.html" rel="canonical"/><link href="https://ai-edu-archive.example.com/blog/articles/rag-over-sealed-documents.html" hreflang="en" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/ko/articles/rag-over-sealed-documents.html" hreflang="ko" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/articles/rag-over-sealed-documents.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+ 오픈 그래프 
+<meta content="article" property="og:type"/>
+<meta content="폐쇄망 내부 문서 위에 RAG 구축하기 - AI Edu Archive 한국어" property="og:title"/>
+<meta content="문서가 네트워크 밖으로 나가지 않는 상태에서 RAG를 구축하는 방법: ingestion, chunking, embedding, retrieval, local serving, source citation, 실전 tip." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="https://ai-edu-archive.example.com/blog/ko/articles/rag-over-sealed-documents.html" property="og:url"/>
+<meta content="ko_KR" property="og:locale"/>
+<meta content="en_US" property="og:locale:alternate"/>
+<meta content="2026-07-04" property="article:published_time"/>
+<meta content="AI Edu Archive" property="article:author"/>
+<meta content="RAG" property="article:section"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="폐쇄망 내부 문서 위에 RAG 구축하기 - AI Edu Archive 한국어" name="twitter:title"/>
+<meta content="문서가 네트워크 밖으로 나가지 않는 상태에서 RAG를 구축하는 방법: ingestion, chunking, embedding, retrieval, local serving, source citation, 실전 tip." name="twitter:description"/>
+ JSON-LD: 기사 스키마 
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "폐쇄망 내부 문서 위에 RAG 구축하기",
+  "description": "문서가 네트워크 밖으로 나가지 않는 상태에서 RAG를 구축하는 방법: ingestion, chunking, embedding, retrieval, local serving, source citation, 실전 tip.",
+  "inLanguage": "ko",
+  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/ko/articles/rag-over-sealed-documents.html"
+  },
+  "name": "폐쇄망 내부 문서 위에 RAG 구축하기",
+  "url": "https://ai-edu-archive.example.com/blog/ko/articles/rag-over-sealed-documents.html"
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/blog.css" rel="stylesheet"/>
+ == 기사-로컬 스타일: 시각적 우선, 넓은 바탕 화면 =============== 
+<style>
+/* ── Wide magazine hybrid: full-bleed visuals + narrow prose ────────── */
+.vf-doc{
+  --figw:min(1180px,calc(100% - 48px));  /* full-bleed visual width  */
+  --prosew:720px;                        /* optimal reading measure  */
+}
+/* Center everything in a wide column; prose stays narrow inside it */
+.vf-body{
+  max-width:var(--figw);margin:8px auto 0;padding:8px 0;
+  display:flex;flex-direction:column;align-items:center;
+}
+.vf-body>.prose-block{
+  width:100%;max-width:var(--prosew);align-self:center;
+}
+.vf-body>.figure-block{width:100%;max-width:var(--figw);align-self:center;margin:40px 0}
+.vf-body>section:not(.figure-block){width:100%;max-width:var(--figw);align-self:center;box-sizing:border-box}
+
+/* prose typography inside the wide column */
+.prose-block p{margin:0 0 22px;font-size:19px;line-height:1.75;color:var(--ink-soft)}
+.prose-block p .lead-in{font-family:var(--serif)}
+.prose-block h2{
+  font-family:var(--serif);font-weight:500;
+  font-size:clamp(1.5rem,3vw,2rem);line-height:1.18;letter-spacing:-.015em;
+  margin:8px 0 14px;scroll-margin-top:88px;
+}
+.prose-block h3{
+  font-family:var(--serif);font-weight:500;font-size:1.32rem;
+  margin:30px 0 12px;letter-spacing:-.005em;scroll-margin-top:88px;
+}
+.prose-block ul{margin:0 0 22px 1.3em}
+.prose-block li{margin-bottom:11px;font-size:18px;line-height:1.72;color:var(--ink-soft)}
+.prose-block strong{color:var(--ink);font-weight:600}
+.prose-block :not(pre)>code{
+  background:var(--paper-2);border:1px solid var(--line);border-radius:6px;
+  padding:2px 6px;color:var(--coral-deep);font-size:.84em;font-family:var(--mono);
+}
+.prose-block blockquote{
+  margin:30px 0;padding:6px 0 6px 28px;border-left:3px solid var(--coral);
+  font-family:var(--serif);font-size:1.32rem;line-height:1.5;color:var(--ink);font-style:italic;
+}
+
+/* section eyebrow tag over each figure block */
+.vf-eyebrow{
+  font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--coral-deep);display:block;margin-bottom:6px;text-align:center;
+}
+.vf-fig-title{
+  font-family:var(--serif);font-weight:500;font-size:clamp(1.3rem,2.4vw,1.7rem);
+  text-align:center;letter-spacing:-.01em;margin-bottom:4px;
+}
+.vf-fig-sub{text-align:center;color:var(--muted);font-size:.95rem;max-width:64ch;margin:0 auto 22px;line-height:1.55}
+.vf-caption{margin-top:14px;font-size:.86rem;color:var(--muted);text-align:center;line-height:1.5}
+
+/* generic visual card */
+.vf-card{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:26px;box-shadow:var(--shadow-sm);
+}
+.vf-card.tint{background:var(--card-2)}
+
+/* ── HERO infographic ─────────────────────────────────────────────── */
+.hero-info{
+  background:linear-gradient(180deg,var(--card-2),var(--card));
+  border:1px solid var(--line);border-radius:20px;overflow:hidden;
+  box-shadow:var(--shadow-lift);
+}
+.hero-info svg{display:block;width:100%;height:auto}
+
+/* ── Animated pipeline "video" ────────────────────────────────────── */
+.anim-wrap{position:relative}
+.anim-wrap svg{display:block;width:100%;height:auto;
+  background:var(--card);border:1px solid var(--line);border-radius:16px}
+.anim-controls{
+  display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px;flex-wrap:wrap;
+}
+.anim-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--sans);font-size:.86rem;font-weight:600;color:var(--ink-soft);
+  background:var(--card);border:1px solid var(--line-2);border-radius:999px;
+  padding:9px 18px;cursor:pointer;transition:border-color .16s,color .16s,transform .16s;
+}
+.anim-btn:hover{border-color:var(--coral);color:var(--coral-deep);transform:translateY(-1px)}
+.anim-hint{font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+/* animation classes toggled by JS; paused by default via reduced-motion */
+.rag-anim.playing .anim-el{animation-play-state:running}
+.rag-anim .anim-el{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){
+  .rag-anim .anim-el{animation:none !important}
+}
+
+/* ── Interactive widgets ──────────────────────────────────────────── */
+.widget{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:26px 28px;box-shadow:var(--shadow-sm);
+}
+.widget-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.widget-head h4{font-family:var(--serif);font-weight:500;font-size:1.2rem;letter-spacing:-.005em}
+.widget-head .tag{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--coral-deep);border:1px solid var(--coral);background:var(--coral-wash);border-radius:999px;padding:3px 9px}
+
+/* chunking widget */
+.chunk-controls{display:flex;gap:28px;flex-wrap:wrap;margin-bottom:18px}
+.ctrl{flex:1 1 220px;min-width:200px}
+.ctrl label{display:flex;justify-content:space-between;font-size:.82rem;font-weight:600;color:var(--ink-soft);margin-bottom:8px}
+.ctrl label b{font-family:var(--mono);color:var(--coral-deep);font-weight:500}
+.ctrl input[type=range]{width:100%;accent-color:var(--coral);height:6px;cursor:pointer}
+.chunk-stats{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:14px;font-size:.82rem;color:var(--muted)}
+.chunk-stats b{font-family:var(--mono);color:var(--ink);font-weight:500}
+.chunk-out{
+  font-family:var(--mono);font-size:.82rem;line-height:1.85;
+  background:var(--paper-2);border:1px solid var(--line);border-radius:12px;
+  padding:16px 18px;max-height:340px;overflow-y:auto;white-space:pre-wrap;word-break:break-word;
+}
+.chunk-seg{border-radius:5px;padding:1px 3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.chunk-ov{outline:1.5px dashed rgba(193,95,60,.55);outline-offset:1px;border-radius:4px}
+.chunk-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:.76rem;color:var(--muted);align-items:center}
+.lg-dot{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:5px}
+
+/* search demo widget */
+.search-demo{display:grid;grid-template-columns:1.15fr .85fr;gap:22px}
+@media(max-width:820px){.search-demo{grid-template-columns:1fr}}
+.query-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.query-btn{
+  font-family:var(--sans);font-size:.8rem;font-weight:500;text-align:left;
+  color:var(--ink-soft);background:var(--card-2);border:1px solid var(--line-2);
+  border-radius:10px;padding:9px 13px;cursor:pointer;transition:border-color .16s,background .16s;
+}
+.query-btn:hover{border-color:var(--coral)}
+.query-btn.active{border-color:var(--coral);background:var(--coral-wash);color:var(--coral-deep)}
+.scatter-box{background:var(--paper-2);border:1px solid var(--line);border-radius:12px;padding:8px}
+.scatter-box svg{display:block;width:100%;height:auto}
+.result-cards{display:flex;flex-direction:column;gap:10px}
+.rcard{
+  border:1px solid var(--line);border-radius:11px;padding:12px 14px;background:var(--card-2);
+  opacity:.4;transform:translateY(4px);transition:opacity .35s,transform .35s,border-color .35s;
+}
+.rcard.lit{opacity:1;transform:none;border-color:var(--coral);background:var(--card)}
+.rcard .rc-src{font-family:var(--mono);font-size:.68rem;color:var(--coral-deep);margin-bottom:4px}
+.rcard .rc-txt{font-size:.82rem;color:var(--ink-soft);line-height:1.45}
+.rcard .rc-score{float:right;font-family:var(--mono);font-size:.68rem;color:var(--muted)}
+.demo-note{font-size:.78rem;color:var(--muted);margin-top:12px;line-height:1.5}
+
+/* comparison chart */
+.chart-box svg{display:block;width:100%;height:auto}
+
+/* structured tables / cards */
+.db-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:820px){.db-grid{grid-template-columns:1fr}}
+.db-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow-sm)}
+.db-card.rec{border-color:var(--coral);box-shadow:0 10px 24px -16px rgba(193,95,60,.6)}
+.db-card .db-name{font-family:var(--serif);font-size:1.15rem;font-weight:500;display:flex;align-items:center;gap:8px}
+.db-card .db-pill{font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--coral-deep);border:1px solid var(--coral);border-radius:999px;padding:2px 8px}
+.db-card ul{margin:14px 0 0 1.1em;padding:0}
+.db-card li{font-size:.86rem;color:var(--ink-soft);line-height:1.5;margin-bottom:7px}
+
+.vf-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.vf-table th,.vf-table td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.vf-table th{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.vf-table td{color:var(--ink-soft);line-height:1.5}
+.vf-table td code{font-family:var(--mono);font-size:.82em;color:var(--coral-deep);background:var(--paper-2);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+.vf-table tbody tr:hover{background:var(--card-2)}
+
+/* callout / pull-quote inside prose */
+.vf-callout{
+  background:var(--card-2);border:1px solid var(--line);border-left:3px solid var(--coral);
+  border-radius:12px;padding:18px 22px;margin:26px 0;font-size:1rem;color:var(--ink-soft);line-height:1.6;
+}
+.vf-callout b{color:var(--ink)}
+
+/* step chips */
+.steps-row{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 8px}
+.step-chip{display:inline-flex;align-items:center;gap:8px;font-size:.82rem;color:var(--ink-soft);
+  background:var(--card);border:1px solid var(--line-2);border-radius:999px;padding:6px 13px}
+.step-chip b{font-family:var(--mono);color:var(--coral-deep);font-weight:500}
+
+/* code details toggle */
+.code-details{max-width:var(--figw);margin:22px auto;width:100%;box-sizing:border-box}
+.code-details summary{
+  cursor:pointer;font-family:var(--sans);font-size:.9rem;font-weight:600;color:var(--coral-deep);
+  list-style:none;display:flex;align-items:center;gap:8px;padding:12px 16px;
+  background:var(--card-2);border:1px solid var(--line);border-radius:11px;box-sizing:border-box;
+}
+.code-details summary::-webkit-details-marker{display:none}
+.code-details summary::before{content:"▸";transition:transform .18s}
+.code-details[open] summary::before{transform:rotate(90deg)}
+.code-details[open] summary{border-radius:11px 11px 0 0;border-bottom:0}
+.code-details .code-figure{margin:0;border-radius:0 0 12px 12px;max-width:100%;box-sizing:border-box}
+
+/* wide-screen sticky TOC: pinned in a reserved left gutter WITHOUT shrinking
+   the figure flow. Figures span the wide column; the column is offset right of
+   the TOC gutter so the two never overlap; prose stays centered in the column. */
+@media(min-width:1180px){
+  .vf-doc{--gutter:210px}
+  /* clean 2-column doc grid: TOC in the left rail, everything (incl. hero) in the main column — never overlapping */
+  .vf-article{display:grid;grid-template-columns:var(--gutter) minmax(0,1fr);column-gap:28px;align-items:start}
+  .vf-article>*{grid-column:2;min-width:0}
+  .vf-article .toc{
+    grid-column:1;grid-row:1/-1;align-self:start;position:sticky;top:100px;
+    margin:0;background:transparent;border:0;border-left:2px solid var(--line);
+    border-radius:0;padding:2px 0 2px 16px;max-width:100%;width:auto;
+  }
+  .vf-article .toc a{font-size:.88rem}
+  .vf-body{--figw:min(1180px, calc(100vw - var(--gutter) - 96px));max-width:var(--figw);margin:0 auto}
+}
+@media(max-width:1179px){
+  .vf-doc .toc{max-width:var(--prosew);margin:28px auto 0}
+}
+@media(max-width:640px){
+  .vf-doc{--figw:calc(100% - 32px)}
+  .vf-body>.figure-block{margin:28px 0}
+  .search-demo{gap:16px}
+  .widget{padding:20px}
+  .prose-block p{font-size:18px}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive 홈" class="brand" href="../../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="주요 메뉴" class="nav-links">
+<a href="../../../index.html#courses">강의</a>
+<a href="../index.html">글</a>
+<a href="../about.html">소개</a>
+<div aria-label="언어 선택" class="language-switch"><a href="../../articles/rag-over-sealed-documents.html" lang="en" title="English">🇺🇸 EN</a><a aria-current="true" href="rag-over-sealed-documents.html" lang="ko" title="한국어">🇰🇷 KO</a><a href="../../articles/rag-over-sealed-documents.html" lang="en" title="English shown for now">🇪🇸 ES</a><a href="../../articles/rag-over-sealed-documents.html" lang="en" title="English shown for now">🇨🇳 ZH</a><a href="../../articles/rag-over-sealed-documents.html" lang="en" title="English shown for now">🇯🇵 JA</a><a href="../../articles/rag-over-sealed-documents.html" lang="en" title="English shown for now">🇩🇪 DE</a><a href="../../articles/rag-over-sealed-documents.html" lang="en" title="English shown for now">🇫🇷 FR</a></div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article class="vf-doc vf-article" itemscope="" itemtype="https://schema.org/Article">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="탐색경로" class="breadcrumb">
+<a href="../../../index.html">홈</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">저널</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">폐쇄망 내부 문서 위에 RAG 구축하기</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag">RAG</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-04" itemprop="datePublished">2026년 07월 04일</time>
+<span class="post-dot"></span>
+<span class="rt">15분 읽기</span>
+</div>
+<h1 itemprop="headline">폐쇄망 내부 문서 위에 RAG 구축하기</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>반도체 공정 엔지니어 · Air-gapped LLM / RAG / Agents</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="목차" class="toc">
+<div class="toc-title">이 페이지에서</div>
+<ol>
+<li><a href="#hero">다섯 단계, 전부 팹 내부에서</a></li>
+<li><a href="#motion">문서가 답변이 되는 과정 보기</a></li>
+<li><a href="#problem">검색되지 않는 지식</a></li>
+<li><a href="#chunk">chunk size가 모든 것을 결정하는 이유</a></li>
+<li><a href="#search">vector space로 보는 retrieval</a></li>
+<li><a href="#tradeoff">chunk size와 retrieval quality</a></li>
+<li><a href="#stack">온프레미스 stack 한눈에 보기</a></li>
+<li><a href="#code">다섯 개의 file</a></li>
+<li><a href="#quality">실제로 중요한 tip</a></li>
+</ol>
+</nav>
+<div class="vf-body article-body" itemprop="articleBody">
+ === 1. HERO INFOGRAPHIC(풀 블리드) ====================== 
+<section aria-labelledby="hero-t" class="figure-block" id="hero">
+<span class="vf-eyebrow">전체 시스템, 하나의 다이어그램</span>
+<h2 class="vf-fig-title" id="hero-t">다섯 단계, 전부 팹 내부에서</h2>
+<p class="vf-fig-sub">팹은 이미 답을 알고 있습니다. 이는 SOP, 매뉴얼, 편차 보고서에 있습니다. RAG는 ​​해당 파일을 사용자가 일반 언어로 요청할 수 있는 것으로 변환하고 모든 바이트는 온프레미스에 유지됩니다. 데이터 무반출.</p>
+<div class="hero-info">
+<svg aria-label="Hero infographic: RAG pipeline from documents through chunks, vectors, retrieval, to a cited answer — all inside the air-gapped network." role="img" viewbox="0 0 1180 440">
+<defs>
+<lineargradient id="hg-doc" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#EEF3EE"></stop><stop offset="1" stop-color="#E3EEE3"></stop></lineargradient>
+<lineargradient id="hg-chunk" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#EEF1F5"></stop><stop offset="1" stop-color="#E2E9F1"></stop></lineargradient>
+<lineargradient id="hg-vec" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#F5F0EE"></stop><stop offset="1" stop-color="#F0E4DF"></stop></lineargradient>
+<lineargradient id="hg-idx" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#F5F3EE"></stop><stop offset="1" stop-color="#EFEBDF"></stop></lineargradient>
+<lineargradient id="hg-ans" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#F0EEF5"></stop><stop offset="1" stop-color="#E7E2F1"></stop></lineargradient>
+<marker id="hg-arrow" markerheight="10" markerwidth="10" orient="auto" refx="6" refy="3"><path d="M0 0 L6 3 L0 6 Z" fill="#C15F3C"></path></marker>
+</defs>
+<!-- air-gap boundary -->
+<rect fill="#FCFBF8" height="424" rx="18" stroke="#E8E4DB" width="1160" x="10" y="8"></rect>
+<rect fill="none" height="316" rx="14" stroke="#DBD5C8" stroke-dasharray="7 5" width="1128" x="26" y="60"></rect>
+<text fill="#3A3833" font-family="Inter,sans-serif" font-size="17" font-weight="600" text-anchor="middle" x="590" y="40">Air-gapped network · 폐쇄망 — no egress, no API keys, no data-review headache</text>
+<!-- stage 1: documents -->
+<g>
+<rect fill="url(#hg-doc)" height="196" rx="12" stroke="#B8CBB8" width="180" x="46" y="120"></rect>
+<text fill="#3A3833" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="136" y="150">1 · Load</text>
+<!-- doc icons -->
+<g fill="#FCFBF8" stroke="#7FA07F" stroke-width="1.4">
+<rect height="60" rx="4" width="46" x="86" y="168"></rect>
+<rect height="60" rx="4" width="46" x="104" y="180"></rect>
+<rect height="60" rx="4" width="46" x="122" y="192"></rect>
+</g>
+<g stroke="#9DB79D" stroke-width="1.4"><line x1="130" x2="158" y1="206" y2="206"></line><line x1="130" x2="158" y1="216" y2="216"></line><line x1="130" x2="150" y1="226" y2="226"></line></g>
+<text fill="#6B6862" font-family="JetBrains Mono,monospace" font-size="12.5" text-anchor="middle" x="136" y="278">SOP · PDF · 매뉴얼</text>
+<text fill="#8A867E" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="136" y="298">scattered, unsearchable</text>
+</g>
+<path d="M232 218 H262" fill="none" marker-end="url(#hg-arrow)" stroke="#C15F3C" stroke-width="2.5"></path>
+<!-- stage 2: chunks -->
+<g>
+<rect fill="url(#hg-chunk)" height="196" rx="12" stroke="#B8C2CB" width="180" x="272" y="120"></rect>
+<text fill="#3A3833" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="362" y="150">2 · Chunk</text>
+<g>
+<rect fill="#C7D6E4" height="20" rx="4" stroke="#96AEC4" width="124" x="300" y="170"></rect>
+<rect fill="#B7CCE0" height="20" rx="4" stroke="#96AEC4" width="124" x="300" y="196"></rect>
+<rect fill="#C7D6E4" height="20" rx="4" stroke="#96AEC4" width="124" x="300" y="222"></rect>
+<rect fill="#B7CCE0" height="20" rx="4" stroke="#96AEC4" width="124" x="300" y="248"></rect>
+</g>
+<text fill="#6B6862" font-family="JetBrains Mono,monospace" font-size="12.5" text-anchor="middle" x="362" y="298">split + overlap</text>
+</g>
+<path d="M458 218 H488" fill="none" marker-end="url(#hg-arrow)" stroke="#C15F3C" stroke-width="2.5"></path>
+<!-- stage 3: embed to vectors -->
+<g>
+<rect fill="url(#hg-vec)" height="196" rx="12" stroke="#CBBBB8" width="180" x="498" y="120"></rect>
+<text fill="#3A3833" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="588" y="150">3 · Embed</text>
+<!-- vector points scatter -->
+<g fill="#D97757">
+<circle cx="540" cy="185" r="4"></circle><circle cx="565" cy="205" r="4"></circle><circle cx="600" cy="180" r="4"></circle>
+<circle cx="628" cy="200" r="4"></circle><circle cx="552" cy="235" r="4"></circle><circle cx="590" cy="248" r="4"></circle>
+<circle cx="622" cy="235" r="4"></circle><circle cx="575" cy="222" r="4"></circle>
+</g>
+<text fill="#6B6862" font-family="JetBrains Mono,monospace" font-size="12.5" text-anchor="middle" x="588" y="288">local model</text>
+<text fill="#8A867E" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="588" y="306">bge-m3 · 다국어</text>
+</g>
+<path d="M684 218 H714" fill="none" marker-end="url(#hg-arrow)" stroke="#C15F3C" stroke-width="2.5"></path>
+<!-- stage 4: vector DB -->
+<g>
+<rect fill="url(#hg-idx)" height="196" rx="12" stroke="#CBC6B8" width="180" x="724" y="120"></rect>
+<text fill="#3A3833" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="814" y="150">4 · Index</text>
+<!-- cylinder DB -->
+<g fill="#EBDFAE" stroke="#B9A96F" stroke-width="1.6">
+<ellipse cx="814" cy="182" rx="42" ry="12"></ellipse>
+<path d="M772 182 V236 a42 12 0 0 0 84 0 V182" fill="#EBDFAE"></path>
+<ellipse cx="814" cy="182" fill="#F3EBCB" rx="42" ry="12"></ellipse>
+</g>
+<g fill="none" stroke="#B9A96F" stroke-width="1.4"><path d="M772 205 a42 12 0 0 0 84 0"></path><path d="M772 222 a42 12 0 0 0 84 0"></path></g>
+<text fill="#6B6862" font-family="JetBrains Mono,monospace" font-size="12.5" text-anchor="middle" x="814" y="288">Chroma · Qdrant</text>
+<text fill="#8A867E" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="814" y="306">persist to disk</text>
+</g>
+<path d="M910 218 H940" fill="none" marker-end="url(#hg-arrow)" stroke="#C15F3C" stroke-width="2.5"></path>
+<!-- stage 5: answer -->
+<g>
+<rect fill="url(#hg-ans)" height="196" rx="12" stroke="#C0B8CB" width="184" x="950" y="120"></rect>
+<text fill="#3A3833" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="1042" y="150">5 · Answer</text>
+<!-- chat bubble w/ cite -->
+<rect fill="#FCFBF8" height="66" rx="10" stroke="#B3A9C4" width="128" x="978" y="168"></rect>
+<g stroke="#B3A9C4" stroke-width="1.4"><line x1="994" x2="1090" y1="186" y2="186"></line><line x1="994" x2="1090" y1="200" y2="200"></line><line x1="994" x2="1060" y1="214" y2="214"></line></g>
+<rect fill="#F6EAE1" height="24" rx="6" stroke="#D9A98F" width="128" x="978" y="244"></rect>
+<text fill="#C15F3C" font-family="JetBrains Mono,monospace" font-size="12" text-anchor="middle" x="1042" y="261">[source: etch_e1420.txt]</text>
+<text fill="#8A867E" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="1042" y="298">retrieve + local LLM</text>
+</g>
+<!-- ingest vs query band -->
+<rect height="0" width="632" x="46" y="340"></rect>
+<line stroke="#B8CBB8" stroke-linecap="round" stroke-width="3" x1="46" x2="678" y1="352" y2="352"></line>
+<text fill="#6B6862" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="362" y="372">Stages 1–4 · run once at ingest · 인제스트</text>
+<line stroke="#C0B8CB" stroke-linecap="round" stroke-width="3" x1="724" x2="1134" y1="352" y2="352"></line>
+<text fill="#6B6862" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="929" y="372">Stage 5 · runs per query · 질의마다</text>
+</svg>
+</div>
+<p class="vf-caption">그림 1. 5단계 RAG 파이프라인. 수집(1~4)은 한 번 발생합니다. 검색 및 생성(5)은 모든 질문에 대해 실행되며 네트워크 경계를 넘는 것은 없습니다.</p>
+</section>
+ === 2. 애니메이션 "동영상" 
+<section aria-labelledby="motion-t" class="figure-block" id="motion">
+<span class="vf-eyebrow">텍스트의 벽이 아닌 움직임</span>
+<h2 class="vf-fig-title" id="motion-t">문서가 답변이 되는 과정 보기</h2>
+<p class="vf-fig-sub">문서는 여러 개의 청크로 분할되고, 해당 청크는 점으로 벡터 공간에 분산된 다음 쿼리가 가장 가까운 이웃을 다시 가져옵니다. 한 번 자동 재생되며 움직임 감소를 준수합니다. 복원재생·절제.</p>
+<div class="anim-wrap">
+<svg aria-label="Animation: a document splits into chunks that fly into a 2-D vector space; a query point then draws lines to its nearest neighbours." class="rag-anim" id="ragAnim" role="img" viewbox="0 0 1180 360">
+<defs>
+<style>
+                @keyframes splitOut{0%,12%{opacity:0;transform:translateX(0)}20%{opacity:1}100%{opacity:1}}
+                @keyframes flyTo{0%,28%{opacity:0}36%{opacity:.2}100%{opacity:1}}
+                @keyframes qPulse{0%,60%{opacity:0;r:0}66%{opacity:1}100%{opacity:1;r:8}}
+                @keyframes pullLine{0%,66%{stroke-dashoffset:220;opacity:0}72%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}
+                @keyframes litUp{0%,74%{opacity:.35}82%,100%{opacity:1}}
+                .rag-anim .anim-el{animation-duration:7s;animation-iteration-count:infinite;animation-timing-function:ease-in-out}
+                .a-chunk{animation-name:splitOut}
+                .a-fly{animation-name:flyTo}
+                .a-q{animation-name:qPulse}
+                .a-line{animation-name:pullLine;stroke-dasharray:220}
+                .a-lit{animation-name:litUp}
+              </style>
+</defs>
+<rect fill="#FCFBF8" height="344" rx="16" stroke="#E8E4DB" width="1160" x="10" y="8"></rect>
+<!-- left: document -> chunks -->
+<text fill="#6B6862" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="150" y="42">document → chunks</text>
+<rect fill="#FCFBF8" height="132" rx="6" stroke="#B8CBB8" stroke-width="1.5" width="108" x="96" y="66"></rect>
+<g stroke="#9DB79D" stroke-width="1.4"><line x1="112" x2="188" y1="86" y2="86"></line><line x1="112" x2="188" y1="102" y2="102"></line><line x1="112" x2="176" y1="118" y2="118"></line></g>
+<g>
+<rect class="anim-el a-chunk" fill="#C7D6E4" height="20" rx="4" stroke="#96AEC4" style="animation-delay:0s" width="108" x="96" y="212"></rect>
+<rect class="anim-el a-chunk" fill="#B7CCE0" height="20" rx="4" stroke="#96AEC4" style="animation-delay:.3s" width="108" x="96" y="238"></rect>
+<rect class="anim-el a-chunk" fill="#C7D6E4" height="20" rx="4" stroke="#96AEC4" style="animation-delay:.6s" width="108" x="96" y="264"></rect>
+<rect class="anim-el a-chunk" fill="#B7CCE0" height="20" rx="4" stroke="#96AEC4" style="animation-delay:.9s" width="108" x="96" y="290"></rect>
+</g>
+<!-- middle arrow -->
+<path d="M232 200 H300" fill="none" marker-end="url(#hg-arrow)" stroke="#C15F3C" stroke-width="2"></path>
+<text fill="#8A867E" font-family="JetBrains Mono,monospace" font-size="12" text-anchor="middle" x="266" y="188">embed</text>
+<!-- right: vector space -->
+<text fill="#6B6862" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="740" y="42">vector space · 최근접 검색</text>
+<rect fill="#F3F0E8" height="270" rx="12" stroke="#DBD5C8" width="820" x="330" y="60"></rect>
+<!-- axes -->
+<line stroke="#DBD5C8" stroke-width="1.5" x1="360" x2="1120" y1="300" y2="300"></line>
+<line stroke="#DBD5C8" stroke-width="1.5" x1="360" x2="360" y1="90" y2="300"></line>
+<!-- scattered chunk points -->
+<g fill="#B7CCE0" stroke="#96AEC4">
+<circle class="anim-el a-fly" cx="470" cy="160" r="6" style="animation-delay:0s"></circle>
+<circle class="anim-el a-fly" cx="560" cy="240" r="6" style="animation-delay:.25s"></circle>
+<circle class="anim-el a-fly" cx="900" cy="130" r="6" style="animation-delay:.5s"></circle>
+<circle class="anim-el a-fly" cx="1010" cy="220" r="6" style="animation-delay:.75s"></circle>
+<circle class="anim-el a-fly" cx="640" cy="110" r="6" style="animation-delay:.4s"></circle>
+<circle class="anim-el a-fly" cx="980" cy="285" r="6" style="animation-delay:.9s"></circle>
+</g>
+<!-- nearest-neighbour chunks (lit) around query -->
+<circle class="anim-el a-lit" cx="740" cy="185" fill="#E7B79E" r="7" stroke="#C15F3C" style="animation-delay:0s"></circle>
+<circle class="anim-el a-lit" cx="820" cy="230" fill="#E7B79E" r="7" stroke="#C15F3C" style="animation-delay:.15s"></circle>
+<circle class="anim-el a-lit" cx="700" cy="255" fill="#E7B79E" r="7" stroke="#C15F3C" style="animation-delay:.3s"></circle>
+<!-- query point -->
+<circle class="anim-el a-q" cx="770" cy="215" fill="#C15F3C" r="8"></circle>
+<!-- pull lines to nearest -->
+<g fill="none" stroke="#C15F3C" stroke-width="2">
+<line class="anim-el a-line" style="animation-delay:0s" x1="770" x2="740" y1="215" y2="185"></line>
+<line class="anim-el a-line" style="animation-delay:.2s" x1="770" x2="820" y1="215" y2="230"></line>
+<line class="anim-el a-line" style="animation-delay:.4s" x1="770" x2="700" y1="215" y2="255"></line>
+</g>
+<text fill="#C15F3C" font-family="JetBrains Mono,monospace" font-size="12" font-weight="600" x="786" y="212">query</text>
+</svg>
+</div>
+<div class="anim-controls">
+<button aria-pressed="false" class="anim-btn" id="animToggle" type="button">
+<span id="animIcon">▶</span> <span id="animLabel">플레이/플레이</span>
+</button>
+<span class="anim-hint" id="animHint">자동재생은 움직임 감소 설정을 존중합니다.</span>
+</div>
+<p class="vf-caption">그림 2. 모션과 동일한 개념: 청크 → 삽입 → 분산 → 최근접 이웃 검색. 개념적이며 확장 가능하지 않습니다.</p>
+</section>
+ === 산문: 왜 RAG ∨∨‿‿‿‿‿⋯⋯ 
+<div class="prose-block">
+<h2 id="problem">검색되지 않는 지식</h2>
+<p><span class="lead-in">새로운 엔지니어에게 물어보세요</span> "실 경보에 대한 응답 SOP는 무엇입니까 <code>E-1420</code>?" 그리고 정직한 대답은 종종 "B교대 선배에게 물어보세요"입니다. 그 지식은 실제이고 문서화되어 있습니다. <strong>검색할 수 없는</strong>. 수천 개의 PDF에 대한 키워드 검색은 아무것도 반환하지 않거나 모든 것을 반환합니다.</p>
+<p>RAG는 ​​문서를 <strong>의미론적 색인</strong>: 귀하가 자연어로 질문하면 시스템이 실제로 귀하에게 답변하는 구절을 검색하고 현지 LLM이 응답을 작성합니다. <em>인용과 함께</em>. 근거 문서를 인용하므로 환각을 걸러낼 수 있습니다.</p>
+<blockquote>RAG는 ​​문서에 추가되는 챗봇이 아닙니다. 이는 귀하를 위해 결과를 읽고 그 작업을 보여주는 검색 엔진입니다.</blockquote>
+<div aria-hidden="true" class="steps-row">
+<span class="step-chip"><b>1</b> 짐</span>
+<span class="step-chip"><b>2</b> 큰 청크</span>
+<span class="step-chip"><b>3</b> 포함시키다</span>
+<span class="step-chip"><b>4</b> 색인</span>
+<span class="step-chip"><b>5</b> 답변</span>
+</div>
+<p>아래의 모든 내용은 다음과 같습니다. <strong>랭체인 0.3</strong> 현재 분할 패키지를 사용하면 더 이상 사용되지 않는 가져오기가 없습니다. 첫째, 해당 단계 중 두 단계는 가치가 있습니다. <em>감동시키는</em>, 단지 읽는 것이 아닙니다.</p>
+</div>
+ === 3a. 청킹 슬라이더 위젯 =" 
+<section aria-labelledby="chunk-t" class="figure-block" id="chunk">
+<span class="vf-eyebrow">대화형 · 드래그해 주세요</span>
+<h2 class="vf-fig-title" id="chunk-t">chunk size가 모든 것을 결정하는 이유</h2>
+<p class="vf-fig-sub">슬라이더를 이동하여 실시간으로 색상이 지정된 청크로 분할되는 실제 SOP를 확인하세요. 너무 작으면 청크가 컨텍스트를 잃습니다. 너무 크면 하나의 청크로 인해 여러 주제가 흐려집니다. 청킹 전략을 조정하세요.</p>
+<div aria-label="대화형 청킹 데모" class="widget" role="group">
+<div class="widget-head">
+<h4>RecursiveCharacterTextSplitter — 라이브</h4>
+<span class="tag">Chunk_size · 중복</span>
+</div>
+<div class="chunk-controls">
+<div class="ctrl">
+<label for="csSize">청크_크기 <b><span id="csSizeVal">120</span> 문자</b></label>
+<input aria-describedby="csSizeVal" id="csSize" max="300" min="40" step="10" type="range" value="120"/>
+</div>
+<div class="ctrl">
+<label for="csOver">청크_겹침 <b><span id="csOverVal">20</span> 문자</b></label>
+<input aria-describedby="csOverVal" id="csOver" max="80" min="0" step="5" type="range" value="20"/>
+</div>
+</div>
+<div class="chunk-stats">
+<span><b id="csCount">0</b> 청크</span>
+<span>평균 <b id="csAvg">0</b> 문자</span>
+<span>겹치다 <b id="csOverPct">0</b>%</span>
+</div>
+<div aria-label="청크 출력 미리보기" aria-live="polite" class="chunk-out" id="csOut"></div>
+<div class="chunk-legend">
+<span><span class="lg-dot" style="background:#C7D6E4"></span>청크 A</span>
+<span><span class="lg-dot" style="background:#D6E4C7"></span>청크 B</span>
+<span><span class="lg-dot" style="background:#E4D3C7"></span>청크 C…</span>
+<span><span class="lg-dot chunk-ov" style="background:transparent"></span>겹치는 영역 · 겹치는 부분</span>
+</div>
+</div>
+<p class="vf-caption">그림 3. 라이브 <code>RecursiveCharacterTextSplitter</code>. 수축 <code>chunk_size</code> 청크 수가 증가하는 것을 보려면; 분할된 문장을 이음새 전체에서 읽을 수 있도록 유지하려면 겹치는 부분을 늘립니다.</p>
+</section>
+<div class="prose-block">
+<div class="vf-callout"><b>경험 법칙.</b> 800~1,200자는 절차적 문서의 확실한 기본값이며 ~15% 중복됩니다. 밀도가 높은 SOP는 더 작은 청크를 원합니다. 서술적 편차 보고서는 더 큰 것을 원합니다. 커밋하기 전에 실제 질문에 대한 적중률을 측정하세요.</div>
+</div>
+ === 3b. 미니 검색 데모 =" 
+<section aria-labelledby="search-t" class="figure-block" id="search">
+<span class="vf-eyebrow">대화형 · 쿼리를 클릭하세요</span>
+<h2 class="vf-fig-title" id="search-t">vector space로 보는 retrieval</h2>
+<p class="vf-fig-sub">질문을 선택하세요. 쿼리는 2D 지도의 한 지점으로 이동하여 가장 가까운 청크에 선을 그립니다. 그러면 상위 k 증거 카드가 해당 소스 경로와 함께 켜집니다. 외계인 카드 표시.</p>
+<div class="widget">
+<div class="widget-head">
+<h4>가장 가까운 이웃 검색 데모</h4>
+<span class="tag">탑케이 = 3</span>
+</div>
+<div class="search-demo">
+<div>
+<div aria-label="쿼리를 선택하세요" class="query-row" id="queryRow" role="group">
+<button class="query-btn" data-q="0" type="button">알람 E-1420 대응 SOP?</button>
+<button class="query-btn" data-q="1" type="button">Etcher RF 전력 드리프트 원인은 무엇입니까?</button>
+<button class="query-btn" data-q="2" type="button">CVD가 프로세스를 진행하고 있나요?</button>
+</div>
+<div class="scatter-box">
+<svg aria-label="2-D scatter plot of document chunks with a query point drawing lines to its nearest neighbours." id="scatterSvg" role="img" viewbox="0 0 460 320">
+<rect fill="#FCFBF8" height="318" rx="10" stroke="#EFEAE0" width="458" x="1" y="1"></rect>
+<line stroke="#DBD5C8" stroke-width="1.4" x1="40" x2="440" y1="285" y2="285"></line>
+<line stroke="#DBD5C8" stroke-width="1.4" x1="40" x2="40" y1="30" y2="285"></line>
+<text fill="#96917D" font-family="JetBrains Mono,monospace" font-size="12" text-anchor="middle" x="240" y="309">semantic dim 1 →</text>
+<text fill="#96917D" font-family="JetBrains Mono,monospace" font-size="12" text-anchor="middle" transform="rotate(-90 18 160)" x="18" y="160">semantic dim 2 →</text>
+<g fill="none" id="linkLayer" stroke="#C15F3C" stroke-width="1.8"></g>
+<g id="dotLayer"></g>
+<g id="queryLayer"></g>
+</svg>
+</div>
+<p class="demo-note">위치는 예시입니다. 즉, 수백 차원에서 실제 임베딩이 수행하는 작업을 2D로 투영한 것입니다. 메커니즘(쿼리 → 코사인에 가장 가까운 청크 → top-k)은 정확합니다.</p>
+</div>
+<div>
+<div aria-live="polite" class="result-cards" id="resultCards">
+ JS에서 삽입한 카드 
+</div>
+</div>
+</div>
+</div>
+<p class="vf-caption">그림 4. 미니 의미 검색 데모. 리트리버는 가장 가까운 k개의 청크를 가져옵니다. LLM은 이들로부터만 응답하고 엔지니어가 확인할 수 있도록 소스 경로를 인쇄합니다.</p>
+</section>
+ === 4. 거래 차트 
+<section aria-labelledby="trade-t" class="figure-block" id="tradeoff">
+<span class="vf-eyebrow">손잡이 뒤의 숫자</span>
+<h2 class="vf-fig-title" id="trade-t">chunk size와 retrieval quality</h2>
+<p class="vf-fig-sub">두 가지 힘이 반대 방향으로 끌어당깁니다. 작은 청크는 맥락을 잃고, 큰 청크는 주제를 흐리게 합니다. 검색 품질은 중간에서 최고조에 이릅니다. 정직하게 라벨이 붙은 개념적 곡선. 개념적 반대.</p>
+<div class="vf-card chart-box">
+<svg aria-label="Line chart: context sufficiency rises with chunk size while topic precision falls; their combined retrieval quality peaks around 900 to 1100 characters." role="img" viewbox="0 0 1120 440">
+<!-- plot frame -->
+<line stroke="#DBD5C8" stroke-width="1.6" x1="90" x2="90" y1="60" y2="370"></line>
+<line stroke="#DBD5C8" stroke-width="1.6" x1="90" x2="1060" y1="370" y2="370"></line>
+<!-- y gridlines -->
+<g stroke="#EFEAE0" stroke-width="1">
+<line x1="90" x2="1060" y1="292" y2="292"></line><line x1="90" x2="1060" y1="215" y2="215"></line><line x1="90" x2="1060" y1="138" y2="138"></line>
+</g>
+<text fill="#96917D" font-family="JetBrains Mono,monospace" font-size="12" text-anchor="end" x="52" y="374">low</text>
+<text fill="#96917D" font-family="JetBrains Mono,monospace" font-size="12" text-anchor="end" x="52" y="142">high</text>
+<text fill="#6B6862" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" transform="rotate(-90 40 215)" x="40" y="215">retrieval quality →</text>
+<!-- x labels -->
+<g fill="#96917D" font-family="JetBrains Mono,monospace" font-size="12" text-anchor="middle">
+<text x="220" y="396">300</text><text x="450" y="396">700</text><text x="680" y="396">1100</text><text x="910" y="396">1800</text><text x="1030" y="396">2600</text>
+</g>
+<text fill="#6B6862" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="575" y="422">chunk_size (characters) →</text>
+<!-- context sufficiency: rises then plateaus -->
+<path d="M90 340 C 260 150, 480 100, 700 92 S 950 88, 1060 88" fill="none" stroke="#7FA07F" stroke-width="3"></path>
+<!-- topic precision: high then falls -->
+<path d="M90 96 C 320 100, 520 130, 700 210 S 950 320, 1060 350" fill="none" stroke="#7C9BC0" stroke-width="3"></path>
+<!-- combined quality: peaks in middle -->
+<path d="M90 300 C 300 150, 520 96, 640 92 C 800 90, 940 190, 1060 300" fill="none" stroke="#C15F3C" stroke-width="3.5"></path>
+<!-- sweet spot marker -->
+<line stroke="#D97757" stroke-dasharray="5 4" stroke-width="1.4" x1="600" x2="600" y1="92" y2="370"></line>
+<circle cx="600" cy="92" fill="#C15F3C" r="6"></circle>
+<rect fill="#F6EAE1" height="26" rx="8" stroke="#D9A98F" width="132" x="540" y="52"></rect>
+<text fill="#C15F3C" font-family="Inter,sans-serif" font-size="12.5" font-weight="600" text-anchor="middle" x="606" y="70">sweet spot ~1000</text>
+<!-- legend -->
+<g font-family="Inter,sans-serif" font-size="13">
+<rect fill="#FCFBF8" height="96" rx="10" stroke="#EFEAE0" width="310" x="740" y="66"></rect>
+<line stroke="#7FA07F" stroke-width="3" x1="758" x2="788" y1="90" y2="90"></line><text fill="#3A3833" x="796" y="94">context sufficiency · 맥락 충분성</text>
+<line stroke="#7C9BC0" stroke-width="3" x1="758" x2="788" y1="116" y2="116"></line><text fill="#3A3833" x="796" y="120">topic precision · 주제 정밀도</text>
+<line stroke="#C15F3C" stroke-width="3.5" x1="758" x2="788" y1="142" y2="142"></line><text fill="#3A3833" x="796" y="146"><tspan font-weight="600">combined retrieval quality</tspan></text>
+</g>
+</svg>
+</div>
+<p class="vf-caption">그림 5. 청크 크기는 상수가 아니라 절충 관계입니다. 실제로 관심을 갖고 있는 산호 곡선은 답변할 수 있을 만큼 크지만 한 가지 주제에 머물 수 있을 만큼 작은 청크의 최고점에 도달합니다.</p>
+</section>
+ === 5. 구조화된 스택 선택 
+<section aria-labelledby="stack-t" class="figure-block" id="stack">
+<span class="vf-eyebrow">조각 선택</span>
+<h2 class="vf-fig-title" id="stack-t">온프레미스 stack 한눈에 보기</h2>
+<p class="vf-fig-sub">모든 구성요소는 로컬에서 실행됩니다. API 키도 없고 송신도 없습니다. 밀폐형 Fab 네트워크를 위해 무엇을 선택해야 하는지와 그 이유는 다음과 같습니다. 데이터 무반출.</p>
+<div class="db-grid" style="margin-bottom:22px">
+<div class="db-card rec">
+<div class="db-name">크로마 <span class="db-pill">여기서 시작하세요</span></div>
+<ul>
+<li>임베디드, 프로세스 중 — 호스팅할 항목 없음</li>
+<li>로컬 디렉터리에 씁니다. 다시 삽입하지 않고 다시 로드</li>
+<li>단일 노드 Fab 지식 기반에 가장 적합</li>
+</ul>
+</div>
+<div class="db-card">
+<div class="db-name">Qdrant</div>
+<ul>
+<li>자체 호스팅 서버, 온프레미스 모드</li>
+<li>동일한 LangChain 패턴, 다중 노드 확장</li>
+<li>한 상자로는 충분하지 않을 때 손을 뻗으세요.</li>
+</ul>
+</div>
+<div class="db-card">
+<div class="db-name">bge-m3 <span class="db-pill">삽입하다</span></div>
+<ul>
+<li>다국어 — 한국어 잘 포함</li>
+<li>로컬 가중치, 다운로드 후 오프라인</li>
+<li>영어로만 구성된 모델이 한국 리콜을 조용히 파괴합니다.</li>
+</ul>
+</div>
+</div>
+<div class="vf-card" style="overflow-x:auto">
+<table class="vf-table">
+<thead>
+<tr><th>단계</th><th>패키지(LangChain 0.3)</th><th>온프레미스 선택</th><th>밀봉된 상태로 유지되는 이유</th></tr>
+</thead>
+<tbody>
+<tr><td>짐</td><td><code>langchain_community</code></td><td>디렉토리 로더 · PyPDFLoader</td><td>로컬 파일만 읽습니다.</td></tr>
+<tr><td>큰 청크</td><td><code>langchain_text_splitters</code></td><td>RecursiveCharacterTextSplitter</td><td>순수 로컬 계산</td></tr>
+<tr><td>포함시키다</td><td><code>langchain_huggingface</code></td><td>bge-m3 로컬 가중치</td><td>호스팅된 임베딩 API 없음</td></tr>
+<tr><td>색인</td><td><code>langchain_chroma</code></td><td>크로마 지속_디렉토리</td><td>디스크에 쓰기, Phone-Home 없음</td></tr>
+<tr><td>답변</td><td><code>langchain_ollama</code></td><td>ChatOllama · qwen2.5</td><td>로컬 LLM, 제로 이그레스</td></tr>
+</tbody>
+</table>
+</div>
+<p class="vf-caption">그림 6. 정확한 최신 가져오기가 포함된 전체 스택. 메타데이터 필터(기준: <code>tool</code>, <code>doc_type</code>) 쿼리 시 소음을 줄입니다. Etcher 질문은 CVD 매뉴얼을 검색하지 않습니다.</p>
+</section>
+ === 6. 다섯 개의 파일(코드, 접을 수 있음) ================== 
+<section id="code">
+<div class="prose-block">
+<h2>다섯 개의 file</h2>
+<p>텍스트 우선 독자는 여전히 코드를 원합니다. 다음은 각 단계의 하중을 견디는 스니펫입니다. 실행 가능한 전체 버전에 대한 파일을 확장합니다. <strong>랭체인 0.3</strong>.</p>
+</div>
+ 1개 부하 
+<details class="code-details" open="">
+<summary>01_load.py — 문서 트리를 탐색하고 소스 경로를 유지합니다.</summary>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> 01_load.py</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># pip install langchain-community pypdf</span>
+<span class="tok-kw">from</span> langchain_community.document_loaders <span class="tok-kw">import</span> DirectoryLoader, TextLoader, PyPDFLoader
+
+sop_loader = <span class="tok-fn">DirectoryLoader</span>(
+    <span class="tok-str">"./docs/sops"</span>, glob=<span class="tok-str">"**/*.txt"</span>, loader_cls=TextLoader,
+    loader_kwargs={<span class="tok-str">"encoding"</span>: <span class="tok-str">"utf-8"</span>},   <span class="tok-com"># 한국어 문서는 utf-8 명시</span>
+    use_multithreading=<span class="tok-kw">True</span>,
+)
+pdf_loader = <span class="tok-fn">DirectoryLoader</span>(
+    <span class="tok-str">"./docs/manuals"</span>, glob=<span class="tok-str">"**/*.pdf"</span>, loader_cls=PyPDFLoader,
+)
+docs = sop_loader.<span class="tok-fn">load</span>() + pdf_loader.<span class="tok-fn">load</span>()
+<span class="tok-fn">print</span>(<span class="tok-str">f"loaded {len(docs)} document pages"</span>)</code></pre>
+</figure>
+</details>
+ 2청크 
+<details class="code-details">
+<summary>02_chunk.py — 중복으로 분할, 태그 메타데이터</summary>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> 02_chunk.py</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># pip install langchain-text-splitters</span>
+<span class="tok-kw">from</span> langchain_text_splitters <span class="tok-kw">import</span> RecursiveCharacterTextSplitter
+
+splitter = <span class="tok-fn">RecursiveCharacterTextSplitter</span>(
+    chunk_size=<span class="tok-num">1000</span>, chunk_overlap=<span class="tok-num">150</span>,  <span class="tok-com"># ~15% overlap</span>
+    add_start_index=<span class="tok-kw">True</span>,
+)
+chunks = splitter.<span class="tok-fn">split_documents</span>(docs)
+
+<span class="tok-kw">for</span> c <span class="tok-kw">in</span> chunks:                      <span class="tok-com"># tag for metadata filters</span>
+    src = c.metadata[<span class="tok-str">"source"</span>]
+    c.metadata[<span class="tok-str">"tool"</span>]     = <span class="tok-str">"etcher"</span> <span class="tok-kw">if</span> <span class="tok-str">"etch"</span> <span class="tok-kw">in</span> src <span class="tok-kw">else</span> <span class="tok-str">"cvd"</span>
+    c.metadata[<span class="tok-str">"doc_type"</span>] = <span class="tok-str">"sop"</span> <span class="tok-kw">if</span> src.<span class="tok-fn">endswith</span>(<span class="tok-str">".txt"</span>) <span class="tok-kw">else</span> <span class="tok-str">"manual"</span></code></pre>
+</figure>
+</details>
+ 3 삽입 
+<details class="code-details">
+<summary>03_embed.py — 로컬, 다국어 임베딩</summary>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> 03_embed.py</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># pip install langchain-huggingface sentence-transformers</span>
+<span class="tok-kw">from</span> langchain_huggingface <span class="tok-kw">import</span> HuggingFaceEmbeddings
+
+embeddings = <span class="tok-fn">HuggingFaceEmbeddings</span>(
+    model_name=<span class="tok-str">"/opt/models/bge-m3"</span>,          <span class="tok-com"># local weights, multilingual</span>
+    model_kwargs={<span class="tok-str">"device"</span>: <span class="tok-str">"cuda"</span>},          <span class="tok-com"># "cpu" if no GPU</span>
+    encode_kwargs={<span class="tok-str">"normalize_embeddings"</span>: <span class="tok-kw">True</span>},
+)
+<span class="tok-com"># Alt — reuse a local Ollama server:</span>
+<span class="tok-com"># from langchain_ollama import OllamaEmbeddings</span>
+<span class="tok-com"># embeddings = OllamaEmbeddings(model="bge-m3", base_url="http://localhost:11434")</span></code></pre>
+</figure>
+</details>
+ 4 인덱스 
+<details class="code-details">
+<summary>04_index.py — 로컬 벡터 DB에 유지</summary>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> 04_index.py</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># pip install langchain-chroma</span>
+<span class="tok-kw">from</span> langchain_chroma <span class="tok-kw">import</span> Chroma
+
+vector_store = Chroma.<span class="tok-fn">from_documents</span>(
+    documents=chunks, embedding=embeddings,
+    collection_name=<span class="tok-str">"fab_kb"</span>,
+    persist_directory=<span class="tok-str">"./fab_kb"</span>,   <span class="tok-com"># local disk — reload, don't re-embed</span>
+)
+<span class="tok-fn">print</span>(<span class="tok-str">f"indexed {vector_store._collection.count()} chunks"</span>)
+<span class="tok-com"># Later runs just reopen it — no re-embedding.</span></code></pre>
+</figure>
+</details>
+ 5 답변 
+<details class="code-details">
+<summary>05_answer.py — 검색 + 생성(인용 포함)</summary>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> 05_answer.py</span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># pip install langchain-ollama langchain-core</span>
+<span class="tok-kw">from</span> langchain_ollama <span class="tok-kw">import</span> ChatOllama
+<span class="tok-kw">from</span> langchain_core.prompts <span class="tok-kw">import</span> ChatPromptTemplate
+
+retriever = vector_store.<span class="tok-fn">as_retriever</span>(
+    search_kwargs={<span class="tok-str">"k"</span>: <span class="tok-num">4</span>, <span class="tok-str">"filter"</span>: {<span class="tok-str">"tool"</span>: <span class="tok-str">"etcher"</span>}},  <span class="tok-com"># metadata filter</span>
+)
+llm = <span class="tok-fn">ChatOllama</span>(model=<span class="tok-str">"qwen2.5:14b"</span>, base_url=<span class="tok-str">"http://localhost:11434"</span>)
+
+prompt = ChatPromptTemplate.<span class="tok-fn">from_template</span>(
+    <span class="tok-str">"Answer only from the context. Cite each source path.\n\n"</span>
+    <span class="tok-str">"Context:\n{context}\n\nQuestion: {question}"</span>
+)
+question = <span class="tok-str">"이 챔버 알람 코드 E-1420 대응 SOP는?"</span>
+hits = retriever.<span class="tok-fn">invoke</span>(question)                      <span class="tok-com"># retriever.invoke — 0.3 API</span>
+context = <span class="tok-str">"\n\n"</span>.<span class="tok-fn">join</span>(<span class="tok-str">f"[{d.metadata['source']}] {d.page_content}"</span> <span class="tok-kw">for</span> d <span class="tok-kw">in</span> hits)
+answer = llm.<span class="tok-fn">invoke</span>(prompt.<span class="tok-fn">invoke</span>({<span class="tok-str">"context"</span>: context, <span class="tok-str">"question"</span>: question}))
+<span class="tok-fn">print</span>(answer.content)
+<span class="tok-kw">for</span> d <span class="tok-kw">in</span> hits:                                        <span class="tok-com"># show the receipts</span>
+    <span class="tok-fn">print</span>(<span class="tok-str">"source:"</span>, d.metadata[<span class="tok-str">"source"</span>])</code></pre>
+</figure>
+</details>
+</section>
+ ="품질 팁 =" 
+<div class="prose-block">
+<h2 id="quality">실제로 중요한 tip</h2>
+<ul>
+<li><strong>청크 크기는 절충안입니다.</strong> 밀도가 높은 SOP는 더 작은 청크를 원합니다. 서술형 보고서는 더 큰 규모를 원합니다. 실제 질문에 대한 적중률을 먼저 측정하세요.</li>
+<li><strong>메타데이터 필터는 노이즈를 차단합니다.</strong> 장비 및 프로세스별로 태그를 지정하고 쿼리 시 필터링합니다. etcher 질문은 CVD 매뉴얼을 검색해서는 안됩니다.</li>
+<li><strong>항상 출처를 표면화하세요.</strong> 인용된 답변은 검증 가능합니다. 인용이 없으면 자신감 있는 추측을 할 수 있습니다. 그들과 함께 검색 도구를 사용하세요. 표지의 출처가 순환각의 핵심입니다.</li>
+<li><strong>Embedder를 언어와 일치시킵니다.</strong> 한국어 문서에는 bge-m3 또는 multilingual-e5가 필요합니다. 영어 전용 모델은 한국어에 대한 회상을 조용히 망가뜨립니다.</li>
+<li><strong>네트워크를 떠나는 것은 없습니다.</strong> 로더, 임베딩, 벡터 DB 및 LLM은 모두 로컬에서 실행됩니다. 데이터 무반출.</li>
+</ul>
+<p>이는 5개의 짧은 파일로 구성된 완전한 에어갭 RAG 스택입니다. 하나의 문서 폴더와 12개의 실제 질문으로 시작하여 조정하세요. <code>chunk_size</code> 그리고 <code>k</code> 그들에 대항하고 거기에서 성장하십시오.</p>
+</div>
+</div>
+ 심층적인 데크 링크 
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">더 깊게 보기</span>
+<h3>이 주제의 전체 과정 보기</h3>
+<p>이 글은 현장노트입니다. 대화형 데크는 다이어그램 및 작업 예제와 함께 전체 RAG 빌드를 슬라이드별로 안내합니다. 관계로 연결됩니다.</p>
+</div>
+<a class="btn btn-primary" href="../../../llm_apply/RAG_BUILD_SLIDE.html">deck 열기 <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+ 공유 
+<div class="share">
+<span class="lbl">공유</span>
+<button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">공유/링크 복사</button>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">엑스 / 트위터</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">링크드인</a>
+</div>
+ 저자 바이오 카드(E-E-A-T) 
+<aside class="author-card">
+<span aria-hidden="true" class="avatar">AE</span>
+<div class="a-body">
+<div class="k">저자 소개</div>
+<h3>AI Edu Archive</h3>
+<p>물리학 박사(IGZO / 그래핀 반도체 특성) 및 반도체
+        증착 작업을 수행하는 프로세스 엔지니어. 에어갭 LLM, RAG 및 에이전트 구축
+        강화 학습 및 이상 탐지 도구를 포함한 시스템
+        팹. 프로세스 노하우를 온프레미스 지식 자산으로 전환하는 방법에 대해 여기에 글을 씁니다.
+        결코 네트워크를 떠나지 않습니다.</p>
+<a href="../about.html">저자에 대해 더 알아보기 →</a>
+</div>
+</aside>
+ 관련된 
+<section aria-label="관련 기사" class="related">
+<span class="eyebrow">계속 읽기</span>
+<h2>저널의 관련 글</h2>
+<div class="related-grid">
+<a class="rel-card" href="rag-over-sealed-documents.html">
+<span class="cat-tag">RAG</span>
+<h3>의미를 찢지 않고 기술 문서 chunking하기</h3>
+</a>
+<a class="rel-card" href="agents-mcp-mes.html">
+<span class="cat-tag">에이전트 및 MCP</span>
+<h3>Hybrid retrieval: vector + knowledge graph</h3>
+</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>무료로 깊게, 열린 방식으로</h2>
+<p>강의와 저널의 모든 콘텐츠는 회원가입 없이 무료로 읽을 수 있습니다.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>탐구하다</h4>
+<a href="../../index.html">허브 홈</a>
+<a href="../../../index.html#courses">모든 강좌</a>
+<a href="../index.html">저널</a>
+</div>
+<div class="foot-col">
+<h4>학습</h4>
+<a href="../../../overview/index.html">팹 AI</a>
+<a href="../../../watsonx/index.html">에어갭 LLM</a>
+<a href="../../../llm_apply/LLM_slide.html">엔터프라이즈 LLM</a>
+</div>
+<div class="foot-col">
+<h4>사이트</h4>
+<a href="../about.html">소개</a>
+<a href="../contact.html">연락하다</a>
+<a href="../privacy.html">개인정보</a>
+<a href="../terms.html">이용약관</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · 열린 한국어 AI 교육</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  // one-click copy for code figures
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig?fig.querySelector('pre'):null;
+      if(!code)return;
+      var text=code.innerText;
+      var done=function(){
+        btn.textContent='Copied';btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1600);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done,function(){});
+      }
+    });
+  });
+
+  /* ══ Animated pipeline: play / pause ══════════════════════════════ */
+  var anim=document.getElementById('ragAnim');
+  var toggle=document.getElementById('animToggle');
+  var icon=document.getElementById('animIcon');
+  var label=document.getElementById('animLabel');
+  var hint=document.getElementById('animHint');
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function setPlay(on){
+    anim.classList.toggle('playing',on);
+    toggle.setAttribute('aria-pressed',on?'true':'false');
+    icon.textContent=on?'❚❚':'▶';
+    label.textContent=on?'Pause / 정지':'Play / 재생';
+  }
+  toggle.addEventListener('click',function(){setPlay(!anim.classList.contains('playing'))});
+  if(reduce){
+    hint.textContent='Reduced motion on — animation held still';
+    setPlay(false);
+  }else{
+    // autoplay once visible
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(es){
+        es.forEach(function(e){ if(e.isIntersecting){ setPlay(true); io.disconnect(); } });
+      },{threshold:.3});
+      io.observe(anim);
+    }else{ setPlay(true); }
+  }
+
+  /* ══ Chunking slider widget ═══════════════════════════════════════ */
+  var SOP="ETCH CHAMBER ALARM E-1420 RESPONSE SOP. Step 1: acknowledge the alarm on the EAP and note the timestamp. Step 2: verify chamber pressure against the recipe setpoint before any purge. Step 3: if RF power reads below 80% of target, isolate the matching network and re-strike. Step 4: log the deviation and notify the B-shift lead. 챔버 압력과 RF 파워를 반드시 확인하고 편차를 기록한다.";
+  var colors=['#C7D6E4','#D6E4C7','#E4D3C7','#E4C7DE','#D8C7E4','#C7E4E0','#E4E0C7'];
+  var sizeEl=document.getElementById('csSize'),overEl=document.getElementById('csOver');
+  var sizeVal=document.getElementById('csSizeVal'),overVal=document.getElementById('csOverVal');
+  var out=document.getElementById('csOut'),cCount=document.getElementById('csCount'),
+      cAvg=document.getElementById('csAvg'),cOverPct=document.getElementById('csOverPct');
+
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+  function chunkText(text,size,overlap){
+    if(overlap>=size)overlap=size-10;
+    var out=[],i=0,step=Math.max(1,size-overlap);
+    while(i<text.length){ out.push([i,Math.min(i+size,text.length)]); if(i+size>=text.length)break; i+=step; }
+    return out;
+  }
+
+  function renderChunks(){
+    var size=+sizeEl.value, overlap=+overEl.value;
+    sizeVal.textContent=size; overVal.textContent=overlap;
+    var spans=chunkText(SOP,size,overlap);
+    // build a per-character owner map: which chunk(s) cover each char
+    var html='',total=0;
+    for(var s=0;s<spans.length;s++){
+      var a=spans[s][0], b=spans[s][1];
+      total+=(b-a);
+      var prevEnd = s>0 ? spans[s-1][1] : a;      // overlap zone with previous chunk
+      var color=colors[s%colors.length];
+      // emit this chunk; mark leading overlap portion
+      var ovEnd = s>0 ? Math.min(prevEnd,b) : a;
+      var pieceOv = esc(SOP.slice(a,ovEnd));
+      var pieceMain = esc(SOP.slice(ovEnd,b));
+      html+='<span class="chunk-seg'+(s>0&&ovEnd>a?' chunk-ov':'')+'" style="background:'+color+'">'+pieceOv+'</span>';
+      html+='<span class="chunk-seg" style="background:'+color+'">'+pieceMain+'</span>';
+      if(s<spans.length-1) html+=' ';
+    }
+    out.innerHTML=html;
+    cCount.textContent=spans.length;
+    cAvg.textContent=spans.length?Math.round(total/spans.length):0;
+    cOverPct.textContent=Math.round(overlap/size*100);
+  }
+  sizeEl.addEventListener('input',renderChunks);
+  overEl.addEventListener('input',renderChunks);
+  renderChunks();
+
+  /* ══ Mini search demo ═════════════════════════════════════════════ */
+  // chunk points (illustrative 2-D positions) + their text
+  var CHUNKS=[
+    {x:0.62,y:0.42,src:'etch/etch_e1420_sop.txt',txt:'E-1420 response: verify chamber pressure, re-strike RF if <80% target.'},
+    {x:0.55,y:0.60,src:'etch/etch_rf_match.txt', txt:'RF power drift is usually a matching-network fault; isolate and re-tune.'},
+    {x:0.70,y:0.30,src:'etch/etch_alarm_index.txt',txt:'Alarm index: E-14xx codes map to chamber pressure / RF subsystem.'},
+    {x:0.28,y:0.35,src:'cvd/cvd_purge_sop.txt',  txt:'CVD purge: N2 flush 3 cycles before venting; confirm interlock clears.'},
+    {x:0.20,y:0.62,src:'cvd/cvd_recipe.txt',     txt:'CVD recipe params: deposition rate vs chamber temperature curve.'},
+    {x:0.42,y:0.20,src:'common/eap_alarms.txt',  txt:'Acknowledge alarms on the EAP; every deviation must be logged.'},
+    {x:0.80,y:0.55,src:'etch/etch_maint.txt',    txt:'Etcher PM: matching network inspection every 2 weeks.'},
+    {x:0.35,y:0.80,src:'cvd/cvd_interlock.txt',  txt:'Interlock chain for CVD purge and vent sequence.'}
+  ];
+  // per-query: index of query point + which chunk indices are the top-3 nearest
+  var QUERIES=[
+    {qx:0.66,qy:0.36,top:[0,2,1],label:'챔버 알람 E-1420 대응 SOP?'},
+    {qx:0.60,qy:0.56,top:[1,0,6],label:'Etcher RF power drift 원인?'},
+    {qx:0.24,qy:0.50,top:[3,4,7],label:'CVD 챔버 퍼지 절차?'}
+  ];
+  var SVGW=460,SVGH=320, PX=[40,440], PY=[30,285];
+  function sx(v){return PX[0]+v*(PX[1]-PX[0]);}
+  function sy(v){return PY[1]-v*(PY[1]-PY[0]);} // invert so y up
+  var dotLayer=document.getElementById('dotLayer'),
+      linkLayer=document.getElementById('linkLayer'),
+      queryLayer=document.getElementById('queryLayer'),
+      resultCards=document.getElementById('resultCards'),
+      queryRow=document.getElementById('queryRow');
+
+  function drawDots(){
+    var s='';
+    CHUNKS.forEach(function(c,i){
+      s+='<circle id="dot'+i+'" cx="'+sx(c.x).toFixed(1)+'" cy="'+sy(c.y).toFixed(1)+'" r="6" fill="#B7CCE0" stroke="#96AEC4"/>';
+    });
+    dotLayer.innerHTML=s;
+  }
+  drawDots();
+
+  function runQuery(qi){
+    var q=QUERIES[qi];
+    // reset dots
+    CHUNKS.forEach(function(c,i){
+      var d=document.getElementById('dot'+i);
+      d.setAttribute('fill','#B7CCE0');d.setAttribute('stroke','#96AEC4');d.setAttribute('r','6');
+    });
+    // links
+    var lines='';
+    q.top.forEach(function(ci){
+      lines+='<line x1="'+sx(q.qx).toFixed(1)+'" y1="'+sy(q.qy).toFixed(1)+'" x2="'+sx(CHUNKS[ci].x).toFixed(1)+'" y2="'+sy(CHUNKS[ci].y).toFixed(1)+'"/>';
+      var d=document.getElementById('dot'+ci);
+      d.setAttribute('fill','#E7B79E');d.setAttribute('stroke','#C15F3C');d.setAttribute('r','7.5');
+    });
+    linkLayer.innerHTML=lines;
+    // query point
+    queryLayer.innerHTML='<circle cx="'+sx(q.qx).toFixed(1)+'" cy="'+sy(q.qy).toFixed(1)+'" r="8" fill="#C15F3C"/>'+
+      '<text x="'+(sx(q.qx)+13).toFixed(1)+'" y="'+(sy(q.qy)+4).toFixed(1)+'" font-family="JetBrains Mono,monospace" font-size="12" font-weight="600" fill="#C15F3C">query</text>';
+    // cards
+    var scores=[0.91,0.84,0.78];
+    var cards='';
+    q.top.forEach(function(ci,rank){
+      cards+='<div class="rcard lit"><span class="rc-score">cos '+scores[rank]+'</span>'+
+        '<div class="rc-src">'+CHUNKS[ci].src+'</div>'+
+        '<div class="rc-txt">'+CHUNKS[ci].txt+'</div></div>';
+    });
+    resultCards.innerHTML=cards;
+    // active button
+    queryRow.querySelectorAll('.query-btn').forEach(function(b,i){b.classList.toggle('active',i===qi);});
+  }
+  queryRow.querySelectorAll('.query-btn').forEach(function(b){
+    b.addEventListener('click',function(){runQuery(+b.getAttribute('data-q'));});
+  });
+  runQuery(0);
+})();
+</script>
+</body>
+</html>

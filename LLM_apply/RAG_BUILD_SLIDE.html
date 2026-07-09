@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>사내 RAG 구축 실전 — BGE · Vector DB · watsonx · gpt-oss-120b · Agent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#111C24; --ink2:#20313D; --bg:#F5F7F9; --bg2:#FAFBFC; --line:#D8E1E7; --line2:#B9C7D1;
+    --teal:#007A74; --teal-d:#005F5A; --mint:#4FC3B7; --tint:#E8F4F2; --tint2:#F2F6F8;
+    --muted:#71818D; --muted2:#586A76; --muted3:#394B56; --red:#B94A3D; --amber:#C48A2B; --purple:#6355B8;
+    --mono:'JetBrains Mono','Consolas',monospace; --sans:'Noto Sans KR',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden;background:#0c1116;font-family:var(--sans);color:var(--ink)}
+  .deck{position:fixed;inset:0;background:#0c1116;overflow:hidden}
+  .stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform:translate(-50%,-50%);transform-origin:center center}
+  .slide{position:absolute;inset:0;opacity:0;visibility:hidden;background:var(--bg);display:flex;flex-direction:column;overflow:hidden}
+  .slide.active{opacity:1;visibility:visible}
+  .slide.dark{background:var(--ink);color:#fff}
+  /* header bar */
+  .bar{display:flex;align-items:center;gap:16px;padding:26px 90px;background:#fff;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:24px;letter-spacing:.1em;color:var(--teal)}
+  .bar .sq{width:10px;height:10px;background:var(--teal);display:inline-block}
+  .bar .r{margin-left:auto;color:var(--muted)}
+  .body{flex:1;padding:48px 90px;display:flex;flex-direction:column;justify-content:center}
+  h2.t{font-weight:700;letter-spacing:-.02em;line-height:1.12;color:var(--ink);font-size:50px}
+  .eyebrow{font-family:var(--mono);font-size:24px;letter-spacing:.1em;color:var(--teal)}
+  .lede{font-size:30px;line-height:1.55;color:var(--ink2)}
+  p.s{font-size:26px;line-height:1.55;color:var(--muted2)}
+  strong{color:var(--ink)} em{font-style:italic}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .card{background:#fff;border:1px solid var(--line);padding:28px 32px}
+  .card.t{border-top:4px solid var(--teal)} .card.l{border-left:5px solid var(--teal)}
+  .card h4{font-size:26px;font-weight:700;margin-bottom:10px}
+  .card p{font-size:23px;line-height:1.5;color:var(--muted3)}
+  .k{font-family:var(--mono);font-size:21px;color:var(--teal)}
+  .dark-box{background:var(--ink);color:#fff;padding:24px 36px;display:flex;gap:16px;align-items:center}
+  .dark-box .lab{font-family:var(--mono);font-size:22px;color:var(--mint);flex-shrink:0}
+  .dark-box span.x{font-size:25px;line-height:1.5}
+  .tealbox{background:var(--tint);border:1px solid #9FD3CC;padding:22px 30px}
+  .tbl{width:100%;border:1px solid var(--line);background:#fff;border-collapse:collapse}
+  .tbl thead td{background:var(--ink);color:#fff;font-family:var(--mono);font-size:21px;padding:16px 22px}
+  .tbl td{padding:14px 22px;font-size:22px;border-bottom:1px solid #E4EAEE;vertical-align:top}
+  .tbl tr:last-child td{border-bottom:none}
+  .pill{display:inline-block;font-family:var(--mono);font-size:21px;padding:7px 18px;border:1px solid var(--line2);background:#fff;color:var(--muted3)}
+  .pill.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+  .mono{font-family:var(--mono)}
+  .note{font-size:21px;color:var(--muted);font-style:italic}
+  .codebox{background:var(--ink);color:#E5F4F1;font-family:var(--mono);font-size:21px;line-height:1.7;padding:24px 30px;white-space:pre-wrap;overflow:auto}
+  .codebox .g{color:var(--mint)} .codebox .m{color:var(--muted)}
+  /* divider slide */
+  .divider .body{justify-content:center}
+  .divider .num{font-family:var(--mono);font-size:30px;letter-spacing:.2em;color:var(--mint)}
+  .divider h2{font-size:88px;font-weight:800;letter-spacing:-.03em;color:#fff;margin-top:16px;line-height:1.08}
+  .divider .sub{font-size:30px;color:#9FB2BD;margin-top:28px;max-width:1300px;line-height:1.5}
+  /* sim */
+  .sim{border:1px solid var(--line2);background:#fff}
+  .sim .head{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;background:var(--ink);color:#fff;font-family:var(--mono);font-size:21px;letter-spacing:.06em}
+  .sim .dots i{width:11px;height:11px;display:inline-block;margin-left:7px}
+  .sim .in{padding:30px 36px}
+  .btn{font-family:var(--mono);font-size:22px;border:1px solid var(--line2);background:#fff;color:var(--muted3);padding:11px 22px;cursor:pointer}
+  .btn.on,.btn.primary{background:var(--teal);color:#fff;border-color:var(--teal)}
+  .ipt{flex:1;border:1px solid var(--line2);background:var(--tint2);padding:14px 20px;font-size:24px;font-family:var(--sans);color:var(--ink)}
+  .rowbar{display:flex;align-items:center;gap:14px;margin:7px 0}
+  .rowbar .nm{width:300px;font-size:22px;color:var(--ink)}
+  .rowbar .track{flex:1;height:26px;background:#EEF2F5;position:relative}
+  .rowbar .fill{position:absolute;left:0;top:0;bottom:0;background:var(--mint)}
+  .rowbar.top .fill{background:var(--teal)}
+  .rowbar .v{width:90px;text-align:right;font-family:var(--mono);font-size:21px;color:var(--muted2)}
+  /* navbar */
+  .navbar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;background:#000;color:#fff;border-radius:999px;padding:6px;font-family:var(--mono);font-size:15px;z-index:50;opacity:.85}
+  .navbar button{background:transparent;border:none;color:#fff;font-size:16px;cursor:pointer;padding:6px 12px;border-radius:999px}
+  .navbar button:hover{background:rgba(255,255,255,.15)}
+  .navbar .ct{padding:0 10px;letter-spacing:.05em}
+  .navbar .kb{opacity:.5;font-size:13px;padding-left:8px;border-left:1px solid rgba(255,255,255,.2);margin-left:4px}
+  .deck.presenting .navbar{display:none}
+  /* start gate */
+  #gate{position:fixed;inset:0;z-index:200;background:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer}
+  #gate svg{width:100%;height:100%;display:block}
+  #gate .hint{position:absolute;bottom:5.5%;left:0;right:0;text-align:center;font-family:var(--mono);font-size:24px;letter-spacing:2px;color:var(--mint);animation:pulse 1.9s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.4}50%{opacity:.95}}
+  .chip{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:20px;padding:6px 14px;border:1px solid var(--line2);color:var(--muted3);background:#fff}
+  /* ===== dynamic motion layer ===== */
+  .slide{transition:opacity .5s ease}
+  .card{transition:transform .22s ease, box-shadow .22s ease}
+  .card:hover{transform:translateY(-5px);box-shadow:0 12px 30px rgba(21,32,42,.12)}
+  .btn{transition:transform .12s ease, background .15s ease, color .15s ease}
+  .btn:hover{transform:translateY(-2px)}
+  .rowbar .fill{transition:width .6s cubic-bezier(.2,.8,.2,1)}
+  .slide.active .body>*{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
+  .slide.active .body>*:nth-child(2){animation-delay:.07s}
+  .slide.active .body>*:nth-child(3){animation-delay:.14s}
+  .slide.active .body>*:nth-child(4){animation-delay:.21s}
+  .slide.active .body>*:nth-child(5){animation-delay:.28s}
+  .slide.active .body>*:nth-child(6){animation-delay:.35s}
+  .slide.active .body>*:nth-child(7){animation-delay:.42s}
+  @keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  .slide.active svg line[marker-end],.slide.active svg path[marker-end]{stroke-dasharray:9 7;animation:dashflow 1.1s linear infinite}
+  @keyframes dashflow{to{stroke-dashoffset:-16}}
+  .divider.slide.active h2{animation:zoomin .6s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes zoomin{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+  #gate g circle{animation:nodepulse 2.2s ease-in-out infinite}
+  @keyframes nodepulse{0%,100%{opacity:1}50%{opacity:.45}}
+  .progress{position:fixed;left:0;top:0;height:4px;width:0;background:linear-gradient(90deg,#007A74,#4FC3B7);z-index:60;transition:width .5s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 12px rgba(94,200,188,.55)}
+  .deck.presenting .progress{opacity:.5}
+  @media (prefers-reduced-motion:reduce){.slide.active .body>*,.divider.slide.active h2,.slide.active svg line[marker-end],.slide.active svg path[marker-end],#gate g circle{animation:none}.slide.active svg line[marker-end],.slide.active svg path[marker-end]{stroke-dasharray:none}}
+
+  /* =========================================================
+     EXPERT REDESIGN OVERRIDES — ported from overview/index.html
+     (industrial control-room deck: radius 8, layered shadows)
+     ========================================================= */
+  html,body{background:#0A0F14}
+  .deck{background:#0A0F14}
+  .slide{background:#F5F7F9}
+  .slide.dark{background:#0B1218}
+  .slide .body>*{position:relative;z-index:1}
+  .bar{height:74px;padding:25px 72px 0;background:transparent;border-bottom:0;font-size:22px;letter-spacing:0;color:var(--teal-d);position:relative;z-index:3}
+  .bar .sq{width:9px;height:30px;background:var(--teal);border-radius:999px;box-shadow:0 0 0 5px rgba(79,195,183,.13)}
+  .bar .r{margin-left:auto;padding:8px 14px;border:1px solid rgba(17,28,36,.10);border-radius:999px;background:rgba(255,255,255,.74);letter-spacing:.04em;color:#627482;font-size:18px;box-shadow:0 10px 26px rgba(17,28,36,.055)}
+  .slide.dark .bar .r{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.13);color:#BFD0D8}
+  .body{padding:40px 72px 52px}
+  h2.t{font-size:48px;font-weight:800;letter-spacing:0;line-height:1.12}
+  .lede{font-size:28px}
+  strong{font-weight:800}
+  .card{border-radius:8px;background:rgba(255,255,255,.96);border:1px solid rgba(17,28,36,.10);box-shadow:0 15px 34px rgba(17,28,36,.075),inset 0 1px 0 rgba(255,255,255,.75);padding:22px 26px}
+  .card.t{border-top:3px solid var(--teal)} .card.l{border-left:4px solid var(--teal)}
+  .card:hover{box-shadow:0 20px 44px rgba(17,28,36,.13)}
+  .dark-box{background:#101C24;border:1px solid rgba(79,195,183,.25);border-radius:8px;box-shadow:0 14px 32px rgba(17,28,36,.08)}
+  .tealbox{border-radius:8px;box-shadow:0 10px 24px rgba(17,28,36,.05)}
+  .codebox{border-radius:8px;box-shadow:0 14px 30px rgba(17,28,36,.12)}
+  table.tbl{border-radius:8px;overflow:hidden;border:1px solid rgba(17,28,36,.12);box-shadow:0 14px 34px rgba(17,28,36,.07)}
+  table.tbl thead td{background:#13212B;letter-spacing:.06em}
+  table.tbl tbody tr:nth-child(even) td{background:#F6F9FA}
+  table.tbl tbody tr:hover td{background:#EEF8F6}
+  .pill,.chip{border-radius:999px}
+  .btn{border-radius:8px;box-shadow:0 8px 20px rgba(17,28,36,.07);font-weight:700}
+  .ipt{border-radius:8px}
+  .note{font-style:normal}
+  .sim{border-radius:8px;overflow:hidden;box-shadow:0 15px 34px rgba(17,28,36,.075)}
+  .sim .head{background:#13212B}
+  .tag{display:inline-block;font-family:var(--mono);font-size:16px;padding:4px 14px;border:1px solid #A7D6D1;border-radius:999px;background:#EEF8F6;color:var(--teal-d)}
+  .callout{border-radius:8px;padding:18px 26px;font-size:23px;line-height:1.5;border:1px solid var(--line);box-shadow:0 14px 32px rgba(17,28,36,.08);color:var(--ink2)}
+  .callout .lab{font-family:var(--mono);font-size:15px;letter-spacing:.06em;text-transform:uppercase;margin-right:14px;color:var(--teal-d)}
+  .callout.teal{background:#101C24;border-color:rgba(79,195,183,.25);color:#DDE9EE}
+  .callout.teal .lab{color:var(--mint)}
+  .callout.teal strong,.callout.teal b{color:#8DE7DD}
+  .stbadge{display:inline-block;font-family:var(--mono);font-size:13.5px;font-weight:700;line-height:1.35;padding:3px 10px;border-radius:999px;vertical-align:4px;white-space:nowrap;letter-spacing:0}
+  .stbadge.field{background:#E8F4F2;border:1px solid #94D4CD;color:#005F5A}
+  .stbadge.acad{background:#EFECFA;border:1px solid #C9BFEE;color:#4A3D96}
+  .lvl{display:inline-block;font-family:var(--mono);font-size:15px;padding:2px 11px;border-radius:999px;margin:0 2px;vertical-align:middle}
+  .lvl.b{background:#1f6b62;color:#d6f0ec} .lvl.a{background:#7a5a1e;color:#f3dca8}
+  /* divider — SECTION MAP + chapter glyph */
+  .divider .body{justify-content:center;align-items:flex-start;padding-left:120px;padding-right:120px;position:relative}
+  .divider .num{font-size:24px;letter-spacing:.14em;color:var(--mint);padding:8px 14px;border:1px solid rgba(79,195,183,.25);background:rgba(79,195,183,.08);border-radius:999px}
+  .divider h2{font-size:84px;letter-spacing:0;color:#F6FBFC;margin-top:24px}
+  .divider .sub{font-size:29px;color:#B6C6CF;max-width:1150px;margin-top:18px;line-height:1.5}
+  .divider .goals{margin:36px 0 0;max-width:1150px;background:rgba(255,255,255,.055);border:1px solid rgba(79,195,183,.18);border-radius:8px;padding:24px 34px;box-shadow:0 18px 42px rgba(0,0,0,.18);text-align:left}
+  .divider .goalhd{font-family:var(--mono);font-size:17px;letter-spacing:.08em;text-transform:uppercase;color:var(--mint);margin-bottom:12px}
+  .divider .goals ul{margin:0;list-style:none;padding:0}
+  .divider .goals li{font-size:23px;color:#D4E0E6;line-height:1.55;padding-left:28px;position:relative;margin:8px 0}
+  .divider .goals li::before{content:'→';position:absolute;left:0;color:var(--mint)}
+  .divider .lvl-line{margin-top:16px;font-family:var(--mono);font-size:17px;color:#9CB0BB}
+  .divider .body::before{content:"";position:absolute;right:84px;top:150px;width:470px;height:540px;background:#0F2028;border:1px solid rgba(79,195,183,.24);border-radius:8px;box-shadow:0 32px 80px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.08)}
+  .divider .body::after{content:"CHUNK · EMBED · RETRIEVE · GENERATE";position:absolute;right:112px;bottom:190px;width:414px;color:#D9F4F1;font-family:var(--mono);font-size:17px;font-weight:900;letter-spacing:.04em;text-align:center;padding:16px 18px;border:1px solid rgba(94,200,188,.30);background:rgba(8,16,22,.72);border-radius:8px;box-shadow:0 18px 44px rgba(0,0,0,.20)}
+  .divider .body>:not(.chapter-glyph){position:relative;z-index:2}
+  .divider .chapter-glyph{position:absolute;right:100px;top:210px;width:438px;height:350px;z-index:1;pointer-events:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center}
+  .divider .chapter-glyph .cg-icon{font-size:150px;line-height:1;filter:drop-shadow(0 18px 30px rgba(0,0,0,.28))}
+  .divider .chapter-glyph .cg-line{font-family:var(--mono);font-size:17px;font-weight:900;color:#8DE7DD;letter-spacing:.08em}
+  /* recap (핵심 정리) */
+  .recap-grid{display:grid;grid-template-columns:1.1fr 1fr 1.15fr;gap:20px;align-items:stretch}
+  .recap-grid .card{height:100%;padding:26px 30px;display:flex;flex-direction:column}
+  .recap-grid .card h4{font-size:26px;margin-bottom:12px}
+  .recap-grid .card .k{font-size:16px;margin-bottom:10px}
+  .sum{margin:10px 0 0 22px;padding:0} .sum li{font-size:21px;color:var(--ink2);line-height:1.62;margin:12px 0}
+  .qz{margin:10px 0 0 26px;padding:0} .qz li{font-size:21px;color:var(--ink2);line-height:1.55;margin:12px 0}
+  .qz li::marker{color:var(--amber);font-weight:700}
+  .qa{margin-top:auto;border:1px solid #CFE3DF;border-radius:8px;background:#F3FAF8}
+  .qa summary{cursor:pointer;padding:10px 16px;font-weight:800;color:var(--teal-d);font-size:16px;font-family:var(--mono);letter-spacing:.04em}
+  .qa summary::marker{color:var(--teal)}
+  .qa summary:hover{color:var(--teal)}
+  .qa[open] summary{border-bottom:1px solid #DCEBE7}
+  .qa ol{margin:10px 18px 14px 36px;padding:0}
+  .qa li{font-size:17.5px;line-height:1.55;color:var(--muted3);margin:7px 0}
+  .qa li b{color:var(--teal-d)}
+  .slide.dark .qa{background:rgba(255,255,255,.06);border-color:rgba(79,195,183,.3)}
+  .slide.dark .qa summary{color:#8DE7DD}
+  .slide.dark .qa[open] summary{border-bottom-color:rgba(79,195,183,.25)}
+  .slide.dark .qa li{color:#C9D6DC}
+  .slide.dark .qa li b{color:#8DE7DD}
+  .recap-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+  .recap-flow span{display:flex;align-items:center;justify-content:center;min-height:62px;border-radius:8px;background:#10202A;color:#fff;font-size:18px;font-weight:800}
+  .recap-flow b{font-family:var(--mono);color:#4FC3B7;margin-right:10px;font-size:14px}
+  .flow-bridge{margin:30px 0 0;display:grid;grid-template-columns:repeat(5,1fr);gap:10px;align-items:center;background:#10202A;border:1px solid rgba(79,195,183,.22);border-radius:8px;padding:16px 16px;box-shadow:0 14px 34px rgba(17,28,36,.10)}
+  .flow-bridge span{color:#EAF6F5;font-family:var(--mono);font-size:15.5px;font-weight:900;text-align:center;line-height:1.4}
+  .flow-bridge b{color:#4FC3B7;margin-right:6px}
+  /* home menu */
+  #homeslide .body{justify-content:center;padding:60px 90px}
+  #homeslide .eyebrow{font-family:var(--mono);font-size:17px;letter-spacing:.12em;text-transform:uppercase;color:var(--mint)}
+  #homeslide h1{font-size:66px;font-weight:800;letter-spacing:0;line-height:1.1;color:#F4F6F8;margin-top:14px}
+  #homeslide h1 .hl{color:var(--mint)}
+  #homeslide .sub{font-size:24px;color:#B9C8D0;margin-top:20px;max-width:1440px;line-height:1.55}
+  .menu{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:36px}
+  .mcard{border-radius:8px;background:rgba(255,255,255,.065);border:1px solid rgba(185,207,213,.18);padding:18px;box-shadow:0 18px 36px rgba(0,0,0,.16);min-height:118px;cursor:pointer;transition:all .15s}
+  .mcard:hover{background:rgba(79,195,183,.14);border-color:rgba(79,195,183,.75);transform:translateY(-3px)}
+  .mcard .mno{font-family:var(--mono);font-size:15px;letter-spacing:.10em;color:var(--mint);font-weight:700}
+  .mcard .mt{font-size:21px;font-weight:700;color:#F2F7F8;margin-top:6px;line-height:1.22}
+  .mcard .md{font-size:15px;color:#AABAC3;margin-top:5px;line-height:1.42}
+  .paths{margin-top:26px;background:rgba(255,255,255,.05);border:1px solid #2C3A44;border-radius:8px;padding:16px 24px;display:flex;flex-wrap:wrap;gap:8px 34px;align-items:center}
+  .paths .pitem{font-size:17px;color:#C4D2DA} .paths .pitem b{color:var(--mint);font-family:var(--mono);margin-right:8px}
+  /* navbar — top glass */
+  .navbar{left:50%;right:auto;top:14px;bottom:auto;transform:translateX(-50%);border-radius:8px;background:rgba(255,255,255,.72);border:1px solid rgba(17,28,36,.10);color:#34434D;box-shadow:inset 1px 1px 0 rgba(255,255,255,.92),inset -1px -1px 0 rgba(17,28,36,.035),8px 10px 24px rgba(17,28,36,.10);padding:6px 8px;opacity:.94;backdrop-filter:blur(14px) saturate(125%);font-weight:700;font-size:13px}
+  .navbar:hover{opacity:1}
+  .navbar button{border-radius:6px;font-weight:800;font-size:12px;padding:5px 8px;background:rgba(255,255,255,.55);border:1px solid rgba(17,28,36,.10);color:#394B56;box-shadow:inset 1px 1px 0 rgba(255,255,255,.95),inset -1px -1px 0 rgba(17,28,36,.04)}
+  .navbar button:hover{background:rgba(255,255,255,.9);color:#005F5A;border-color:rgba(0,122,116,.18)}
+  .navbar .ct{font-size:13px;min-width:58px;text-align:center;color:#20313D;padding:0 7px}
+  .navbar .kb{display:none}
+  .deck.presenting .navbar{display:flex;opacity:.4}
+  .deck.presenting .navbar:hover{opacity:.92}
+  .progress{display:none}
+  /* watermark */
+  .slide .artmark{position:absolute;right:58px;bottom:58px;z-index:0;pointer-events:none;font-size:94px;line-height:1;opacity:.07}
+  .slide.dark .artmark{opacity:.13}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+  <div class="stage" id="stage">
+
+  <!-- ===== 01 COVER ===== -->
+  <section class="slide dark" data-label="표지">
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 110px;position:relative;overflow:hidden">
+      <svg viewBox="0 0 1920 1080" style="position:absolute;inset:0;width:100%;height:100%;opacity:.5" preserveAspectRatio="xMidYMid slice">
+        <defs><pattern id="g" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#22323d" stroke-width="1"/></pattern></defs>
+        <rect width="1920" height="1080" fill="url(#g)"/>
+        <g stroke="#007A74" stroke-width="1.6" opacity=".5"><line x1="1480" y1="200" x2="1680" y2="160"/><line x1="1480" y1="200" x2="1600" y2="340"/><line x1="1680" y1="160" x2="1780" y2="300"/><line x1="1600" y1="340" x2="1780" y2="300"/><line x1="1680" y1="160" x2="1600" y2="340"/></g>
+        <g fill="#4FC3B7"><circle cx="1480" cy="200" r="9"/><circle cx="1680" cy="160" r="9"/><circle cx="1600" cy="340" r="9"/><circle cx="1780" cy="300" r="9"/></g>
+      </svg>
+      <div style="position:relative">
+        <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:24px;color:var(--mint);letter-spacing:.06em;margin-bottom:60px"><span>ENTERPRISE LLM · 사내 LLM 구축 자가학습</span><span style="color:var(--muted)">SELF-STUDY SERIES · 예시 도메인: 반도체 FAB</span></div>
+        <div style="display:inline-flex;align-items:center;gap:14px;font-family:var(--mono);font-size:26px;letter-spacing:.1em;color:var(--teal);margin-bottom:30px"><span style="width:12px;height:12px;background:var(--teal);display:inline-block"></span>SELF-STUDY · 사내 지식을 AI에게 연결하기</div>
+        <h1 style="font-size:96px;font-weight:800;letter-spacing:-.03em;line-height:1.05;color:#F4F6F8">사내 RAG 구축 실전<br>— 문서를 <span style="color:var(--mint)">검색 가능한 지능</span>으로</h1>
+        <p style="margin-top:34px;max-width:1380px;font-size:30px;line-height:1.6;color:#AFC0CA">사내 문서를 <strong style="color:#fff">BGE</strong>로 임베딩해 <strong style="color:#fff">Vector DB</strong>에 쌓고, <strong style="color:#fff">IBM watsonx</strong> 위의 <strong style="color:#fff">gpt-oss-120b</strong>로 답을 만들고, <strong style="color:#fff">에이전트 오케스트레이션</strong>으로 일을 시키는 — 전 과정을 실전 예시로.</p>
+        <div style="display:flex;gap:12px;margin-top:48px">
+          <span class="chip" style="border-color:#007A74;color:#4FC3B7;background:rgba(14,124,114,.15)">BGE 임베딩</span>
+          <span class="chip" style="color:#9FB2BD;background:transparent;border-color:#3a4f5a">Vector DB</span>
+          <span class="chip" style="color:#9FB2BD;background:transparent;border-color:#3a4f5a">검색·Rerank</span>
+          <span class="chip" style="color:#9FB2BD;background:transparent;border-color:#3a4f5a">watsonx · gpt-oss-120b</span>
+          <span class="chip" style="color:#9FB2BD;background:transparent;border-color:#3a4f5a">Agent · 오케스트레이션</span>
+        </div>
+        <div style="margin-top:56px;font-family:var(--mono);font-size:22px;color:var(--muted)">자가학습 자료 · 예상 60분 · 시뮬레이터 5종 · 챕터별 핵심 정리 3장</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 01b HOME / 학습 안내 ===== -->
+  <section class="slide dark" id="homeslide" data-label="학습 안내" data-ch="홈">
+    <div class="body">
+      <div>
+        <div class="eyebrow">SELF-STUDY GUIDE · 학습 지도</div>
+        <h1>여덟 챕터로 완주하는 <span class="hl">사내 RAG 구축</span></h1>
+        <p class="sub">카드를 클릭하면 해당 챕터로 바로 이동합니다. 챕터 사이에 <strong style="color:#fff">시뮬레이터 5종</strong>과 <strong style="color:#fff">핵심 정리 3장</strong>이 배치되어 있어, 읽고 → 직접 만져보고 → 스스로 점검하는 순서로 진행됩니다. 어느 슬라이드에서든 상단 <span style="font-family:var(--mono);color:var(--mint)">H 홈</span> 버튼(또는 H 키)으로 이 지도로 돌아올 수 있습니다.</p>
+        <div class="menu no-advance">
+          <div class="mcard" data-target="ch1"><div class="mno">CHAPTER I</div><div class="mt">큰 그림 — 한 장으로</div><div class="md">빌드타임/런타임 · 전체 아키텍처</div></div>
+          <div class="mcard" data-target="ch2"><div class="mno">CHAPTER II</div><div class="mt">임베딩 · BGE</div><div class="md">텍스트→1024차원 · 코사인 · SIM1</div></div>
+          <div class="mcard" data-target="ch3"><div class="mno">CHAPTER III</div><div class="mt">문서 파이프라인 · 인덱싱</div><div class="md">파싱·청킹·메타데이터 · SIM2</div></div>
+          <div class="mcard" data-target="ch4"><div class="mno">CHAPTER IV</div><div class="mt">Vector DB</div><div class="md">ANN·HNSW·필터 · SIM3</div></div>
+          <div class="mcard" data-target="ch5"><div class="mno">CHAPTER V</div><div class="mt">검색 · 리트리벌</div><div class="md">Hybrid·RRF·Rerank · SIM4</div></div>
+          <div class="mcard" data-target="ch6"><div class="mno">CHAPTER VI</div><div class="mt">생성 · watsonx × gpt-oss</div><div class="md">컨텍스트 주입 · 인용 · 가드레일</div></div>
+          <div class="mcard" data-target="ch7"><div class="mno">CHAPTER VII</div><div class="mt">에이전트 · 오케스트레이션</div><div class="md">ReAct·도구·승인 게이트 · SIM5</div></div>
+          <div class="mcard" data-target="ch8"><div class="mno">CHAPTER VIII</div><div class="mt">실전 구축 · 운영</div><div class="md">로드맵·평가·보안·거버넌스</div></div>
+        </div>
+        <div class="paths">
+          <span class="pitem"><b>처음이면</b>I → VIII 순서대로 완주 (약 60분)</span>
+          <span class="pitem"><b>개념만 빠르게</b>I → IV → V → VIII (약 25분)</span>
+          <span class="pitem"><b>손으로 익히기</b>SIM 1~5만 골라 조작 (약 20분)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 02 목표 ===== -->
+  <section class="slide" data-label="목표" data-ch="0 프롤로그">
+    <div class="bar"><span class="sq"></span>PROLOGUE · 왜 사내 RAG인가<span class="r">목표</span></div>
+    <div class="body">
+      <h2 class="t">우리가 만들 것 — "근거를 대는 사내 AI"</h2>
+      <p class="lede" style="margin-top:26px;max-width:1620px">엔지니어가 챗봇에 묻습니다. <em style="color:var(--teal)">"라인3 진공 누설 알람(PVD-A104) 대응 절차랑, 지난주 반복 이력 알려줘."</em> AI가 <strong>사내 SOP·MES·결함DB</strong>를 근거로, <strong>출처를 인용</strong>하며, 필요하면 <strong>이슈까지 등록</strong>합니다.</p>
+      <div class="grid3" style="margin-top:42px">
+        <div class="card t"><div class="k">문제</div><h4>지식이 흩어져 있다</h4><p>SOP는 문서고에, 이력은 MES에, 도면은 PLM에. 사람이 5곳을 돌아다니며 20~30분.</p></div>
+        <div class="card t"><div class="k">한계</div><h4>LLM 단독은 사내를 모른다</h4><p>학습 시점 지식만 있고, 사내 문서·어제 이슈는 알 수 없음. 모르면 지어냄(환각).</p></div>
+        <div class="card t"><div class="k">해법</div><h4>RAG + Agent</h4><p>사내 문서를 검색해 근거로 주고(RAG), 도구를 쥐어 실행까지(Agent). 전부 <strong>온프레미스</strong>.</p></div>
+      </div>
+      <div class="flow-bridge"><span><b>①</b>문서 수집·청킹<br><span style="color:#8EA2AD;font-weight:700">CH III</span></span><span><b>②</b>BGE 임베딩<br><span style="color:#8EA2AD;font-weight:700">CH II</span></span><span><b>③</b>Vector DB 적재<br><span style="color:#8EA2AD;font-weight:700">CH IV</span></span><span><b>④</b>검색 · Rerank<br><span style="color:#8EA2AD;font-weight:700">CH V</span></span><span><b>⑤</b>gpt-oss-120b 생성<br><span style="color:#8EA2AD;font-weight:700">CH VI</span></span></div>
+      <p class="note" style="margin-top:14px">이 다섯 칸이 이 자료의 완성 그림이자 목차입니다 — 그리고 CH VII에서 이 전체를 "도구"로 쥐는 에이전트 오케스트레이션, CH VIII에서 실전 구축·운영으로 마무리합니다.</p>
+    </div>
+  </section>
+
+  <!-- ===== 03 DIVIDER I ===== -->
+  <section class="slide dark divider" id="ch1" data-label="I · 큰 그림" data-ch="I 큰 그림">
+    <div class="body">
+      <div class="num">CHAPTER I</div>
+      <h2>큰 그림 — 한 장으로</h2>
+      <div class="sub">데이터가 어디서 들어와 어떻게 흘러 답이 되는가. 빌드타임(인덱싱)과 런타임(질의)을 먼저 구분합니다.</div>
+      <div class="goals">
+        <div class="goalhd">SECTION MAP · 이 챕터에서 확인할 것</div>
+        <ul>
+          <li>빌드타임(미리 쌓기)과 런타임(그때 답하기)이 왜 <strong style="color:#F2F7F8">다른 시스템처럼</strong> 설계되는가</li>
+          <li>그 둘을 잇는 다리가 왜 Vector DB인가</li>
+          <li>문서 12만 건이 답변 한 줄이 되기까지의 전체 데이터 흐름 — 한 장의 지도</li>
+        </ul>
+        <div class="lvl-line">난이도 <span class="lvl b">기초</span> · 예상 5분 · 본문 2장</div>
+      </div>
+      <div class="chapter-glyph"><div class="cg-icon">🗺</div><div class="cg-line">BUILD-TIME ↔ RUN-TIME</div></div>
+    </div>
+  </section>
+
+  <!-- ===== 04 아키텍처 ===== -->
+  <section class="slide" data-label="전체 아키텍처">
+    <div class="bar"><span class="sq"></span>CHAPTER I · 큰 그림<span class="r">END-TO-END ARCHITECTURE</span></div>
+    <div class="body" style="justify-content:flex-start;padding-top:30px">
+      <h2 class="t" style="font-size:44px;margin-bottom:18px">전체 아키텍처 — 사내 문서가 답이 되기까지</h2>
+      <svg viewBox="0 0 1740 720" style="width:100%;height:auto;font-family:var(--sans)">
+        <defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L8 5L1 9" fill="none" stroke="#71818D" stroke-width="1.6"/></marker>
+        <marker id="art" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L8 5L1 9" fill="none" stroke="#007A74" stroke-width="1.6"/></marker></defs>
+        <!-- build-time band -->
+        <rect x="0" y="0" width="1740" height="300" fill="#F2F6F8"/>
+        <text x="24" y="40" font-family="var(--mono)" font-size="20" fill="#B94A3D" letter-spacing="2">① BUILD-TIME · 인덱싱 (배치, 주기적)</text>
+        <g font-size="22">
+          <rect x="24" y="70" width="250" height="120" fill="#fff" stroke="#B9C7D1"/><text x="149" y="120" text-anchor="middle" font-weight="700">사내 문서</text><text x="149" y="152" text-anchor="middle" font-size="18" fill="#71818D">SOP·MES·도면·결함DB</text>
+          <line x1="274" y1="130" x2="330" y2="130" stroke="#71818D" stroke-width="2" marker-end="url(#ar)"/>
+          <rect x="332" y="70" width="230" height="120" fill="#fff" stroke="#B9C7D1"/><text x="447" y="115" text-anchor="middle" font-weight="700">파싱·청킹</text><text x="447" y="148" text-anchor="middle" font-size="18" fill="#71818D">구조 인식 분할</text>
+          <line x1="562" y1="130" x2="618" y2="130" stroke="#71818D" stroke-width="2" marker-end="url(#ar)"/>
+          <rect x="620" y="70" width="250" height="120" fill="#E8F4F2" stroke="#007A74" stroke-width="2"/><text x="745" y="115" text-anchor="middle" font-weight="700" fill="#005F5A">BGE 임베딩</text><text x="745" y="148" text-anchor="middle" font-size="18" fill="#005F5A">텍스트→1024차원 벡터</text>
+          <line x1="870" y1="130" x2="926" y2="130" stroke="#007A74" stroke-width="2" marker-end="url(#art)"/>
+          <rect x="928" y="70" width="270" height="120" fill="#10202A"/><text x="1063" y="115" text-anchor="middle" font-weight="700" fill="#fff">Vector DB</text><text x="1063" y="148" text-anchor="middle" font-size="18" fill="#9FD3CC">벡터 + 메타데이터</text>
+          <g font-family="'JetBrains Mono',monospace" font-size="17" fill="#B94A3D" text-anchor="middle">
+            <text x="149" y="219">문서 12만 건</text>
+            <text x="447" y="219">→ 청크 85만 개</text>
+            <text x="745" y="219">1024d × 85만</text>
+            <text x="1063" y="219">float32 ≈ 3.4GB</text>
+          </g>
+        </g>
+        <text x="24" y="250" font-size="19" fill="#71818D" font-style="italic">문서가 바뀌면 해당 청크만 다시 임베딩해 갱신(증분 인덱싱) — 하루 변경분 ~3%면 재임베딩도 ~2.5만 청크뿐.</text>
+        <!-- run-time band -->
+        <rect x="0" y="320" width="1740" height="400" fill="#EEF2F5"/>
+        <text x="24" y="362" font-family="var(--mono)" font-size="20" fill="#005F5A" letter-spacing="2">② RUN-TIME · 질의 (실시간, 사용자마다)</text>
+        <g font-size="22">
+          <rect x="24" y="400" width="210" height="110" fill="#fff" stroke="#B9C7D1"/><text x="129" y="450" text-anchor="middle" font-weight="700">질문</text><text x="129" y="480" text-anchor="middle" font-size="17" fill="#71818D">"PVD-A104 대응?"</text>
+          <line x1="234" y1="455" x2="286" y2="455" stroke="#71818D" stroke-width="2" marker-end="url(#ar)"/>
+          <rect x="288" y="400" width="200" height="110" fill="#E8F4F2" stroke="#007A74" stroke-width="2"/><text x="388" y="445" text-anchor="middle" font-weight="700" fill="#005F5A">BGE 임베딩</text><text x="388" y="476" text-anchor="middle" font-size="17" fill="#005F5A">질의→벡터</text>
+          <line x1="488" y1="455" x2="540" y2="455" stroke="#007A74" stroke-width="2" marker-end="url(#art)"/>
+          <rect x="542" y="400" width="230" height="110" fill="#fff" stroke="#B9C7D1"/><text x="657" y="438" text-anchor="middle" font-weight="700">검색 + Rerank</text><text x="657" y="468" text-anchor="middle" font-size="17" fill="#71818D">ANN→hybrid→top-k</text><text x="657" y="492" text-anchor="middle" font-size="17" fill="#71818D">BGE-reranker</text>
+          <line x1="772" y1="455" x2="824" y2="455" stroke="#71818D" stroke-width="2" marker-end="url(#ar)"/>
+          <rect x="826" y="395" width="300" height="120" fill="#10202A"/><text x="976" y="438" text-anchor="middle" font-weight="700" fill="#fff">gpt-oss-120b</text><text x="976" y="468" text-anchor="middle" font-size="17" fill="#9FD3CC">on IBM watsonx.ai</text><text x="976" y="492" text-anchor="middle" font-size="17" fill="#9FD3CC">컨텍스트 주입 → 생성</text>
+          <line x1="1126" y1="455" x2="1178" y2="455" stroke="#71818D" stroke-width="2" marker-end="url(#ar)"/>
+          <rect x="1180" y="400" width="240" height="110" fill="#fff" stroke="#007A74" stroke-width="2"/><text x="1300" y="445" text-anchor="middle" font-weight="700" fill="#005F5A">인용된 답변</text><text x="1300" y="476" text-anchor="middle" font-size="17" fill="#71818D">출처 표시 + 근거</text>
+          <g font-family="'JetBrains Mono',monospace" font-size="17" fill="#005F5A" text-anchor="middle">
+            <text x="388" y="543">~10ms</text>
+            <text x="657" y="543">ANN ~20ms · Rerank ~150ms</text>
+            <text x="976" y="543">생성 2~5s</text>
+            <text x="1300" y="543">체감 총 ~3~6s</text>
+          </g>
+          <!-- vector db feeds search -->
+          <line x1="1063" y1="190" x2="1063" y2="300" stroke="#007A74" stroke-width="2" stroke-dasharray="5,4"/>
+          <line x1="657" y1="395" x2="657" y2="330" stroke="#007A74" stroke-width="0"/>
+          <path d="M1063 300 L1063 360 L657 360 L657 398" fill="none" stroke="#007A74" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#art)"/>
+          <text x="1075" y="345" font-size="17" fill="#005F5A">Vector DB가 검색에 근거 제공</text>
+        </g>
+        <!-- agent layer -->
+        <rect x="1470" y="395" width="246" height="240" fill="#10202A" stroke="#007A74" stroke-width="2"/>
+        <text x="1593" y="438" text-anchor="middle" font-weight="700" fill="#4FC3B7" font-size="23">Agent ·</text>
+        <text x="1593" y="466" text-anchor="middle" font-weight="700" fill="#4FC3B7" font-size="23">오케스트레이션</text>
+        <text x="1593" y="505" text-anchor="middle" fill="#C9D6DC" font-size="18">위 전체를 '도구'로</text>
+        <text x="1593" y="530" text-anchor="middle" fill="#C9D6DC" font-size="18">호출·조율하는 층</text>
+        <text x="1593" y="565" text-anchor="middle" fill="#C9D6DC" font-size="18">watsonx Orchestrate</text>
+        <line x1="1420" y1="455" x2="1468" y2="455" stroke="#007A74" stroke-width="2" marker-end="url(#art)"/>
+      </svg>
+      <p class="note" style="margin-top:14px">핵심 분리 — <strong>빌드타임</strong>은 "문서를 미리 벡터로 쌓아두는" 배치 작업, <strong>런타임</strong>은 "질문이 올 때 검색해 답하는" 실시간 작업. 둘을 잇는 다리가 <strong>Vector DB</strong>. (규모·지연은 문서 12만 건 규모를 가정한 개념 수치)</p>
+    </div>
+  </section>
+
+  <!-- ===== 05 두 시간대 ===== -->
+  <section class="slide" data-label="두 시간대">
+    <div class="bar"><span class="sq"></span>CHAPTER I · 큰 그림<span class="r">빌드타임 vs 런타임</span></div>
+    <div class="body">
+      <h2 class="t" style="margin-bottom:26px">두 시간대를 분리해서 생각하라</h2>
+      <div style="display:grid;grid-template-columns:470px 1fr;gap:24px;align-items:stretch">
+        <div class="card" style="display:flex;align-items:center;justify-content:center;padding:16px 18px">
+          <svg viewBox="0 0 430 470" style="width:100%;height:auto;font-family:var(--sans)">
+            <defs><marker id="ar05" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L8 5L1 9" fill="none" stroke="#4FC3B7" stroke-width="1.8"/></marker></defs>
+            <!-- night: batch indexing -->
+            <rect x="10" y="10" width="410" height="215" rx="10" fill="#10202A"/>
+            <text x="34" y="48" font-family="'JetBrains Mono',monospace" font-size="16" fill="#F0B6AC" letter-spacing="2">① BUILD · 밤의 배치</text>
+            <path d="M375 42 a14 14 0 1 1 -10 -24 a11 11 0 1 0 10 24z" fill="#C9D6DC"/>
+            <g font-size="15" fill="#C9D6DC">
+              <rect x="34" y="72" width="96" height="58" rx="6" fill="#1B2B36" stroke="#3a4f5a"/><text x="82" y="98" text-anchor="middle">문서</text><text x="82" y="118" text-anchor="middle" font-size="13" fill="#8EA2AD">변경분 ~3%</text>
+              <line x1="130" y1="101" x2="168" y2="101" stroke="#4FC3B7" stroke-width="2" marker-end="url(#ar05)"/>
+              <rect x="170" y="72" width="96" height="58" rx="6" fill="#0F3A36" stroke="#007A74"/><text x="218" y="98" text-anchor="middle" fill="#8DE7DD">임베딩</text><text x="218" y="118" text-anchor="middle" font-size="13" fill="#8EA2AD">배치 처리</text>
+              <line x1="266" y1="101" x2="304" y2="101" stroke="#4FC3B7" stroke-width="2" marker-end="url(#ar05)"/>
+              <rect x="306" y="72" width="96" height="58" rx="6" fill="#1B2B36" stroke="#3a4f5a"/><text x="354" y="98" text-anchor="middle">Vector DB</text><text x="354" y="118" text-anchor="middle" font-size="13" fill="#8EA2AD">upsert</text>
+            </g>
+            <text x="34" y="172" font-size="15" fill="#8EA2AD">실패해도 다음 배치에서 복구 —</text>
+            <text x="34" y="196" font-size="15" fill="#8EA2AD">처리량이 관건, 지연은 덜 중요</text>
+            <!-- day: realtime query -->
+            <rect x="10" y="245" width="410" height="215" rx="10" fill="#fff" stroke="#D8E1E7"/>
+            <text x="34" y="283" font-family="'JetBrains Mono',monospace" font-size="16" fill="#005F5A" letter-spacing="2">② RUN · 낮의 실시간</text>
+            <circle cx="368" cy="278" r="12" fill="#C48A2B" opacity=".85"/><g stroke="#C48A2B" stroke-width="2"><line x1="368" y1="258" x2="368" y2="264"/><line x1="368" y1="292" x2="368" y2="298"/><line x1="348" y1="278" x2="354" y2="278"/><line x1="382" y1="278" x2="388" y2="278"/></g>
+            <g font-size="15" fill="#20313D">
+              <rect x="34" y="307" width="96" height="58" rx="6" fill="#F2F6F8" stroke="#B9C7D1"/><text x="82" y="333" text-anchor="middle">질문</text><text x="82" y="353" text-anchor="middle" font-size="13" fill="#71818D">초당 수십 건</text>
+              <line x1="130" y1="336" x2="168" y2="336" stroke="#007A74" stroke-width="2" marker-end="url(#ar05)"/>
+              <rect x="170" y="307" width="96" height="58" rx="6" fill="#E8F4F2" stroke="#007A74"/><text x="218" y="333" text-anchor="middle" fill="#005F5A">검색·생성</text><text x="218" y="353" text-anchor="middle" font-size="13" fill="#005F5A">~185ms+2~5s</text>
+              <line x1="266" y1="336" x2="304" y2="336" stroke="#007A74" stroke-width="2" marker-end="url(#ar05)"/>
+              <rect x="306" y="307" width="96" height="58" rx="6" fill="#F2F6F8" stroke="#B9C7D1"/><text x="354" y="333" text-anchor="middle">답변</text><text x="354" y="353" text-anchor="middle" font-size="13" fill="#71818D">출처 인용</text>
+            </g>
+            <text x="34" y="407" font-size="15" fill="#586A76">실패하면 사용자가 즉시 체감 —</text>
+            <text x="34" y="431" font-size="15" fill="#586A76">지연·견고함이 관건</text>
+          </svg>
+        </div>
+        <table class="tbl">
+          <thead><tr><td style="width:190px">구분</td><td style="color:#F0B6AC">① 빌드타임 · 인덱싱</td><td style="color:#4FC3B7">② 런타임 · 질의</td></tr></thead>
+          <tbody>
+            <tr><td><strong>언제</strong></td><td>문서가 추가·변경될 때 (배치)</td><td>사용자가 질문할 때 (실시간)</td></tr>
+            <tr><td><strong>무엇을</strong></td><td>파싱 → 청킹 → BGE 임베딩 → Vector DB 적재</td><td>질의 임베딩 → 검색 → Rerank → 생성</td></tr>
+            <tr><td><strong>빈도</strong></td><td>드묾 (일·주 단위, 변경분만)</td><td>잦음 (초당 다수 호출)</td></tr>
+            <tr><td><strong>규모</strong></td><td>하루 변경분 ~3% 재임베딩 ≈ 2.5만 청크</td><td>초당 수십 질의 × top-30 검색</td></tr>
+            <tr><td><strong>비용 민감</strong></td><td>임베딩 처리량 (대량 1회성)</td><td>지연시간·생성 토큰 (반복)</td></tr>
+            <tr><td><strong>실패 시</strong></td><td>다음 배치에서 복구 가능</td><td>사용자가 즉시 체감 → 견고해야</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="dark-box" style="margin-top:28px"><span class="lab">한 줄</span><span class="x">"문서를 <strong style="color:var(--mint)">미리</strong> 벡터로 만들어 두는 일"과 "질문에 <strong style="color:var(--mint)">그때</strong> 답하는 일"은 다른 시스템처럼 설계합니다. Vector DB가 그 둘을 잇습니다.</span></div>
+    </div>
+  </section>
+
+  <!-- ===== 06 DIVIDER II ===== -->
+  <section class="slide dark divider" id="ch2" data-label="II · 임베딩 BGE" data-ch="II 임베딩">
+    <div class="body">
+      <div class="num">CHAPTER II</div>
+      <h2>임베딩 · BGE</h2>
+      <div class="sub">텍스트를 "의미 좌표(벡터)"로 바꾸는 모듈. 왜 BGE이고, 텍스트가 어떻게 1024개의 숫자가 되는가.</div>
+      <div class="goals">
+        <div class="goalhd">SECTION MAP · 이 챕터에서 확인할 것</div>
+        <ul>
+          <li>왜 BGE-M3인가 — 다국어(한국어) · 8192토큰 · Dense+Sparse+Multi-vector 3-in-1</li>
+          <li>한 청크가 <strong style="color:#F2F7F8">1024개의 숫자</strong>가 되는 과정과 L2 정규화의 의미</li>
+          <li>코사인 유사도 읽는 법 — 1(같은 의미) · 0(무관) · −1(반대), 그리고 SIM1로 직접 검색</li>
+        </ul>
+        <div class="lvl-line">난이도 <span class="lvl b">기초</span> · 예상 7분 · 본문 2장 + SIM 1</div>
+      </div>
+      <div class="chapter-glyph"><div class="cg-icon">🧭</div><div class="cg-line">TEXT → 1024-DIM VECTOR</div></div>
+    </div>
+  </section>
+
+  <!-- ===== 07 BGE 소개 ===== -->
+  <section class="slide" data-label="BGE 소개">
+    <div class="bar"><span class="sq"></span>CHAPTER II · 임베딩<span class="r">왜 BGE인가</span></div>
+    <div class="body">
+      <h2 class="t">임베딩 모듈로 <span style="color:var(--teal)">BGE</span>를 쓰는 이유</h2>
+      <p class="s" style="margin-top:20px;max-width:1620px"><strong>BGE</strong>(BAAI General Embedding) — 베이징 AI 연구원(BAAI)이 공개한 오픈 임베딩 모델. 그중 <strong>BGE-M3</strong>(2024)가 사내 RAG의 사실상 표준 후보입니다. <span class="stbadge field">FIELD · 현장 검증</span></p>
+      <div class="grid4" style="margin-top:34px">
+        <div class="card t"><div class="k">Multilingual</div><h4 style="font-size:24px">다국어</h4><p>100+ 언어, <strong>한국어 강함</strong>. 사내 한·영 혼용 문서에 적합.</p></div>
+        <div class="card t"><div class="k">Multi-granularity</div><h4 style="font-size:24px">긴 입력</h4><p>최대 <strong>8192 토큰</strong>까지 한 번에 — 긴 절차서도 통째로.</p></div>
+        <div class="card t"><div class="k">Multi-function</div><h4 style="font-size:24px">3-in-1</h4><p><strong>Dense</strong>(의미)+<strong>Sparse</strong>(키워드)+<strong>Multi-vector</strong>(ColBERT) 동시. <span class="stbadge acad">ACAD · Multi-vector는 연구 단계</span></p></div>
+        <div class="card t"><div class="k">On-prem · Open</div><h4 style="font-size:24px">사내 설치</h4><p>오픈 가중치 → <strong>사내 GPU에서 실행</strong>, 데이터 외부 유출 0.</p></div>
+      </div>
+      <div class="grid2" style="margin-top:26px">
+        <div class="tealbox"><div class="k" style="margin-bottom:8px">출력 차원</div><div style="font-size:24px;line-height:1.5;color:var(--ink2)">Dense 벡터 <strong>1024차원</strong>. 한 청크 = 1024개의 실수. 이 좌표 사이 거리가 "의미 유사도".</div></div>
+        <div class="tealbox"><div class="k" style="margin-bottom:8px">함께 쓰는 짝</div><div style="font-size:24px;line-height:1.5;color:var(--ink2)">검색 정밀화용 <strong>BGE-reranker-v2-m3</strong>(재순위). 임베딩(넓게)→reranker(정밀)의 2단 구조.</div></div>
+      </div>
+      <p class="note" style="margin-top:18px">※ 대안 — <span class="tag">e5-mistral</span> <span class="tag">Jina-v3</span> <span class="tag">Qwen3-Embedding</span> · 한국어·온프레미스·라이선스를 기준으로 선택. 외부 API(OpenAI text-embedding-3)는 데이터 유출 이슈로 사내에선 지양.</p>
+    </div>
+  </section>
+
+  <!-- ===== 08 텍스트→벡터 ===== -->
+  <section class="slide" data-label="텍스트→벡터">
+    <div class="bar"><span class="sq"></span>CHAPTER II · 임베딩<span class="r">텍스트 → 1024차원 벡터</span></div>
+    <div class="body">
+      <h2 class="t">한 청크가 1024개의 숫자가 되는 과정</h2>
+      <div class="grid2" style="margin-top:30px;align-items:stretch">
+        <div>
+          <div class="codebox">입력 청크
+  "PVD-A104 알람은 진공도가 §3 허용
+   범위를 벗어났을 때 발생한다."
+        ↓  <span class="m">BGE-M3 인코더 (Transformer)</span>
+  [ 0.021, -0.114, 0.067, ... ]   <span class="g">← 1024개</span>
+        ↓  <span class="m">L2 정규화 (길이=1)</span>
+  단위 벡터 = "의미 공간 위의 한 점"</div>
+          <p class="note" style="margin-top:14px">정규화하면 코사인 유사도 = 내적(dot)이 되어 검색이 빠르고 안정적.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <div class="card l"><h4 style="font-size:24px">왜 "숫자"여야 하나</h4><p>컴퓨터는 글자의 의미를 모릅니다. 의미를 <strong>좌표</strong>로 바꿔야 "가깝다/멀다"를 계산할 수 있습니다.</p></div>
+          <div class="card l"><h4 style="font-size:24px">비슷한 의미 = 가까운 좌표</h4><p>"균열"과 "크랙", "누설"과 "leak"은 글자가 달라도 <strong>벡터가 가깝게</strong> 학습돼 있음.</p></div>
+          <div class="dark-box" style="flex-direction:column;align-items:stretch;gap:10px;padding:20px 28px">
+            <span class="lab">코사인 읽는 법 — 두 벡터 사이의 각도</span>
+            <svg viewBox="0 0 700 158" style="width:100%;height:auto">
+              <defs><marker id="cosA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1L8 5L1 9" fill="none" stroke="currentColor" stroke-width="2"/></marker></defs>
+              <!-- cos ≈ 1 -->
+              <g transform="translate(60,0)">
+                <line x1="60" y1="96" x2="128" y2="34" stroke="#4FC3B7" stroke-width="3.5" marker-end="url(#cosA)" color="#4FC3B7"/>
+                <line x1="60" y1="96" x2="140" y2="46" stroke="#8DE7DD" stroke-width="3.5" marker-end="url(#cosA)" color="#8DE7DD"/>
+                <circle cx="60" cy="96" r="5" fill="#fff"/>
+                <text x="90" y="128" text-anchor="middle" font-size="19" font-weight="700" fill="#8DE7DD">cos ≈ 1</text>
+                <text x="90" y="150" text-anchor="middle" font-size="15" fill="#9FB2BD">같은 의미 · "균열"↔"크랙"</text>
+              </g>
+              <!-- cos ≈ 0 -->
+              <g transform="translate(300,0)">
+                <line x1="60" y1="96" x2="150" y2="96" stroke="#4FC3B7" stroke-width="3.5" marker-end="url(#cosA)" color="#4FC3B7"/>
+                <line x1="60" y1="96" x2="60" y2="26" stroke="#C9D6DC" stroke-width="3.5" marker-end="url(#cosA)" color="#C9D6DC"/>
+                <path d="M60 76 A20 20 0 0 1 80 96" fill="none" stroke="#71818D" stroke-width="1.6"/>
+                <circle cx="60" cy="96" r="5" fill="#fff"/>
+                <text x="105" y="128" text-anchor="middle" font-size="19" font-weight="700" fill="#C9D6DC">cos ≈ 0</text>
+                <text x="105" y="150" text-anchor="middle" font-size="15" fill="#9FB2BD">무관 · "누설"↔"PM 일정"</text>
+              </g>
+              <!-- cos ≈ -1 -->
+              <g transform="translate(530,0)">
+                <line x1="80" y1="62" x2="160" y2="62" stroke="#4FC3B7" stroke-width="3.5" marker-end="url(#cosA)" color="#4FC3B7"/>
+                <line x1="80" y1="62" x2="0" y2="62" stroke="#F0B6AC" stroke-width="3.5" marker-end="url(#cosA)" color="#F0B6AC"/>
+                <circle cx="80" cy="62" r="5" fill="#fff"/>
+                <text x="80" y="128" text-anchor="middle" font-size="19" font-weight="700" fill="#F0B6AC">cos = −1</text>
+                <text x="80" y="150" text-anchor="middle" font-size="15" fill="#9FB2BD">반대 방향 · 드묾</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 09 SIM1 임베딩·코사인 ===== -->
+  <section class="slide" data-label="SIM · 임베딩 검색">
+    <div class="bar"><span class="sq"></span>LIVE DEMO<span class="r">SIM 1 · 임베딩 의미 검색</span></div>
+    <div class="body">
+      <h2 class="t" style="font-size:42px;margin-bottom:8px">질의와 사내 문서의 의미 거리 — 직접 검색</h2>
+      <p class="s" style="margin-bottom:10px">질의와 <strong>검색 방식</strong>을 고르면 사내 문서 청크의 순위가 바뀝니다. Dense는 의미, Keyword는 품번 같은 정확 토큰, Hybrid(RRF)는 둘의 순위를 융합. (개념 시연용 6차원 미니 임베딩)</p>
+      <div class="sim no-advance">
+        <div class="head"><span>SIM_1 · SEMANTIC / KEYWORD / HYBRID SEARCH</span><span id="s1mode" style="display:flex;gap:8px;align-items:center"><span style="color:#9FB2BD;font-size:18px">검색 방식</span><button class="btn on" data-m="dense" style="font-size:18px;padding:8px 16px">Dense</button><button class="btn" data-m="kw" style="font-size:18px;padding:8px 16px">Keyword</button><button class="btn" data-m="rrf" style="font-size:18px;padding:8px 16px">Hybrid·RRF</button></span></div>
+        <div class="in">
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px" id="s1q">
+            <button class="btn on" data-q="0">PVD-A104 진공 누설 대응</button>
+            <button class="btn" data-q="1">포토마스크 미세 균열 원인</button>
+            <button class="btn" data-q="2">PM 일정과 담당자</button>
+            <button class="btn" data-q="3">SPC 차트 품질 이상</button>
+          </div>
+          <div id="s1out"></div>
+          <div class="note" style="margin-top:14px" id="s1note"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 10 DIVIDER III ===== -->
+  <section class="slide dark divider" id="ch3" data-label="III · 인덱싱" data-ch="III 인덱싱">
+    <div class="body">
+      <div class="num">CHAPTER III</div>
+      <h2>문서 파이프라인 · 인덱싱</h2>
+      <div class="sub">사내 문서를 Vector DB에 쌓는 빌드타임 5단계. 청킹이 검색 품질의 8할을 좌우합니다.</div>
+      <div class="goals">
+        <div class="goalhd">SECTION MAP · 이 챕터에서 확인할 것</div>
+        <ul>
+          <li>수집 → 파싱 → 청킹 → 임베딩 → 적재, 5단계에서 각각 무엇이 깨질 수 있는가</li>
+          <li>청킹이 8할인 이유 — 너무 작으면 맥락 붕괴, 너무 크면 잡음 혼입. SIM2로 직접 체험</li>
+          <li>메타데이터의 3가지 용도 — <strong style="color:#F2F7F8">출처 인용 · 접근권한 필터 · 최신본 우선</strong></li>
+        </ul>
+        <div class="lvl-line">난이도 <span class="lvl b">기초</span> · 예상 8분 · 본문 2장 + SIM 2 + 핵심 정리 I</div>
+      </div>
+      <div class="chapter-glyph"><div class="cg-icon">📦</div><div class="cg-line">PARSE · CHUNK · UPSERT</div></div>
+    </div>
+  </section>
+
+  <!-- ===== 11 인덱싱 5단계 ===== -->
+  <section class="slide" data-label="인덱싱 5단계">
+    <div class="bar"><span class="sq"></span>CHAPTER III · 인덱싱<span class="r">수집 → 적재</span></div>
+    <div class="body">
+      <h2 class="t" style="margin-bottom:24px">사내 문서를 벡터로 쌓는 5단계</h2>
+      <div class="grid5" style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px">
+        <div class="card"><div class="k">01</div><h4 style="font-size:23px;margin-top:6px">수집</h4><p style="font-size:21px">SOP·MES·PLM·메일. 권한·보안등급 메타 함께.</p></div>
+        <div class="card"><div class="k">02</div><h4 style="font-size:23px;margin-top:6px">파싱</h4><p style="font-size:21px">PDF·표·이미지 추출. 표는 행 보존, 그림은 캡션·OCR.</p></div>
+        <div class="card"><div class="k">03</div><h4 style="font-size:23px;margin-top:6px">청킹</h4><p style="font-size:21px">구조 인식 분할. 헤더·표 안 깨지게, 300~800자 + 오버랩.</p></div>
+        <div class="card" style="border-top:4px solid var(--teal)"><div class="k">04</div><h4 style="font-size:23px;margin-top:6px;color:var(--teal-d)">임베딩</h4><p style="font-size:21px">각 청크 → BGE → 1024차원. 배치로 대량 처리.</p></div>
+        <div class="card" style="background:#10202A;color:#fff"><div class="k" style="color:var(--mint)">05</div><h4 style="font-size:23px;margin-top:6px;color:#fff">적재</h4><p style="font-size:21px;color:#C9D6DC">벡터+메타+원문을 Vector DB에 upsert.</p></div>
+      </div>
+      <div style="margin-top:30px" class="codebox">예 · 사내 SOP 한 청크의 적재 레코드
+{ <span class="g">"id"</span>: "SOP-PVD-117#c12",
+  <span class="g">"vector"</span>: [0.021, -0.114, ...],          <span class="m"># BGE 1024차원</span>
+  <span class="g">"text"</span>: "PVD-A104 알람 발생 시 ① 게이트 밸브 즉시 차단 ...",
+  <span class="g">"meta"</span>: { "source":"SOP-PVD-117 v3.2", "page":2, "dept":"PVD",
+            "sec_level":"L2", "updated":"2026-03" } }</div>
+      <p class="note" style="margin-top:14px"><strong>메타데이터</strong>가 핵심 — 출처 인용, 접근권한 필터(<span class="mono">sec_level</span>), 최신본 우선에 모두 쓰입니다.</p>
+    </div>
+  </section>
+
+  <!-- ===== 12 청킹 전략 ===== -->
+  <section class="slide" data-label="청킹 전략">
+    <div class="bar"><span class="sq"></span>CHAPTER III · 인덱싱<span class="r">청킹 전략</span></div>
+    <div class="body">
+      <h2 class="t">청킹 — 검색 품질의 8할</h2>
+      <div class="grid2" style="margin-top:28px">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="card l"><h4 style="font-size:24px">너무 작으면</h4><p>한 문장이 여러 조각으로 → 맥락 깨짐, 청크 수·임베딩 비용 폭증, 표·헤더 분리.</p></div>
+          <div class="card l"><h4 style="font-size:24px">너무 크면</h4><p>한 청크에 잡음이 섞여 의미가 흐려짐 → 검색이 둔해지고 엉뚱한 회수.</p></div>
+          <div class="dark-box"><span class="lab">실무</span><span class="x"><strong style="color:var(--mint)">300~800자</strong>에서 시작 + <strong style="color:var(--mint)">10~15% 오버랩</strong>, 평가셋으로 튜닝.</span></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="card t"><h4 style="font-size:24px">구조 인식 분할</h4><p>§ 헤더는 청크 시작에 유지, <strong>표는 행 단위로 자르지 않기</strong>, 리스트는 묶어서. 문단 경계 우선.</p></div>
+          <div class="card t"><h4 style="font-size:24px">오버랩(overlap)</h4><p>인접 청크가 일부 겹치게 — 경계에 걸친 문장이 한쪽에서 잘려 검색 누락되는 걸 방지.</p></div>
+          <div class="tealbox"><div class="k" style="margin-bottom:6px">메타 주입</div><div style="font-size:22px;color:var(--ink2)">각 청크 앞에 "[SOP-PVD-117 §3] " 같은 <strong>헤더 경로</strong>를 붙이면 검색·인용 정확도↑.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 13 SIM2 청크 분할 ===== -->
+  <section class="slide" data-label="SIM · 청크 분할">
+    <div class="bar"><span class="sq"></span>LIVE DEMO<span class="r">SIM 2 · 청크 분할</span></div>
+    <div class="body">
+      <h2 class="t" style="font-size:42px;margin-bottom:8px">chunk size의 트레이드오프 — 직접 조절</h2>
+      <p class="s" style="margin-bottom:18px">청크 크기와 <strong>오버랩</strong>을 바꿔 보세요. 색 경계가 분할 지점, 빗금이 오버랩(양쪽 청크에 모두 포함) 구간 — 표·헤더가 끊기거나 경계에서 문장이 잘리면 경고가 뜹니다.</p>
+      <div class="sim no-advance">
+        <div class="head"><span>SIM_2 · CHUNKING</span><span style="display:flex;gap:10px;align-items:center"><span style="color:#9FB2BD;font-size:18px">청크 크기</span><span id="c2btns" style="display:flex;gap:8px"><button class="btn" data-s="80" style="font-size:18px;padding:8px 14px">80자</button><button class="btn" data-s="200" style="font-size:18px;padding:8px 14px">200자</button><button class="btn on" data-s="400" style="font-size:18px;padding:8px 14px">400자</button><button class="btn" data-s="800" style="font-size:18px;padding:8px 14px">800자</button></span><span style="color:#9FB2BD;font-size:18px;margin-left:12px">오버랩</span><span id="c2ov" style="display:flex;gap:8px"><button class="btn on" data-o="0" style="font-size:18px;padding:8px 14px">0%</button><button class="btn" data-o="15" style="font-size:18px;padding:8px 14px">15%</button></span></span></div>
+        <div class="in">
+          <div id="c2doc" style="font-family:var(--mono);font-size:19px;line-height:1.75;white-space:pre-wrap;max-height:360px;overflow:auto;background:#F6F9FA;border:1px solid #E4EAEE;padding:20px 24px"></div>
+          <div id="c2sum" style="display:flex;gap:30px;margin-top:16px;font-family:var(--mono);font-size:21px"></div>
+          <div id="c2warn" style="margin-top:14px"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 핵심 정리 I (CH I~III) ===== -->
+  <section class="slide" data-label="핵심 정리 I" data-ch="정리 I">
+    <div class="bar"><span class="sq"></span>CHECKPOINT · 핵심 정리 I<span class="r">CHAPTER I ~ III</span></div>
+    <div class="body">
+      <h2 class="t" style="margin-bottom:20px">여기까지 세 문장 — 그리고 스스로 점검</h2>
+      <div class="recap-grid">
+        <div class="card t"><div class="k">핵심 요약</div>
+          <ul class="sum">
+            <li><strong>빌드타임 / 런타임 분리</strong> — 미리 쌓는 일과 그때 답하는 일은 다른 시스템처럼 설계. 둘을 잇는 다리가 Vector DB.</li>
+            <li><strong>BGE = 의미 좌표기</strong> — 텍스트를 1024차원 벡터로. 글자가 달라도(균열↔크랙) 좌표는 가깝다.</li>
+            <li><strong>청킹이 8할</strong> — 300~800자 + 오버랩 10~15%, 표·헤더는 깨지 않게. 메타데이터는 처음부터.</li>
+          </ul>
+        </div>
+        <div class="card t"><div class="k">도입 기준 — 시작 전에 정할 것</div>
+          <ul class="sum">
+            <li>평가셋(질문 50개)을 <strong>먼저</strong> — 청크 크기·오버랩은 감이 아니라 측정으로 튜닝.</li>
+            <li>메타데이터 설계 선행 — 출처 인용·권한 필터·최신본 우선이 전부 여기에 걸린다.</li>
+            <li>증분 인덱싱 전제 — 문서는 계속 바뀐다. 변경분만 다시 임베딩하는 구조로.</li>
+          </ul>
+        </div>
+        <div class="card t" style="border-top-color:var(--amber)"><div class="k" style="color:var(--amber)">남길 질문 — 먼저 스스로 답해보기</div>
+          <ol class="qz">
+            <li>빌드타임과 런타임을 잇는 것은?</li>
+            <li>청크가 너무 크면 생기는 문제 두 가지는?</li>
+            <li>오버랩은 무엇을 막기 위한 장치인가?</li>
+          </ol>
+          <details class="qa no-advance"><summary>정답 확인</summary>
+            <ol>
+              <li><b>Vector DB</b> — 빌드타임이 벡터를 쌓고, 런타임이 꺼내 쓴다.</li>
+              <li>한 청크에 여러 주제가 섞여 <b>검색이 둔해지고</b>, 긴 컨텍스트의 <b>Lost in the Middle</b>이 생긴다.</li>
+              <li>경계에 걸친 문장이 <b>어느 쪽 청크에서도 잘려 검색에서 누락</b>되는 것 (SIM2의 15% 토글).</li>
+            </ol>
+          </details>
+        </div>
+      </div>
+      <div class="recap-flow"><span><b>BUILD</b>문서 → 파싱·청킹</span><span><b>EMBED</b>BGE → 1024차원</span><span><b>STORE</b>Vector DB upsert</span><span><b>NEXT</b>검색·Rerank로 →</span></div>
+      <div class="artmark">📦</div>
+    </div>
+  </section>
+
+  <!-- ===== DIVIDER IV ===== -->
+  <section class="slide dark divider" id="ch4" data-label="IV · Vector DB" data-ch="IV VectorDB">
+    <div class="body">
+      <div class="num">CHAPTER IV</div>
+      <h2>Vector DB</h2>
+      <div class="sub">수백만 개의 1024차원 벡터에서 "가까운 것"을 밀리초 안에 찾는 저장소. 빌드타임과 런타임을 잇는 다리.</div>
+      <div class="goals">
+        <div class="goalhd">SECTION MAP · 이 챕터에서 확인할 것</div>
+        <ul>
+          <li>ANN(HNSW)이 정확도를 조금 포기하고 <strong style="color:#F2F7F8">밀리초 속도</strong>를 얻는 원리 — SIM3로 체험</li>
+          <li>메타데이터 필터가 곧 접근권한·최신본 제어라는 것 (<span style="font-family:var(--mono)">sec_level ≤ 사용자등급</span>)</li>
+          <li>규모 감각 — 1024d float32 = 4KB/벡터, 100만 벡터 ≈ 4GB RAM · Qdrant/Milvus/pgvector 선택 기준</li>
+        </ul>
+        <div class="lvl-line">난이도 <span class="lvl b">기초</span> · 예상 6분 · 본문 1장 + SIM 3</div>
+      </div>
+      <div class="chapter-glyph"><div class="cg-icon">🗄</div><div class="cg-line">VECTOR STORE · ANN INDEX</div></div>
+    </div>
+  </section>
+
+  <!-- ===== Vector DB란 ===== -->
+  <section class="slide" data-label="Vector DB란">
+    <div class="bar"><span class="sq"></span>CHAPTER IV · Vector DB<span class="r">저장 · 색인 · 검색</span></div>
+    <div class="body" style="justify-content:flex-start;padding-top:34px">
+      <h2 class="t" style="margin-bottom:20px">벡터를 저장하고 "가까운 이웃"을 찾는 DB</h2>
+      <div class="grid2" style="align-items:start">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="card l"><h4 style="font-size:24px">무엇을 저장하나</h4><p><strong>벡터(1024차원)</strong> + <strong>메타데이터(payload)</strong> + 원문. 청크 하나 = 레코드 하나.</p></div>
+          <div class="card l"><h4 style="font-size:24px">ANN — 근사 최근접 이웃</h4><p>전부 비교하면 수백만 번. <strong>HNSW</strong>(그래프 색인)로 "가까운 군집부터" 탐색해 <strong>밀리초</strong>에 top-K. 정확도 99%↑를 속도와 맞바꾼 근사 검색.</p></div>
+          <div class="card l"><h4 style="font-size:24px">메타데이터 필터</h4><p>검색을 <span class="mono">dept=PVD</span> · <span class="mono">sec_level≤사용자등급</span> 으로 사전 제한 → <strong>접근권한·최신본</strong> 제어.</p></div>
+          <div class="card l"><h4 style="font-size:24px">Hybrid 검색</h4><p>의미(Dense) + 키워드(Sparse/BM25)를 <strong>RRF</strong>로 융합 — 코드·품번("PVD-A104")에 강해짐.</p></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="codebox" style="font-size:20px">컬렉션 스키마 (Qdrant 예)
+collection: <span class="g">sop_chunks</span>
+  vector:   size=1024, distance=<span class="g">Cosine</span>
+  hnsw:     m=16, ef_construct=128
+  payload:  source, page, dept, sec_level, updated, text
+
+검색 (런타임)
+hits = client.query_points(
+   "sop_chunks",
+   query=<span class="g">bge.embed(질문)</span>,        <span class="m"># 1024차원</span>
+   query_filter=<span class="g">{dept:"PVD", sec_level:{lte:2}}</span>,
+   limit=30)                       <span class="m"># top-30 후보</span></div>
+          <table class="tbl" style="font-size:20px"><thead><tr><td>옵션</td><td>특징 · 사내 적합</td></tr></thead><tbody>
+            <tr><td><strong>Qdrant</strong></td><td>가볍고 필터링 강함. <span class="mono" style="font-size:18px">1024d float32 = 4KB/벡터 → 100만 벡터 ≈ 4GB RAM</span>. 온프레미스 단일 도입에 무난 (추천 출발점)</td></tr>
+            <tr><td><strong>Milvus</strong></td><td>대규모 분산. 수억 벡터·고가용 필요 시</td></tr>
+            <tr><td><strong>pgvector</strong></td><td>이미 쓰는 PostgreSQL에 확장으로 — 운영 단순화</td></tr>
+            <tr><td><strong>Weaviate</strong></td><td>하이브리드·모듈 내장</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SIM3 ANN ===== -->
+  <section class="slide" data-label="SIM · 벡터 검색">
+    <div class="bar"><span class="sq"></span>LIVE DEMO<span class="r">SIM 3 · ANN 벡터 검색</span></div>
+    <div class="body">
+      <h2 class="t" style="font-size:42px;margin-bottom:8px">의미 공간에서 "가까운 청크" 찾기</h2>
+      <p class="s" style="margin-bottom:10px">질의 위치를 바꾸면 그 주변의 <strong>가장 가까운 k개 청크</strong>가 회수됩니다. k를 늘리면 먼(=관련 약한) 청크까지 딸려 오는 것도 확인해 보세요. (1024차원을 2D로 누른 개념도)</p>
+      <div class="sim no-advance">
+        <div class="head"><span>SIM_3 · APPROX. NEAREST NEIGHBOR</span><span style="display:flex;gap:8px;align-items:center"><span id="s3btns" style="display:flex;gap:8px"><button class="btn on" data-p="0" style="font-size:18px;padding:8px 14px">진공 영역</button><button class="btn" data-p="1" style="font-size:18px;padding:8px 14px">균열 영역</button><button class="btn" data-p="2" style="font-size:18px;padding:8px 14px">경계 지점</button><button class="btn" data-p="3" style="font-size:18px;padding:8px 14px">안전 영역</button></span><span style="color:#9FB2BD;font-size:18px;margin-left:10px">top-k</span><span id="s3k" style="display:flex;gap:6px"><button class="btn" data-k="1" style="font-size:18px;padding:8px 14px">1</button><button class="btn on" data-k="3" style="font-size:18px;padding:8px 14px">3</button><button class="btn" data-k="5" style="font-size:18px;padding:8px 14px">5</button></span></span></div>
+        <div class="in" style="display:flex;gap:30px;align-items:center">
+          <svg id="s3svg" viewBox="0 0 900 470" style="flex:1;max-height:600px;background:#F6F9FA;border:1px solid #E4EAEE;border-radius:8px"></svg>
+          <div style="width:430px"><div class="k" style="margin-bottom:10px">회수된 top-<span id="s3kv">3</span> (가까운 순)</div><div id="s3list"></div><div class="note" style="margin-top:14px" id="s3note">질의와 가까운 군집의 청크가 회수됩니다. 경계에 두거나 k를 늘리면 서로 다른 군집이 섞여 회수 — 이때 <strong>Rerank</strong>가 필요해집니다.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DIVIDER V ===== -->
+  <section class="slide dark divider" id="ch5" data-label="V · 검색" data-ch="V 검색">
+    <div class="body">
+      <div class="num">CHAPTER V</div>
+      <h2>검색 · 리트리벌</h2>
+      <div class="sub">질문 한 줄이 "근거 청크 5개"가 되기까지. 넓게 뽑고(임베딩·hybrid) → 좁게 거른다(reranker).</div>
+      <div class="goals">
+        <div class="goalhd">SECTION MAP · 이 챕터에서 확인할 것</div>
+        <ul>
+          <li>5단계 파이프라인의 지연 예산 — 임베딩 ~10ms · ANN ~20ms · Rerank ~150ms</li>
+          <li>왜 <strong style="color:#F2F7F8">30개 넓게 → 5개 정밀</strong>인가 — 재현율과 정밀도의 2단 분업</li>
+          <li>근거가 약하면 "자료 없음"으로 끝내는 환각 차단 — SIM4에서 성공/실패 두 케이스 실행</li>
+        </ul>
+        <div class="lvl-line">난이도 <span class="lvl a">심화</span> · 예상 8분 · 본문 1장 + SIM 4 + 핵심 정리 II</div>
+      </div>
+      <div class="chapter-glyph"><div class="cg-icon">🔍</div><div class="cg-line">WIDE RECALL → NARROW PRECISION</div></div>
+    </div>
+  </section>
+
+  <!-- ===== 검색 파이프라인 ===== -->
+  <section class="slide" data-label="검색 파이프라인">
+    <div class="bar"><span class="sq"></span>CHAPTER V · 검색<span class="r">RETRIEVAL PIPELINE</span></div>
+    <div class="body" style="justify-content:flex-start;padding-top:30px">
+      <h2 class="t" style="font-size:44px;margin-bottom:20px">질문 → 근거 5개 — 5단계</h2>
+      <svg viewBox="0 0 1720 262" style="width:100%;height:auto;font-family:var(--sans)">
+        <defs><marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L8 5L1 9" fill="none" stroke="#007A74" stroke-width="1.6"/></marker></defs>
+        <g font-size="22">
+          <rect x="10" y="60" width="230" height="120" fill="#fff" stroke="#B9C7D1"/><text x="125" y="105" text-anchor="middle" font-weight="700">① 질의 임베딩</text><text x="125" y="138" text-anchor="middle" font-size="17" fill="#71818D">BGE: 질문→1024차원</text>
+          <line x1="240" y1="120" x2="296" y2="120" stroke="#007A74" stroke-width="2" marker-end="url(#ar2)"/>
+          <rect x="298" y="60" width="280" height="120" fill="#fff" stroke="#B9C7D1"/><text x="438" y="100" text-anchor="middle" font-weight="700">② ANN 검색 + 필터</text><text x="438" y="130" text-anchor="middle" font-size="17" fill="#71818D">HNSW top-30 · 권한 필터</text><text x="438" y="154" text-anchor="middle" font-size="17" fill="#71818D">dept·sec_level</text>
+          <line x1="578" y1="120" x2="634" y2="120" stroke="#007A74" stroke-width="2" marker-end="url(#ar2)"/>
+          <rect x="636" y="60" width="280" height="120" fill="#fff" stroke="#B9C7D1"/><text x="776" y="100" text-anchor="middle" font-weight="700">③ Hybrid 융합</text><text x="776" y="130" text-anchor="middle" font-size="17" fill="#71818D">Dense + BM25(키워드)</text><text x="776" y="154" text-anchor="middle" font-size="17" fill="#71818D">RRF로 점수 합성</text>
+          <line x1="916" y1="120" x2="972" y2="120" stroke="#007A74" stroke-width="2" marker-end="url(#ar2)"/>
+          <rect x="974" y="55" width="290" height="130" fill="#E8F4F2" stroke="#007A74" stroke-width="2"/><text x="1119" y="95" text-anchor="middle" font-weight="700" fill="#005F5A">④ Reranker</text><text x="1119" y="125" text-anchor="middle" font-size="17" fill="#005F5A">BGE-reranker-v2-m3</text><text x="1119" y="149" text-anchor="middle" font-size="17" fill="#005F5A">30개 재채점 → 정밀</text>
+          <line x1="1264" y1="120" x2="1320" y2="120" stroke="#007A74" stroke-width="2" marker-end="url(#ar2)"/>
+          <rect x="1322" y="60" width="290" height="120" fill="#10202A"/><text x="1467" y="100" text-anchor="middle" font-weight="700" fill="#fff">⑤ top-5 컨텍스트</text><text x="1467" y="130" text-anchor="middle" font-size="17" fill="#9FD3CC">근거+출처를 프롬프트로</text><text x="1467" y="154" text-anchor="middle" font-size="17" fill="#9FD3CC">→ gpt-oss-120b</text>
+        </g>
+        <g font-family="'JetBrains Mono',monospace" font-size="17" fill="#586A76" text-anchor="middle">
+          <text x="125" y="212">~10ms</text>
+          <text x="438" y="212">~20ms</text>
+          <text x="776" y="212">~5ms</text>
+          <text x="1119" y="212" fill="#005F5A" font-weight="700">~150ms</text>
+          <text x="1467" y="212">→ 생성 2~5s</text>
+        </g>
+        <text x="438" y="250" text-anchor="middle" font-size="18" fill="#B94A3D">넓게 뽑기 (재현율 ↑) — top-30 재현율 ~95%</text>
+        <text x="1119" y="250" text-anchor="middle" font-size="18" fill="#005F5A">좁게 거르기 (정밀도 ↑) — top-5 정밀도 ~90%</text>
+      </svg>
+      <div class="grid2" style="margin-top:20px">
+        <div class="dark-box"><span class="lab">왜 2단</span><span class="x">임베딩은 빠르지만 거칠고, reranker는 느리지만 정밀. <strong style="color:var(--mint)">30개 넓게 → 5개 정밀</strong>이 황금 조합 — 검색 전체 지연 ~185ms는 생성(2~5s)에 비하면 공짜에 가깝다.</span></div>
+        <div class="tealbox"><div class="k" style="margin-bottom:6px">실패 방지</div><div style="font-size:22px;color:var(--ink2)">근거가 약하면(rerank 최고점이 임계 미만) <strong>"자료 없음"으로 답하게</strong> — 억지로 지어내지 않도록(환각 차단). SIM4의 Q2에서 체험.</div></div>
+      </div>
+      <p class="note" style="margin-top:12px">※ 재현율·정밀도·지연은 개념 수치 — 실제 값은 도메인·평가셋·하드웨어에 따라 달라지며, 그래서 평가셋이 먼저다(CH VIII).</p>
+    </div>
+  </section>
+
+  <!-- ===== SIM4 검색 파이프라인 ===== -->
+  <section class="slide" data-label="SIM · 검색 실행">
+    <div class="bar"><span class="sq"></span>LIVE DEMO<span class="r">SIM 4 · 검색 파이프라인 실행</span></div>
+    <div class="body">
+      <h2 class="t" style="font-size:42px;margin-bottom:8px">넓게 뽑고 좁게 거르기 — 성공과 "자료 없음" 두 갈래</h2>
+      <p class="s" style="margin-bottom:18px">질의를 고르고 실행하세요. Q1은 근거가 있어 <strong>top-3가 컨텍스트로</strong> 들어가고, Q2는 사내 자료가 없어 rerank 점수가 전부 임계(0.5) 미만 — <strong>"자료 없음"으로 종료</strong>됩니다(환각 차단).</p>
+      <div class="sim no-advance">
+        <div class="head"><span>SIM_4 · RETRIEVE → RERANK</span><span style="display:flex;gap:8px;align-items:center"><span id="s4q" style="display:flex;gap:8px"><button class="btn on" data-q="0" style="font-size:18px;padding:8px 14px">Q1 · PVD-A104 대응 절차</button><button class="btn" data-q="1" style="font-size:18px;padding:8px 14px">Q2 · 신규 장비 X-9000 설치 절차</button></span><button class="btn primary" id="s4run" style="font-size:18px;padding:8px 16px">▶ 실행</button> <button class="btn" id="s4reset" style="font-size:18px;padding:8px 14px">초기화</button></span></div>
+        <div class="in">
+          <div id="s4stage" style="display:flex;gap:10px;margin-bottom:22px"></div>
+          <div id="s4list"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 핵심 정리 II (CH IV~V) ===== -->
+  <section class="slide" data-label="핵심 정리 II" data-ch="정리 II">
+    <div class="bar"><span class="sq"></span>CHECKPOINT · 핵심 정리 II<span class="r">CHAPTER IV ~ V</span></div>
+    <div class="body">
+      <h2 class="t" style="margin-bottom:20px">저장과 검색, 세 문장 — 그리고 스스로 점검</h2>
+      <div class="recap-grid">
+        <div class="card t"><div class="k">핵심 요약</div>
+          <ul class="sum">
+            <li><strong>ANN(HNSW)의 거래</strong> — 정확도 1%를 내주고 밀리초 속도를 얻는다. 수백만 벡터에서도 top-30이 ~20ms.</li>
+            <li><strong>필터 = 보안</strong> — <span class="mono" style="font-size:19px">sec_level ≤ 사용자등급</span> 사전 필터로, 볼 수 없는 문서는 검색 자체가 안 된다.</li>
+            <li><strong>넓게 → 좁게</strong> — 임베딩·hybrid로 30개(재현율), reranker로 5개(정밀도). 2단 분업이 황금 조합.</li>
+          </ul>
+        </div>
+        <div class="card t"><div class="k">도입 기준 — 시작 전에 정할 것</div>
+          <ul class="sum">
+            <li>Vector DB는 Qdrant 같은 단일 노드부터 — 100만 벡터 ≈ 4GB RAM이면 충분히 시작.</li>
+            <li>품번·코드 질의가 많은 현장이면 <strong>hybrid(BM25+RRF)를 처음부터</strong> 켜고 시작.</li>
+            <li>"자료 없음" 임계값을 정하고 그 비율을 대시보드로 — 낮추면 환각, 높이면 무응답이 는다.</li>
+          </ul>
+        </div>
+        <div class="card t" style="border-top-color:var(--amber)"><div class="k" style="color:var(--amber)">남길 질문 — 먼저 스스로 답해보기</div>
+          <ol class="qz">
+            <li>ANN이 정확도를 조금 포기하고 얻는 것은?</li>
+            <li>품번 "PVD-A104" 같은 질의에 강해지려면?</li>
+            <li>넓게 뽑고 좁게 거르는 이유는?</li>
+          </ol>
+          <details class="qa no-advance"><summary>정답 확인</summary>
+            <ol>
+              <li><b>밀리초 속도</b> — 전수 비교 대신 HNSW 그래프로 가까운 군집부터 탐색.</li>
+              <li><b>Hybrid</b> — Dense(의미) + BM25(키워드)를 <b>RRF</b>로 융합 (SIM1의 Hybrid 토글).</li>
+              <li>임베딩 검색은 <b>빠르지만 거칠고</b>, reranker는 <b>느리지만 정밀</b>해서 — 각자 잘하는 것만 시킨다.</li>
+            </ol>
+          </details>
+        </div>
+      </div>
+      <div class="recap-flow"><span><b>ANN</b>HNSW top-30 · ~20ms</span><span><b>FILTER</b>권한·부서·최신본</span><span><b>RERANK</b>top-5 · ~150ms</span><span><b>NEXT</b>생성(grounding)으로 →</span></div>
+      <div class="artmark">🔍</div>
+    </div>
+  </section>
+
+  <!-- ===== DIVIDER VI ===== -->
+  <section class="slide dark divider" id="ch6" data-label="VI · 생성 watsonx" data-ch="VI 생성">
+    <div class="body">
+      <div class="num">CHAPTER VI</div>
+      <h2>생성 · IBM watsonx × gpt-oss-120b</h2>
+      <div class="sub">회수된 근거를 받아 답을 쓰는 엔진. 사내 GPU 위에서 돌려 데이터가 회사를 떠나지 않게.</div>
+      <div class="goals">
+        <div class="goalhd">SECTION MAP · 이 챕터에서 확인할 것</div>
+        <ul>
+          <li>gpt-oss-120b의 구조 감각 — 117B 중 토큰당 ~5.1B 활성(MoE) · MXFP4로 80GB GPU 1장</li>
+          <li>"근거 안에서만 답하라" — 컨텍스트 주입 · [n] 출처 인용 · 가드레일 프롬프트의 실제 모양</li>
+          <li>사내 통합 구성도 — 무엇을 어디에 올리고, <strong style="color:#F2F7F8">감사 로그</strong>는 어디서 남는가</li>
+        </ul>
+        <div class="lvl-line">난이도 <span class="lvl b">기초</span> · 예상 7분 · 본문 3장</div>
+      </div>
+      <div class="chapter-glyph"><div class="cg-icon">⚙</div><div class="cg-line">GROUNDED GENERATION</div></div>
+    </div>
+  </section>
+
+  <!-- ===== gpt-oss-120b ===== -->
+  <section class="slide" data-label="gpt-oss-120b">
+    <div class="bar"><span class="sq"></span>CHAPTER VI · 생성<span class="r">gpt-oss-120b on watsonx.ai</span></div>
+    <div class="body">
+      <h2 class="t">왜 <span style="color:var(--teal)">gpt-oss-120b</span>를 사내 GPU에 <span class="stbadge field" style="vertical-align:10px">FIELD · 현장 검증</span></h2>
+      <p class="s" style="margin-top:18px;max-width:1620px"><strong>gpt-oss-120b</strong> — OpenAI가 공개한 <strong>오픈웨이트</strong> 모델(Apache 2.0). 가중치를 받아 <strong>사내에서 직접 서빙</strong>할 수 있어, 사내 문서를 넣어도 데이터가 외부로 나가지 않습니다.</p>
+      <div class="grid4" style="margin-top:32px">
+        <div class="card t"><div class="k">MoE</div><h4 style="font-size:24px">효율 구조</h4><p>전체 <strong>117B</strong> 중 토큰당 <strong>~5.1B만 활성</strong>(128 전문가 중 top-4). 큰 지능을 적은 연산으로.</p></div>
+        <div class="card t"><div class="k">1× 80GB</div><h4 style="font-size:24px">한 장에 fit</h4><p>MXFP4 양자화로 <strong>H100/H200 한 장</strong>에 적재 가능 — 도입 문턱이 낮음.</p></div>
+        <div class="card t"><div class="k">On-prem</div><h4 style="font-size:24px">데이터 주권</h4><p>추론이 <strong>사내망 안</strong>에서 — 외부 API 유출 리스크 0. 규제·보안 부서 통과 용이.</p></div>
+        <div class="card t"><div class="k">Reasoning</div><h4 style="font-size:24px">추론·도구</h4><p>사고 과정·함수 호출(tool use)에 강해 <strong>에이전트</strong>의 두뇌로 적합.</p></div>
+      </div>
+      <div class="grid2" style="margin-top:26px">
+        <div class="dark-box"><span class="lab">watsonx.ai</span><span class="x">IBM의 모델 서빙·거버넌스 플랫폼. gpt-oss-120b를 <strong style="color:var(--mint)">배포·추론 엔드포인트</strong>로 올리고, 사용 로그·평가를 한곳에서 관리.</span></div>
+        <div class="tealbox"><div class="k" style="margin-bottom:6px">RAG와의 관계</div><div style="font-size:23px;color:var(--ink2)">모델은 그대로. <strong>지식은 검색으로</strong> 주입 → 재학습 없이 최신 사내 문서 반영, 출처 인용 가능.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 프롬프트 조립 ===== -->
+  <section class="slide" data-label="프롬프트 조립">
+    <div class="bar"><span class="sq"></span>CHAPTER VI · 생성<span class="r">컨텍스트 주입 · 인용 · 가드레일</span></div>
+    <div class="body">
+      <h2 class="t" style="margin-bottom:22px">검색 결과를 프롬프트로 — "근거 안에서만 답하라"</h2>
+      <div class="grid2" style="align-items:stretch">
+        <div class="codebox" style="font-size:19px">[SYSTEM]
+당신은 FAB 공정 어시스턴트입니다.
+<span class="g">· 아래 &lt;근거&gt; 안의 내용으로만 답한다.</span>
+<span class="g">· 각 문장 끝에 [출처]를 표기한다.</span>
+<span class="g">· 근거가 없으면 "자료 없음"이라 답한다.</span>
+
+[CONTEXT] &lt;근거&gt;
+[1] SOP-PVD-117 §2 — PVD-A104 발생 시 ① 게이트
+    밸브 즉시 차단 ② N₂ 퍼지 ...
+[2] SOP-PVD-117 §3.2 — 30분 내 3회 반복 시 §4
+[3] MES — 최근 24h PVD-A104 8회 ...
+
+[USER] PVD-A104 대응 절차와 최근 이력은?
+        ↓  <span class="m">gpt-oss-120b (watsonx.ai)</span>
+[ANSWER] 게이트 밸브를 즉시 차단하고 N₂ 퍼지로
+안정화합니다 [1]. 최근 24시간 8회 반복돼 §4 점검
+대상입니다 [2][3].</div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="card l"><h4 style="font-size:24px">컨텍스트 주입(grounding)</h4><p>회수된 top-5 청크를 번호 붙여 프롬프트에 삽입. 모델은 <strong>그 안에서만</strong> 답하도록 지시.</p></div>
+          <div class="card l"><h4 style="font-size:24px">출처 인용</h4><p>청크 번호 → 답변의 [n]으로 연결. 사용자가 <strong>원문을 클릭해 검증</strong> 가능 → 신뢰·감사.</p></div>
+          <div class="card l"><h4 style="font-size:24px">가드레일</h4><p>근거 약하면 거부, 위험 작업은 사람 승인, 출력 PII/금칙어 필터, 토큰·비용 상한.</p></div>
+          <div class="dark-box"><span class="lab">핵심</span><span class="x">모델을 <strong style="color:var(--mint)">재학습하지 않는다</strong>. 지식은 매번 "검색→프롬프트"로 신선하게 공급.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== watsonx 통합도 ===== -->
+  <section class="slide" data-label="watsonx 통합도">
+    <div class="bar"><span class="sq"></span>CHAPTER VI · 생성<span class="r">사내 통합 구성도</span></div>
+    <div class="body" style="justify-content:flex-start;padding-top:30px">
+      <h2 class="t" style="font-size:44px;margin-bottom:18px">사내 통합 — 무엇을 어디에 올리나</h2>
+      <svg viewBox="0 0 1720 540" style="width:100%;height:auto;font-family:var(--sans)">
+        <defs><marker id="ar3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L8 5L1 9" fill="none" stroke="#007A74" stroke-width="1.6"/></marker></defs>
+        <rect x="40" y="40" width="1640" height="470" fill="none" stroke="#B94A3D" stroke-width="2" stroke-dasharray="8,6"/>
+        <text x="60" y="74" font-family="var(--mono)" font-size="22" fill="#B94A3D" letter-spacing="1">사내 보안 경계 (On-premise) — 데이터·모델·검색 모두 사내망 안 · 질의/행동 감사 로그 100% 기록</text>
+        <g font-size="16" fill="#71818D"><line x1="1330" y1="66" x2="1380" y2="66" stroke="#007A74" stroke-width="2"/><text x="1390" y="72">런타임(질의)</text><line x1="1510" y1="66" x2="1560" y2="66" stroke="#71818D" stroke-width="2" stroke-dasharray="5,4"/><text x="1570" y="72">빌드타임(인덱싱)</text></g>
+        <g font-size="22">
+          <rect x="80" y="120" width="220" height="110" fill="#fff" stroke="#B9C7D1"/><text x="190" y="165" text-anchor="middle" font-weight="700">사용자</text><text x="190" y="196" text-anchor="middle" font-size="17" fill="#71818D">엔지니어 · 챗봇 UI</text>
+          <line x1="300" y1="175" x2="372" y2="175" stroke="#007A74" stroke-width="2" marker-end="url(#ar3)"/>
+          <rect x="374" y="100" width="330" height="150" fill="#10202A"/><text x="539" y="150" text-anchor="middle" font-weight="700" fill="#fff" font-size="25">watsonx Orchestrate</text><text x="539" y="184" text-anchor="middle" font-size="18" fill="#9FD3CC">어시스턴트 · 에이전트 · 스킬</text><text x="539" y="210" text-anchor="middle" font-size="18" fill="#9FD3CC">도구 호출 조율 (MCP)</text>
+          <!-- to retrieval tool -->
+          <line x1="704" y1="150" x2="776" y2="150" stroke="#007A74" stroke-width="2" marker-end="url(#ar3)"/>
+          <rect x="778" y="100" width="300" height="150" fill="#E8F4F2" stroke="#007A74" stroke-width="2"/><text x="928" y="148" text-anchor="middle" font-weight="700" fill="#005F5A">검색 도구</text><text x="928" y="180" text-anchor="middle" font-size="18" fill="#005F5A">BGE 임베딩 + Rerank</text><text x="928" y="206" text-anchor="middle" font-size="18" fill="#005F5A">+ Vector DB 질의</text>
+          <line x1="928" y1="250" x2="928" y2="312" stroke="#007A74" stroke-width="2" marker-end="url(#ar3)"/>
+          <rect x="778" y="314" width="300" height="120" fill="#10202A"/><text x="928" y="360" text-anchor="middle" font-weight="700" fill="#fff">Vector DB</text><text x="928" y="392" text-anchor="middle" font-size="17" fill="#9FD3CC">Qdrant · 벡터+메타+원문</text>
+          <rect x="560" y="314" width="170" height="120" fill="#fff" stroke="#B9C7D1"/><text x="645" y="358" text-anchor="middle" font-weight="700" font-size="20">사내 문서</text><text x="645" y="388" text-anchor="middle" font-size="16" fill="#71818D">SOP·MES·PLM</text>
+          <line x1="730" y1="374" x2="776" y2="374" stroke="#71818D" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#ar3)"/>
+          <text x="754" y="300" font-size="15" fill="#71818D">인덱싱(빌드)</text>
+          <!-- to model -->
+          <line x1="1078" y1="150" x2="1150" y2="150" stroke="#007A74" stroke-width="2" marker-end="url(#ar3)"/>
+          <rect x="1152" y="100" width="330" height="150" fill="#10202A"/><text x="1317" y="148" text-anchor="middle" font-weight="700" fill="#fff" font-size="25">watsonx.ai</text><text x="1317" y="182" text-anchor="middle" font-size="18" fill="#9FD3CC">gpt-oss-120b 서빙</text><text x="1317" y="208" text-anchor="middle" font-size="18" fill="#9FD3CC">추론 엔드포인트 · 거버넌스</text>
+          <line x1="1317" y1="250" x2="1317" y2="312" stroke="#007A74" stroke-width="2" stroke-dasharray="4,3"/>
+          <rect x="1152" y="314" width="330" height="120" fill="#fff" stroke="#B9C7D1"/><text x="1317" y="358" text-anchor="middle" font-weight="700" font-size="20">GPU (사내)</text><text x="1317" y="388" text-anchor="middle" font-size="16" fill="#71818D">H100/H200 · MXFP4</text>
+        </g>
+        <text x="60" y="492" font-size="18" fill="#71818D" font-style="italic">Orchestrate가 "검색 도구"로 근거를 모으고 → watsonx.ai의 gpt-oss-120b로 답을 생성. 권한·감사 로그는 Orchestrate/watsonx.governance에서.</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ===== DIVIDER VII ===== -->
+  <section class="slide dark divider" id="ch7" data-label="VII · Agent" data-ch="VII Agent">
+    <div class="body">
+      <div class="num">CHAPTER VII</div>
+      <h2>에이전트 · 오케스트레이션</h2>
+      <div class="sub">"답"에서 "실행"으로. 검색·생성을 도구로 쥐고 스스로 단계를 밟는 에이전트, 그리고 여럿을 조율하는 오케스트레이션.</div>
+      <div class="goals">
+        <div class="goalhd">SECTION MAP · 이 챕터에서 확인할 것</div>
+        <ul>
+          <li>에이전트 = LLM + 도구 + 반복 루프 — 챗봇과의 결정적 차이는 <strong style="color:#F2F7F8">직접 실행</strong></li>
+          <li>ReAct(Thought→Action→Observation) 루프와 승인 게이트 — SIM5에서 승인/거부 분기까지 체험</li>
+          <li>오케스트레이션 — 복합 요청을 도메인별 전문 에이전트로 쪼개고 다시 합치는 구조</li>
+        </ul>
+        <div class="lvl-line">난이도 <span class="lvl a">심화</span> · 예상 8분 · 본문 2장 + SIM 5 + 핵심 정리 III</div>
+      </div>
+      <div class="chapter-glyph"><div class="cg-icon">🤖</div><div class="cg-line">REASON + ACT + APPROVE</div></div>
+    </div>
+  </section>
+
+  <!-- ===== 단일 에이전트 ===== -->
+  <section class="slide" data-label="단일 에이전트">
+    <div class="bar"><span class="sq"></span>CHAPTER VII · Agent<span class="r">ReAct · 도구</span></div>
+    <div class="body">
+      <h2 class="t" style="margin-bottom:18px">에이전트 = LLM + 도구 + 반복 루프</h2>
+      <div class="grid2" style="align-items:stretch">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="grid2" style="gap:14px;margin:0">
+            <div class="card"><h4 style="font-size:23px;color:var(--muted2)">챗봇</h4><p>"무엇을 하라"고 <strong>말해줌</strong>. 한 번 답하고 끝.</p></div>
+            <div class="card t"><h4 style="font-size:23px;color:var(--teal-d)">에이전트</h4><p>도구를 불러 <strong>직접 실행</strong>. 결과 보고 다음 행동 결정.</p></div>
+          </div>
+          <div class="card l"><h4 style="font-size:24px">ReAct 루프</h4><p><strong>Thought</strong>(생각) → <strong>Action</strong>(도구 호출) → <strong>Observation</strong>(결과) → 다시 Thought … 목표 달성까지. 최대 스텝·승인 게이트로 가드.</p></div>
+          <div class="card l"><h4 style="font-size:24px">도구(watsonx Orchestrate 스킬)</h4><p><span class="mono">vector_search</span> · <span class="mono">mes_query</span> · <span class="mono">sop_lookup</span> · <span class="mono">create_ticket</span>. RAG 검색도 "도구 하나"로 들어옴.</p></div>
+        </div>
+        <div class="codebox" style="font-size:19px">목표: "어제 라인3 PVD-A104 분석하고
+       반복이면 점검 이슈 등록"
+
+<span class="g">T1</span> 어제 알람 이력이 필요하다.
+<span class="g">A1</span> mes_query(line=3, code="PVD-A104", 24h)
+<span class="g">O1</span> 8회 발생, 간격 ≈ 30분
+
+<span class="g">T2</span> 반복 기준은 SOP에 있다.
+<span class="g">A2</span> vector_search("PVD-A104 반복 판단 기준")
+<span class="g">O2</span> SOP-PVD-117 §3.2 — 30분 내 3회↑ → §4
+
+<span class="g">T3</span> 조건 충족. 점검 이슈 등록.
+<span class="g">A3</span> create_ticket(line=3, type="주기 반복")  <span class="m"># ← 사람 승인 게이트</span>
+<span class="g">O3</span> 이슈 #4821 생성
+
+<span class="g">T4</span> 목표 달성 → <span style="color:#4FC3B7">결과 보고</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SIM5 ReAct ===== -->
+  <section class="slide" data-label="SIM · ReAct">
+    <div class="bar"><span class="sq"></span>LIVE DEMO<span class="r">SIM 5 · 에이전트 ReAct 루프</span></div>
+    <div class="body">
+      <h2 class="t" style="font-size:42px;margin-bottom:8px">에이전트가 한 단계씩 — 직접 실행</h2>
+      <p class="s" style="margin-bottom:18px">"다음 단계"를 누르면 Thought→Action→Observation이 차례로 진행됩니다. 쓰기 작업(티켓 생성) 앞에서 <strong>승인 게이트</strong>가 멈춰 서면 — 직접 <strong>승인 또는 거부</strong>를 선택하세요. 거부하면 에이전트는 쓰기 없이 보고서만 남깁니다(HITL).</p>
+      <div class="sim no-advance">
+        <div class="head"><span>SIM_5 · ReAct AGENT</span><span><button class="btn primary" id="s5next">다음 단계 ▶</button> <button class="btn" id="s5reset">초기화</button></span></div>
+        <div class="in"><div id="s5log" style="min-height:380px;font-family:var(--mono);font-size:21px;line-height:1.5"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 오케스트레이션 ===== -->
+  <section class="slide" data-label="오케스트레이션">
+    <div class="bar"><span class="sq"></span>CHAPTER VII · Agent<span class="r">MULTI-AGENT ORCHESTRATION</span></div>
+    <div class="body" style="justify-content:flex-start;padding-top:30px">
+      <h2 class="t" style="font-size:44px;margin-bottom:18px">오케스트레이션 — 여러 전문 에이전트를 조율</h2>
+      <svg viewBox="0 0 1720 430" style="width:100%;height:auto;font-family:var(--sans)">
+        <defs><marker id="ar4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L8 5L1 9" fill="none" stroke="#007A74" stroke-width="1.6"/></marker></defs>
+        <g font-size="22">
+          <rect x="60" y="170" width="220" height="100" fill="#fff" stroke="#B9C7D1"/><text x="170" y="212" text-anchor="middle" font-weight="700">복합 요청</text><text x="170" y="242" text-anchor="middle" font-size="16" fill="#71818D">"이번주 PM 묶어 메일"</text>
+          <line x1="280" y1="220" x2="338" y2="220" stroke="#007A74" stroke-width="2" marker-end="url(#ar4)"/>
+          <rect x="340" y="160" width="270" height="120" fill="#10202A"/><text x="475" y="205" text-anchor="middle" font-weight="700" fill="#fff" font-size="24">오케스트레이터</text><text x="475" y="236" text-anchor="middle" font-size="17" fill="#9FD3CC">계획 · 라우팅 · 종합</text><text x="475" y="258" text-anchor="middle" font-size="16" fill="#9FD3CC">watsonx Orchestrate</text>
+          <!-- fan out to 3 specialists -->
+          <line x1="610" y1="190" x2="700" y2="100" stroke="#007A74" stroke-width="2" marker-end="url(#ar4)"/>
+          <line x1="610" y1="220" x2="700" y2="220" stroke="#007A74" stroke-width="2" marker-end="url(#ar4)"/>
+          <line x1="610" y1="250" x2="700" y2="340" stroke="#007A74" stroke-width="2" marker-end="url(#ar4)"/>
+          <rect x="702" y="55" width="320" height="90" fill="#E8F4F2" stroke="#007A74"/><text x="722" y="92" font-weight="700" fill="#005F5A">문서 QA 에이전트</text><text x="722" y="120" font-size="16" fill="#005F5A">RAG 검색 — SOP·절차 근거</text>
+          <rect x="702" y="175" width="320" height="90" fill="#E8F4F2" stroke="#007A74"/><text x="722" y="212" font-weight="700" fill="#005F5A">설비데이터 에이전트</text><text x="722" y="240" font-size="16" fill="#005F5A">MES·SPC 조회·집계</text>
+          <rect x="702" y="295" width="320" height="90" fill="#E8F4F2" stroke="#007A74"/><text x="722" y="332" font-weight="700" fill="#005F5A">액션 에이전트</text><text x="722" y="360" font-size="16" fill="#005F5A">메일·티켓 (사람 승인)</text>
+          <!-- gather to synthesizer -->
+          <line x1="1022" y1="100" x2="1112" y2="190" stroke="#71818D" stroke-width="2" marker-end="url(#ar4)"/>
+          <line x1="1022" y1="220" x2="1112" y2="220" stroke="#71818D" stroke-width="2" marker-end="url(#ar4)"/>
+          <line x1="1022" y1="340" x2="1112" y2="250" stroke="#71818D" stroke-width="2" marker-end="url(#ar4)"/>
+          <rect x="1114" y="160" width="260" height="120" fill="#10202A"/><text x="1244" y="205" text-anchor="middle" font-weight="700" fill="#fff">종합(Synthesize)</text><text x="1244" y="236" text-anchor="middle" font-size="17" fill="#9FD3CC">gpt-oss-120b가</text><text x="1244" y="258" text-anchor="middle" font-size="17" fill="#9FD3CC">결과를 하나로</text>
+          <line x1="1374" y1="220" x2="1432" y2="220" stroke="#007A74" stroke-width="2" marker-end="url(#ar4)"/>
+          <rect x="1434" y="170" width="230" height="100" fill="#fff" stroke="#007A74" stroke-width="2"/><text x="1549" y="212" text-anchor="middle" font-weight="700" fill="#005F5A">최종 결과</text><text x="1549" y="242" text-anchor="middle" font-size="16" fill="#71818D">근거+실행+보고</text>
+        </g>
+      </svg>
+      <div class="grid3" style="margin-top:18px">
+        <div class="card t"><h4 style="font-size:23px">분해·라우팅</h4><p>오케스트레이터가 요청을 하위 작업으로 쪼개 <strong>알맞은 전문 에이전트</strong>에 배정.</p></div>
+        <div class="card t"><h4 style="font-size:23px">도메인 분할 권장</h4><p>제조는 기능별보다 <strong>도메인별</strong>(문서/설비/액션) 분할이 책임·감사에 유리.</p></div>
+        <div class="card t"><h4 style="font-size:23px">재현성·감사</h4><p>모든 에이전트의 T·A·O 로그를 중앙 기록 → <strong>누가 왜 그 결정을</strong> 재현 가능(규제 필수).</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 핵심 정리 III (CH VI~VII) ===== -->
+  <section class="slide" data-label="핵심 정리 III" data-ch="정리 III">
+    <div class="bar"><span class="sq"></span>CHECKPOINT · 핵심 정리 III<span class="r">CHAPTER VI ~ VII</span></div>
+    <div class="body">
+      <h2 class="t" style="margin-bottom:20px">생성과 에이전트, 세 문장 — 그리고 스스로 점검</h2>
+      <div class="recap-grid">
+        <div class="card t"><div class="k">핵심 요약</div>
+          <ul class="sum">
+            <li><strong>모델은 재학습하지 않는다</strong> — 지식은 매번 "검색 → 프롬프트 주입"으로 신선하게 공급. 문서가 바뀌면 인덱스만 갱신.</li>
+            <li><strong>근거 안에서만 + [n] 인용</strong> — 사용자가 원문을 클릭해 검증할 수 있어야 신뢰·감사가 선다.</li>
+            <li><strong>에이전트 = LLM + 도구 + 루프</strong> — 말해주는 챗봇과 달리 직접 실행. 단, 쓰기 앞엔 반드시 사람.</li>
+          </ul>
+        </div>
+        <div class="card t"><div class="k">도입 기준 — 시작 전에 정할 것</div>
+          <ul class="sum">
+            <li>gpt-oss-120b는 MXFP4로 <strong>80GB GPU 1장</strong>부터 — 도입 문턱이 곧 시작 규모.</li>
+            <li>읽기 도구(조회·검색)부터 열고, 쓰기 도구(티켓·메일)는 승인 게이트를 붙여 나중에.</li>
+            <li>T·A·O 전 로그 중앙 기록 — "누가 왜 그 결정을" 재현 못 하면 규제·감사에서 막힌다.</li>
+          </ul>
+        </div>
+        <div class="card t" style="border-top-color:var(--amber)"><div class="k" style="color:var(--amber)">남길 질문 — 먼저 스스로 답해보기</div>
+          <ol class="qz">
+            <li>RAG가 재학습 없이 최신 지식을 반영하는 방법은?</li>
+            <li>에이전트와 챗봇의 결정적 차이는?</li>
+            <li>쓰기 작업 전 반드시 필요한 것은?</li>
+          </ol>
+          <details class="qa no-advance"><summary>정답 확인</summary>
+            <ol>
+              <li>검색 결과를 <b>프롬프트에 주입</b>(grounding) — 모델 가중치는 그대로, 인덱스만 갱신.</li>
+              <li>도구를 <b>직접 실행</b>하고 결과를 보고 다음 행동을 정하는 <b>반복 루프</b>(ReAct).</li>
+              <li><b>사람 승인 게이트(HITL)</b> — 거부되면 쓰기 없이 보고서만 (SIM5의 거부 분기).</li>
+            </ol>
+          </details>
+        </div>
+      </div>
+      <div class="recap-flow"><span><b>GROUND</b>근거 주입 · [n] 인용</span><span><b>GUARD</b>자료 없음 · 승인 게이트</span><span><b>ACT</b>ReAct 루프 · 도구 실행</span><span><b>NEXT</b>구축·운영으로 →</span></div>
+      <div class="artmark">🤖</div>
+    </div>
+  </section>
+
+  <!-- ===== DIVIDER VIII ===== -->
+  <section class="slide dark divider" id="ch8" data-label="VIII · 구축·운영" data-ch="VIII 구축운영">
+    <div class="body">
+      <div class="num">CHAPTER VIII</div>
+      <h2>실전 구축 · 운영</h2>
+      <div class="sub">작게 시작해 측정하며 키운다. 인프라·평가·보안까지 — 데모를 제품으로 만드는 마지막 단계.</div>
+      <div class="goals">
+        <div class="goalhd">SECTION MAP · 이 챕터에서 확인할 것</div>
+        <ul>
+          <li>로드맵 — PoC(한 부서·한 문서종, 4~6주) → Pilot(도구 연결) → Scale(오케스트레이션)</li>
+          <li>평가를 숫자로 — Ragas 지표(Faithfulness·Context Precision/Recall), <strong style="color:#F2F7F8">검색 오류와 생성 오류의 분리 측정</strong></li>
+          <li>다섯 가지 안전장치 — 온프레미스 · 접근권한 · 승인 게이트 · 감사 로그 · 인젝션 방어</li>
+        </ul>
+        <div class="lvl-line">난이도 <span class="lvl a">심화</span> · 예상 6분 · 본문 3장 + 마무리 퀴즈</div>
+      </div>
+      <div class="chapter-glyph"><div class="cg-icon">🛠</div><div class="cg-line">MEASURE · GOVERN · SCALE</div></div>
+    </div>
+  </section>
+
+  <!-- ===== 로드맵 & 인프라 ===== -->
+  <section class="slide" data-label="로드맵·인프라">
+    <div class="bar"><span class="sq"></span>CHAPTER VIII · 구축<span class="r">로드맵 · 인프라</span></div>
+    <div class="body">
+      <h2 class="t" style="margin-bottom:24px">작게 시작해 측정하며 키우기</h2>
+      <div class="grid3">
+        <div class="card t"><div class="k">PHASE 0~1 · PoC · 4~6주</div><h4 style="font-size:24px">한 부서·한 문서종</h4><p>증착 SOP만으로 RAG 검색+인용 검증. <strong>평가셋 50문항</strong> 먼저 만들기. 읽기 전용.</p></div>
+        <div class="card t"><div class="k">PHASE 2 · Pilot · 2~3개월</div><h4 style="font-size:24px">에이전트·도구 연결</h4><p>MES 조회 도구 추가, 단일 에이전트. <strong>사람 승인</strong> 하에 티켓 생성까지.</p></div>
+        <div class="card t"><div class="k">PHASE 3 · Scale · 6개월~</div><h4 style="font-size:24px">오케스트레이션</h4><p>다부서 문서·다중 에이전트. 모니터링·재인덱싱 자동화, SLA 운영.</p></div>
+      </div>
+      <h3 style="font-size:30px;font-weight:700;margin:34px 0 16px">인프라 — 무엇을 어디에 (사내 GPU)</h3>
+      <table class="tbl" style="font-size:21px">
+        <thead><tr><td>구성요소</td><td>역할</td><td>리소스 (예)</td></tr></thead>
+        <tbody>
+          <tr><td><strong>BGE 임베딩·Rerank</strong></td><td>인덱싱·질의 임베딩, 재순위</td><td>GPU 1장(소형, 24GB급) 또는 CPU 배치 — 임베딩 ~10ms/질의</td></tr>
+          <tr><td><strong>Vector DB (Qdrant)</strong></td><td>벡터 저장·ANN 검색</td><td>CPU·RAM 중심, SSD. 100만 벡터 ≈ 4GB RAM, 수백만까지 단일 노드</td></tr>
+          <tr><td><strong>gpt-oss-120b (watsonx.ai)</strong></td><td>생성·추론</td><td><strong>H100/H200 1장(80GB)</strong> · MXFP4</td></tr>
+          <tr><td><strong>watsonx Orchestrate</strong></td><td>에이전트·도구 조율·권한</td><td>앱 서버 (사내)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== 평가 & 운영 ===== -->
+  <section class="slide" data-label="평가·운영">
+    <div class="bar"><span class="sq"></span>CHAPTER VIII · 운영<span class="r">평가 · 모니터링 · 재인덱싱</span></div>
+    <div class="body">
+      <h2 class="t">"잘 되고 있나"를 숫자로 — 평가와 운영</h2>
+      <div class="grid2" style="margin-top:28px">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="card l"><h4 style="font-size:24px">RAG 평가 (Ragas 등)</h4><p><strong>Faithfulness</strong>(근거 충실도) · <strong>Answer Relevancy</strong>(질문 적합) · <strong>Context Precision/Recall</strong>(검색 품질). 평가셋으로 정량 측정.</p></div>
+          <div class="card l"><h4 style="font-size:24px">두 갈래로 분리 측정</h4><p><strong>검색</strong>이 틀렸나(엉뚱한 청크) vs <strong>생성</strong>이 틀렸나(근거 무시·환각). 원인별로 고친다.</p></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="card t"><h4 style="font-size:24px">모니터링</h4><p>지연시간·실패율·"자료 없음" 비율·사용자 피드백(👍/👎)·토큰 비용을 대시보드로.</p></div>
+          <div class="card t"><h4 style="font-size:24px">재인덱싱 (CDC)</h4><p>문서가 바뀌면 <strong>변경분만</strong> 다시 임베딩·upsert. 최신본 메타로 옛 청크 강등. 주기 배치 또는 변경 감지.</p></div>
+          <div class="callout teal"><span class="lab">철칙</span>평가셋 없이 배포 금지 — <strong>측정 없으면 개선도 없다.</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 보안·거버넌스 ===== -->
+  <section class="slide" data-label="보안·거버넌스">
+    <div class="bar"><span class="sq"></span>CHAPTER VIII · 운영<span class="r">보안 · 거버넌스</span></div>
+    <div class="body">
+      <h2 class="t" style="margin-bottom:24px">사내 자료를 다루는 다섯 가지 안전장치</h2>
+      <div class="grid5" style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px">
+        <div class="card t"><div class="k">①</div><h4 style="font-size:22px;margin-top:6px">온프레미스</h4><p style="font-size:20px">임베딩·검색·생성 모두 사내망. 데이터·모델 외부 유출 0.</p></div>
+        <div class="card t"><div class="k">②</div><h4 style="font-size:22px;margin-top:6px">접근권한</h4><p style="font-size:20px"><span class="mono">sec_level</span> 메타로 검색 단계에서 필터 — 볼 수 있는 문서만 회수.</p></div>
+        <div class="card t"><div class="k">③</div><h4 style="font-size:22px;margin-top:6px">승인 게이트</h4><p style="font-size:20px">쓰기·외부통신(메일·티켓)은 사람 승인 필수.</p></div>
+        <div class="card t"><div class="k">④</div><h4 style="font-size:22px;margin-top:6px">감사 로그</h4><p style="font-size:20px">질의·검색·생성·행동을 출처와 함께 기록 → 재현·추적.</p></div>
+        <div class="card t"><div class="k">⑤</div><h4 style="font-size:22px;margin-top:6px">인젝션 방어</h4><p style="font-size:20px">문서에 숨은 지시 차단, 출력 PII·금칙어 필터.</p></div>
+      </div>
+      <div class="dark-box" style="margin-top:30px"><span class="lab">왜 watsonx + gpt-oss</span><span class="x">바로 이 다섯을 <strong style="color:var(--mint)">사내 경계 안에서</strong> 모두 충족하기 위함 — 오픈웨이트 모델을 사내 GPU에 올리는 구조의 핵심 이유.</span></div>
+    </div>
+  </section>
+
+  <!-- ===== 마무리 ===== -->
+  <section class="slide dark" data-label="마무리">
+    <div class="body" style="justify-content:center">
+      <div class="eyebrow" style="color:var(--mint)">EPILOGUE · 한 장으로</div>
+      <h2 style="font-size:58px;font-weight:800;color:#fff;margin-top:18px;line-height:1.2">사내 문서를 <span style="color:var(--mint)">검색 가능한 지능</span>으로</h2>
+      <p style="font-size:28px;color:#AFC0CA;margin-top:22px;max-width:1560px;line-height:1.55">BGE로 <strong style="color:#fff">의미를 좌표화</strong>하고, Vector DB로 <strong style="color:#fff">빠르게 회수</strong>하고, Rerank로 <strong style="color:#fff">정밀하게 거르고</strong>, watsonx의 gpt-oss-120b로 <strong style="color:#fff">근거 위에서 답</strong>하고, 에이전트 오케스트레이션으로 <strong style="color:#fff">실행</strong>까지 — 전부 <strong style="color:#fff">사내 경계 안에서.</strong></p>
+      <div style="margin-top:30px;max-width:1560px" class="no-advance">
+        <div style="font-family:var(--mono);font-size:18px;color:var(--mint);letter-spacing:.06em;margin-bottom:10px">FINAL CHECK · 전체 파이프라인 복습 3문항</div>
+        <ol class="qz" style="margin-left:26px">
+          <li style="color:#C9D6DC;font-size:22px">질문 한 줄이 답이 되기까지의 검색 5단계는?</li>
+          <li style="color:#C9D6DC;font-size:22px">RAG가 재학습 없이 최신 사내 지식을 반영하는 방법은?</li>
+          <li style="color:#C9D6DC;font-size:22px">에이전트가 쓰기 작업(티켓·메일) 전에 반드시 거치는 것은?</li>
+        </ol>
+        <details class="qa no-advance" style="max-width:1200px;margin-top:14px"><summary>정답 확인</summary>
+          <ol>
+            <li>질의 임베딩 → ANN 검색+권한 필터 → Hybrid 융합(RRF) → <b>Rerank</b> → top-5 컨텍스트 주입.</li>
+            <li>모델은 그대로 두고 <b>검색 결과를 프롬프트에 주입</b> — 문서가 바뀌면 인덱스만 증분 갱신.</li>
+            <li><b>사람 승인 게이트(HITL)</b> — 거부되면 쓰기 없이 보고서만 작성.</li>
+          </ol>
+        </details>
+      </div>
+      <div style="margin-top:30px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1560px">
+        <div style="border:1px solid #2C3A44;border-left:4px solid #007A74;border-radius:8px;padding:20px 26px"><div class="k" style="color:var(--mint)">시작</div><div style="font-size:22px;color:#C9D6DC;margin-top:6px">한 부서·한 문서종 PoC(4~6주) + 평가셋 50문항</div></div>
+        <div style="border:1px solid #2C3A44;border-left:4px solid #007A74;border-radius:8px;padding:20px 26px"><div class="k" style="color:var(--mint)">원칙</div><div style="font-size:22px;color:#C9D6DC;margin-top:6px">근거 안에서만 답하고, 출처를 인용한다</div></div>
+        <div style="border:1px solid #2C3A44;border-left:4px solid #007A74;border-radius:8px;padding:20px 26px"><div class="k" style="color:var(--mint)">확장</div><div style="font-size:22px;color:#C9D6DC;margin-top:6px">측정하며 에이전트·오케스트레이션으로</div></div>
+      </div>
+      <div style="margin-top:36px;font-family:var(--mono);font-size:20px;color:var(--muted)">함께 보기 — <span style="color:#fff">LLM 기초 (LLM_slide)</span> · <span style="color:#fff">에이전트 운영 (AGENT_OPS)</span> · 처음으로 돌아가려면 <span style="color:var(--mint)">H</span></div>
+      <div class="artmark">🧠</div>
+    </div>
+  </section>
+
+  </div><!-- /stage -->
+</div>
+
+<!-- nav -->
+<div class="progress" id="prog"></div>
+<div class="navbar" id="navbar" aria-label="페이지 이동과 빠른 실행">
+  <button id="prev" type="button" aria-label="이전 페이지">‹</button>
+  <span class="ct"><b id="cur">1</b> / <span id="tot">1</span></span>
+  <button id="next" type="button" aria-label="다음 페이지">›</button>
+  <button id="homeBtn" type="button" aria-label="홈(학습 지도)으로 이동">H 홈</button>
+  <button id="fsBtn" type="button" aria-label="전체화면 전환">F5 전체화면</button>
+</div>
+
+<!-- start gate -->
+<div id="gate">
+  <svg viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid meet">
+    <defs><pattern id="gg" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#22323d" stroke-width="1"/></pattern></defs>
+    <rect width="1280" height="720" fill="#10202A"/><rect width="1280" height="720" fill="url(#gg)" opacity=".45"/>
+    <g stroke="#007A74" stroke-width="1.4" opacity=".55"><line x1="980" y1="120" x2="1130" y2="92"/><line x1="980" y1="120" x2="1075" y2="222"/><line x1="1130" y1="92" x2="1205" y2="188"/><line x1="1075" y1="222" x2="1205" y2="188"/><line x1="1130" y1="92" x2="1075" y2="222"/></g>
+    <g fill="#4FC3B7"><circle cx="980" cy="120" r="6.5"/><circle cx="1130" cy="92" r="6.5"/><circle cx="1075" cy="222" r="6.5"/><circle cx="1205" cy="188" r="6.5"/></g>
+    <rect x="80" y="61" width="13" height="13" fill="#007A74"/><text x="105" y="73" font-family="'JetBrains Mono',monospace" font-size="21" letter-spacing="1.5" fill="#4FC3B7">ENTERPRISE LLM · SELF-STUDY</text>
+    <rect x="81" y="291" width="11" height="11" fill="#007A74"/><text x="103" y="302" font-family="'JetBrains Mono',monospace" font-size="23" letter-spacing="2" fill="#007A74">SELF-STUDY · 사내 지식을 AI에게 연결하기</text>
+    <text x="76" y="402" font-family="'Noto Sans KR',sans-serif" font-size="86" font-weight="800" letter-spacing="-2" fill="#F4F6F8">사내 RAG 구축 실전</text>
+    <text x="76" y="500" font-family="'Noto Sans KR',sans-serif" font-size="86" font-weight="800" letter-spacing="-2" fill="#F4F6F8">— 문서를 <tspan fill="#4FC3B7">검색 가능한 지능</tspan>으로</text>
+    <g font-family="'JetBrains Mono',monospace" font-size="22"><rect x="80" y="560" width="220" height="48" fill="#007A74"/><text x="190" y="591" text-anchor="middle" fill="#fff">BGE · VectorDB</text><rect x="312" y="560" width="240" height="48" fill="none" stroke="#3a4f5a" stroke-width="1.5"/><text x="432" y="591" text-anchor="middle" fill="#9FB2BD">watsonx · gpt-oss</text><rect x="564" y="560" width="200" height="48" fill="none" stroke="#3a4f5a" stroke-width="1.5"/><text x="664" y="591" text-anchor="middle" fill="#9FB2BD">Agent 오케스트</text></g>
+    <text x="80" y="668" font-family="'JetBrains Mono',monospace" font-size="20" letter-spacing="1" fill="#71818D">자가학습 자료 · <tspan fill="#C9D6DC">사내 RAG 전 과정</tspan></text>
+  </svg>
+  <div class="hint">▶ 클릭 · Space · → 키로 시작 &nbsp;|&nbsp; F5 전체화면</div>
+</div>
+
+<script>
+(function(){
+  var stage=document.getElementById('stage'), deck=document.getElementById('deck');
+  function fit(){var s=Math.min(window.innerWidth/1920, window.innerHeight/1080);stage.style.transform='translate(-50%,-50%) scale('+s+')';}
+  window.addEventListener('resize',fit); fit();
+
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var idx=0;
+  document.getElementById('tot').textContent=slides.length;
+  function go(n){idx=Math.max(0,Math.min(slides.length-1,n));for(var i=0;i<slides.length;i++)slides[i].classList.toggle('active',i===idx);document.getElementById('cur').textContent=idx+1;var pg=document.getElementById('prog');if(pg)pg.style.width=((idx+1)/slides.length*100)+'%';}
+  go(0);
+  document.getElementById('prev').onclick=function(){go(idx-1)};
+  document.getElementById('next').onclick=function(){go(idx+1)};
+  var homeIdx=Math.max(0,slides.indexOf(document.getElementById('homeslide')));
+  document.getElementById('homeBtn').onclick=function(){go(homeIdx)};
+  [].forEach.call(document.querySelectorAll('.mcard[data-target]'),function(m){
+    m.addEventListener('click',function(e){e.stopPropagation();var el=document.getElementById(m.getAttribute('data-target'));if(el)go(slides.indexOf(el));});
+  });
+
+  // click on a slide advances, unless clicking an interactive area
+  stage.addEventListener('click',function(e){
+    if(e.target.closest('button,input,a,.sim,.no-advance,.navbar'))return;
+    go(idx+1);
+  });
+
+  // present (F5) — fullscreen + hide chrome
+  var pres=false;
+  function fsEl(){return document.fullscreenElement||document.webkitFullscreenElement;}
+  function setPres(v){pres=v;deck.classList.toggle('presenting',v);}
+  document.addEventListener('fullscreenchange',function(){setPres(!!fsEl());});
+  document.addEventListener('webkitfullscreenchange',function(){setPres(!!fsEl());});
+  function toggleFS(){
+    if(pres||fsEl()){if(fsEl())(document.exitFullscreen||document.webkitExitFullscreen).call(document);else setPres(false);}
+    else{var el=deck;var r=el.requestFullscreen||el.webkitRequestFullscreen;if(r){try{var p=r.call(el);if(p&&p.catch)p.catch(function(){setPres(true);});}catch(_){setPres(true);}}else setPres(true);}
+  }
+  document.getElementById('fsBtn').onclick=toggleFS;
+
+  document.addEventListener('keydown',function(e){
+    if(e.metaKey||e.ctrlKey||e.altKey)return;
+    var k=e.key;
+    if(k==='F5'||e.keyCode===116){e.preventDefault();toggleFS();return;}
+    if(k==='ArrowRight'||k==='PageDown'||k===' '||k==='Spacebar'){go(idx+1);e.preventDefault();}
+    else if(k==='ArrowLeft'||k==='PageUp'){go(idx-1);e.preventDefault();}
+    else if(k==='Home'){go(0);}
+    else if(k==='End'){go(slides.length-1);}
+    else if(k==='r'||k==='R'){go(0);}
+    else if(k==='h'||k==='H'){go(homeIdx);}
+    else if(/^[0-9]$/.test(k)){var n=k==='0'?9:parseInt(k,10)-1;if(n<slides.length)go(n);}
+  },false);
+
+  // start gate
+  var gate=document.getElementById('gate'),done=false;
+  function start(){if(done)return;done=true;gate.style.transition='opacity .35s ease';gate.style.opacity='0';gate.style.pointerEvents='none';setTimeout(function(){if(gate.parentNode)gate.parentNode.removeChild(gate);},400);}
+  gate.addEventListener('click',start);
+  document.addEventListener('keydown',function(e){if(done||e.key==='Tab'||e.metaKey||e.ctrlKey||e.altKey)return;if(e.key!=='F5'){start();e.stopPropagation();}else start();},true);
+
+  /* ===== SIM 1 · dense / keyword / hybrid(RRF) search ===== */
+  // dims: [진공/누설, 균열/포토마스크, 알람/MES, 일정/PM, 품질/SPC, 안전]
+  var S1DOCS=[
+    {t:"SOP-PVD-117 §2 — PVD-A104 누설 알람 시 게이트 밸브 즉시 차단·N₂ 퍼지", v:[.95,.05,.7,.05,.1,.6], kw:["pvd-a104","누설","알람","게이트밸브","퍼지"]},
+    {t:"SOP-PVD-117 §3 — 진공도 허용 기준 표(챔버 1.0e-5 Pa ±2% 등)", v:[.9,.1,.3,0,.4,.2], kw:["진공도","허용","기준","챔버"]},
+    {t:"결함DB — 포토마스크 정렬부 미세 균열 8건, 30분 주기 반복", v:[.15,.95,.6,.05,.5,.2], kw:["포토마스크","균열","결함","반복"]},
+    {t:"품질지침 — SPC 차트 관리한계 이탈 시 라인 정지 판단", v:[.1,.3,.5,.1,.95,.3], kw:["spc","차트","관리한계","품질"]},
+    {t:"PM 캘린더 — 라인3 정기점검 일정·시프트 리더 연락처", v:[.1,.05,.3,.95,.1,.2], kw:["pm","일정","점검","연락처"]},
+    {t:"안전수칙 — 챔버 작업 시 LOTO·잔압 확인 절차", v:[.5,.1,.1,.1,.1,.95], kw:["loto","안전","잔압","챔버"]},
+    {t:"MES 로그 — 코드별(PVD-A104 등) 알람 이력·발생 빈도 조회", v:[.4,.3,.95,.2,.4,.1], kw:["mes","알람","이력","pvd-a104"]},
+  ];
+  var S1Q=[
+    {label:"PVD-A104 진공 누설 대응", v:[.95,.05,.6,0,.1,.5], kw:["pvd-a104","진공","누설","대응"]},
+    {label:"포토마스크 미세 균열 원인", v:[.2,.95,.5,0,.5,.15], kw:["포토마스크","균열","원인"]},
+    {label:"PM 일정과 담당자", v:[.05,.05,.25,.95,.05,.15], kw:["pm","일정","담당자"]},
+    {label:"SPC 차트 품질 이상", v:[.1,.3,.45,.05,.95,.2], kw:["spc","차트","품질","이상"]},
+  ];
+  function cos(a,b){var d=0,na=0,nb=0;for(var i=0;i<a.length;i++){d+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i];}return d/(Math.sqrt(na)*Math.sqrt(nb)+1e-9);}
+  function kwScore(qk,dk){var inter=0;qk.forEach(function(t){if(dk.indexOf(t)>=0)inter++;});var uni=qk.length+dk.length-inter;return uni?inter/uni:0;}
+  function s1ranks(sc){var ord=sc.map(function(v,i){return [v,i];}).sort(function(a,b){return b[0]-a[0];});var r=[];ord.forEach(function(p,rk){r[p[1]]=rk;});return r;}
+  var s1mode='dense', s1qi=0;
+  function s1render(){
+    var q=S1Q[s1qi];
+    var dense=S1DOCS.map(function(d){return cos(q.v,d.v);});
+    var kws=S1DOCS.map(function(d){return kwScore(q.kw,d.kw);});
+    var sc;
+    if(s1mode==='dense')sc=dense;
+    else if(s1mode==='kw')sc=kws;
+    else{var rd=s1ranks(dense),rk=s1ranks(kws);sc=S1DOCS.map(function(_,i){return 1/(60+rd[i]+1)+1/(60+rk[i]+1);});}
+    var max=Math.max.apply(null,sc)||1;
+    var rows=S1DOCS.map(function(d,i){return {t:d.t,s:sc[i]};}).sort(function(a,b){return b.s-a.s;});
+    var html='';
+    rows.forEach(function(r,i){
+      var pct=Math.max(2,Math.round(r.s/max*100));
+      var val=s1mode==='rrf'?r.s.toFixed(4):r.s.toFixed(2);
+      html+='<div class="rowbar'+(i<3?' top':'')+'"><div class="nm">'+r.t.split(' — ')[0]+'<div style="font-size:16px;color:#71818D">'+(r.t.split(' — ')[1]||'')+'</div></div><div class="track"><div class="fill" style="width:'+pct+'%"></div></div><div class="v">'+val+'</div></div>';
+    });
+    document.getElementById('s1out').innerHTML=html;
+    var notes={
+      dense:'<strong>Dense(의미)</strong> — 글자가 안 겹쳐도 의미가 가까우면 회수. 단, "PVD-A104" 같은 <strong>품번의 정확 일치</strong>엔 상대적으로 둔감.',
+      kw:'<strong>Keyword(BM25 개념)</strong> — 품번·코드가 박힌 문서(SOP §2, MES 로그)를 정확히 잡음. 단, "누설"↔"leak"처럼 <strong>표현이 다르면 놓침</strong>.',
+      rrf:'<strong>Hybrid(RRF)</strong> — 점수가 아니라 <strong>순위</strong>를 1/(60+rank)로 합산. 품번이 박힌 문서와 의미가 가까운 문서가 <strong>모두 상위</strong>로 올라옴 — 실무 기본값.'};
+    document.getElementById('s1note').innerHTML=notes[s1mode]+' 진하게(청록) 표시된 상위 3개가 LLM 컨텍스트 후보입니다.';
+  }
+  var s1q=document.getElementById('s1q'), s1m=document.getElementById('s1mode');
+  if(s1q){
+    s1q.addEventListener('click',function(e){var b=e.target.closest('[data-q]');if(!b)return;[].forEach.call(s1q.children,function(c){c.classList.remove('on');});b.classList.add('on');s1qi=+b.getAttribute('data-q');s1render();});
+    s1m.addEventListener('click',function(e){var b=e.target.closest('[data-m]');if(!b)return;[].forEach.call(s1m.querySelectorAll('[data-m]'),function(c){c.classList.remove('on');});b.classList.add('on');s1mode=b.getAttribute('data-m');s1render();});
+    s1render();
+  }
+
+  /* ===== SIM 2 · chunking (distinct story per size) ===== */
+  var DOC='SOP-PVD-2024-117 · 진공 챔버 누설 알람 대응 절차서 v3.2 (개정 2026.03)\n\n'
+   +'§1. 개요\n본 절차는 라인3 PVD 증착 챔버에서 누설 알람(코드 PVD-A104)이 발생했을 때 운영자와 야간 시프트 리더가 따라야 할 즉시 조치와 위반 판단 기준을 정의한다. 본 알람은 챔버 진공도가 §3에 정의된 허용 범위를 벗어났을 때 자동으로 발생하며, 누설 위치와 압력 추세에 따라 대응 우선순위 및 보고 단계가 달라진다. 특히 게이트 밸브 인근에서의 누설은 즉시 라인 정지 판단 사유에 해당하므로 최우선으로 보고한다.\n\n'
+   +'§2. 즉시 조치 (5분 이내)\n① 게이트 밸브를 즉시 닫아 외부 공기 유입을 차단한다.\n② N₂ 퍼지 라인을 열어 챔버 내부 압력을 안정시킨다.\n③ 압력 추세를 30분간 기록하며 SPC 차트를 동시 모니터링한다.\n④ 야간 시프트 리더에게 즉시 보고한다.\n\n'
+   +'§3. 진공도 허용 기준 (표)\n위치          기준압         허용오차\n챔버 본체     1.0e-5 Pa     ±2%\n게이트 밸브   1.0e-4 Pa     ±5%\n펌프 입구     1.0e-3 Pa     ±10%\n배기 라인     1.0e-2 Pa     ±15%\n\n'
+   +'§3.2 위반 판단 기준\n30분 이내 동일 코드 알람이 3회 이상 반복되면 §4 점검 절차로 진행한다.\n\n'
+   +'§4. 점검 절차\n정렬부·게이트·O링 순서로 외관 검사를 실시한다.';
+  var TINT=['#E8F4F2','#F2F6F8','#E7EFFB','#F7ECDD','#EFE8F8'];
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  var c2size=400, c2ovp=0;
+  function c2chunks(size,ov){
+    var step=Math.max(1,size-ov), doc=DOC, out=[], p=0;
+    while(p<doc.length){out.push([p,Math.min(p+size,doc.length)]);if(p+size>=doc.length)break;p+=step;}
+    return out;
+  }
+  function c2render(){
+    var doc=DOC, size=c2size, ov=Math.round(size*c2ovp/100);
+    var ch=c2chunks(size,ov);
+    // segment rendering: overlap zones get striped background
+    var pts={};pts[0]=1;pts[doc.length]=1;ch.forEach(function(c){pts[c[0]]=1;pts[c[1]]=1;});
+    var bp=Object.keys(pts).map(Number).sort(function(a,b){return a-b;});
+    var html='';
+    for(var i=0;i<bp.length-1;i++){
+      var a=bp[i],b=bp[i+1];if(a>=b)continue;
+      var owners=[];ch.forEach(function(c,k){if(c[0]<=a&&b<=c[1])owners.push(k);});
+      var st;
+      if(owners.length>1)st='background:repeating-linear-gradient(45deg,#F2E3C8 0 8px,#FBF3E7 8px 16px);box-shadow:inset 0 0 0 1px rgba(196,138,43,.4)';
+      else st='background:'+TINT[(owners[0]||0)%5]+';box-shadow:inset 0 0 0 1px rgba(0,0,0,.04)';
+      html+='<span style="'+st+'">'+esc(doc.substring(a,b))+'</span>';
+    }
+    document.getElementById('c2doc').innerHTML=html;
+    // boundary-cut sentences: not fully contained in any single chunk
+    var sents=[],last=0;
+    for(var j=0;j<doc.length;j++){var cch=doc.charAt(j);if(cch==='\n'||(cch==='.'&&doc.charAt(j-1)==='다')){if(j>last)sents.push([last,j+1]);last=j+1;}}
+    if(last<doc.length)sents.push([last,doc.length]);
+    var cut=0;
+    sents.forEach(function(sp){var ok=ch.some(function(c){return c[0]<=sp[0]&&sp[1]<=c[1];});if(!ok)cut++;});
+    var base=Math.ceil(doc.length/size), plus=ch.length-base;
+    document.getElementById('c2sum').innerHTML=
+      '<span>총 글자 <b style="color:var(--teal)">'+doc.length+'</b></span>'+
+      '<span>청크 <b style="color:var(--teal)">'+ch.length+'</b>개'+(plus>0?' <b style="color:var(--amber)">(+'+plus+' 오버랩)</b>':'')+'</span>'+
+      '<span>임베딩 <b style="color:var(--teal)">×'+ch.length+'</b></span>'+
+      '<span>경계 잘림 문장 <b style="color:'+(cut>0?'#B94A3D':'#005F5A')+'">'+cut+'개</b></span>';
+    var w=[];
+    var ts0=doc.indexOf('위치          기준압'),te=doc.indexOf('§3.2');
+    var tcont=ch.some(function(c){return c[0]<=ts0&&te<=c[1];});
+    var tsplit=0;ch.forEach(function(c,k){if(k>0&&c[0]>ts0&&c[0]<te)tsplit++;});
+    if(!tcont&&tsplit>0)w.push('⚠ 진공도 허용 기준 표가 '+(tsplit+1)+'개 청크에 걸쳐 분리됨 — 행·열이 잘려 맥락 손실');
+    var ho=0;['§1. ','§2. ','§3. ','§3.2','§4. '].forEach(function(h){var p=doc.indexOf(h);if(p<0)return;var nl=doc.indexOf('\n',p);if(nl<0)return;var bs=nl+1;while(bs<doc.length&&doc.charAt(bs)==='\n')bs++;if(bs>=doc.length)return;var ok=ch.some(function(c){return c[0]<=p&&bs+1<=c[1];});if(!ok)ho++;});
+    if(ho>0)w.push('⚠ '+ho+'개 § 헤더가 본문과 다른 청크로 분리됨 — 헤더 경로 메타 주입으로 보완 필요');
+    if(size<=80)w.push('⚠ 청크가 너무 작아 한 문장이 여러 조각 — 맥락 붕괴 + 임베딩 비용 폭증');
+    if(size>=800)w.push('⚠ 청크가 커서 한 청크에 여러 주제(§1 개요 + §2 조치 + §3 기준표 …)가 혼입 — 의미가 흐려져 검색 둔화, Lost in the Middle 위험');
+    if(cut>0&&c2ovp===0&&size>80&&size<800)w.push('⚠ 경계에서 잘린 문장 '+cut+'개 — 오버랩 15%를 켜면 양쪽 청크에 온전히 보존되는지 확인해 보세요');
+    document.getElementById('c2warn').innerHTML=w.length?w.map(function(x){return '<div style="padding:12px 18px;border-radius:8px;background:#F8E7E4;border:1px solid #E2A89F;color:#B94A3D;font-size:20px;margin-bottom:8px">'+x+'</div>';}).join(''):'<div style="padding:12px 18px;border-radius:8px;background:#E8F4F2;border:1px solid #9FD3CC;color:#005F5A;font-size:20px">✓ 구조적 문제 없음 — 표·헤더가 보존되고'+(c2ovp>0?', 오버랩 덕에 경계 문장도 온전':'')+' (실무 권장: 300~800자 + 10~15% 오버랩)</div>';
+  }
+  var c2=document.getElementById('c2btns'), c2o=document.getElementById('c2ov');
+  if(c2){
+    c2.addEventListener('click',function(e){var b=e.target.closest('[data-s]');if(!b)return;[].forEach.call(c2.children,function(c){c.classList.remove('on');});b.classList.add('on');c2size=+b.getAttribute('data-s');c2render();});
+    c2o.addEventListener('click',function(e){var b=e.target.closest('[data-o]');if(!b)return;[].forEach.call(c2o.children,function(c){c.classList.remove('on');});b.classList.add('on');c2ovp=+b.getAttribute('data-o');c2render();});
+    c2render();
+  }
+
+  /* ===== SIM 3 · ANN 2D ===== */
+  var S3PTS=[{x:175,y:150,l:"SOP §2 누설대응",c:0},{x:235,y:110,l:"SOP §3 진공기준",c:0},{x:150,y:215,l:"MES 알람이력",c:0},{x:660,y:150,l:"결함DB 균열",c:1},{x:715,y:120,l:"포토마스크 정렬 SOP",c:1},{x:620,y:215,l:"검사 기준",c:1},{x:430,y:360,l:"SPC 품질지침",c:2},{x:375,y:325,l:"PM 일정",c:2},{x:485,y:390,l:"시프트 리더",c:2},{x:765,y:360,l:"LOTO 안전",c:3},{x:815,y:330,l:"잔압 확인",c:3}];
+  var S3COL=['#007A74','#B94A3D','#C48A2B','#6355B8'];
+  var S3Q=[{x:190,y:150},{x:680,y:150},{x:430,y:240},{x:790,y:360}];
+  var s3qi=0, s3kk=3;
+  function s3render(){
+    var q=S3Q[s3qi];
+    var near=S3PTS.map(function(p,i){return {i:i,d:Math.sqrt((p.x-q.x)*(p.x-q.x)+(p.y-q.y)*(p.y-q.y))};}).sort(function(a,b){return a.d-b.d;}).slice(0,s3kk).map(function(r){return r.i;});
+    var qc=S3PTS[near[0]].c; // cluster of the closest hit
+    var svg='';
+    near.forEach(function(i){svg+='<line x1="'+q.x+'" y1="'+q.y+'" x2="'+S3PTS[i].x+'" y2="'+S3PTS[i].y+'" stroke="#007A74" stroke-width="2" stroke-dasharray="4,3"/>';});
+    S3PTS.forEach(function(p,i){var on=near.indexOf(i)>=0;svg+='<circle cx="'+p.x+'" cy="'+p.y+'" r="'+(on?11:7)+'" fill="'+S3COL[p.c]+'" opacity="'+(on?1:.45)+'"/><text x="'+p.x+'" y="'+(p.y-15)+'" text-anchor="middle" font-size="15" fill="#394B56">'+p.l+'</text>';});
+    svg+='<circle cx="'+q.x+'" cy="'+q.y+'" r="15" fill="none" stroke="#10202A" stroke-width="3"/><circle cx="'+q.x+'" cy="'+q.y+'" r="5" fill="#10202A"/><text x="'+q.x+'" y="'+(q.y+36)+'" text-anchor="middle" font-size="16" font-weight="700" fill="#10202A">질의</text>';
+    document.getElementById('s3svg').innerHTML=svg;
+    document.getElementById('s3kv').textContent=s3kk;
+    var mixed=near.some(function(i){return S3PTS[i].c!==qc;});
+    document.getElementById('s3list').innerHTML=near.map(function(i,r){var p=S3PTS[i];var off=p.c!==qc;return '<div class="rowbar'+(off?'':' top')+'"><div class="nm" style="width:auto;flex:1'+(off?';color:#B94A3D':'')+'">'+(r+1)+'. '+p.l+(off?' <span style="font-size:15px">← 다른 군집(잡음)</span>':'')+'</div><div class="v" style="color:'+S3COL[p.c]+'">●</div></div>';}).join('');
+    document.getElementById('s3note').innerHTML=mixed
+      ?'k를 늘리거나 경계에 두면 <strong>다른 군집(빨간 표시)이 섞여</strong> 회수됩니다 — 이 잡음을 걸러내는 것이 <strong>Rerank</strong>의 역할입니다.'
+      :'질의와 가까운 군집의 청크만 깨끗하게 회수됐습니다. k를 5로 늘리거나 "경계 지점"으로 옮겨 잡음 유입을 확인해 보세요.';
+  }
+  var s3b=document.getElementById('s3btns'), s3kbtn=document.getElementById('s3k');
+  if(s3b){
+    s3b.addEventListener('click',function(e){var b=e.target.closest('[data-p]');if(!b)return;[].forEach.call(s3b.children,function(c){c.classList.remove('on');});b.classList.add('on');s3qi=+b.getAttribute('data-p');s3render();});
+    s3kbtn.addEventListener('click',function(e){var b=e.target.closest('[data-k]');if(!b)return;[].forEach.call(s3kbtn.children,function(c){c.classList.remove('on');});b.classList.add('on');s3kk=+b.getAttribute('data-k');s3render();});
+    s3render();
+  }
+
+  /* ===== SIM 4 · retrieve → rerank (성공 / 자료 없음) ===== */
+  var S4TH=0.5;
+  var S4SETS=[
+    {q:'"PVD-A104 대응 절차와 최근 이력?"', ok:true, docs:[
+      {t:"SOP-PVD-117 §2 — PVD-A104 누설 시 게이트밸브 차단·N₂ 퍼지",dense:.71,rr:.96},
+      {t:"SOP-PVD-117 §3.2 — 30분 내 3회 반복 시 §4 점검",dense:.64,rr:.89},
+      {t:"MES — PVD-A104 최근 24h 알람 이력",dense:.69,rr:.82},
+      {t:"SOP-PVD-117 §3 — 진공도 허용 기준 표",dense:.66,rr:.60},
+      {t:"결함DB — 포토마스크 균열 8건(PVD-A104 무관)",dense:.63,rr:.20},
+      {t:"안전수칙 — 챔버 LOTO 절차",dense:.58,rr:.30},
+      {t:"PM 캘린더 — 라인3 점검 일정",dense:.55,rr:.12},
+      {t:"품질 — SPC 관리한계 이탈 대응",dense:.52,rr:.18}]},
+    {q:'"신규 장비 X-9000 설치 절차?" (사내 문서 없음)', ok:false, docs:[
+      {t:"설비 반입 일반 절차 (2019, 구버전)",dense:.61,rr:.32},
+      {t:"안전수칙 — 신규 장비 반입 시 일반 안전",dense:.58,rr:.30},
+      {t:"SOP-PVD-117 §2 — 누설 대응 (다른 장비)",dense:.56,rr:.22},
+      {t:"PM 캘린더 — 라인3 점검 일정",dense:.54,rr:.09},
+      {t:"구매 지침 — 장비 발주 프로세스",dense:.53,rr:.24},
+      {t:"결함DB — 포토마스크 균열 이력",dense:.51,rr:.07},
+      {t:"MES — 라인3 알람 이력",dense:.50,rr:.11},
+      {t:"품질 — SPC 관리한계 이탈 대응",dense:.48,rr:.06}]}
+  ];
+  var s4qi=0;
+  function s4stages(active){
+    var ok=S4SETS[s4qi].ok;
+    var st=[['질의','—'],['임베딩','BGE'],['ANN 검색','top-30'],['Rerank','top-5'],ok?['컨텍스트','→ LLM']:['자료 없음','생성 중단']];
+    document.getElementById('s4stage').innerHTML=st.map(function(s,i){
+      var on=i<=active, last=(i===4), bg, bd, fg;
+      if(i===active){bg=(last&&!ok)?'#B94A3D':'#10202A';bd=(last&&!ok)?'#B94A3D':'#007A74';fg='#fff';}
+      else if(on){bg=(last&&!ok)?'#F8E7E4':'#E8F4F2';bd=(last&&!ok)?'#B94A3D':'#007A74';fg=(last&&!ok)?'#B94A3D':'#005F5A';}
+      else{bg='#fff';bd='#D8E1E7';fg='#71818D';}
+      return '<div style="flex:1;padding:15px 16px;text-align:center;border-radius:8px;border:1px solid '+bd+';background:'+bg+';color:'+fg+'"><div style="font-size:21px;font-weight:700">'+s[0]+'</div><div style="font-family:var(--mono);font-size:16px;margin-top:3px">'+s[1]+'</div></div>';
+    }).join('<div style="align-self:center;color:#9FD3CC;font-size:20px;padding:0 2px">→</div>');
+  }
+  function s4list(mode){
+    var set=S4SETS[s4qi];
+    var rows=set.docs.map(function(d){return {t:d.t,s:mode==='dense'?d.dense:d.rr};}).sort(function(a,b){return b.s-a.s;});
+    var head;
+    if(mode==='dense')head='① 임베딩 검색 — 후보(거친 점수). '+(set.ok?'':'주의: 근거가 없어도 ANN은 "가장 덜 먼" 문서를 일단 돌려줌');
+    else if(set.ok){rows.forEach(function(r,i){r.top=i<3&&r.s>=S4TH;});head='② Rerank 후 — 정밀 재정렬, 임계 '+S4TH.toFixed(1)+' 이상 상위 3이 컨텍스트로';}
+    else head='② Rerank 후 — 최고 점수 '+rows[0].s.toFixed(2)+' &lt; 임계 '+S4TH.toFixed(1)+' → <span style="color:#B94A3D;font-weight:700">컨텍스트 주입 중단, "자료 없음"으로 답변(환각 차단)</span>';
+    document.getElementById('s4list').innerHTML='<div class="k" style="margin-bottom:10px">'+head+'</div>'+rows.map(function(r){var pct=Math.round(r.s*100);var low=(mode!=='dense'&&r.s<S4TH);return '<div class="rowbar'+(r.top?' top':'')+'"><div class="nm" style="width:auto;flex:1;font-size:20px'+(low?';color:#8b9aa5':'')+'">'+r.t+'</div><div class="track" style="max-width:240px"><div class="fill" style="width:'+pct+'%'+(low?';background:#D9A79F':'')+'"></div></div><div class="v"'+(low?' style="color:#B94A3D"':'')+'>'+r.s.toFixed(2)+'</div></div>';}).join('')+(mode!=='dense'&&!set.ok?'<div style="margin-top:14px;padding:12px 18px;border-radius:8px;background:#F8E7E4;border:1px solid #E2A89F;color:#B94A3D;font-size:20px">🛑 최종 응답: "요청하신 X-9000 설치 절차는 사내 자료에서 확인되지 않습니다. 담당 부서 문의 또는 문서 등록 후 재시도를 권장합니다." — 지어내지 않는 것이 정답</div>':'');
+  }
+  var s4timers=[];
+  function s4reset(){s4timers.forEach(clearTimeout);s4timers=[];s4stages(-1);document.getElementById('s4list').innerHTML='<div class="note">▶ 질의(Q1/Q2)를 고르고 실행을 눌러 검색 → 재정렬 과정을 보세요. 질의: '+S4SETS[s4qi].q+'</div>';}
+  function s4run(){s4timers.forEach(clearTimeout);s4timers=[];[0,1].forEach(function(a,i){s4timers.push(setTimeout(function(){s4stages(a);},i*420));});s4timers.push(setTimeout(function(){s4stages(2);s4list('dense');},1150));s4timers.push(setTimeout(function(){s4stages(3);s4list('rerank');},2300));s4timers.push(setTimeout(function(){s4stages(4);},3050));}
+  var s4b=document.getElementById('s4run'), s4qs=document.getElementById('s4q');
+  if(s4b){
+    s4b.onclick=s4run;document.getElementById('s4reset').onclick=s4reset;
+    s4qs.addEventListener('click',function(e){var b=e.target.closest('[data-q]');if(!b)return;[].forEach.call(s4qs.children,function(c){c.classList.remove('on');});b.classList.add('on');s4qi=+b.getAttribute('data-q');s4reset();});
+    s4reset();
+  }
+
+  /* ===== SIM 5 · ReAct step-through ===== */
+  var S5=[
+    {k:'goal',t:'목표 — 어제 라인3 PVD-A104 알람 분석 → 반복이면 점검 이슈 등록'},
+    {k:'T',t:'먼저 어제 PVD-A104 알람 이력이 필요하다.'},
+    {k:'A',t:'mes_query(line=3, code="PVD-A104", range="24h")'},
+    {k:'O',t:'8회 발생, 간격 ≈ 30분 (주기적)'},
+    {k:'T',t:'반복 판단 기준을 SOP에서 확인하자.'},
+    {k:'A',t:'vector_search("PVD-A104 반복 판단 기준")'},
+    {k:'O',t:'SOP-PVD-117 §3.2 — 30분 내 3회↑ 반복이면 §4 점검'},
+    {k:'T',t:'조건 충족. 점검 이슈를 등록한다 (쓰기 작업).'},
+    {k:'G',t:'사람 승인 게이트 — create_ticket 실행 전 확인 필요'},
+    {k:'A',t:'create_ticket(line=3, code="PVD-A104", type="주기 반복 점검")'},
+    {k:'O',t:'이슈 #4821 생성 완료'},
+    {k:'D',t:'목표 달성 → 보고: 8회 반복 확인, §4 점검 이슈 #4821 등록'}
+  ];
+  var S5ALT=[
+    {k:'T',t:'승인이 거부됐다 — 쓰기 작업 없이, 판단 근거만 정리해 보고한다.'},
+    {k:'A',t:"write_report(summary='PVD-A104 8회 반복, §3.2 조건 충족 — §4 점검 권고')  # 쓰기 없음"},
+    {k:'O',t:'보고서 초안 생성 — 담당 엔지니어 검토 대기'},
+    {k:'D',t:'종료 — 실행 여부는 사람 판단으로 넘김 (Human-in-the-Loop)'}
+  ];
+  var S5LAB={goal:'목표',T:'Thought',A:'Action',O:'Observe',G:'승인',D:'완료'};
+  var S5COL={goal:'#10202A',T:'#007A74',A:'#10202A',O:'#71818D',G:'#B94A3D',D:'#005F5A'};
+  var S5GATE=8, s5i=0, s5choice=null;
+  function s5steps(){
+    var base=S5.slice(0,S5GATE+1);
+    if(s5choice==='y')return base.concat(S5.slice(S5GATE+1));
+    if(s5choice==='n')return base.concat(S5ALT);
+    return base;
+  }
+  function s5draw(){
+    var eff=s5steps(), html='';
+    var pending=(s5i===S5GATE+1&&s5choice===null);
+    for(var i=0;i<s5i&&i<eff.length;i++){var s=eff[i];
+      if(s.k==='G'){
+        if(pending)html+='<div style="margin:10px 0;padding:12px 18px;border-radius:8px;background:#F8E7E4;border:1px solid #E2A89F;color:#B94A3D">⚠ '+s.t+'<br><span style="display:inline-block;margin-top:9px"><button class="btn" data-g="y" style="background:#007A74;color:#fff;border-color:#007A74;font-size:19px;padding:7px 20px">✔ 승인</button> <button class="btn" data-g="n" style="background:#B94A3D;color:#fff;border-color:#B94A3D;font-size:19px;padding:7px 20px">✖ 거부</button></span></div>';
+        else html+='<div style="margin:10px 0;padding:11px 18px;border-radius:8px;background:#F8E7E4;border:1px solid #E2A89F;color:#B94A3D">⚠ '+s.t+' &nbsp;<span style="background:'+(s5choice==='y'?'#007A74':'#B94A3D')+';color:#fff;padding:2px 12px;font-size:18px;border-radius:999px">'+(s5choice==='y'?'승인됨 → 실행 계속':'거부됨 → 쓰기 없이 보고만')+'</span></div>';
+      }
+      else html+='<div style="margin:7px 0"><span style="display:inline-block;width:140px;color:'+S5COL[s.k]+';font-weight:700">'+S5LAB[s.k]+'</span><span style="color:'+(s.k==='O'?'#586A76':'#10202A')+'">'+s.t+'</span></div>';
+    }
+    var total=(s5choice===null)?S5.length:eff.length;
+    if(s5choice!==null&&s5i>=eff.length)html+='<div style="margin-top:14px;color:#005F5A;font-weight:700">— 루프 종료 — '+(s5choice==='n'?'거부 분기: 에이전트는 관찰·제안까지만, 실행은 사람이.':'승인 분기: 게이트 통과 후에만 쓰기 실행.')+'</div>';
+    else if(pending)html+='<div style="margin-top:12px;color:#B94A3D;font-weight:700">⏸ 게이트에서 정지 — 위의 승인/거부를 선택해야 진행됩니다.</div>';
+    else html+='<div style="margin-top:12px;color:#9FB2BD">▶ "다음 단계"를 눌러 진행 ('+s5i+' / '+total+')</div>';
+    document.getElementById('s5log').innerHTML=html;
+  }
+  var s5n=document.getElementById('s5next');
+  if(s5n){
+    s5n.onclick=function(){
+      if(s5i===S5GATE+1&&s5choice===null)return; // gate: wait for human
+      if(s5i<s5steps().length||s5choice===null&&s5i<=S5GATE){s5i++;s5draw();}
+    };
+    document.getElementById('s5reset').onclick=function(){s5i=0;s5choice=null;s5draw();};
+    document.getElementById('s5log').addEventListener('click',function(e){
+      var b=e.target.closest('[data-g]');if(!b)return;
+      s5choice=b.getAttribute('data-g')==='y'?'y':'n';
+      s5i++; s5draw();
+    });
+    s5draw();
+  }
+})();
+</script>
+</body>
+</html>

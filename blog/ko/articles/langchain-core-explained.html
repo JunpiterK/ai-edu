@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+ ="SEO =" 
+<title>LangChain core 설명: LLM, prompt, LCEL pipeline - AI Edu Archive 한국어</title>
+<meta content="LangChain core를 함수 단위로 설명합니다: ChatModel 호출, ChatPromptTemplate, output parser, LCEL pipe, RunnableParallel, RunnablePassthrough를 local LLM/RAG app에서 쓰는 방법." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/langchain-core-explained.html" rel="canonical"/><link href="https://ai-edu-archive.example.com/blog/articles/langchain-core-explained.html" hreflang="en" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/ko/articles/langchain-core-explained.html" hreflang="ko" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/articles/langchain-core-explained.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+ 오픈 그래프 
+<meta content="article" property="og:type"/>
+<meta content="LangChain core 설명: LLM, prompt, LCEL pipeline - AI Edu Archive 한국어" property="og:title"/>
+<meta content="LangChain core를 함수 단위로 설명합니다: ChatModel 호출, ChatPromptTemplate, output parser, LCEL pipe, RunnableParallel, RunnablePassthrough를 local LLM/RAG app에서 쓰는 방법." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="https://ai-edu-archive.example.com/blog/ko/articles/langchain-core-explained.html" property="og:url"/>
+<meta content="ko_KR" property="og:locale"/>
+<meta content="en_US" property="og:locale:alternate"/>
+<meta content="2026-07-04" property="article:published_time"/>
+<meta content="AI Edu Archive" property="article:author"/>
+<meta content="Python Stack" property="article:section"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="LangChain core 설명: LLM, prompt, LCEL pipeline - AI Edu Archive 한국어" name="twitter:title"/>
+<meta content="LangChain core를 함수 단위로 설명합니다: ChatModel 호출, ChatPromptTemplate, output parser, LCEL pipe, RunnableParallel, RunnablePassthrough를 local LLM/RAG app에서 쓰는 방법." name="twitter:description"/>
+ JSON-LD: 기사 스키마 
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "LangChain core 설명: LLM, prompt, LCEL pipeline",
+  "description": "LangChain core를 함수 단위로 설명합니다: ChatModel 호출, ChatPromptTemplate, output parser, LCEL pipe, RunnableParallel, RunnablePassthrough를 local LLM/RAG app에서 쓰는 방법.",
+  "inLanguage": "ko",
+  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/ko/articles/langchain-core-explained.html"
+  },
+  "name": "LangChain core 설명: LLM, prompt, LCEL pipeline",
+  "url": "https://ai-edu-archive.example.com/blog/ko/articles/langchain-core-explained.html"
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/blog.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive 홈" class="brand" href="../../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="주요 메뉴" class="nav-links">
+<a href="../../../index.html#courses">강의</a>
+<a href="../index.html">글</a>
+<a href="../about.html">소개</a>
+<div aria-label="언어 선택" class="language-switch"><a href="../../articles/langchain-core-explained.html" lang="en" title="English">🇺🇸 EN</a><a aria-current="true" href="langchain-core-explained.html" lang="ko" title="한국어">🇰🇷 KO</a><a href="../../articles/langchain-core-explained.html" lang="en" title="English shown for now">🇪🇸 ES</a><a href="../../articles/langchain-core-explained.html" lang="en" title="English shown for now">🇨🇳 ZH</a><a href="../../articles/langchain-core-explained.html" lang="en" title="English shown for now">🇯🇵 JA</a><a href="../../articles/langchain-core-explained.html" lang="en" title="English shown for now">🇩🇪 DE</a><a href="../../articles/langchain-core-explained.html" lang="en" title="English shown for now">🇫🇷 FR</a></div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article itemscope="" itemtype="https://schema.org/Article">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="탐색경로" class="breadcrumb">
+<a href="../../../index.html">홈</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">저널</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">LangChain core 설명</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag">Python Stack</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-04" itemprop="datePublished">2026년 7월 4일</time>
+<span class="post-dot"></span>
+<span class="rt">14분 읽기</span>
+</div>
+<h1 itemprop="headline">LangChain core 설명: LLM, prompt, LCEL pipeline</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>Semiconductor process engineer · Air-gapped LLM / RAG / Agents</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="목차" class="toc">
+<div class="toc-title">On this page</div>
+<ol>
+<li><a href="#why">LangChain이 실제로 해결하는 것</a></li>
+<li><a href="#chatmodel">ChatModel: ChatOllama로 on-prem model 연결하기</a></li>
+<li><a href="#prompt">Prompt: ChatPromptTemplate.from_messages</a></li>
+<li><a href="#parser">Output parser: 느슨한 text에서 typed object까지</a></li>
+<li><a href="#lcel">LCEL과 Runnable: pipeline을 묶는 pipe</a></li>
+<li><a href="#rag">RunnableParallel과 RunnablePassthrough로 context 주입하기</a></li>
+<li><a href="#next">다음 단계: chain에서 agent로</a></li>
+</ol>
+</nav>
+<div class="article-body" itemprop="articleBody">
+<p>LangChain core는 LLM 주변의 마법이 아닙니다. prompt, model, parser, retriever, tool을 같은 방식으로 조합하게 해주는 작은 interface 집합입니다. 이 interface를 이해하면 local LLM app은 callback 더미가 아니라 data pipeline처럼 보이기 시작합니다.</p>
+<h2 id="why">LangChain이 실제로 해결하는 것</h2>
+<p>LangChain이 해결하는 실전 문제는 교체 가능성입니다. local Ollama model을 다른 provider로 바꾸고, retrieval을 건드리지 않고 prompt를 바꾸고, string parser를 JSON parser로 교체하고, chain 전체를 다시 쓰지 않고 stream을 붙이고 싶을 때 core abstraction이 필요합니다.</p>
+<p>On-prem 작업에서는 이것이 중요합니다. prototype은 gaming GPU의 7B model에서 시작했다가 더 큰 quantized model로 옮겨가고, 나중에는 internal API 뒤에서 돌 수 있습니다. model endpoint가 바뀔 때마다 application code가 무너지면 안 됩니다.</p>
+<blockquote>
+        LangChain의 가치는 어느 하나의 클래스가 아닙니다. 프롬프트, 모델,
+        파서와 리트리버는 모두 동일한 인터페이스를 사용하므로 구성합니다.
+        유닉스 파이프처럼요.
+        <cite>— LCEL의 요점</cite>
+</blockquote>
+<h2 id="chatmodel">ChatModel: ChatOllama로 on-prem model 연결하기</h2>
+<p>ChatModel은 model-facing abstraction입니다. local lab에서는 ChatOllama가 가장 단순한 출발점입니다. Ollama server와 통신하고 chat message를 반환합니다. model name, temperature, context length 등을 설정한 뒤 같은 Runnable interface로 invoke, stream, batch를 호출합니다.</p>
+<p>핵심 mental model은 model이 raw string이 아니라 message를 받는다는 점입니다. system message는 policy와 role을 담고, human message는 user task를 담고, AI message는 이전 응답입니다. LangChain은 provider마다 JSON payload를 직접 만드는 대신 이 구조를 명시적으로 유지합니다.</p>
+<p>Prompt template은 variable을 message로 바꿉니다. ChatPromptTemplate.from_messages가 핵심 도구인 이유는 system instruction을 한 번 쓰고 runtime에 user-specific field를 주입할 수 있기 때문입니다. 결과는 reusable Runnable입니다. dictionary를 넣으면 prompt value가 나옵니다.</p>
+<ul>
+<li><code>invoke(x)</code> — 하나의 입력, 하나의 전체 답변. 완료될 때까지 차단합니다.</li>
+<li><code>stream(x)</code> — 라이브 UI에 대해 생성된 토큰을 생성합니다.</li>
+<li><code>batch([x1, x2, …])</code> — 한 번에 많은 입력이 내장되어 있습니다.
+        동시성. 로그 스택에 레이블을 지정하는 데 이상적입니다.</li>
+</ul>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            chat_model.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># pip install langchain-ollama  (LangChain 0.3+, Pydantic v2)</span>
+<span class="tok-kw">from</span> langchain_ollama <span class="tok-kw">import</span> ChatOllama
+
+llm = <span class="tok-fn">ChatOllama</span>(
+    model=<span class="tok-str">"llama3.1"</span>,                       <span class="tok-com"># local weights, pulled once</span>
+    base_url=<span class="tok-str">"http://gpu-node.fab.local:11434"</span>,  <span class="tok-com"># on-prem, no egress</span>
+    temperature=<span class="tok-num">0</span>,                            <span class="tok-com"># deterministic for process work</span>
+    num_predict=<span class="tok-num">512</span>,                          <span class="tok-com"># cap generated tokens</span>
+)
+
+<span class="tok-com"># invoke: one shot, full answer</span>
+msg = llm.<span class="tok-fn">invoke</span>(<span class="tok-str">"Summarize this alarm in one line: CVD-07 Ar MFC drift +3%."</span>)
+<span class="tok-fn">print</span>(msg.content)
+
+<span class="tok-com"># stream: token by token (live SOP assistant)</span>
+<span class="tok-kw">for</span> chunk <span class="tok-kw">in</span> llm.<span class="tok-fn">stream</span>(<span class="tok-str">"Explain plasma cleaning in two sentences."</span>):
+    <span class="tok-fn">print</span>(chunk.content, end=<span class="tok-str">""</span>, flush=<span class="tok-kw">True</span>)
+
+<span class="tok-com"># batch: label a stack of logs in one concurrent call</span>
+logs = [<span class="tok-str">"PM idle 12min"</span>, <span class="tok-str">"RF reflected power spike"</span>, <span class="tok-str">"chamber vent OK"</span>]
+answers = llm.<span class="tok-fn">batch</span>(logs)</code></pre>
+</figure>
+<p>Prompt는 지루하고 test 가능하게 유지하세요. 안정적인 behavior는 system message에, user content는 human message에, retrieved context는 명확한 field에 넣습니다. 그래야 잘못된 답이 model 때문인지, prompt 때문인지, retrieved evidence 때문인지 구분하기 쉽습니다.</p>
+<h2 id="prompt">Prompt: ChatPromptTemplate.from_messages</h2>
+<p>Model은 message를 반환합니다. 하지만 application은 string, JSON, Pydantic object, list, routing label이 필요할 때가 많습니다. Output parser는 느슨한 model output을 program의 나머지 부분이 기대하는 shape로 바꿉니다. StrOutputParser가 가장 단순하고, format이 중요하면 structured parser가 다음 단계입니다.</p>
+<p>Blog workflow라면 parser가 title, summary, slug, tags를 반환할 수 있습니다. Fab workflow라면 risk_level, reason, required_approval을 반환할 수 있습니다. 핵심은 같습니다. downstream code는 그럴듯한 paragraph가 아니라 contract에 의존해야 합니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            프롬프트.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain_core.prompts <span class="tok-kw">import</span> ChatPromptTemplate
+
+prompt = ChatPromptTemplate.<span class="tok-fn">from_messages</span>([
+    (<span class="tok-str">"system"</span>, <span class="tok-str">"You are a fab process assistant. "</span>
+               <span class="tok-str">"Answer only from the given context. Reply in {language}."</span>),
+    (<span class="tok-str">"human"</span>,  <span class="tok-str">"Context:\n{context}\n\nQuestion: {question}"</span>),
+])
+
+<span class="tok-com"># Bind variables -&gt; a ready-to-send message list</span>
+messages = prompt.<span class="tok-fn">invoke</span>({
+    <span class="tok-str">"language"</span>: <span class="tok-str">"Korean"</span>,
+    <span class="tok-str">"context"</span>: <span class="tok-str">"SOP-CVD-07: purge 30s before vent."</span>,
+    <span class="tok-str">"question"</span>: <span class="tok-str">"How long is the purge?"</span>,
+})</code></pre>
+</figure>
+<p>LCEL, LangChain Expression Language는 prompt | model | parser 형태의 pipe syntax입니다. 각 piece는 Runnable입니다. 그래서 전체 chain은 invoke, batch, stream, composition이라는 공통 interface를 갖습니다.</p>
+<h2 id="parser">Output parser: 느슨한 text에서 typed object까지</h2>
+<p>이 syntax를 배울 가치가 있는 이유는 단순히 예쁜 function composition이 아니기 때문입니다. chain을 inspect, swap, test하기 쉬워집니다. 한 piece가 바뀌어도 주변 pipeline은 대체로 그대로 유지됩니다.</p>
+<p>RunnableParallel과 RunnablePassthrough는 simple chain에서 RAG-style chain으로 넘어가는 다리입니다. RunnablePassthrough는 user question을 그대로 유지합니다. RunnableParallel은 question과 context처럼 여러 field를 동시에 계산합니다. 그러면 prompt는 정돈된 dictionary를 받습니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            파서.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain_core.output_parsers <span class="tok-kw">import</span> StrOutputParser
+<span class="tok-kw">from</span> pydantic <span class="tok-kw">import</span> BaseModel, Field   <span class="tok-com"># Pydantic v2, native in 0.3+</span>
+
+<span class="tok-com"># 1) Plain string out</span>
+str_parser = <span class="tok-fn">StrOutputParser</span>()
+
+<span class="tok-com"># 2) Structured out: a typed schema the model must fill</span>
+<span class="tok-kw">class</span> <span class="tok-fn">AlarmTriage</span>(BaseModel):
+    severity: <span class="tok-fn">str</span> = <span class="tok-fn">Field</span>(description=<span class="tok-str">"low | medium | high"</span>)
+    subsystem: <span class="tok-fn">str</span> = <span class="tok-fn">Field</span>(description=<span class="tok-str">"e.g. gas, RF, vacuum"</span>)
+    action: <span class="tok-fn">str</span> = <span class="tok-fn">Field</span>(description=<span class="tok-str">"one recommended next step"</span>)
+
+triage_llm = llm.<span class="tok-fn">with_structured_output</span>(AlarmTriage)
+result = triage_llm.<span class="tok-fn">invoke</span>(<span class="tok-str">"RF reflected power spiked to 40W on ETCH-03."</span>)
+
+<span class="tok-fn">print</span>(result.severity, result.subsystem, result.action)  <span class="tok-com"># validated fields</span></code></pre>
+</figure>
+<p>Typical RAG chain은 이렇게 생겼습니다. question을 받고, document를 retrieve해서 context로 만들고, 원래 question을 유지하고, 둘을 prompt에 넣고, model을 호출하고, answer를 parse합니다. 특별한 RAG 마법은 없습니다. retrieval branch가 하나 추가된 Runnable composition입니다.</p>
+<h2 id="lcel">LCEL과 Runnable: pipeline을 묶는 pipe</h2>
+<p>흔한 실수는 하나의 function 안에 너무 많은 것을 숨기는 것입니다. retrieve, format, prompt, model call, parse, log를 한 function이 모두 하면 각 부분을 test하기 어렵습니다. LCEL은 작고 이름 있는 step을 만들게 합니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            lcel_chain.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># prompt -&gt; model -&gt; parser, composed with the pipe (LCEL)</span>
+chain = prompt | llm | <span class="tok-fn">StrOutputParser</span>()
+
+<span class="tok-com"># The whole chain is itself a Runnable — same three methods:</span>
+chain.<span class="tok-fn">invoke</span>({<span class="tok-str">"language"</span>: <span class="tok-str">"Korean"</span>,
+             <span class="tok-str">"context"</span>: sop_text,
+             <span class="tok-str">"question"</span>: <span class="tok-str">"How long is the purge?"</span>})
+
+<span class="tok-kw">for</span> tok <span class="tok-kw">in</span> chain.<span class="tok-fn">stream</span>({...}):   <span class="tok-com"># streaming, for free</span>
+    <span class="tok-fn">print</span>(tok, end=<span class="tok-str">""</span>)
+
+chain.<span class="tok-fn">batch</span>([{...}, {...}])       <span class="tok-com"># batching, for free</span>
+<span class="tok-kw">await</span> chain.<span class="tok-fn">ainvoke</span>({...})        <span class="tok-com"># async, for free</span></code></pre>
+</figure>
+<p>Chain에 conditional routing, retry, human approval, durable state가 필요해지면 LangChain core에서 LangGraph로 넘어갈 때입니다. Core는 composable step을 주고, LangGraph는 다음에 어떤 step이 실행될지 결정하는 state machine을 줍니다.</p>
+<figure>
+<div aria-label="LCEL 파이프라인 흐름도" class="diagram">
+<svg aria-label="LCEL pipeline: input dict flows through prompt, model, and parser to a typed result, with streaming, batch, and async available across the whole pipe" role="img" viewbox="0 0 720 250" width="100%">
+<rect fill="#FCFBF8" height="248" rx="12" stroke="#E8E4DB" width="718" x="1" y="1"></rect>
+<!-- input -->
+<rect fill="#F3EFE6" height="58" rx="9" stroke="#DBD5C8" width="120" x="24" y="96"></rect>
+<text fill="#3A362F" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="84" y="120">input dict</text>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="84" y="140">{question…}</text>
+<!-- arrow 1 -->
+<line stroke="#C15F3C" stroke-width="2" x1="150" x2="188" y1="125" y2="125"></line>
+<path d="M188 125 l-9 -5 v10 z" fill="#C15F3C"></path>
+<text fill="#C15F3C" font-family="JetBrains Mono, monospace" font-size="15" font-weight="500" text-anchor="middle" x="169" y="112">|</text>
+<!-- prompt -->
+<rect fill="#FCFBF8" height="58" rx="9" stroke="#C15F3C" width="120" x="194" y="96"></rect>
+<text fill="#3A362F" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="254" y="120">prompt</text>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="254" y="140">messages</text>
+<!-- arrow 2 -->
+<line stroke="#C15F3C" stroke-width="2" x1="320" x2="358" y1="125" y2="125"></line>
+<path d="M358 125 l-9 -5 v10 z" fill="#C15F3C"></path>
+<text fill="#C15F3C" font-family="JetBrains Mono, monospace" font-size="15" font-weight="500" text-anchor="middle" x="339" y="112">|</text>
+<!-- model -->
+<rect fill="#FCFBF8" height="58" rx="9" stroke="#C15F3C" width="120" x="364" y="96"></rect>
+<text fill="#3A362F" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="424" y="120">model</text>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="424" y="140">ChatOllama</text>
+<!-- arrow 3 -->
+<line stroke="#C15F3C" stroke-width="2" x1="490" x2="528" y1="125" y2="125"></line>
+<path d="M528 125 l-9 -5 v10 z" fill="#C15F3C"></path>
+<text fill="#C15F3C" font-family="JetBrains Mono, monospace" font-size="15" font-weight="500" text-anchor="middle" x="509" y="112">|</text>
+<!-- parser -->
+<rect fill="#F3EFE6" height="58" rx="9" stroke="#DBD5C8" width="120" x="534" y="96"></rect>
+<text fill="#3A362F" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="594" y="120">parser</text>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="594" y="140">result</text>
+<!-- capabilities band -->
+<text fill="#3A362F" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="360" y="46">one Runnable interface across the whole pipe</text>
+<text fill="#8A6D3B" font-family="JetBrains Mono, monospace" font-size="14" text-anchor="middle" x="360" y="206">.invoke( )   .stream( )   .batch( )   .ainvoke( )</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="360" y="228">streaming · batching · async — inherited for free</text>
+</svg>
+</div>
+<figcaption>그림 1. LCEL 파이프. 입력은 왼쪽에서 오른쪽으로 흐릅니다.
+        <code>prompt | model | parser</code>; 각 단계는 Runnable이기 때문에
+        구성된 체인은 추가 코드 없이 호출/스트림/배치/비동기를 노출합니다.
+        LCEL 파이프 리소스도 — 각 단계가 Runnable 이라 스트리밍·배치·비동기 자체 그대로 콘텐츠입니다.</figcaption>
+</figure>
+<h2 id="rag">RunnableParallel과 RunnablePassthrough로 context 주입하기</h2>
+<p>깔끔한 진행 순서는 plain chat chain, structured output, tiny RAG, one safe tool, router graph, approval workflow입니다. 각 layer는 단일 prompt에 complexity를 쌓는 대신 이유 있는 capability를 하나씩 추가합니다.</p>
+<ul>
+<li><code>RunnableParallel</code> — 동일한 입력에서 여러 Runnable을 실행합니다.
+        동시에 출력의 사전을 반환합니다. 체인의 Y-포크.</li>
+<li><code>RunnablePassthrough</code> — 입력을 변경하지 않고 전달하므로 원시
+        질문은 새로 검색된 컨텍스트와 함께 살아남습니다.</li>
+</ul>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            rag_chain.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain_core.runnables <span class="tok-kw">import</span> RunnableParallel, RunnablePassthrough
+<span class="tok-kw">from</span> langchain_core.output_parsers <span class="tok-kw">import</span> StrOutputParser
+
+<span class="tok-com"># retriever = an on-prem vector store's .as_retriever() (also a Runnable)</span>
+<span class="tok-kw">def</span> <span class="tok-fn">format_docs</span>(docs):
+    <span class="tok-kw">return</span> <span class="tok-str">"\n\n"</span>.<span class="tok-fn">join</span>(d.page_content <span class="tok-kw">for</span> d <span class="tok-kw">in</span> docs)
+
+<span class="tok-com"># Fork: fetch context AND keep the question, in parallel</span>
+setup = <span class="tok-fn">RunnableParallel</span>(
+    context=retriever | format_docs,   <span class="tok-com"># retrieve, then flatten to text</span>
+    question=<span class="tok-fn">RunnablePassthrough</span>(),   <span class="tok-com"># pass the query straight through</span>
+)
+
+rag_chain = setup | prompt | llm | <span class="tok-fn">StrOutputParser</span>()
+
+rag_chain.<span class="tok-fn">invoke</span>(<span class="tok-str">"What purge time does SOP-CVD-07 require before vent?"</span>)</code></pre>
+</figure>
+<p>Local/on-prem portfolio에서는 이 글이 foundation입니다. ChatModel, PromptTemplate, Parser, Runnable, LCEL을 명확히 설명할 수 있으면 RAG, tool, MCP, agent는 자연스러운 확장이 됩니다.</p>
+<hr/>
+<h2 id="next">다음 단계: chain에서 agent로</h2>
+<p>이 글은 현장 노트입니다. 인터랙티브 deck은 local LLM과 RAG stack을 diagram과 구현 예제로 slide by slide 설명합니다.</p>
+<p>물리학 박사(IGZO / graphene 반도체 물성)이며 증착 공정을 수행하는 반도체 공정 엔지니어입니다. 팹을 위한 air-gapped LLM, RAG, agent 시스템과 강화학습·이상탐지 도구를 구축합니다. 이곳에서는 공정 know-how를 네트워크 밖으로 나가지 않는 온프레미스 지식 자산으로 바꾸는 방법을 씁니다.</p>
+</div>
+ 심층적인 데크 링크 
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">더 깊게 보기</span>
+<h3>이 주제의 전체 과정 보기</h3>
+<p>강의와 저널의 모든 콘텐츠는 회원가입 없이 무료로 읽을 수 있습니다.</p>
+</div>
+<a class="btn btn-primary" href="../../../overview/index.html">deck 열기 <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+ 공유 
+<div class="share">
+<span class="lbl">공유</span>
+<button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">공유/링크 복사</button>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">엑스 / 트위터</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">링크드인</a>
+</div>
+ 저자 바이오 카드(E-E-A-T) 
+<aside class="author-card">
+<span aria-hidden="true" class="avatar">AE</span>
+<div class="a-body">
+<div class="k">저자 소개</div>
+<h3>AI Edu Archive</h3>
+<p>아래 관련 글은 core module에서 implementation pattern과 stateful workflow로 이어집니다.</p>
+<a href="../about.html">저자에 대해 더 알아보기 →</a>
+</div>
+</aside>
+ 관련된 
+<section aria-label="관련 기사" class="related">
+<span class="eyebrow">계속 읽기</span>
+<h2>저널의 관련 글</h2>
+<div class="related-grid">
+<a class="rel-card" href="rag-over-sealed-documents.html">
+<span class="cat-tag">Python Stack</span>
+<h3>Lang 모듈 구현 가이드</h3>
+</a>
+<a class="rel-card" href="agents-mcp-mes.html">
+<span class="cat-tag">Python Stack</span>
+<h3>LangGraph: stateful, resumable agent workflow</h3>
+</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>무료로 깊게, 열린 방식으로</h2>
+<p>좋은 rule은 간단합니다. behavior를 증명하는 가장 작은 runnable chain부터 만들고, problem이 실제로 요구할 때만 retrieval, tool, graph state를 추가하세요.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>탐색</h4>
+<a href="../../index.html">허브 홈</a>
+<a href="../../../index.html#courses">모든 강의</a>
+<a href="../index.html">저널</a>
+</div>
+<div class="foot-col">
+<h4>강의</h4>
+<a href="../../../overview/index.html">Fab AI</a>
+<a href="../../../watsonx/index.html">Air-gapped LLM</a>
+<a href="../../../llm_apply/LLM_slide.html">Enterprise LLM</a>
+</div>
+<div class="foot-col">
+<h4>사이트</h4>
+<a href="../about.html">소개</a>
+<a href="../contact.html">연락</a>
+<a href="../privacy.html">개인정보</a>
+<a href="../terms.html">이용약관</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · 열린 한국어 AI 교육</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  // one-click copy for code figures
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig?fig.querySelector('pre'):null;
+      if(!code)return;
+      var text=code.innerText;
+      var done=function(){
+        btn.textContent='Copied';btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1600);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done,function(){});
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

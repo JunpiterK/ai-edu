@@ -1,0 +1,377 @@
+HTML
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+ ∨ SEO ​ 
+<title>한국어·기술 텍스트 임베딩 모델 고르기 - AI Edu Archive 한국어</title>
+<meta content="폐쇄망 팹 안에서 한국어-영어 혼합 문서와 기술 용어를 검색하기 위해 bge-m3, multilingual-e5 같은 로컬 임베딩 모델을 고르는 방법." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/embeddings-korean-technical.html" rel="canonical"/><link href="https://ai-edu-archive.example.com/blog/articles/embeddings-korean-technical.html" hreflang="en" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/ko/articles/embeddings-korean-technical.html" hreflang="ko" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/articles/embeddings-korean-technical.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+ 오픈 그래프 
+<meta content="article" property="og:type"/>
+<meta content="한국어·기술 텍스트 임베딩 모델 고르기 - AI Edu Archive 한국어" property="og:title"/>
+<meta content="폐쇄망 팹 안에서 한국어-영어 혼합 문서와 기술 용어를 검색하기 위해 bge-m3, multilingual-e5 같은 로컬 임베딩 모델을 고르는 방법." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="https://ai-edu-archive.example.com/blog/ko/articles/embeddings-korean-technical.html" property="og:url"/>
+<meta content="ko_KR" property="og:locale"/>
+<meta content="en_US" property="og:locale:alternate"/>
+<meta content="2026-07-04" property="article:published_time"/>
+<meta content="AI Edu Archive" property="article:author"/>
+<meta content="RAG" property="article:section"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="한국어·기술 텍스트 임베딩 모델 고르기 - AI Edu Archive 한국어" name="twitter:title"/>
+<meta content="폐쇄망 팹 안에서 한국어-영어 혼합 문서와 기술 용어를 검색하기 위해 bge-m3, multilingual-e5 같은 로컬 임베딩 모델을 고르는 방법." name="twitter:description"/>
+ JSON-LD: 기사 스키마 
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "한국어·기술 텍스트 임베딩 모델 고르기",
+  "description": "폐쇄망 팹 안에서 한국어-영어 혼합 문서와 기술 용어를 검색하기 위해 bge-m3, multilingual-e5 같은 로컬 임베딩 모델을 고르는 방법.",
+  "inLanguage": "ko",
+  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/ko/articles/embeddings-korean-technical.html"
+  },
+  "name": "한국어·기술 텍스트 임베딩 모델 고르기",
+  "url": "https://ai-edu-archive.example.com/blog/ko/articles/embeddings-korean-technical.html"
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/blog.css" rel="stylesheet"/>
+</head>
+<body data-cat="rag">
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive — 홈" class="brand" href="../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="주요 메뉴" class="nav-links">
+<a href="../../../index.html#courses">강의</a>
+<a href="../index.html">글</a>
+<a href="../about.html">소개</a>
+<div aria-label="언어 선택" class="language-switch"><a href="../../articles/embeddings-korean-technical.html" lang="en" title="English">🇺🇸 EN</a><a aria-current="true" href="embeddings-korean-technical.html" lang="ko" title="한국어">🇰🇷 KO</a><a href="../../articles/embeddings-korean-technical.html" lang="en" title="스페인어판은 추후 추가 예정이며 현재는 영어로 표시됩니다">🇪🇸 ES</a><a href="../../articles/embeddings-korean-technical.html" lang="en" title="중국어판은 추후 추가 예정이며 현재는 영어로 표시됩니다">🇨🇳 ZH</a><a href="../../articles/embeddings-korean-technical.html" lang="en" title="일본어판은 추후 추가 예정이며 현재는 영어로 표시됩니다">🇯🇵 JA</a><a href="../../articles/embeddings-korean-technical.html" lang="en" title="독일어판은 추후 추가 예정이며 현재는 영어로 표시됩니다">🇩🇪 DE</a><a href="../../articles/embeddings-korean-technical.html" lang="en" title="프랑스어판은 추후 추가 예정이며 현재는 영어로 표시됩니다">🇫🇷 FR</a></div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article itemscope="" itemtype="https://schema.org/Article">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="탐색경로" class="breadcrumb">
+<a href="../../index.html">홈</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">저널</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">한국어·기술 텍스트 임베딩 모델 고르기</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag">RAG</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-04" itemprop="datePublished">2026년 7월 4일</time>
+<span class="post-dot"></span>
+<span class="rt">10분 읽기</span>
+</div>
+<h1 itemprop="headline">한국어·기술 텍스트 임베딩 모델 고르기</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>반도체 공정 엔지니어 · Air-gapped LLM/RAG/에이전트</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="목차" class="toc">
+<div class="toc-title">이 페이지에서</div>
+<ol>
+<li>임베딩 모델이 RAG 품질을 결정하는 이유</li>
+<li>두 후보: bge-m3와 multilingual-e5</li>
+<li>한국어-영어 혼합 문서와 기술 용어</li>
+<li>차원, 정규화, 유사도</li>
+<li>로컬 임베딩 모델을 오프라인으로 로드하기</li>
+<li>도입 전에 자체 데이터로 평가하기</li>
+</ol>
+</nav>
+<div class="article-body" itemprop="articleBody">
+<p>리트리버의 품질은 벡터 품질을 넘지 못합니다. 폐쇄망 팹에서는 호스팅 임베딩 API를 호출할 수 없습니다. 모델 가중치는 사내 네트워크 안, 직접 관리하는 GPU 위에 있어야 합니다. 이 제약은 선택지를 좁히고, 많은 RAG 튜토리얼이 건너뛰는 결정을 강제합니다. 한국어, 영어, 부품 번호, 챔버 ID, 내부 약어가 섞인 문서를 실제로 이해하는 임베딩 모델을 골라야 합니다.</p>
+<h2 id="why">임베딩 모델이 RAG 품질을 결정하는 이유</h2>
+<p>임베딩 모델은 텍스트를 벡터로 바꾸고, 의미가 비슷한 텍스트가 가까운 위치에 놓이도록 만듭니다. 검색은 결국 이 벡터 공간에서 가까운 이웃을 찾는 일입니다. 모델이 한국어 질문과 그 답을 담은 영어 문서를 멀리 떨어뜨려 놓으면, 이후 LLM 프롬프트를 아무리 잘 써도 누락된 청크를 복구할 수 없습니다. 온프레미스 RAG가 답답하게 느껴질 때 가장 먼저 봐야 할 곳이 임베딩입니다.</p>
+<blockquote>LLM은 나중에 바꿀 수 있습니다. 하지만 임베딩 모델은 리트리버가 찾을 수 있는 세계의 경계를 조용히 결정합니다.</blockquote>
+<h2 id="candidates">두 후보: bge-m3와 multilingual-e5</h2>
+<p>완전 오프라인으로 실행해야 하는 한국어-영어 혼합 문서에서는 두 오픈 웨이트 계열이 실용적인 출발점입니다. 둘 다 허용적 라이선스로 사용할 수 있고 단일 GPU에서도 서빙 가능한 크기입니다.</p>
+<ul>
+<li>bge-m3(BAAI): 약 560M 파라미터, 1024차원 dense vector, 최대 8192 토큰 컨텍스트, 100개 이상 언어를 지원합니다. query instruction prefix가 필요 없어 질문과 문서를 같은 방식으로 임베딩합니다.</li>
+<li>multilingual-e5-large(intfloat): 1024차원이며 다국어 성능이 강하지만 prefix가 필요합니다. 모든 질문은 query:로, 저장 문서는 passage:로 시작해야 합니다. prefix를 빼먹으면 유사도 품질이 조용히 떨어집니다.</li>
+</ul>
+<p>최근 다국어 검색 벤치마크에서는 한국어 비중이 큰 작업에서 bge-m3가 자주 우세하며, 긴 컨텍스트도 SOP 섹션이 길 때 유리합니다. 첫 폐쇄망 구축이라면 bge-m3를 기본값으로 두는 편이 안전합니다. multilingual-e5는 자체 데이터 평가에서 비교 후보로 두기에 좋습니다.</p>
+<h2 id="jargon">한국어-영어 혼합 문서와 기술 용어</h2>
+<p>일반 다국어 모델은 일상적인 이중언어 텍스트를 잘 처리합니다. 팹에서 어려운 부분은 모델이 거의 보지 못했을 용어입니다. PECVD-03B 같은 챔버명, 결함 코드, 내부 약어는 subword tokenizer에서 의미 없는 조각으로 쪼개질 수 있습니다. 엔지니어가 보면 분명 관련 있는 문서도 벡터 공간에서는 멀어질 수 있습니다. 실용적인 완화책은 세 가지입니다.</p>
+<ul>
+<li>식별자를 청크 텍스트에 남깁니다. 전처리 중 부품 번호, 챔버 ID, 결함 코드를 제거하지 마세요. 질문에 정확한 이름이 들어올 때 강한 검색 앵커가 됩니다.</li>
+<li>하이브리드 키워드 채널을 추가합니다. dense vector를 BM25 같은 sparse 채널과 함께 써서 lot ID처럼 정확히 일치해야 하는 용어를 항상 찾을 수 있게 합니다.</li>
+<li>평가가 필요하다고 보여줄 때만 fine-tuning을 고려합니다. 도메인 fine-tuning은 실제 운영 부담이 크고 폐쇄망에서는 유지관리 비용도 큽니다. 시작점이 아니라 마지막 수단으로 다루세요.</li>
+</ul>
+<h2 id="normalize">차원, 정규화, 유사도</h2>
+<p>두 모델 모두 1024차원 벡터를 출력합니다. 하지만 숫자 자체보다 다음 두 설정이 더 중요합니다.</p>
+<ul>
+<li>벡터를 정규화합니다. normalize_embeddings=True를 설정하세요. 모든 벡터가 단위 길이가 되면 dot product와 cosine similarity가 같아지고, 많은 벡터 스토어에서 빠른 inner-product index를 쓸 수 있습니다.</li>
+<li>일관성을 유지합니다. 인덱싱과 질의에 같은 metric을 사용하세요. 임베딩 모델을 바꾸면 전체 코퍼스를 다시 임베딩해야 합니다. 예전 벡터 공간과 새 벡터 공간은 비교할 수 없습니다.</li>
+</ul>
+<figure>
+<div aria-label="삽입 및 검색 파이프라인 다이어그램" class="diagram">
+<svg aria-label="Korean-English SOP text is chunked, embedded by a local model into 1024-dim normalized vectors, indexed with cosine similarity, and retrieved by a query vector — all inside the air gap." role="img" viewbox="0 0 640 260" width="100%">
+<rect fill="#FCFBF8" height="258" rx="12" stroke="#E8E4DB" width="638" x="1" y="1"></rect>
+<rect fill="#F4EFE6" height="92" rx="9" stroke="#E0D6C4" width="600" x="20" y="150"></rect>
+<text fill="#8A6D3B" font-family="JetBrains Mono, monospace" font-size="13" x="36" y="172">air-gapped network · 폐쇄망</text>
+<rect fill="#FFFFFF" height="60" rx="8" stroke="#DBD5C8" width="120" x="34" y="66"></rect>
+<text fill="#3A3833" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="94" y="92">한/EN SOP</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="94" y="110">chunks</text>
+<rect fill="#FFFFFF" height="60" rx="8" stroke="#DBD5C8" width="130" x="196" y="66"></rect>
+<text fill="#3A3833" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="261" y="90">bge-m3</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="261" y="110">local weights</text>
+<rect fill="#FFFFFF" height="60" rx="8" stroke="#DBD5C8" width="130" x="368" y="66"></rect>
+<text fill="#3A3833" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="433" y="90">1024-dim</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="433" y="110">normalized</text>
+<rect fill="#FBEDE7" height="60" rx="8" stroke="#E4B7A3" width="104" x="516" y="66"></rect>
+<text fill="#C15F3C" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="568" y="90">vector</text>
+<text fill="#C15F3C" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="568" y="110">index</text>
+<line marker-end="url(#ar)" stroke="#C7BFAE" stroke-width="2" x1="154" x2="194" y1="96" y2="96"></line>
+<line marker-end="url(#ar)" stroke="#C7BFAE" stroke-width="2" x1="326" x2="366" y1="96" y2="96"></line>
+<line marker-end="url(#ar)" stroke="#C7BFAE" stroke-width="2" x1="498" x2="514" y1="96" y2="96"></line>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="320" y="200">query → same model → cosine nearest-neighbor → top-k chunks</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="320" y="222">질의 → 동일 모델 → 코사인 최근접 → 상위 k개</text>
+<defs>
+<marker id="ar" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="3">
+<path d="M0 0 L6 3 L0 6 Z" fill="#C7BFAE"></path>
+</marker>
+</defs>
+</svg>
+</div>
+<figcaption>그림 1. 임베딩과 검색 루프 전체가 폐쇄망 안에 머뭅니다. 가중치는 로컬 디스크에서 로드되고, 런타임에는 인터넷에서 아무것도 다운로드하지 않습니다.</figcaption>
+</figure>
+<h2 id="code">로컬 임베딩 모델을 오프라인으로 로드하기</h2>
+<p>LangChain에서 Hugging Face 임베딩 모델을 실행할 때는 전용 langchain-huggingface 패키지를 사용하는 것이 현재 방식입니다. 폐쇄망 안으로 복사한 로컬 가중치 디렉터리를 지정하세요. 런타임에는 네트워크 호출이 없어야 합니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            embeddings_hf.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># Local bge-m3 via the current langchain-huggingface package</span>
+<span class="tok-com"># pip install langchain-huggingface (pulls sentence-transformers)</span>
+<span class="tok-kw">from</span> langchain_huggingface <span class="tok-kw">import</span> HuggingFaceEmbeddings
+
+embed = <span class="tok-fn">HuggingFaceEmbeddings</span>(
+    model_name=<span class="tok-str">"/opt/models/bge-m3"</span>,          <span class="tok-com"># weights on local disk</span>
+    model_kwargs={<span class="tok-str">"device"</span>: <span class="tok-str">"cuda"</span>},
+    encode_kwargs={<span class="tok-str">"normalize_embeddings"</span>: <span class="tok-kw">True</span>},  <span class="tok-com"># unit length → cosine</span>
+)
+
+vec = embed.<span class="tok-fn">embed_query</span>(<span class="tok-str">"PECVD-03B 챔버 압력 이상 대응 절차"</span>)
+<span class="tok-fn">print</span>(<span class="tok-fn">len</span>(vec))  <span class="tok-com"># 1024</span></code></pre>
+</figure>
+<p>bge-m3는 query 또는 passage prefix가 필요 없으므로 embed_query와 embed_documents에 원문 텍스트를 그대로 넣을 수 있습니다. multilingual-e5를 선택했다면 임베딩 전에 query:와 passage: prefix를 직접 붙여야 합니다. 이 prefix를 빼먹는 것은 조용히 품질을 떨어뜨리는 실패 모드입니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            embeddings_e5_prefix.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># multilingual-e5 REQUIRES query:/passage: prefixes</span>
+<span class="tok-kw">from</span> langchain_huggingface <span class="tok-kw">import</span> HuggingFaceEmbeddings
+
+e5 = <span class="tok-fn">HuggingFaceEmbeddings</span>(
+    model_name=<span class="tok-str">"/opt/models/multilingual-e5-large"</span>,
+    encode_kwargs={<span class="tok-str">"normalize_embeddings"</span>: <span class="tok-kw">True</span>},
+)
+
+<span class="tok-kw">def</span> <span class="tok-fn">embed_passages</span>(texts):
+    <span class="tok-kw">return</span> e5.<span class="tok-fn">embed_documents</span>([<span class="tok-str">f"passage: {t}"</span> <span class="tok-kw">for</span> t <span class="tok-kw">in</span> texts])
+
+<span class="tok-kw">def</span> <span class="tok-fn">embed_question</span>(q):
+    <span class="tok-kw">return</span> e5.<span class="tok-fn">embed_query</span>(<span class="tok-str">f"query: {q}"</span>)</code></pre>
+</figure>
+<p>이미 Ollama 기반 로컬 모델 서빙을 표준화했다면 langchain-ollama를 통해 임베딩 모델에 접근할 수도 있습니다. 오래된 community import 대신 전용 패키지를 사용하세요.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            embeddings_ollama.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># Same weights served by a local Ollama instance</span>
+<span class="tok-com"># pip install langchain-ollama</span>
+<span class="tok-kw">from</span> langchain_ollama <span class="tok-kw">import</span> OllamaEmbeddings
+
+embed = <span class="tok-fn">OllamaEmbeddings</span>(
+    model=<span class="tok-str">"bge-m3"</span>,
+    base_url=<span class="tok-str">"http://127.0.0.1:11434"</span>,  <span class="tok-com"># stays on the host</span>
+)
+
+vecs = embed.<span class="tok-fn">embed_documents</span>([<span class="tok-str">"증착 공정 SOP"</span>, <span class="tok-str">"deposition recipe"</span>])</code></pre>
+</figure>
+<p>그다음 선택한 임베더를 로컬 벡터 스토어에 연결합니다. Chroma는 이제 langchain-chroma 패키지에 있으며, 예전 langchain_community.vectorstores import는 더 이상 권장되지 않습니다.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file">
+<span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span>
+<span class="lang">python</span>
+            index_local.py
+          </span>
+<button class="copy-btn" data-copy="" type="button">복사</button>
+</div>
+<pre><code><span class="tok-com"># pip install langchain-chroma</span>
+<span class="tok-kw">from</span> langchain_chroma <span class="tok-kw">import</span> Chroma
+
+store = Chroma.<span class="tok-fn">from_documents</span>(
+    docs, embed,                              <span class="tok-com"># embed from the snippets above</span>
+    collection_metadata={<span class="tok-str">"hnsw:space"</span>: <span class="tok-str">"cosine"</span>},  <span class="tok-com"># match normalization</span>
+    persist_directory=<span class="tok-str">"/data/kb"</span>,             <span class="tok-com"># on-prem, no egress</span>
+)
+hits = store.<span class="tok-fn">similarity_search</span>(<span class="tok-str">"챔버 압력 이상"</span>, k=<span class="tok-num">4</span>)</code></pre>
+</figure>
+<h2 id="evaluate">도입 전에 자체 데이터로 평가하기</h2>
+<p>리더보드만 보고 모델을 고르지 마세요. 엔지니어가 실제로 묻는 질문 30-50개를 실제 언어 그대로 모으고, 각 질문의 정답이 되는 SOP 섹션을 기록하세요. 그런 다음 각 후보 모델이 top-k 안에서 그 섹션을 찾아오는지 측정합니다. 이 작은 평가 세트가 프로젝트에서 가장 가치 있는 산출물이 될 수 있습니다.</p>
+<hr/>
+<p>임베딩은 온프레미스 RAG의 조용한 기반입니다. 모델 선택, 정규화, 기술 용어 처리가 맞아야 나머지 검색·생성 파이프라인도 안정적으로 올라갑니다. 아래 전체 과정에서는 검색 스택을 끝까지 연결해 봅니다.</p>
+</div>
+ 심층적인 데크 링크 
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">더 깊이 들어가세요</span>
+<h3>폐쇄망 LLM과 RAG 전체 과정 보기</h3>
+<p>이 글은 현장 노트입니다. 연결된 인터랙티브 슬라이드에서는 검색과 임베딩 스택 전체를 다이어그램과 실행 예제로 설명합니다.</p>
+</div>
+<a class="btn btn-primary" href="../../../watsonx/index.html">데크를 열어보세요 <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+ 공유 
+<div class="share">
+<span class="lbl">공유</span>
+<button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">공유/링크 복사</button>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">엑스 / 트위터</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">링크드인</a>
+</div>
+ 저자 바이오 카드(E-E-A-T) 
+<aside class="author-card">
+<span aria-hidden="true" class="avatar">AE</span>
+<div class="a-body">
+<div class="k">저자 소개</div>
+<h3>AI Edu Archive</h3>
+<p>물리학 박사(IGZO / 그래핀 반도체 물성)이며 증착 공정을 다루는 반도체 프로세스 엔지니어입니다. 폐쇄망 LLM, RAG, 에이전트 시스템과 강화학습·이상탐지 도구를 팹 환경에 맞게 만드는 작업을 합니다. 이곳에는 공정 노하우를 외부로 내보내지 않고 온프레미스 지식 자산으로 바꾸는 방법을 씁니다.</p>
+<a href="../about.html">저자에 대해 더 알아보기 →</a>
+</div>
+</aside>
+ 관련된 
+<section aria-label="관련 기사" class="related">
+<span class="eyebrow">계속 읽으세요</span>
+<h2>저널의 관련 글</h2>
+<div class="related-grid">
+<a class="rel-card" href="rag-over-sealed-documents.html">
+<span class="cat-tag">RAG</span>
+<h3>폐쇄망 문서 기반 RAG: 폐쇄망 안에서 검색하기</h3>
+</a>
+<a class="rel-card" href="why-air-gapped-llm-manufacturing.html">
+<span class="cat-tag">온프레미스 LLM</span>
+<h3>왜 폐쇄망 LLM이 제조에 맞는가</h3>
+</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>무료로 깊게, 열린 방식으로</h2>
+<p>강좌와 저널 글은 모두 가입 없이 무료로 읽을 수 있습니다.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>탐구하다</h4>
+<a href="../../index.html">허브 홈</a>
+<a href="../../../index.html#courses">모든 강좌</a>
+<a href="../index.html">저널</a>
+</div>
+<div class="foot-col">
+<h4>학습</h4>
+<a href="../../../overview/index.html">팹 AI</a>
+<a href="../../../watsonx/index.html">에어갭 LLM</a>
+<a href="../../../llm_apply/LLM_slide.html">엔터프라이즈 LLM</a>
+</div>
+<div class="foot-col">
+<h4>사이트</h4>
+<a href="../about.html">소개</a>
+<a href="../contact.html">연락하다</a>
+<a href="../privacy.html">개인정보</a>
+<a href="../terms.html">이용약관</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · 한국형 AI 교육 공개</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig?fig.querySelector('pre'):null;
+      if(!code)return;
+      var text=code.innerText;
+      var done=function(){
+        btn.textContent='Copied';btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1600);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done,function(){});
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>On-prem LLM, MCP, and agents on a gaming GPU - AI Edu Archive Journal</title>
+<meta content="A step-by-step home PC series for running on-prem LLMs, MCP tools, RAG, coding agents, and Goose-style local automation on consumer gaming GPUs." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/consumer-gpu-onprem-llm-agent-lab.html" rel="canonical"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/consumer-gpu-onprem-llm-agent-lab.html" hreflang="ko" rel="alternate"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/consumer-gpu-onprem-llm-agent-lab.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+<meta content="article" property="og:type"/>
+<meta content="On-prem LLM, MCP, and agents on a gaming GPU - AI Edu Archive Journal" property="og:title"/>
+<meta content="A step-by-step home PC series for running on-prem LLMs, MCP tools, RAG, coding agents, and Goose-style local automation on consumer gaming GPUs." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="ko_KR" property="og:locale:alternate"/>
+<meta content="2026-07-06" property="article:published_time"/>
+<meta content="On-Prem LLM" property="article:section"/>
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "On-prem LLM, MCP, and agents on a gaming GPU",
+  "description": "A step-by-step home PC series for running on-prem LLMs, MCP tools, RAG, coding agents, and Goose-style local automation on consumer gaming GPUs.",
+  "inLanguage": "en",
+  "datePublished": "2026-07-06",
+  "dateModified": "2026-07-06",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive"
+  },
+  "url": "https://ai-edu-archive.example.com/blog/articles/consumer-gpu-onprem-llm-agent-lab.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/articles/consumer-gpu-onprem-llm-agent-lab.html"
+  },
+  "name": "On-prem LLM, MCP, and agents on a gaming GPU"
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../assets/blog.css" rel="stylesheet"/>
+<meta content="A step-by-step home PC series for running on-prem LLMs, MCP tools, RAG, coding agents, and Goose-style local automation on consumer gaming GPUs." name="twitter:description"/><meta content="On-prem LLM, MCP, and agents on a gaming GPU - AI Edu Archive Journal" name="twitter:title"/><meta content="https://ai-edu-archive.example.com/blog/articles/consumer-gpu-onprem-llm-agent-lab.html" property="og:url"/><link href="https://ai-edu-archive.example.com/blog/articles/consumer-gpu-onprem-llm-agent-lab.html" hreflang="en" rel="alternate"/></head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive home" class="brand" href="../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="Primary" class="nav-links">
+<a href="../../index.html#courses">Courses</a>
+<a href="../index.html">Articles</a>
+<a href="../portfolio.html">Portfolio</a>
+<a href="../about.html">About</a>
+<div aria-label="Language selector" class="language-switch">
+<a aria-current="true" href="consumer-gpu-onprem-llm-agent-lab.html" lang="en" title="English">🇺🇸 EN</a>
+<a href="../ko/articles/consumer-gpu-onprem-llm-agent-lab.html" lang="ko" title="한국어">🇰🇷 KO</a>
+<a href="consumer-gpu-onprem-llm-agent-lab.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a>
+<a href="consumer-gpu-onprem-llm-agent-lab.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a>
+<a href="consumer-gpu-onprem-llm-agent-lab.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a>
+<a href="consumer-gpu-onprem-llm-agent-lab.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a>
+<a href="consumer-gpu-onprem-llm-agent-lab.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a>
+</div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article itemscope="" itemtype="https://schema.org/TechArticle">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="Breadcrumb" class="breadcrumb">
+<a href="../../index.html">Home</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">Journal</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">On-prem LLM, MCP, and agents on a gaming GPU</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag">On-Prem LLM</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-06" itemprop="datePublished">Jul 6, 2026</time>
+<span class="post-dot"></span>
+<span class="rt">15 min read</span>
+</div>
+<h1 itemprop="headline">On-prem LLM, MCP, and agents on a gaming GPU</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>Semiconductor process engineer · Air-gapped LLM / RAG / Agents</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="Table of contents" class="toc">
+<div class="toc-title">On this page</div>
+<ol>
+<li>The promise: one normal PC</li>
+<li>Hardware tiers</li>
+<li>The series roadmap</li>
+<li>Part 1: local server with Ollama</li>
+<li>Part 2: Hugging Face 4-bit inference</li>
+<li>Part 3: first MCP tool</li>
+<li>Part 4: Goose as a local coding agent</li>
+</ol>
+</nav>
+<div class="article-body" itemprop="articleBody">
+<p>You do not need an H100 to learn on-prem LLM engineering. You need a normal PC, a small instruct model, a repeatable setup, and the patience to add one capability at a time. This series follows that order.</p>
+<div class="callout">
+<p>Disclosure. Future versions of this series may include affiliate links to books or hardware. The rule is simple: recommendations must be technically relevant, and every article must remain useful without buying anything.</p>
+</div>
+<h2 id="promise">The promise: one normal PC</h2>
+<p>We are building the same shape of system used in serious on-prem deployments, only scaled down: a local model server, a Python client, a document index, an MCP tool server, and an agent loop with guardrails. The goal is not benchmark glory. The goal is to understand the system with your own hands.</p>
+<p>Each step has three checks: what to run, what success looks like, and what to try if it fails. Do not skip the output checks. They are how you know the local stack is actually alive.</p>
+<p>The practical stack:</p>
+<ul>
+<li>Ollama for the easiest local model server and OpenAI-compatible API.</li>
+<li>Hugging Face Transformers for direct model loading and 4-bit experiments.</li>
+<li>bitsandbytes for 4-bit / 8-bit quantized inference when your GPU is tight.</li>
+<li>MCP for exposing local tools, files, and workflows to agents in a standard way.</li>
+<li>Goose for the Claude Code / Codex-like layer: terminal agent, extensions, file work, and local automation.</li>
+<li>Python for the glue: retrieval, tools, logging, and safety checks.</li>
+</ul>
+<h2 id="hardware">Hardware tiers</h2>
+<p>Use this as a learning map, not a shopping command. Model families change quickly, but memory pressure does not.</p>
+<ul>
+<li>CPU-only, 32 GB RAM: slow with small 1B-3B models, but useful for learning APIs and prompts.</li>
+<li>8 GB VRAM: 3B-7B quantized models, short context, one user at a time.</li>
+<li>12 GB VRAM: comfortable quantized 7B-8B models; small RAG demos start to feel real.</li>
+<li>16 GB VRAM: 8B-14B quantized models, longer context, better agent experiments.</li>
+<li>24 GB VRAM: 14B-class quantized models and smoother multi-tool workflows.</li>
+</ul>
+<blockquote>
+        Buy VRAM before you buy theoretical FLOPS. For home on-prem LLM work, memory is where the project usually hits the wall.
+      </blockquote>
+<h2 id="series">The series roadmap</h2>
+<ol>
+<li>Local LLM server. Install Ollama, pull a small instruct model, and call it from Python.</li>
+<li>Hugging Face direct path. Load a model with Transformers, apply a chat template, and try 4-bit quantization.</li>
+<li>Local RAG. Index a small folder of PDFs or Markdown files and answer with citations.</li>
+<li>First MCP server. Expose a safe local tool such as a calculator, file search, or system note.</li>
+<li>Goose coding agent. Connect a local model provider and let the agent inspect, edit, and test a tiny repo.</li>
+<li>Agent loop. Let the model choose tools, but require structured output and approval gates.</li>
+<li>Operations. Logs, evaluation questions, GPU monitoring, backups, and “do not run this command” rules.</li>
+</ol>
+<h2 id="ollama">Part 1: local server with Ollama</h2>
+<p>Start with the boring path because it removes ten variables. Install Ollama, pull a small model, and call the local OpenAI-compatible endpoint. On most machines, the server listens at http://localhost:11434.</p>
+<h3>Step 1. Pull a small instruct model</h3>
+<p>Pick a 3B-7B model first. Larger models can wait. The first win is proving that your PC can download, load, and answer locally.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Shell</span>setup.sh</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># Pick a small instruct model first. Replace the model name as needed.</span>
+ollama pull qwen2.5:7b-instruct
+
+<span class="tok-com"># Quick smoke test</span>
+ollama run qwen2.5:7b-instruct <span class="tok-str">"Explain RAG in three Korean sentences."</span></code></pre>
+</figure>
+<p>Expected output. The exact answer will vary, but the pull should end with success, and the model should answer the prompt.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Output</span>terminal.txt</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code>pulling manifest
+pulling 8c3f... 100% ▕████████████████████████████████▏
+verifying sha256 digest
+writing manifest
+success
+
+RAG는 검색으로 찾은 문서를 근거로 LLM이 답변하게 만드는 방식입니다.
+모델이 모든 지식을 외우는 대신, 질문과 관련된 자료를 먼저 찾아 읽습니다.
+그래서 사내 문서나 기술 문서처럼 최신성과 출처가 중요한 경우에 유용합니다.</code></pre>
+</figure>
+<p>Success checkpoint. If you get a consistent answer here, the local model server is alive. Slow is fine. We are testing architecture first and speed later.</p>
+<h3>Step 2. Call the same model from Python</h3>
+<p>Now call the local endpoint from Python. This matters because RAG libraries, agent frameworks, and Goose-style tools often integrate through this API shape.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Python</span>local_chat.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-kw">from</span> openai <span class="tok-kw">import</span> OpenAI
+
+client = OpenAI(
+    base_url=<span class="tok-str">"http://localhost:11434/v1"</span>,
+    api_key=<span class="tok-str">"ollama"</span>,  <span class="tok-com"># local placeholder</span>
+)
+
+response = client.chat.completions.create(
+    model=<span class="tok-str">"qwen2.5:7b-instruct"</span>,
+    messages=[
+        {<span class="tok-str">"role"</span>: <span class="tok-str">"system"</span>, <span class="tok-str">"content"</span>: <span class="tok-str">"You are a concise Korean AI tutor."</span>},
+        {<span class="tok-str">"role"</span>: <span class="tok-str">"user"</span>, <span class="tok-str">"content"</span>: <span class="tok-str">"온프레미스 LLM을 한 문단으로 설명해줘."</span>},
+    ],
+)
+
+print(response.choices[0].message.content)</code></pre>
+</figure>
+<p>Expected output. Run python local_chat.py. You should see one paragraph printed by Python, not only inside the Ollama terminal UI.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Output</span>python-output.txt</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code>온프레미스 LLM은 외부 클라우드 API가 아니라 회사나 개인이 직접 관리하는
+서버 또는 PC 안에서 실행되는 언어 모델입니다. 데이터가 외부로 나가지 않기
+때문에 보안과 비용 통제가 쉽고, 사내 문서 RAG나 로컬 에이전트 실험에 적합합니다.</code></pre>
+</figure>
+<p>If it fails. If you see a connection error, confirm Ollama is running. If you see “model not found,” make sure the Python model value exactly matches the model name you pulled.</p>
+<p>Once this works, you have the first brick: a local model endpoint that many tools already know how to call. Do not add RAG, MCP, or agents until this is boring.</p>
+<h2 id="hf">Part 2: Hugging Face 4-bit inference</h2>
+<p>The Hugging Face path gives you more control. It also gives you more ways to misconfigure the machine, so keep the first script small. The important details are: use the tokenizer’s chat template, use device_map="auto", and try 4-bit only after you understand normal loading.</p>
+<h3>Step 3. Create a clean Python environment</h3>
+<p>Use a fresh virtual environment. Local LLM work is dependency-sensitive, and a clean environment makes errors easier to understand.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Shell</span>install.sh</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code>python -m venv .venv
+.\.venv\Scripts\activate
+pip install torch transformers accelerate bitsandbytes</code></pre>
+</figure>
+<p>Expected output. The install may download a lot. A successful install ends with installed packages and returns to the activated prompt.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Output</span>pip-output.txt</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code>Successfully installed accelerate-... bitsandbytes-... torch-... transformers-...
+(.venv) PS C:\coding\home-llm-lab&gt;</code></pre>
+</figure>
+<h3>Step 4. Run a 4-bit Hugging Face chat script</h3>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Python</span>hf_4bit_chat.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-kw">import</span> torch
+<span class="tok-kw">from</span> transformers <span class="tok-kw">import</span> AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+
+model_id = <span class="tok-str">"Qwen/Qwen2.5-3B-Instruct"</span>
+
+bnb_config = BitsAndBytesConfig(
+    load_in_4bit=<span class="tok-kw">True</span>,
+    bnb_4bit_quant_type=<span class="tok-str">"nf4"</span>,
+    bnb_4bit_compute_dtype=torch.float16,
+)
+
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+model = AutoModelForCausalLM.from_pretrained(
+    model_id,
+    quantization_config=bnb_config,
+    device_map=<span class="tok-str">"auto"</span>,
+)
+
+messages = [
+    {<span class="tok-str">"role"</span>: <span class="tok-str">"system"</span>, <span class="tok-str">"content"</span>: <span class="tok-str">"You explain local LLM engineering clearly."</span>},
+    {<span class="tok-str">"role"</span>: <span class="tok-str">"user"</span>, <span class="tok-str">"content"</span>: <span class="tok-str">"What is the first thing to test on a gaming GPU LLM setup?"</span>},
+]
+
+prompt = tokenizer.apply_chat_template(
+    messages,
+    tokenize=<span class="tok-kw">False</span>,
+    add_generation_prompt=<span class="tok-kw">True</span>,
+)
+
+inputs = tokenizer(prompt, return_tensors=<span class="tok-str">"pt"</span>).to(model.device)
+with torch.no_grad():
+    out = model.generate(**inputs, max_new_tokens=<span class="tok-num">160</span>, temperature=<span class="tok-num">0.2</span>)
+
+print(tokenizer.decode(out[0][inputs.input_ids.shape[-1]:], skip_special_tokens=<span class="tok-kw">True</span>))</code></pre>
+</figure>
+<p>Expected output. The first run may be slow because the model downloads. After loading, you should see a short answer.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Output</span>hf-output.txt</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code>Loading checkpoint shards: 100%|████████████████| 2/2 [00:08&lt;00:00,  4.11s/it]
+The first thing to test is a tiny end-to-end prompt. Confirm that the model loads,
+accepts a chat-formatted prompt, generates text, and does not run out of VRAM.</code></pre>
+</figure>
+<p>If it fails. This is the first place many home setups fail: wrong CUDA version, model too large, missing chat template, or context length too ambitious. Change one variable at a time. Try a smaller model before changing five packages at once.</p>
+<h2 id="mcp">Part 3: first MCP tool</h2>
+<p>After local inference works, add tools. Do not start with “the agent controls my computer.” Start with a read-only or harmless tool. MCP is useful because it gives that tool a standard shape.</p>
+<h3>Step 5. Run a harmless MCP server</h3>
+<p>This server does not touch files, run shell commands, or call the network. It only answers two safe tool calls. That makes it a good first extension.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Python</span>lab_tools_server.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># A deliberately harmless MCP server: calculator + lab note lookup.</span>
+<span class="tok-kw">from</span> mcp.server.fastmcp <span class="tok-kw">import</span> FastMCP
+
+mcp = FastMCP(<span class="tok-str">"home-llm-lab"</span>)
+
+<span class="tok-dec">@mcp.tool()</span>
+<span class="tok-kw">def</span> <span class="tok-fn">vram_rule_of_thumb</span>(model_size_b: float, bits: int = <span class="tok-num">4</span>) -&gt; str:
+    <span class="tok-str">"""Estimate raw model weight memory for a quantized LLM."""</span>
+    gb = model_size_b * bits / <span class="tok-num">8</span>
+    return f<span class="tok-str">"Raw weights need about {gb:.1f} GB before KV cache and overhead."</span>
+
+<span class="tok-dec">@mcp.tool()</span>
+<span class="tok-kw">def</span> <span class="tok-fn">lab_policy</span>() -&gt; str:
+    <span class="tok-str">"""Return the safety policy for the home LLM lab."""</span>
+    return (
+        <span class="tok-str">"Read-only by default. No shell execution, no file deletion, "</span>
+        <span class="tok-str">"no network calls, and no tool action without logging."</span>
+    )
+
+<span class="tok-kw">if</span> __name__ == <span class="tok-str">"__main__"</span>:
+    mcp.run()</code></pre>
+</figure>
+<p>Expected output. Depending on the transport you run, the server may sit quietly and wait for a client. Quiet is fine. A successful MCP server often looks like a long-running process, not a command that exits.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Output</span>mcp-output.txt</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code>Starting MCP server "home-llm-lab"
+Available tools:
+  - vram_rule_of_thumb
+  - lab_policy
+Waiting for client connection...</code></pre>
+</figure>
+<p>Success checkpoint. Your next task is not to make it powerful. Your next task is to connect a client and confirm that the two tool names are discoverable.</p>
+<p>That tiny server is not impressive, and that is why it is good. Safe agents are built from small, boring capabilities, not one giant permission grant.</p>
+<h2 id="goose">Part 4: Goose as a local coding agent</h2>
+<p>Once local inference and MCP tools work, you can build what people actually want: a local coding assistant that feels closer to Claude Code or Codex. The open-source tool I would start with is Goose. In this series, Goose becomes the layer that can inspect a small codebase, propose edits, run tests, and call MCP tools.</p>
+<p>The first Goose milestone is intentionally small.</p>
+<ul>
+<li>Use Ollama or another local provider as the model.</li>
+<li>Open a toy Python repo, not your main work folder.</li>
+<li>Ask Goose to explain the code before it edits anything.</li>
+<li>Allow file edits only after reviewing the diff.</li>
+<li>Allow only a small command allowlist such as test, lint, and format.</li>
+</ul>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Shell</span>goose-first-run.txt</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># Install Goose CLI using the current official instructions for your OS.</span>
+<span class="tok-com"># Then configure a local provider such as Ollama in Goose's provider settings.</span>
+
+mkdir home-agent-lab
+cd home-agent-lab
+python -m venv .venv
+.\.venv\Scripts\activate
+
+<span class="tok-com"># Tiny repo for the first agent task</span>
+mkdir src tests
+echo <span class="tok-str">"def add(a, b): return a + b"</span> &gt; src\calculator.py
+echo <span class="tok-str">"from src.calculator import add`n`ndef test_add(): assert add(2, 3) == 5"</span> &gt; tests\test_calculator.py
+pip install pytest
+pytest
+
+<span class="tok-com"># First Goose prompt idea:</span>
+<span class="tok-com"># \"Read this repo. Explain its structure. Do not edit files yet.\"</span></code></pre>
+</figure>
+<p>Expected output. Before Goose touches anything, your baseline tests should pass. If the baseline fails, you do not have an agent problem; you have a project setup problem.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Output</span>pytest-output.txt</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code>============================= test session starts =============================
+collected 1 item
+
+tests/test_calculator.py .                                           [100%]
+
+============================== 1 passed in 0.03s ==============================</code></pre>
+</figure>
+<p>Now ask Goose to inspect the project without editing it. A good first response should mention the source file, the test file, and the fact that the project exposes one simple add function.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Output</span>goose-response.txt</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code>I found a small Python project:
+
+- src/calculator.py defines add(a, b)
+- tests/test_calculator.py imports add and checks add(2, 3) == 5
+- The pytest baseline passes
+
+I have not edited any files.</code></pre>
+</figure>
+<p>Success checkpoint. This is the first Claude Code / Codex-like moment: the agent read a repository, understood it, and reported back without changing anything. That restraint matters. Editing comes after inspection.</p>
+<p>The second step is connecting Goose to the MCP server. That is where the lab starts to feel real: the coding agent can use project files, local tools, and structured capabilities instead of relying on one enormous prompt. The safety rule stays the same: read-only first, then small edits, tests, and wider tools later.</p>
+<div class="callout">
+<p>Do not start by giving a local agent your whole computer. Use a disposable repo. Keep secrets outside the folder. The point is to learn the agent loop before trusting it with anything valuable.</p>
+</div>
+<h2>What comes next</h2>
+<p>The next article turns this into local RAG: one document folder, local embeddings, a vector index, and cited answers. After that, the MCP server gets a document-search tool. Then Goose becomes the user-facing agent that can call those tools, inspect a codebase, make patches, and run tests inside a controlled workspace.</p>
+</div>
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">Go deeper</span>
+<h3>Connect this lab to the full on-prem LLM course</h3>
+<p>The course deck covers the enterprise version of the same architecture: air-gapped serving, RAG, MCP tools, governance, and human-in-the-loop review. This article is the home-PC starting point.</p>
+</div>
+<a class="btn btn-primary" href="../../llm_apply/LLM_slide.html">Open the deck <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+<div class="related">
+<span class="eyebrow">Related</span>
+<h2>Continue the path</h2>
+<div class="related-grid">
+<a class="rel-card" href="onprem-llm-serving.html">
+<span class="cat-tag">On-Prem LLM</span>
+<h3>Serving LLMs on-prem: vLLM, Ollama, and GPU sizing</h3>
+</a>
+<a class="rel-card" href="agents-mcp-mes.html">
+<span class="cat-tag">Agents &amp; MCP</span>
+<h3>Wiring an agent to internal systems with MCP</h3>
+</a>
+</div>
+</div>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>Keep the know-how in. Keep the cloud out.</h2>
+<p>Free, in-depth archive for manufacturers and builders working with local LLM, RAG, and agent systems.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>Explore</h4>
+<a href="../../index.html">Hub home</a>
+<a href="../index.html">Journal</a>
+<a href="../portfolio.html">Portfolio</a>
+</div>
+<div class="foot-col">
+<h4>Site</h4>
+<a href="../about.html">About</a>
+<a href="../contact.html">Contact</a>
+<a href="../privacy.html">Privacy</a>
+<a href="../terms.html">Terms</a>
+<a href="../disclosure.html">Disclosure</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig&&fig.querySelector('pre code');
+      if(!code)return;
+      navigator.clipboard&&navigator.clipboard.writeText(code.innerText).then(function(){
+        btn.textContent='Copied';
+        btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1300);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

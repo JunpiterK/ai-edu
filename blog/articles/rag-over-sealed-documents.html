@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- ══ SEO ══════════════════════════════════════════════════════════ -->
+<title>Building RAG over sealed internal documents - AI Edu Archive Journal</title>
+<meta content="How to build RAG over sealed internal documents without data leaving the network: ingestion, chunking, embeddings, retrieval, local serving, source citation, and practical tips." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/rag-over-sealed-documents.html" rel="canonical"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/rag-over-sealed-documents.html" hreflang="ko" rel="alternate"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/rag-over-sealed-documents.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+<!-- Open Graph -->
+<meta content="article" property="og:type"/>
+<meta content="Building RAG over sealed internal documents - AI Edu Archive Journal" property="og:title"/>
+<meta content="How to build RAG over sealed internal documents without data leaving the network: ingestion, chunking, embeddings, retrieval, local serving, source citation, and practical tips." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="https://ai-edu-archive.example.com/blog/articles/rag-over-sealed-documents.html" property="og:url"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="ko_KR" property="og:locale:alternate"/>
+<meta content="2026-07-04" property="article:published_time"/>
+<meta content="AI Edu Archive" property="article:author"/>
+<meta content="RAG" property="article:section"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Building RAG over sealed internal documents - AI Edu Archive Journal" name="twitter:title"/>
+<meta content="How to build RAG over sealed internal documents without data leaving the network: ingestion, chunking, embeddings, retrieval, local serving, source citation, and practical tips." name="twitter:description"/>
+<!-- JSON-LD: Article schema -->
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Building RAG over sealed internal documents",
+  "description": "How to build RAG over sealed internal documents without data leaving the network: ingestion, chunking, embeddings, retrieval, local serving, source citation, and practical tips.",
+  "inLanguage": "en",
+  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/articles/rag-over-sealed-documents.html"
+  },
+  "name": "Building RAG over sealed internal documents",
+  "url": "https://ai-edu-archive.example.com/blog/articles/rag-over-sealed-documents.html"
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../assets/blog.css" rel="stylesheet"/>
+<!-- ══ Article-local styles: visual-first, wide desktop ═══════════════ -->
+<style>
+/* ── Wide magazine hybrid: full-bleed visuals + narrow prose ────────── */
+.vf-doc{
+  --figw:min(1180px,calc(100% - 48px));  /* full-bleed visual width  */
+  --prosew:720px;                        /* optimal reading measure  */
+}
+/* Center everything in a wide column; prose stays narrow inside it */
+.vf-body{
+  max-width:var(--figw);margin:8px auto 0;padding:8px 0;
+  display:flex;flex-direction:column;align-items:center;
+}
+.vf-body>.prose-block{
+  width:100%;max-width:var(--prosew);align-self:center;
+}
+.vf-body>.figure-block{width:100%;max-width:var(--figw);align-self:center;margin:40px 0}
+.vf-body>section:not(.figure-block){width:100%;max-width:var(--figw);align-self:center;box-sizing:border-box}
+
+/* prose typography inside the wide column */
+.prose-block p{margin:0 0 22px;font-size:19px;line-height:1.75;color:var(--ink-soft)}
+.prose-block p .lead-in{font-family:var(--serif)}
+.prose-block h2{
+  font-family:var(--serif);font-weight:500;
+  font-size:clamp(1.5rem,3vw,2rem);line-height:1.18;letter-spacing:-.015em;
+  margin:8px 0 14px;scroll-margin-top:88px;
+}
+.prose-block h3{
+  font-family:var(--serif);font-weight:500;font-size:1.32rem;
+  margin:30px 0 12px;letter-spacing:-.005em;scroll-margin-top:88px;
+}
+.prose-block ul{margin:0 0 22px 1.3em}
+.prose-block li{margin-bottom:11px;font-size:18px;line-height:1.72;color:var(--ink-soft)}
+.prose-block strong{color:var(--ink);font-weight:600}
+.prose-block :not(pre)>code{
+  background:var(--paper-2);border:1px solid var(--line);border-radius:6px;
+  padding:2px 6px;color:var(--coral-deep);font-size:.84em;font-family:var(--mono);
+}
+.prose-block blockquote{
+  margin:30px 0;padding:6px 0 6px 28px;border-left:3px solid var(--coral);
+  font-family:var(--serif);font-size:1.32rem;line-height:1.5;color:var(--ink);font-style:italic;
+}
+
+/* section eyebrow tag over each figure block */
+.vf-eyebrow{
+  font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--coral-deep);display:block;margin-bottom:6px;text-align:center;
+}
+.vf-fig-title{
+  font-family:var(--serif);font-weight:500;font-size:clamp(1.3rem,2.4vw,1.7rem);
+  text-align:center;letter-spacing:-.01em;margin-bottom:4px;
+}
+.vf-fig-sub{text-align:center;color:var(--muted);font-size:.95rem;max-width:64ch;margin:0 auto 22px;line-height:1.55}
+.vf-caption{margin-top:14px;font-size:.86rem;color:var(--muted);text-align:center;line-height:1.5}
+
+/* generic visual card */
+.vf-card{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:26px;box-shadow:var(--shadow-sm);
+}
+.vf-card.tint{background:var(--card-2)}
+
+/* ── HERO infographic ─────────────────────────────────────────────── */
+.hero-info{
+  background:linear-gradient(180deg,var(--card-2),var(--card));
+  border:1px solid var(--line);border-radius:20px;overflow:hidden;
+  box-shadow:var(--shadow-lift);
+}
+.hero-info svg{display:block;width:100%;height:auto}
+
+/* ── Animated pipeline "video" ────────────────────────────────────── */
+.anim-wrap{position:relative}
+.anim-wrap svg{display:block;width:100%;height:auto;
+  background:var(--card);border:1px solid var(--line);border-radius:16px}
+.anim-controls{
+  display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px;flex-wrap:wrap;
+}
+.anim-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--sans);font-size:.86rem;font-weight:600;color:var(--ink-soft);
+  background:var(--card);border:1px solid var(--line-2);border-radius:999px;
+  padding:9px 18px;cursor:pointer;transition:border-color .16s,color .16s,transform .16s;
+}
+.anim-btn:hover{border-color:var(--coral);color:var(--coral-deep);transform:translateY(-1px)}
+.anim-hint{font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+/* animation classes toggled by JS; paused by default via reduced-motion */
+.rag-anim.playing .anim-el{animation-play-state:running}
+.rag-anim .anim-el{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){
+  .rag-anim .anim-el{animation:none !important}
+}
+
+/* ── Interactive widgets ──────────────────────────────────────────── */
+.widget{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:26px 28px;box-shadow:var(--shadow-sm);
+}
+.widget-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.widget-head h4{font-family:var(--serif);font-weight:500;font-size:1.2rem;letter-spacing:-.005em}
+.widget-head .tag{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--coral-deep);border:1px solid var(--coral);background:var(--coral-wash);border-radius:999px;padding:3px 9px}
+
+/* chunking widget */
+.chunk-controls{display:flex;gap:28px;flex-wrap:wrap;margin-bottom:18px}
+.ctrl{flex:1 1 220px;min-width:200px}
+.ctrl label{display:flex;justify-content:space-between;font-size:.82rem;font-weight:600;color:var(--ink-soft);margin-bottom:8px}
+.ctrl label b{font-family:var(--mono);color:var(--coral-deep);font-weight:500}
+.ctrl input[type=range]{width:100%;accent-color:var(--coral);height:6px;cursor:pointer}
+.chunk-stats{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:14px;font-size:.82rem;color:var(--muted)}
+.chunk-stats b{font-family:var(--mono);color:var(--ink);font-weight:500}
+.chunk-out{
+  font-family:var(--mono);font-size:.82rem;line-height:1.85;
+  background:var(--paper-2);border:1px solid var(--line);border-radius:12px;
+  padding:16px 18px;max-height:340px;overflow-y:auto;white-space:pre-wrap;word-break:break-word;
+}
+.chunk-seg{border-radius:5px;padding:1px 3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.chunk-ov{outline:1.5px dashed rgba(193,95,60,.55);outline-offset:1px;border-radius:4px}
+.chunk-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:.76rem;color:var(--muted);align-items:center}
+.lg-dot{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:5px}
+
+/* search demo widget */
+.search-demo{display:grid;grid-template-columns:1.15fr .85fr;gap:22px}
+@media(max-width:820px){.search-demo{grid-template-columns:1fr}}
+.query-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.query-btn{
+  font-family:var(--sans);font-size:.8rem;font-weight:500;text-align:left;
+  color:var(--ink-soft);background:var(--card-2);border:1px solid var(--line-2);
+  border-radius:10px;padding:9px 13px;cursor:pointer;transition:border-color .16s,background .16s;
+}
+.query-btn:hover{border-color:var(--coral)}
+.query-btn.active{border-color:var(--coral);background:var(--coral-wash);color:var(--coral-deep)}
+.scatter-box{background:var(--paper-2);border:1px solid var(--line);border-radius:12px;padding:8px}
+.scatter-box svg{display:block;width:100%;height:auto}
+.result-cards{display:flex;flex-direction:column;gap:10px}
+.rcard{
+  border:1px solid var(--line);border-radius:11px;padding:12px 14px;background:var(--card-2);
+  opacity:.4;transform:translateY(4px);transition:opacity .35s,transform .35s,border-color .35s;
+}
+.rcard.lit{opacity:1;transform:none;border-color:var(--coral);background:var(--card)}
+.rcard .rc-src{font-family:var(--mono);font-size:.68rem;color:var(--coral-deep);margin-bottom:4px}
+.rcard .rc-txt{font-size:.82rem;color:var(--ink-soft);line-height:1.45}
+.rcard .rc-score{float:right;font-family:var(--mono);font-size:.68rem;color:var(--muted)}
+.demo-note{font-size:.78rem;color:var(--muted);margin-top:12px;line-height:1.5}
+
+/* comparison chart */
+.chart-box svg{display:block;width:100%;height:auto}
+
+/* structured tables / cards */
+.db-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:820px){.db-grid{grid-template-columns:1fr}}
+.db-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow-sm)}
+.db-card.rec{border-color:var(--coral);box-shadow:0 10px 24px -16px rgba(193,95,60,.6)}
+.db-card .db-name{font-family:var(--serif);font-size:1.15rem;font-weight:500;display:flex;align-items:center;gap:8px}
+.db-card .db-pill{font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--coral-deep);border:1px solid var(--coral);border-radius:999px;padding:2px 8px}
+.db-card ul{margin:14px 0 0 1.1em;padding:0}
+.db-card li{font-size:.86rem;color:var(--ink-soft);line-height:1.5;margin-bottom:7px}
+
+.vf-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.vf-table th,.vf-table td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.vf-table th{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.vf-table td{color:var(--ink-soft);line-height:1.5}
+.vf-table td code{font-family:var(--mono);font-size:.82em;color:var(--coral-deep);background:var(--paper-2);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+.vf-table tbody tr:hover{background:var(--card-2)}
+
+/* callout / pull-quote inside prose */
+.vf-callout{
+  background:var(--card-2);border:1px solid var(--line);border-left:3px solid var(--coral);
+  border-radius:12px;padding:18px 22px;margin:26px 0;font-size:1rem;color:var(--ink-soft);line-height:1.6;
+}
+.vf-callout b{color:var(--ink)}
+
+/* step chips */
+.steps-row{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 8px}
+.step-chip{display:inline-flex;align-items:center;gap:8px;font-size:.82rem;color:var(--ink-soft);
+  background:var(--card);border:1px solid var(--line-2);border-radius:999px;padding:6px 13px}
+.step-chip b{font-family:var(--mono);color:var(--coral-deep);font-weight:500}
+
+/* code details toggle */
+.code-details{max-width:var(--figw);margin:22px auto;width:100%;box-sizing:border-box}
+.code-details summary{
+  cursor:pointer;font-family:var(--sans);font-size:.9rem;font-weight:600;color:var(--coral-deep);
+  list-style:none;display:flex;align-items:center;gap:8px;padding:12px 16px;
+  background:var(--card-2);border:1px solid var(--line);border-radius:11px;box-sizing:border-box;
+}
+.code-details summary::-webkit-details-marker{display:none}
+.code-details summary::before{content:"▸";transition:transform .18s}
+.code-details[open] summary::before{transform:rotate(90deg)}
+.code-details[open] summary{border-radius:11px 11px 0 0;border-bottom:0}
+.code-details .code-figure{margin:0;border-radius:0 0 12px 12px;max-width:100%;box-sizing:border-box}
+
+/* wide-screen sticky TOC: pinned in a reserved left gutter WITHOUT shrinking
+   the figure flow. Figures span the wide column; the column is offset right of
+   the TOC gutter so the two never overlap; prose stays centered in the column. */
+@media(min-width:1180px){
+  .vf-doc{--gutter:210px}
+  /* clean 2-column doc grid: TOC in the left rail, everything (incl. hero) in the main column — never overlapping */
+  .vf-article{display:grid;grid-template-columns:var(--gutter) minmax(0,1fr);column-gap:28px;align-items:start}
+  .vf-article>*{grid-column:2;min-width:0}
+  .vf-article .toc{
+    grid-column:1;grid-row:1/-1;align-self:start;position:sticky;top:100px;
+    margin:0;background:transparent;border:0;border-left:2px solid var(--line);
+    border-radius:0;padding:2px 0 2px 16px;max-width:100%;width:auto;
+  }
+  .vf-article .toc a{font-size:.88rem}
+  .vf-body{--figw:min(1180px, calc(100vw - var(--gutter) - 96px));max-width:var(--figw);margin:0 auto}
+}
+@media(max-width:1179px){
+  .vf-doc .toc{max-width:var(--prosew);margin:28px auto 0}
+}
+@media(max-width:640px){
+  .vf-doc{--figw:calc(100% - 32px)}
+  .vf-body>.figure-block{margin:28px 0}
+  .search-demo{gap:16px}
+  .widget{padding:20px}
+  .prose-block p{font-size:18px}
+}
+</style>
+<link href="https://ai-edu-archive.example.com/blog/articles/rag-over-sealed-documents.html" hreflang="en" rel="alternate"/></head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive home" class="brand" href="../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="Primary" class="nav-links">
+<a href="../../index.html#courses">Courses</a>
+<a href="../index.html">Articles</a>
+<a href="../about.html">About</a>
+<div aria-label="Language selector" class="language-switch">
+<a aria-current="true" href="rag-over-sealed-documents.html" lang="en" title="English">🇺🇸 EN</a>
+<a href="../ko/articles/rag-over-sealed-documents.html" lang="ko" title="한국어">🇰🇷 KO</a>
+<a href="rag-over-sealed-documents.html" lang="en" title="English shown for now">🇪🇸 ES</a>
+<a href="rag-over-sealed-documents.html" lang="en" title="English shown for now">🇨🇳 ZH</a>
+<a href="rag-over-sealed-documents.html" lang="en" title="English shown for now">🇯🇵 JA</a>
+<a href="rag-over-sealed-documents.html" lang="en" title="English shown for now">🇩🇪 DE</a>
+<a href="rag-over-sealed-documents.html" lang="en" title="English shown for now">🇫🇷 FR</a>
+</div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article class="vf-doc vf-article" itemscope="" itemtype="https://schema.org/Article">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="Breadcrumb" class="breadcrumb">
+<a href="../../index.html">Home</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">Journal</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">Building RAG over sealed internal documents</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag">RAG</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-04" itemprop="datePublished">Jul 4, 2026</time>
+<span class="post-dot"></span>
+<span class="rt">15 min read</span>
+</div>
+<h1 itemprop="headline">Building RAG over sealed internal documents</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>Semiconductor process engineer · Air-gapped LLM / RAG / Agents</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="Table of contents" class="toc">
+<div class="toc-title">On this page</div>
+<ol>
+<li><a href="#hero">Five stages, entirely inside the fab</a></li>
+<li><a href="#motion">Watch a document become an answer</a></li>
+<li><a href="#problem">Knowledge you cannot search</a></li>
+<li><a href="#chunk">Why chunk size decides everything</a></li>
+<li><a href="#search">Retrieval, drawn in vector space</a></li>
+<li><a href="#tradeoff">Chunk size vs retrieval quality</a></li>
+<li><a href="#stack">The on-prem stack, at a glance</a></li>
+<li><a href="#code">The five files</a></li>
+<li><a href="#quality">Tips that actually matter</a></li>
+</ol>
+</nav>
+<div class="vf-body article-body" itemprop="articleBody">
+<!-- ═══ 1. HERO INFOGRAPHIC (full-bleed) ═══════════════════════ -->
+<section aria-labelledby="hero-t" class="figure-block" id="hero">
+<span class="vf-eyebrow">The whole system, one diagram</span>
+<h2 class="vf-fig-title" id="hero-t">Five stages, entirely inside the fab</h2>
+<p class="vf-fig-sub">A fab already knows the answer — it's in an SOP, a manual, a deviation report. RAG turns that pile into something you can ask in plain language, and every byte stays on-prem. 데이터 무반출.</p>
+<div class="hero-info">
+<svg aria-label="Hero infographic: RAG pipeline from documents through chunks, vectors, retrieval, to a cited answer — all inside the air-gapped network." role="img" viewbox="0 0 1180 440">
+<defs>
+<lineargradient id="hg-doc" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#EEF3EE"></stop><stop offset="1" stop-color="#E3EEE3"></stop></lineargradient>
+<lineargradient id="hg-chunk" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#EEF1F5"></stop><stop offset="1" stop-color="#E2E9F1"></stop></lineargradient>
+<lineargradient id="hg-vec" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#F5F0EE"></stop><stop offset="1" stop-color="#F0E4DF"></stop></lineargradient>
+<lineargradient id="hg-idx" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#F5F3EE"></stop><stop offset="1" stop-color="#EFEBDF"></stop></lineargradient>
+<lineargradient id="hg-ans" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#F0EEF5"></stop><stop offset="1" stop-color="#E7E2F1"></stop></lineargradient>
+<marker id="hg-arrow" markerheight="10" markerwidth="10" orient="auto" refx="6" refy="3"><path d="M0 0 L6 3 L0 6 Z" fill="#C15F3C"></path></marker>
+</defs>
+<!-- air-gap boundary -->
+<rect fill="#FCFBF8" height="424" rx="18" stroke="#E8E4DB" width="1160" x="10" y="8"></rect>
+<rect fill="none" height="316" rx="14" stroke="#DBD5C8" stroke-dasharray="7 5" width="1128" x="26" y="60"></rect>
+<text fill="#3A3833" font-family="Inter,sans-serif" font-size="17" font-weight="600" text-anchor="middle" x="590" y="40">Air-gapped network · 폐쇄망 — no egress, no API keys, no data-review headache</text>
+<!-- stage 1: documents -->
+<g>
+<rect fill="url(#hg-doc)" height="196" rx="12" stroke="#B8CBB8" width="180" x="46" y="120"></rect>
+<text fill="#3A3833" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="136" y="150">1 · Load</text>
+<!-- doc icons -->
+<g fill="#FCFBF8" stroke="#7FA07F" stroke-width="1.4">
+<rect height="60" rx="4" width="46" x="86" y="168"></rect>
+<rect height="60" rx="4" width="46" x="104" y="180"></rect>
+<rect height="60" rx="4" width="46" x="122" y="192"></rect>
+</g>
+<g stroke="#9DB79D" stroke-width="1.4"><line x1="130" x2="158" y1="206" y2="206"></line><line x1="130" x2="158" y1="216" y2="216"></line><line x1="130" x2="150" y1="226" y2="226"></line></g>
+<text fill="#6B6862" font-family="JetBrains Mono,monospace" font-size="12.5" text-anchor="middle" x="136" y="278">SOP · PDF · 매뉴얼</text>
+<text fill="#8A867E" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="136" y="298">scattered, unsearchable</text>
+</g>
+<path d="M232 218 H262" fill="none" marker-end="url(#hg-arrow)" stroke="#C15F3C" stroke-width="2.5"></path>
+<!-- stage 2: chunks -->
+<g>
+<rect fill="url(#hg-chunk)" height="196" rx="12" stroke="#B8C2CB" width="180" x="272" y="120"></rect>
+<text fill="#3A3833" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="362" y="150">2 · Chunk</text>
+<g>
+<rect fill="#C7D6E4" height="20" rx="4" stroke="#96AEC4" width="124" x="300" y="170"></rect>
+<rect fill="#B7CCE0" height="20" rx="4" stroke="#96AEC4" width="124" x="300" y="196"></rect>
+<rect fill="#C7D6E4" height="20" rx="4" stroke="#96AEC4" width="124" x="300" y="222"></rect>
+<rect fill="#B7CCE0" height="20" rx="4" stroke="#96AEC4" width="124" x="300" y="248"></rect>
+</g>
+<text fill="#6B6862" font-family="JetBrains Mono,monospace" font-size="12.5" text-anchor="middle" x="362" y="298">split + overlap</text>
+</g>
+<path d="M458 218 H488" fill="none" marker-end="url(#hg-arrow)" stroke="#C15F3C" stroke-width="2.5"></path>
+<!-- stage 3: embed to vectors -->
+<g>
+<rect fill="url(#hg-vec)" height="196" rx="12" stroke="#CBBBB8" width="180" x="498" y="120"></rect>
+<text fill="#3A3833" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="588" y="150">3 · Embed</text>
+<!-- vector points scatter -->
+<g fill="#D97757">
+<circle cx="540" cy="185" r="4"></circle><circle cx="565" cy="205" r="4"></circle><circle cx="600" cy="180" r="4"></circle>
+<circle cx="628" cy="200" r="4"></circle><circle cx="552" cy="235" r="4"></circle><circle cx="590" cy="248" r="4"></circle>
+<circle cx="622" cy="235" r="4"></circle><circle cx="575" cy="222" r="4"></circle>
+</g>
+<text fill="#6B6862" font-family="JetBrains Mono,monospace" font-size="12.5" text-anchor="middle" x="588" y="288">local model</text>
+<text fill="#8A867E" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="588" y="306">bge-m3 · 다국어</text>
+</g>
+<path d="M684 218 H714" fill="none" marker-end="url(#hg-arrow)" stroke="#C15F3C" stroke-width="2.5"></path>
+<!-- stage 4: vector DB -->
+<g>
+<rect fill="url(#hg-idx)" height="196" rx="12" stroke="#CBC6B8" width="180" x="724" y="120"></rect>
+<text fill="#3A3833" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="814" y="150">4 · Index</text>
+<!-- cylinder DB -->
+<g fill="#EBDFAE" stroke="#B9A96F" stroke-width="1.6">
+<ellipse cx="814" cy="182" rx="42" ry="12"></ellipse>
+<path d="M772 182 V236 a42 12 0 0 0 84 0 V182" fill="#EBDFAE"></path>
+<ellipse cx="814" cy="182" fill="#F3EBCB" rx="42" ry="12"></ellipse>
+</g>
+<g fill="none" stroke="#B9A96F" stroke-width="1.4"><path d="M772 205 a42 12 0 0 0 84 0"></path><path d="M772 222 a42 12 0 0 0 84 0"></path></g>
+<text fill="#6B6862" font-family="JetBrains Mono,monospace" font-size="12.5" text-anchor="middle" x="814" y="288">Chroma · Qdrant</text>
+<text fill="#8A867E" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="814" y="306">persist to disk</text>
+</g>
+<path d="M910 218 H940" fill="none" marker-end="url(#hg-arrow)" stroke="#C15F3C" stroke-width="2.5"></path>
+<!-- stage 5: answer -->
+<g>
+<rect fill="url(#hg-ans)" height="196" rx="12" stroke="#C0B8CB" width="184" x="950" y="120"></rect>
+<text fill="#3A3833" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="1042" y="150">5 · Answer</text>
+<!-- chat bubble w/ cite -->
+<rect fill="#FCFBF8" height="66" rx="10" stroke="#B3A9C4" width="128" x="978" y="168"></rect>
+<g stroke="#B3A9C4" stroke-width="1.4"><line x1="994" x2="1090" y1="186" y2="186"></line><line x1="994" x2="1090" y1="200" y2="200"></line><line x1="994" x2="1060" y1="214" y2="214"></line></g>
+<rect fill="#F6EAE1" height="24" rx="6" stroke="#D9A98F" width="128" x="978" y="244"></rect>
+<text fill="#C15F3C" font-family="JetBrains Mono,monospace" font-size="12" text-anchor="middle" x="1042" y="261">[source: etch_e1420.txt]</text>
+<text fill="#8A867E" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="1042" y="298">retrieve + local LLM</text>
+</g>
+<!-- ingest vs query band -->
+<rect height="0" width="632" x="46" y="340"></rect>
+<line stroke="#B8CBB8" stroke-linecap="round" stroke-width="3" x1="46" x2="678" y1="352" y2="352"></line>
+<text fill="#6B6862" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="362" y="372">Stages 1–4 · run once at ingest · 인제스트</text>
+<line stroke="#C0B8CB" stroke-linecap="round" stroke-width="3" x1="724" x2="1134" y1="352" y2="352"></line>
+<text fill="#6B6862" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="929" y="372">Stage 5 · runs per query · 질의마다</text>
+</svg>
+</div>
+<p class="vf-caption">Figure 1. The five-stage RAG pipeline. Ingest (1–4) happens once; retrieve-and-generate (5) runs on every question — and nothing crosses the network boundary.</p>
+</section>
+<!-- ═══ 2. ANIMATED "VIDEO" ════════════════════════════════════ -->
+<section aria-labelledby="motion-t" class="figure-block" id="motion">
+<span class="vf-eyebrow">Motion, not a wall of text</span>
+<h2 class="vf-fig-title" id="motion-t">Watch a document become an answer</h2>
+<p class="vf-fig-sub">A document splits into chunks, the chunks scatter into vector space as points, then a query pulls its nearest neighbours back. Autoplays once, respects reduced-motion. 자동재생·절제.</p>
+<div class="anim-wrap">
+<svg aria-label="Animation: a document splits into chunks that fly into a 2-D vector space; a query point then draws lines to its nearest neighbours." class="rag-anim" id="ragAnim" role="img" viewbox="0 0 1180 360">
+<defs>
+<style>
+                @keyframes splitOut{0%,12%{opacity:0;transform:translateX(0)}20%{opacity:1}100%{opacity:1}}
+                @keyframes flyTo{0%,28%{opacity:0}36%{opacity:.2}100%{opacity:1}}
+                @keyframes qPulse{0%,60%{opacity:0;r:0}66%{opacity:1}100%{opacity:1;r:8}}
+                @keyframes pullLine{0%,66%{stroke-dashoffset:220;opacity:0}72%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}
+                @keyframes litUp{0%,74%{opacity:.35}82%,100%{opacity:1}}
+                .rag-anim .anim-el{animation-duration:7s;animation-iteration-count:infinite;animation-timing-function:ease-in-out}
+                .a-chunk{animation-name:splitOut}
+                .a-fly{animation-name:flyTo}
+                .a-q{animation-name:qPulse}
+                .a-line{animation-name:pullLine;stroke-dasharray:220}
+                .a-lit{animation-name:litUp}
+              </style>
+</defs>
+<rect fill="#FCFBF8" height="344" rx="16" stroke="#E8E4DB" width="1160" x="10" y="8"></rect>
+<!-- left: document -> chunks -->
+<text fill="#6B6862" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="150" y="42">document → chunks</text>
+<rect fill="#FCFBF8" height="132" rx="6" stroke="#B8CBB8" stroke-width="1.5" width="108" x="96" y="66"></rect>
+<g stroke="#9DB79D" stroke-width="1.4"><line x1="112" x2="188" y1="86" y2="86"></line><line x1="112" x2="188" y1="102" y2="102"></line><line x1="112" x2="176" y1="118" y2="118"></line></g>
+<g>
+<rect class="anim-el a-chunk" fill="#C7D6E4" height="20" rx="4" stroke="#96AEC4" style="animation-delay:0s" width="108" x="96" y="212"></rect>
+<rect class="anim-el a-chunk" fill="#B7CCE0" height="20" rx="4" stroke="#96AEC4" style="animation-delay:.3s" width="108" x="96" y="238"></rect>
+<rect class="anim-el a-chunk" fill="#C7D6E4" height="20" rx="4" stroke="#96AEC4" style="animation-delay:.6s" width="108" x="96" y="264"></rect>
+<rect class="anim-el a-chunk" fill="#B7CCE0" height="20" rx="4" stroke="#96AEC4" style="animation-delay:.9s" width="108" x="96" y="290"></rect>
+</g>
+<!-- middle arrow -->
+<path d="M232 200 H300" fill="none" marker-end="url(#hg-arrow)" stroke="#C15F3C" stroke-width="2"></path>
+<text fill="#8A867E" font-family="JetBrains Mono,monospace" font-size="12" text-anchor="middle" x="266" y="188">embed</text>
+<!-- right: vector space -->
+<text fill="#6B6862" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="740" y="42">vector space · 최근접 검색</text>
+<rect fill="#F3F0E8" height="270" rx="12" stroke="#DBD5C8" width="820" x="330" y="60"></rect>
+<!-- axes -->
+<line stroke="#DBD5C8" stroke-width="1.5" x1="360" x2="1120" y1="300" y2="300"></line>
+<line stroke="#DBD5C8" stroke-width="1.5" x1="360" x2="360" y1="90" y2="300"></line>
+<!-- scattered chunk points -->
+<g fill="#B7CCE0" stroke="#96AEC4">
+<circle class="anim-el a-fly" cx="470" cy="160" r="6" style="animation-delay:0s"></circle>
+<circle class="anim-el a-fly" cx="560" cy="240" r="6" style="animation-delay:.25s"></circle>
+<circle class="anim-el a-fly" cx="900" cy="130" r="6" style="animation-delay:.5s"></circle>
+<circle class="anim-el a-fly" cx="1010" cy="220" r="6" style="animation-delay:.75s"></circle>
+<circle class="anim-el a-fly" cx="640" cy="110" r="6" style="animation-delay:.4s"></circle>
+<circle class="anim-el a-fly" cx="980" cy="285" r="6" style="animation-delay:.9s"></circle>
+</g>
+<!-- nearest-neighbour chunks (lit) around query -->
+<circle class="anim-el a-lit" cx="740" cy="185" fill="#E7B79E" r="7" stroke="#C15F3C" style="animation-delay:0s"></circle>
+<circle class="anim-el a-lit" cx="820" cy="230" fill="#E7B79E" r="7" stroke="#C15F3C" style="animation-delay:.15s"></circle>
+<circle class="anim-el a-lit" cx="700" cy="255" fill="#E7B79E" r="7" stroke="#C15F3C" style="animation-delay:.3s"></circle>
+<!-- query point -->
+<circle class="anim-el a-q" cx="770" cy="215" fill="#C15F3C" r="8"></circle>
+<!-- pull lines to nearest -->
+<g fill="none" stroke="#C15F3C" stroke-width="2">
+<line class="anim-el a-line" style="animation-delay:0s" x1="770" x2="740" y1="215" y2="185"></line>
+<line class="anim-el a-line" style="animation-delay:.2s" x1="770" x2="820" y1="215" y2="230"></line>
+<line class="anim-el a-line" style="animation-delay:.4s" x1="770" x2="700" y1="215" y2="255"></line>
+</g>
+<text fill="#C15F3C" font-family="JetBrains Mono,monospace" font-size="12" font-weight="600" x="786" y="212">query</text>
+</svg>
+</div>
+<div class="anim-controls">
+<button aria-pressed="false" class="anim-btn" id="animToggle" type="button">
+<span id="animIcon">▶</span> <span id="animLabel">Play / 재생</span>
+</button>
+<span class="anim-hint" id="animHint">Autoplay respects your reduced-motion setting</span>
+</div>
+<p class="vf-caption">Figure 2. The same idea as motion: chunk → embed → scatter → nearest-neighbour retrieval. Conceptual, not to scale.</p>
+</section>
+<!-- ═══ Prose: why RAG ═════════════════════════════════════════ -->
+<div class="prose-block">
+<h2 id="problem">Knowledge you cannot search</h2>
+<p><span class="lead-in">Ask a new engineer</span> "what's the response SOP for chamber alarm <code>E-1420</code>?" and the honest answer is often "ask the senior on B-shift." That knowledge is real and documented — and <strong>unsearchable</strong>. Keyword search over a thousand PDFs returns either nothing or everything.</p>
+<p>RAG turns documents into a <strong>semantic index</strong>: you ask in natural language, the system retrieves the passages that actually answer you, and a local LLM writes the response <em>with citations</em>. 근거 문서를 인용하므로 환각을 걸러낼 수 있습니다.</p>
+<blockquote>RAG isn't a chatbot bolted onto your docs. It's a search engine that reads the results for you — and shows its work.</blockquote>
+<div aria-hidden="true" class="steps-row">
+<span class="step-chip"><b>1</b> Load</span>
+<span class="step-chip"><b>2</b> Chunk</span>
+<span class="step-chip"><b>3</b> Embed</span>
+<span class="step-chip"><b>4</b> Index</span>
+<span class="step-chip"><b>5</b> Answer</span>
+</div>
+<p>Everything below runs on <strong>LangChain 0.3</strong> with the current split packages — no deprecated imports. First, two of those stages are worth <em>touching</em>, not just reading about.</p>
+</div>
+<!-- ═══ 3a. CHUNKING SLIDER WIDGET ═════════════════════════════ -->
+<section aria-labelledby="chunk-t" class="figure-block" id="chunk">
+<span class="vf-eyebrow">Interactive · drag me</span>
+<h2 class="vf-fig-title" id="chunk-t">Why chunk size decides everything</h2>
+<p class="vf-fig-sub">Move the sliders and watch a real SOP split into coloured chunks in real time. Too small and a chunk loses its context; too large and one chunk blurs several topics. 만지며 체감하세요.</p>
+<div aria-label="Interactive chunking demonstration" class="widget" role="group">
+<div class="widget-head">
+<h4>RecursiveCharacterTextSplitter — live</h4>
+<span class="tag">chunk_size · overlap</span>
+</div>
+<div class="chunk-controls">
+<div class="ctrl">
+<label for="csSize">chunk_size <b><span id="csSizeVal">120</span> chars</b></label>
+<input aria-describedby="csSizeVal" id="csSize" max="300" min="40" step="10" type="range" value="120"/>
+</div>
+<div class="ctrl">
+<label for="csOver">chunk_overlap <b><span id="csOverVal">20</span> chars</b></label>
+<input aria-describedby="csOverVal" id="csOver" max="80" min="0" step="5" type="range" value="20"/>
+</div>
+</div>
+<div class="chunk-stats">
+<span><b id="csCount">0</b> chunks</span>
+<span>avg <b id="csAvg">0</b> chars</span>
+<span>overlap <b id="csOverPct">0</b>%</span>
+</div>
+<div aria-label="Chunked output preview" aria-live="polite" class="chunk-out" id="csOut"></div>
+<div class="chunk-legend">
+<span><span class="lg-dot" style="background:#C7D6E4"></span>chunk A</span>
+<span><span class="lg-dot" style="background:#D6E4C7"></span>chunk B</span>
+<span><span class="lg-dot" style="background:#E4D3C7"></span>chunk C…</span>
+<span><span class="lg-dot chunk-ov" style="background:transparent"></span>overlap region · 겹침</span>
+</div>
+</div>
+<p class="vf-caption">Figure 3. A live <code>RecursiveCharacterTextSplitter</code>. Shrink <code>chunk_size</code> to see chunk count climb; raise overlap to keep split sentences readable across the seam.</p>
+</section>
+<div class="prose-block">
+<div class="vf-callout"><b>Rule of thumb.</b> 800–1,200 characters is a solid default for procedural docs, with ~15% overlap. Dense SOPs want smaller chunks; narrative deviation reports want larger. Measure hit-rate on real questions before you commit.</div>
+</div>
+<!-- ═══ 3b. MINI SEARCH DEMO ═══════════════════════════════════ -->
+<section aria-labelledby="search-t" class="figure-block" id="search">
+<span class="vf-eyebrow">Interactive · click a query</span>
+<h2 class="vf-fig-title" id="search-t">Retrieval, drawn in vector space</h2>
+<p class="vf-fig-sub">Pick a question. The query lands as a point in the 2-D map, draws lines to its nearest chunks, and the top-k evidence cards light up with their source paths. 근거 카드 표시.</p>
+<div class="widget">
+<div class="widget-head">
+<h4>Nearest-neighbour retrieval demo</h4>
+<span class="tag">top-k = 3</span>
+</div>
+<div class="search-demo">
+<div>
+<div aria-label="Choose a query" class="query-row" id="queryRow" role="group">
+<button class="query-btn" data-q="0" type="button">챔버 알람 E-1420 대응 SOP?</button>
+<button class="query-btn" data-q="1" type="button">Etcher RF power drift 원인?</button>
+<button class="query-btn" data-q="2" type="button">CVD 챔버 퍼지 절차?</button>
+</div>
+<div class="scatter-box">
+<svg aria-label="2-D scatter plot of document chunks with a query point drawing lines to its nearest neighbours." id="scatterSvg" role="img" viewbox="0 0 460 320">
+<rect fill="#FCFBF8" height="318" rx="10" stroke="#EFEAE0" width="458" x="1" y="1"></rect>
+<line stroke="#DBD5C8" stroke-width="1.4" x1="40" x2="440" y1="285" y2="285"></line>
+<line stroke="#DBD5C8" stroke-width="1.4" x1="40" x2="40" y1="30" y2="285"></line>
+<text fill="#96917D" font-family="JetBrains Mono,monospace" font-size="12" text-anchor="middle" x="240" y="309">semantic dim 1 →</text>
+<text fill="#96917D" font-family="JetBrains Mono,monospace" font-size="12" text-anchor="middle" transform="rotate(-90 18 160)" x="18" y="160">semantic dim 2 →</text>
+<g fill="none" id="linkLayer" stroke="#C15F3C" stroke-width="1.8"></g>
+<g id="dotLayer"></g>
+<g id="queryLayer"></g>
+</svg>
+</div>
+<p class="demo-note">Positions are illustrative — a 2-D projection of what a real embedding does in hundreds of dimensions. The mechanic (query → cosine-nearest chunks → top-k) is exact.</p>
+</div>
+<div>
+<div aria-live="polite" class="result-cards" id="resultCards">
+<!-- cards injected by JS -->
+</div>
+</div>
+</div>
+</div>
+<p class="vf-caption">Figure 4. A mini semantic-search demo. The retriever pulls the k nearest chunks; the LLM answers only from those, and prints their source paths so an engineer can verify.</p>
+</section>
+<!-- ═══ 4. TRADE-OFF CHART ═════════════════════════════════════ -->
+<section aria-labelledby="trade-t" class="figure-block" id="tradeoff">
+<span class="vf-eyebrow">The numbers behind the knob</span>
+<h2 class="vf-fig-title" id="trade-t">Chunk size vs retrieval quality</h2>
+<p class="vf-fig-sub">Two forces pull opposite ways: tiny chunks lose context, huge chunks blur topics. Retrieval quality peaks in the middle. Conceptual curves, honestly labelled. 개념적 곡선.</p>
+<div class="vf-card chart-box">
+<svg aria-label="Line chart: context sufficiency rises with chunk size while topic precision falls; their combined retrieval quality peaks around 900 to 1100 characters." role="img" viewbox="0 0 1120 440">
+<!-- plot frame -->
+<line stroke="#DBD5C8" stroke-width="1.6" x1="90" x2="90" y1="60" y2="370"></line>
+<line stroke="#DBD5C8" stroke-width="1.6" x1="90" x2="1060" y1="370" y2="370"></line>
+<!-- y gridlines -->
+<g stroke="#EFEAE0" stroke-width="1">
+<line x1="90" x2="1060" y1="292" y2="292"></line><line x1="90" x2="1060" y1="215" y2="215"></line><line x1="90" x2="1060" y1="138" y2="138"></line>
+</g>
+<text fill="#96917D" font-family="JetBrains Mono,monospace" font-size="12" text-anchor="end" x="52" y="374">low</text>
+<text fill="#96917D" font-family="JetBrains Mono,monospace" font-size="12" text-anchor="end" x="52" y="142">high</text>
+<text fill="#6B6862" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" transform="rotate(-90 40 215)" x="40" y="215">retrieval quality →</text>
+<!-- x labels -->
+<g fill="#96917D" font-family="JetBrains Mono,monospace" font-size="12" text-anchor="middle">
+<text x="220" y="396">300</text><text x="450" y="396">700</text><text x="680" y="396">1100</text><text x="910" y="396">1800</text><text x="1030" y="396">2600</text>
+</g>
+<text fill="#6B6862" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="575" y="422">chunk_size (characters) →</text>
+<!-- context sufficiency: rises then plateaus -->
+<path d="M90 340 C 260 150, 480 100, 700 92 S 950 88, 1060 88" fill="none" stroke="#7FA07F" stroke-width="3"></path>
+<!-- topic precision: high then falls -->
+<path d="M90 96 C 320 100, 520 130, 700 210 S 950 320, 1060 350" fill="none" stroke="#7C9BC0" stroke-width="3"></path>
+<!-- combined quality: peaks in middle -->
+<path d="M90 300 C 300 150, 520 96, 640 92 C 800 90, 940 190, 1060 300" fill="none" stroke="#C15F3C" stroke-width="3.5"></path>
+<!-- sweet spot marker -->
+<line stroke="#D97757" stroke-dasharray="5 4" stroke-width="1.4" x1="600" x2="600" y1="92" y2="370"></line>
+<circle cx="600" cy="92" fill="#C15F3C" r="6"></circle>
+<rect fill="#F6EAE1" height="26" rx="8" stroke="#D9A98F" width="132" x="540" y="52"></rect>
+<text fill="#C15F3C" font-family="Inter,sans-serif" font-size="12.5" font-weight="600" text-anchor="middle" x="606" y="70">sweet spot ~1000</text>
+<!-- legend -->
+<g font-family="Inter,sans-serif" font-size="13">
+<rect fill="#FCFBF8" height="96" rx="10" stroke="#EFEAE0" width="310" x="740" y="66"></rect>
+<line stroke="#7FA07F" stroke-width="3" x1="758" x2="788" y1="90" y2="90"></line><text fill="#3A3833" x="796" y="94">context sufficiency · 맥락 충분성</text>
+<line stroke="#7C9BC0" stroke-width="3" x1="758" x2="788" y1="116" y2="116"></line><text fill="#3A3833" x="796" y="120">topic precision · 주제 정밀도</text>
+<line stroke="#C15F3C" stroke-width="3.5" x1="758" x2="788" y1="142" y2="142"></line><text fill="#3A3833" x="796" y="146"><tspan font-weight="600">combined retrieval quality</tspan></text>
+</g>
+</svg>
+</div>
+<p class="vf-caption">Figure 5. Chunk size is a trade-off, not a constant. The coral curve — what you actually care about — peaks where chunks are big enough to be answerable but small enough to stay on one topic.</p>
+</section>
+<!-- ═══ 5. STRUCTURED STACK CHOICE ═════════════════════════════ -->
+<section aria-labelledby="stack-t" class="figure-block" id="stack">
+<span class="vf-eyebrow">Choosing the pieces</span>
+<h2 class="vf-fig-title" id="stack-t">The on-prem stack, at a glance</h2>
+<p class="vf-fig-sub">Every component runs local — no API key, no egress. Here's what to pick for a sealed fab network and why. 데이터 무반출.</p>
+<div class="db-grid" style="margin-bottom:22px">
+<div class="db-card rec">
+<div class="db-name">Chroma <span class="db-pill">start here</span></div>
+<ul>
+<li>Embedded, in-process — nothing to host</li>
+<li>Writes to a local directory; reload without re-embedding</li>
+<li>Best for a single-node fab knowledge base</li>
+</ul>
+</div>
+<div class="db-card">
+<div class="db-name">Qdrant</div>
+<ul>
+<li>Self-hosted server, on-prem mode</li>
+<li>Same LangChain pattern, scales multi-node</li>
+<li>Reach for it when one box isn't enough</li>
+</ul>
+</div>
+<div class="db-card">
+<div class="db-name">bge-m3 <span class="db-pill">embedder</span></div>
+<ul>
+<li>Multilingual — embeds 한국어 well</li>
+<li>Local weights, offline once downloaded</li>
+<li>English-only models quietly wreck Korean recall</li>
+</ul>
+</div>
+</div>
+<div class="vf-card" style="overflow-x:auto">
+<table class="vf-table">
+<thead>
+<tr><th>Stage</th><th>Package (LangChain 0.3)</th><th>On-prem choice</th><th>Why it stays sealed</th></tr>
+</thead>
+<tbody>
+<tr><td>Load</td><td><code>langchain_community</code></td><td>DirectoryLoader · PyPDFLoader</td><td>Reads local files only</td></tr>
+<tr><td>Chunk</td><td><code>langchain_text_splitters</code></td><td>RecursiveCharacterTextSplitter</td><td>Pure local computation</td></tr>
+<tr><td>Embed</td><td><code>langchain_huggingface</code></td><td>bge-m3 local weights</td><td>No hosted embedding API</td></tr>
+<tr><td>Index</td><td><code>langchain_chroma</code></td><td>Chroma persist_directory</td><td>Writes to disk, no phone-home</td></tr>
+<tr><td>Answer</td><td><code>langchain_ollama</code></td><td>ChatOllama · qwen2.5</td><td>Local LLM, zero egress</td></tr>
+</tbody>
+</table>
+</div>
+<p class="vf-caption">Figure 6. The full stack with the exact modern imports. Metadata filters (by <code>tool</code>, <code>doc_type</code>) cut noise at query time — an etcher question never retrieves a CVD manual.</p>
+</section>
+<!-- ═══ 6. THE FIVE FILES (code, collapsible) ══════════════════ -->
+<section id="code">
+<div class="prose-block">
+<h2>The five files</h2>
+<p>Text-first readers still want the code. Here's the load-bearing snippet for each stage; expand any file for the full, runnable version on <strong>LangChain 0.3</strong>.</p>
+</div>
+<!-- 1 load -->
+<details class="code-details" open="">
+<summary>01_load.py — walk the doc tree, keep source paths</summary>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Python</span> 01_load.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># pip install langchain-community pypdf</span>
+<span class="tok-kw">from</span> langchain_community.document_loaders <span class="tok-kw">import</span> DirectoryLoader, TextLoader, PyPDFLoader
+
+sop_loader = <span class="tok-fn">DirectoryLoader</span>(
+    <span class="tok-str">"./docs/sops"</span>, glob=<span class="tok-str">"**/*.txt"</span>, loader_cls=TextLoader,
+    loader_kwargs={<span class="tok-str">"encoding"</span>: <span class="tok-str">"utf-8"</span>},   <span class="tok-com"># 한국어 문서는 utf-8 명시</span>
+    use_multithreading=<span class="tok-kw">True</span>,
+)
+pdf_loader = <span class="tok-fn">DirectoryLoader</span>(
+    <span class="tok-str">"./docs/manuals"</span>, glob=<span class="tok-str">"**/*.pdf"</span>, loader_cls=PyPDFLoader,
+)
+docs = sop_loader.<span class="tok-fn">load</span>() + pdf_loader.<span class="tok-fn">load</span>()
+<span class="tok-fn">print</span>(<span class="tok-str">f"loaded {len(docs)} document pages"</span>)</code></pre>
+</figure>
+</details>
+<!-- 2 chunk -->
+<details class="code-details">
+<summary>02_chunk.py — split with overlap, tag metadata</summary>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Python</span> 02_chunk.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># pip install langchain-text-splitters</span>
+<span class="tok-kw">from</span> langchain_text_splitters <span class="tok-kw">import</span> RecursiveCharacterTextSplitter
+
+splitter = <span class="tok-fn">RecursiveCharacterTextSplitter</span>(
+    chunk_size=<span class="tok-num">1000</span>, chunk_overlap=<span class="tok-num">150</span>,  <span class="tok-com"># ~15% overlap</span>
+    add_start_index=<span class="tok-kw">True</span>,
+)
+chunks = splitter.<span class="tok-fn">split_documents</span>(docs)
+
+<span class="tok-kw">for</span> c <span class="tok-kw">in</span> chunks:                      <span class="tok-com"># tag for metadata filters</span>
+    src = c.metadata[<span class="tok-str">"source"</span>]
+    c.metadata[<span class="tok-str">"tool"</span>]     = <span class="tok-str">"etcher"</span> <span class="tok-kw">if</span> <span class="tok-str">"etch"</span> <span class="tok-kw">in</span> src <span class="tok-kw">else</span> <span class="tok-str">"cvd"</span>
+    c.metadata[<span class="tok-str">"doc_type"</span>] = <span class="tok-str">"sop"</span> <span class="tok-kw">if</span> src.<span class="tok-fn">endswith</span>(<span class="tok-str">".txt"</span>) <span class="tok-kw">else</span> <span class="tok-str">"manual"</span></code></pre>
+</figure>
+</details>
+<!-- 3 embed -->
+<details class="code-details">
+<summary>03_embed.py — local, multilingual embeddings</summary>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Python</span> 03_embed.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># pip install langchain-huggingface sentence-transformers</span>
+<span class="tok-kw">from</span> langchain_huggingface <span class="tok-kw">import</span> HuggingFaceEmbeddings
+
+embeddings = <span class="tok-fn">HuggingFaceEmbeddings</span>(
+    model_name=<span class="tok-str">"/opt/models/bge-m3"</span>,          <span class="tok-com"># local weights, multilingual</span>
+    model_kwargs={<span class="tok-str">"device"</span>: <span class="tok-str">"cuda"</span>},          <span class="tok-com"># "cpu" if no GPU</span>
+    encode_kwargs={<span class="tok-str">"normalize_embeddings"</span>: <span class="tok-kw">True</span>},
+)
+<span class="tok-com"># Alt — reuse a local Ollama server:</span>
+<span class="tok-com"># from langchain_ollama import OllamaEmbeddings</span>
+<span class="tok-com"># embeddings = OllamaEmbeddings(model="bge-m3", base_url="http://localhost:11434")</span></code></pre>
+</figure>
+</details>
+<!-- 4 index -->
+<details class="code-details">
+<summary>04_index.py — persist to a local vector DB</summary>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Python</span> 04_index.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># pip install langchain-chroma</span>
+<span class="tok-kw">from</span> langchain_chroma <span class="tok-kw">import</span> Chroma
+
+vector_store = Chroma.<span class="tok-fn">from_documents</span>(
+    documents=chunks, embedding=embeddings,
+    collection_name=<span class="tok-str">"fab_kb"</span>,
+    persist_directory=<span class="tok-str">"./fab_kb"</span>,   <span class="tok-com"># local disk — reload, don't re-embed</span>
+)
+<span class="tok-fn">print</span>(<span class="tok-str">f"indexed {vector_store._collection.count()} chunks"</span>)
+<span class="tok-com"># Later runs just reopen it — no re-embedding.</span></code></pre>
+</figure>
+</details>
+<!-- 5 answer -->
+<details class="code-details">
+<summary>05_answer.py — retrieve + generate, with citations</summary>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Python</span> 05_answer.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># pip install langchain-ollama langchain-core</span>
+<span class="tok-kw">from</span> langchain_ollama <span class="tok-kw">import</span> ChatOllama
+<span class="tok-kw">from</span> langchain_core.prompts <span class="tok-kw">import</span> ChatPromptTemplate
+
+retriever = vector_store.<span class="tok-fn">as_retriever</span>(
+    search_kwargs={<span class="tok-str">"k"</span>: <span class="tok-num">4</span>, <span class="tok-str">"filter"</span>: {<span class="tok-str">"tool"</span>: <span class="tok-str">"etcher"</span>}},  <span class="tok-com"># metadata filter</span>
+)
+llm = <span class="tok-fn">ChatOllama</span>(model=<span class="tok-str">"qwen2.5:14b"</span>, base_url=<span class="tok-str">"http://localhost:11434"</span>)
+
+prompt = ChatPromptTemplate.<span class="tok-fn">from_template</span>(
+    <span class="tok-str">"Answer only from the context. Cite each source path.\n\n"</span>
+    <span class="tok-str">"Context:\n{context}\n\nQuestion: {question}"</span>
+)
+question = <span class="tok-str">"이 챔버 알람 코드 E-1420 대응 SOP는?"</span>
+hits = retriever.<span class="tok-fn">invoke</span>(question)                      <span class="tok-com"># retriever.invoke — 0.3 API</span>
+context = <span class="tok-str">"\n\n"</span>.<span class="tok-fn">join</span>(<span class="tok-str">f"[{d.metadata['source']}] {d.page_content}"</span> <span class="tok-kw">for</span> d <span class="tok-kw">in</span> hits)
+answer = llm.<span class="tok-fn">invoke</span>(prompt.<span class="tok-fn">invoke</span>({<span class="tok-str">"context"</span>: context, <span class="tok-str">"question"</span>: question}))
+<span class="tok-fn">print</span>(answer.content)
+<span class="tok-kw">for</span> d <span class="tok-kw">in</span> hits:                                        <span class="tok-com"># show the receipts</span>
+    <span class="tok-fn">print</span>(<span class="tok-str">"source:"</span>, d.metadata[<span class="tok-str">"source"</span>])</code></pre>
+</figure>
+</details>
+</section>
+<!-- ═══ Quality tips ═══════════════════════════════════════════ -->
+<div class="prose-block">
+<h2 id="quality">Tips that actually matter</h2>
+<ul>
+<li><strong>Chunk size is a trade-off.</strong> Dense SOPs want smaller chunks; narrative reports want larger. Measure hit-rate on real questions first.</li>
+<li><strong>Metadata filters cut noise.</strong> Tag by equipment and process, filter at query time. An etcher question should never retrieve a CVD manual.</li>
+<li><strong>Always surface sources.</strong> A cited answer is verifiable. Without citations you've built a confident guesser; with them, a search tool. 출처 표기가 환각 방지의 핵심입니다.</li>
+<li><strong>Match embedder to language.</strong> Korean docs need bge-m3 or multilingual-e5. An English-only model quietly wrecks recall on 한국어.</li>
+<li><strong>Nothing leaves the network.</strong> Loaders, embeddings, vector DB, and LLM all run local. 데이터 무반출.</li>
+</ul>
+<p>That's a complete air-gapped RAG stack in five short files. Start with one document folder and a dozen real questions, tune <code>chunk_size</code> and <code>k</code> against them, and grow from there.</p>
+</div>
+</div>
+<!-- deep-dive deck link -->
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">Go deeper</span>
+<h3>Take the full course on this topic</h3>
+<p>This article is a field note. The interactive deck walks the entire RAG build slide by slide, with diagrams and worked examples. 심화 자료로 이어집니다.</p>
+</div>
+<a class="btn btn-primary" href="../../llm_apply/RAG_BUILD_SLIDE.html">Open the deck <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+<!-- share -->
+<div class="share">
+<span class="lbl">Share</span>
+<button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+</div>
+<!-- author bio card (E-E-A-T) -->
+<aside class="author-card">
+<span aria-hidden="true" class="avatar">AE</span>
+<div class="a-body">
+<div class="k">About the author</div>
+<h3>AI Edu Archive</h3>
+<p>PhD in physics (IGZO / graphene semiconductor properties) and a semiconductor
+        process engineer working on deposition. Builds air-gapped LLM, RAG, and agent
+        systems — plus reinforcement-learning and anomaly-detection tooling — for the
+        fab. Writes here about turning process know-how into an on-prem knowledge asset
+        that never leaves the network.</p>
+<a href="../about.html">More about the author →</a>
+</div>
+</aside>
+<!-- related -->
+<section aria-label="Related articles" class="related">
+<span class="eyebrow">Keep reading</span>
+<h2>Related from the Journal</h2>
+<div class="related-grid">
+<a class="rel-card" href="rag-over-sealed-documents.html">
+<span class="cat-tag">RAG</span>
+<h3>Chunking technical docs without shredding the meaning</h3>
+</a>
+<a class="rel-card" href="agents-mcp-mes.html">
+<span class="cat-tag">Agents &amp; MCP</span>
+<h3>Hybrid retrieval: vectors + knowledge graph</h3>
+</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>Free, in-depth, and open.</h2>
+<p>Everything here, courses and journal alike, is free to read with no signup.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>Explore</h4>
+<a href="../../index.html">Hub home</a>
+<a href="../../index.html#courses">All courses</a>
+<a href="../index.html">Journal</a>
+</div>
+<div class="foot-col">
+<h4>Courses</h4>
+<a href="../../overview/index.html">Fab AI</a>
+<a href="../../watsonx/index.html">Air-gapped LLM</a>
+<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
+</div>
+<div class="foot-col">
+<h4>Site</h4>
+<a href="../about.html">About</a>
+<a href="../contact.html">Contact</a>
+<a href="../privacy.html">Privacy</a>
+<a href="../terms.html">Terms</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  // one-click copy for code figures
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig?fig.querySelector('pre'):null;
+      if(!code)return;
+      var text=code.innerText;
+      var done=function(){
+        btn.textContent='Copied';btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1600);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done,function(){});
+      }
+    });
+  });
+
+  /* ══ Animated pipeline: play / pause ══════════════════════════════ */
+  var anim=document.getElementById('ragAnim');
+  var toggle=document.getElementById('animToggle');
+  var icon=document.getElementById('animIcon');
+  var label=document.getElementById('animLabel');
+  var hint=document.getElementById('animHint');
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function setPlay(on){
+    anim.classList.toggle('playing',on);
+    toggle.setAttribute('aria-pressed',on?'true':'false');
+    icon.textContent=on?'❚❚':'▶';
+    label.textContent=on?'Pause / 정지':'Play / 재생';
+  }
+  toggle.addEventListener('click',function(){setPlay(!anim.classList.contains('playing'))});
+  if(reduce){
+    hint.textContent='Reduced motion on — animation held still';
+    setPlay(false);
+  }else{
+    // autoplay once visible
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(es){
+        es.forEach(function(e){ if(e.isIntersecting){ setPlay(true); io.disconnect(); } });
+      },{threshold:.3});
+      io.observe(anim);
+    }else{ setPlay(true); }
+  }
+
+  /* ══ Chunking slider widget ═══════════════════════════════════════ */
+  var SOP="ETCH CHAMBER ALARM E-1420 RESPONSE SOP. Step 1: acknowledge the alarm on the EAP and note the timestamp. Step 2: verify chamber pressure against the recipe setpoint before any purge. Step 3: if RF power reads below 80% of target, isolate the matching network and re-strike. Step 4: log the deviation and notify the B-shift lead. 챔버 압력과 RF 파워를 반드시 확인하고 편차를 기록한다.";
+  var colors=['#C7D6E4','#D6E4C7','#E4D3C7','#E4C7DE','#D8C7E4','#C7E4E0','#E4E0C7'];
+  var sizeEl=document.getElementById('csSize'),overEl=document.getElementById('csOver');
+  var sizeVal=document.getElementById('csSizeVal'),overVal=document.getElementById('csOverVal');
+  var out=document.getElementById('csOut'),cCount=document.getElementById('csCount'),
+      cAvg=document.getElementById('csAvg'),cOverPct=document.getElementById('csOverPct');
+
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+  function chunkText(text,size,overlap){
+    if(overlap>=size)overlap=size-10;
+    var out=[],i=0,step=Math.max(1,size-overlap);
+    while(i<text.length){ out.push([i,Math.min(i+size,text.length)]); if(i+size>=text.length)break; i+=step; }
+    return out;
+  }
+
+  function renderChunks(){
+    var size=+sizeEl.value, overlap=+overEl.value;
+    sizeVal.textContent=size; overVal.textContent=overlap;
+    var spans=chunkText(SOP,size,overlap);
+    // build a per-character owner map: which chunk(s) cover each char
+    var html='',total=0;
+    for(var s=0;s<spans.length;s++){
+      var a=spans[s][0], b=spans[s][1];
+      total+=(b-a);
+      var prevEnd = s>0 ? spans[s-1][1] : a;      // overlap zone with previous chunk
+      var color=colors[s%colors.length];
+      // emit this chunk; mark leading overlap portion
+      var ovEnd = s>0 ? Math.min(prevEnd,b) : a;
+      var pieceOv = esc(SOP.slice(a,ovEnd));
+      var pieceMain = esc(SOP.slice(ovEnd,b));
+      html+='<span class="chunk-seg'+(s>0&&ovEnd>a?' chunk-ov':'')+'" style="background:'+color+'">'+pieceOv+'</span>';
+      html+='<span class="chunk-seg" style="background:'+color+'">'+pieceMain+'</span>';
+      if(s<spans.length-1) html+=' ';
+    }
+    out.innerHTML=html;
+    cCount.textContent=spans.length;
+    cAvg.textContent=spans.length?Math.round(total/spans.length):0;
+    cOverPct.textContent=Math.round(overlap/size*100);
+  }
+  sizeEl.addEventListener('input',renderChunks);
+  overEl.addEventListener('input',renderChunks);
+  renderChunks();
+
+  /* ══ Mini search demo ═════════════════════════════════════════════ */
+  // chunk points (illustrative 2-D positions) + their text
+  var CHUNKS=[
+    {x:0.62,y:0.42,src:'etch/etch_e1420_sop.txt',txt:'E-1420 response: verify chamber pressure, re-strike RF if <80% target.'},
+    {x:0.55,y:0.60,src:'etch/etch_rf_match.txt', txt:'RF power drift is usually a matching-network fault; isolate and re-tune.'},
+    {x:0.70,y:0.30,src:'etch/etch_alarm_index.txt',txt:'Alarm index: E-14xx codes map to chamber pressure / RF subsystem.'},
+    {x:0.28,y:0.35,src:'cvd/cvd_purge_sop.txt',  txt:'CVD purge: N2 flush 3 cycles before venting; confirm interlock clears.'},
+    {x:0.20,y:0.62,src:'cvd/cvd_recipe.txt',     txt:'CVD recipe params: deposition rate vs chamber temperature curve.'},
+    {x:0.42,y:0.20,src:'common/eap_alarms.txt',  txt:'Acknowledge alarms on the EAP; every deviation must be logged.'},
+    {x:0.80,y:0.55,src:'etch/etch_maint.txt',    txt:'Etcher PM: matching network inspection every 2 weeks.'},
+    {x:0.35,y:0.80,src:'cvd/cvd_interlock.txt',  txt:'Interlock chain for CVD purge and vent sequence.'}
+  ];
+  // per-query: index of query point + which chunk indices are the top-3 nearest
+  var QUERIES=[
+    {qx:0.66,qy:0.36,top:[0,2,1],label:'챔버 알람 E-1420 대응 SOP?'},
+    {qx:0.60,qy:0.56,top:[1,0,6],label:'Etcher RF power drift 원인?'},
+    {qx:0.24,qy:0.50,top:[3,4,7],label:'CVD 챔버 퍼지 절차?'}
+  ];
+  var SVGW=460,SVGH=320, PX=[40,440], PY=[30,285];
+  function sx(v){return PX[0]+v*(PX[1]-PX[0]);}
+  function sy(v){return PY[1]-v*(PY[1]-PY[0]);} // invert so y up
+  var dotLayer=document.getElementById('dotLayer'),
+      linkLayer=document.getElementById('linkLayer'),
+      queryLayer=document.getElementById('queryLayer'),
+      resultCards=document.getElementById('resultCards'),
+      queryRow=document.getElementById('queryRow');
+
+  function drawDots(){
+    var s='';
+    CHUNKS.forEach(function(c,i){
+      s+='<circle id="dot'+i+'" cx="'+sx(c.x).toFixed(1)+'" cy="'+sy(c.y).toFixed(1)+'" r="6" fill="#B7CCE0" stroke="#96AEC4"/>';
+    });
+    dotLayer.innerHTML=s;
+  }
+  drawDots();
+
+  function runQuery(qi){
+    var q=QUERIES[qi];
+    // reset dots
+    CHUNKS.forEach(function(c,i){
+      var d=document.getElementById('dot'+i);
+      d.setAttribute('fill','#B7CCE0');d.setAttribute('stroke','#96AEC4');d.setAttribute('r','6');
+    });
+    // links
+    var lines='';
+    q.top.forEach(function(ci){
+      lines+='<line x1="'+sx(q.qx).toFixed(1)+'" y1="'+sy(q.qy).toFixed(1)+'" x2="'+sx(CHUNKS[ci].x).toFixed(1)+'" y2="'+sy(CHUNKS[ci].y).toFixed(1)+'"/>';
+      var d=document.getElementById('dot'+ci);
+      d.setAttribute('fill','#E7B79E');d.setAttribute('stroke','#C15F3C');d.setAttribute('r','7.5');
+    });
+    linkLayer.innerHTML=lines;
+    // query point
+    queryLayer.innerHTML='<circle cx="'+sx(q.qx).toFixed(1)+'" cy="'+sy(q.qy).toFixed(1)+'" r="8" fill="#C15F3C"/>'+
+      '<text x="'+(sx(q.qx)+13).toFixed(1)+'" y="'+(sy(q.qy)+4).toFixed(1)+'" font-family="JetBrains Mono,monospace" font-size="12" font-weight="600" fill="#C15F3C">query</text>';
+    // cards
+    var scores=[0.91,0.84,0.78];
+    var cards='';
+    q.top.forEach(function(ci,rank){
+      cards+='<div class="rcard lit"><span class="rc-score">cos '+scores[rank]+'</span>'+
+        '<div class="rc-src">'+CHUNKS[ci].src+'</div>'+
+        '<div class="rc-txt">'+CHUNKS[ci].txt+'</div></div>';
+    });
+    resultCards.innerHTML=cards;
+    // active button
+    queryRow.querySelectorAll('.query-btn').forEach(function(b,i){b.classList.toggle('active',i===qi);});
+  }
+  queryRow.querySelectorAll('.query-btn').forEach(function(b){
+    b.addEventListener('click',function(){runQuery(+b.getAttribute('data-q'));});
+  });
+  runQuery(0);
+})();
+</script>
+</body>
+</html>

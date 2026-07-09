@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Human-in-the-loop and MLOps for on-prem agents - AI Edu Archive Journal</title>
+<meta content="Why an air-gapped agent must pause for human approval before state-changing actions: approval gates, audit logs, drift watch, and durable state with LangGraph interrupt() and PostgresSaver." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/hitl-mlops-onprem.html" rel="canonical"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/hitl-mlops-onprem.html" hreflang="ko" rel="alternate"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/hitl-mlops-onprem.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+<!-- Open Graph -->
+<meta content="article" property="og:type"/>
+<meta content="Human-in-the-loop and MLOps for on-prem agents - AI Edu Archive Journal" property="og:title"/>
+<meta content="Why an air-gapped agent must pause for human approval before state-changing actions: approval gates, audit logs, drift watch, and durable state with LangGraph interrupt() and PostgresSaver." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="https://ai-edu-archive.example.com/blog/articles/hitl-mlops-onprem.html" property="og:url"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="ko_KR" property="og:locale:alternate"/>
+<meta content="2026-07-04" property="article:published_time"/>
+<meta content="AI Edu Archive" property="article:author"/>
+<meta content="Agents &amp; MCP" property="article:section"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Human-in-the-loop and MLOps for on-prem agents - AI Edu Archive Journal" name="twitter:title"/>
+<meta content="Why an air-gapped agent must pause for human approval before state-changing actions: approval gates, audit logs, drift watch, and durable state with LangGraph interrupt() and PostgresSaver." name="twitter:description"/>
+<!-- JSON-LD: Article schema -->
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Human-in-the-loop and MLOps for on-prem agents",
+  "description": "Why an air-gapped agent must pause for human approval before state-changing actions: approval gates, audit logs, drift watch, and durable state with LangGraph interrupt() and PostgresSaver.",
+  "inLanguage": "en",
+  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.example.com/blog/about.html"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/articles/hitl-mlops-onprem.html"
+  },
+  "name": "Human-in-the-loop and MLOps for on-prem agents",
+  "url": "https://ai-edu-archive.example.com/blog/articles/hitl-mlops-onprem.html"
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../assets/blog.css" rel="stylesheet"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/hitl-mlops-onprem.html" hreflang="en" rel="alternate"/></head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive home" class="brand" href="../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="Primary" class="nav-links">
+<a href="../../index.html#courses">Courses</a>
+<a href="../index.html">Articles</a>
+<a href="../about.html">About</a>
+<div aria-label="Language selector" class="language-switch">
+<a aria-current="true" href="hitl-mlops-onprem.html" lang="en" title="English">🇺🇸 EN</a>
+<a href="../ko/articles/hitl-mlops-onprem.html" lang="ko" title="한국어">🇰🇷 KO</a>
+<a href="hitl-mlops-onprem.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a>
+<a href="hitl-mlops-onprem.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a>
+<a href="hitl-mlops-onprem.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a>
+<a href="hitl-mlops-onprem.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a>
+<a href="hitl-mlops-onprem.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a>
+</div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article itemscope="" itemtype="https://schema.org/Article">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="Breadcrumb" class="breadcrumb">
+<a href="../../index.html">Home</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">Journal</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">HITL &amp; MLOps for on-prem agents</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag" data-cat="agents">Agents &amp; MCP</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-04" itemprop="datePublished">Jul 4, 2026</time>
+<span class="post-dot"></span>
+<span class="rt">12 min read</span>
+</div>
+<h1 itemprop="headline">Human-in-the-loop and MLOps for on-prem agents</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>Semiconductor process engineer · Air-gapped LLM / RAG / Agents</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="Table of contents" class="toc">
+<div class="toc-title">On this page</div>
+<ol>
+<li><a href="#why-approval">Why a human gate before the agent acts</a></li>
+<li><a href="#gate">The approval gate with <code>interrupt()</code></a></li>
+<li><a href="#state">Durable state: why PostgresSaver, not MemorySaver</a></li>
+<li><a href="#audit">Audit logs and the approval trail</a></li>
+<li><a href="#drift">Retraining, drift watch, and the MLOps loop</a></li>
+</ol>
+</nav>
+<div class="article-body" itemprop="articleBody">
+<p>An agent that can call tools can change the plant. In a fab, a tool call is not an abstraction: it can write a recipe parameter, file an MES lot hold, or open a maintenance ticket on a deposition chamber. The moment an LLM can trigger those actions on its own, the question stops being whether the answer is good and becomes who signed off before it happened. This article defends one operating rule: an on-prem agent must pause for human approval before any state-changing action, and that pause has to survive a process restart.</p>
+<h2 id="why-approval">Why a human gate before the agent acts</h2>
+<p>On the open internet, a bad agent action is usually a wasted API call. Inside a sealed fab network, the blast radius is physical. An LLM can hallucinate a plausible but wrong setpoint, misread an ambiguous SOP, or chain two correct steps into a dangerous third. Accuracy metrics do not catch that. An engineer who knows the chamber does. The design goal is therefore not only a smarter model; it is a reliable point of control where a person reviews the proposed action, with full context, before it commits.</p>
+<p>Concretely, split the agent's tools into two classes:</p>
+<ul>
+<li>Read tools — query MES, read a recipe, pull an equipment log. These run freely because they cannot change the line.</li>
+<li>Write tools — set a parameter, place a hold, dispatch a work order. Each one passes through an approval gate and cannot execute until a named human resumes it.</li>
+</ul>
+<blockquote>A read agent needs to be right. A write agent needs to be stoppable, and every stop needs a name attached to it.</blockquote>
+<h2 id="gate">The approval gate with <code>interrupt()</code></h2>
+<p>LangGraph gives us the exact primitive for this pattern. Inside a node, call interrupt(payload): the runtime persists the whole graph state, surfaces the payload to the caller, and halts. Nothing downstream runs. The graph stays paused across minutes, or across a server restart, until someone resumes it with Command(resume=...). The resume value becomes the return value of interrupt(), so the human decision flows straight back into the node logic.</p>
+<p>One behavior matters in production: when you resume, LangGraph reruns the node from the top. It does not continue from the line after interrupt(). Keep every real side effect, especially the actual write, after the interrupt returns. Everything above the interrupt must be safe to execute more than once.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> approval_gate.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># Approval gate for a state-changing (write) tool call.</span>
+<span class="tok-com"># interrupt / Command live in langgraph.types (2026 API).</span>
+<span class="tok-kw">from</span> typing <span class="tok-kw">import</span> TypedDict
+<span class="tok-kw">from</span> langgraph.graph <span class="tok-kw">import</span> StateGraph, START, END
+<span class="tok-kw">from</span> langgraph.types <span class="tok-kw">import</span> interrupt, Command
+
+
+<span class="tok-kw">class</span> <span class="tok-fn">AgentState</span>(TypedDict):
+    action: dict        <span class="tok-com"># proposed write, e.g. {"tool": "set_recipe", "param": ...}</span>
+    approved_by: str
+    result: str
+
+
+<span class="tok-kw">def</span> <span class="tok-fn">human_gate</span>(state: AgentState) -&gt; Command:
+    <span class="tok-com"># Pause here. Everything above must be side-effect free,</span>
+    <span class="tok-com"># because the node re-runs from the top on resume.</span>
+    decision = <span class="tok-fn">interrupt</span>({
+        <span class="tok-str">"review"</span>: <span class="tok-str">"Approve this write to the line?"</span>,
+        <span class="tok-str">"action"</span>: state[<span class="tok-str">"action"</span>],
+    })
+    <span class="tok-kw">if</span> <span class="tok-kw">not</span> decision[<span class="tok-str">"approve"</span>]:
+        <span class="tok-kw">return</span> <span class="tok-fn">Command</span>(goto=END, update={<span class="tok-str">"result"</span>: <span class="tok-str">"rejected"</span>})
+    <span class="tok-kw">return</span> <span class="tok-fn">Command</span>(
+        goto=<span class="tok-str">"execute"</span>,
+        update={<span class="tok-str">"approved_by"</span>: decision[<span class="tok-str">"by"</span>]},  <span class="tok-com"># who signed off</span>
+    )
+
+
+<span class="tok-kw">def</span> <span class="tok-fn">execute</span>(state: AgentState) -&gt; dict:
+    <span class="tok-com"># The real side effect runs ONLY after approval.</span>
+    out = <span class="tok-fn">run_write_tool</span>(state[<span class="tok-str">"action"</span>])       <span class="tok-com"># MES / recipe API</span>
+    <span class="tok-kw">return</span> {<span class="tok-str">"result"</span>: out}
+
+
+builder = <span class="tok-fn">StateGraph</span>(AgentState)
+builder.<span class="tok-fn">add_node</span>(<span class="tok-str">"human_gate"</span>, human_gate)
+builder.<span class="tok-fn">add_node</span>(<span class="tok-str">"execute"</span>, execute)
+builder.<span class="tok-fn">add_edge</span>(START, <span class="tok-str">"human_gate"</span>)
+builder.<span class="tok-fn">add_edge</span>(<span class="tok-str">"execute"</span>, END)</code></pre>
+</figure>
+<p>Compiling the graph requires a checkpointer. Without one, interrupt() has nowhere to persist the paused state. That checkpointer is the whole reliability story, and it is where the on-prem decision matters most.</p>
+<h2 id="state">Durable state: why PostgresSaver, not MemorySaver</h2>
+<p>Many tutorials reach for InMemorySaver, formerly MemorySaver. It stores checkpoints in a Python dictionary, which is perfect for a notebook demo and wrong for production. If the process restarts while an approval is pending, the paused graph disappears. The engineer's half-reviewed hold vanishes, and you have no record that it ever existed. In a fab that runs 24/7 and redeploys services behind the scenes, in-memory state is a data-loss bug waiting to happen.</p>
+<p>Use PostgresSaver against an on-prem Postgres database. The paused state becomes a row in a database that lives on your network. It survives restarts, it is backed up with the rest of your operational data, and a pending approval from Tuesday is still there on Wednesday morning. Run .setup() once to create the checkpoint tables. Resume is keyed by thread_id, so the same conversation reloads exactly where it paused.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> durable_run.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># Durable checkpoints on an on-prem Postgres — survives restarts.</span>
+<span class="tok-kw">from</span> langgraph.checkpoint.postgres <span class="tok-kw">import</span> PostgresSaver
+
+DB_URI = <span class="tok-str">"postgresql://agent:pw@postgres.fab.local:5432/agentdb"</span>
+
+<span class="tok-kw">with</span> PostgresSaver.<span class="tok-fn">from_conn_string</span>(DB_URI) <span class="tok-kw">as</span> checkpointer:
+    checkpointer.<span class="tok-fn">setup</span>()                       <span class="tok-com"># once: create checkpoint tables</span>
+    graph = builder.<span class="tok-fn">compile</span>(checkpointer=checkpointer)
+
+    config = {<span class="tok-str">"configurable"</span>: {<span class="tok-str">"thread_id"</span>: <span class="tok-str">"lot-A17-hold"</span>}}
+
+    <span class="tok-com"># 1) Run until the gate. It pauses and persists to Postgres.</span>
+    <span class="tok-kw">for</span> chunk <span class="tok-kw">in</span> graph.<span class="tok-fn">stream</span>(
+        {<span class="tok-str">"action"</span>: {<span class="tok-str">"tool"</span>: <span class="tok-str">"place_hold"</span>, <span class="tok-str">"lot"</span>: <span class="tok-str">"A17"</span>}},
+        config,
+        stream_mode=<span class="tok-str">"values"</span>,
+    ):
+        <span class="tok-fn">print</span>(chunk)
+
+    <span class="tok-com"># 2) Later — even after a restart — inspect what is pending.</span>
+    snapshot = graph.<span class="tok-fn">get_state</span>(config)
+    <span class="tok-fn">print</span>(snapshot.next)               <span class="tok-com"># ('human_gate',) -&gt; awaiting approval</span>
+
+    <span class="tok-com"># 3) A named engineer approves; the write runs only now.</span>
+    graph.<span class="tok-fn">invoke</span>(
+        <span class="tok-fn">Command</span>(resume={<span class="tok-str">"approve"</span>: <span class="tok-kw">True</span>, <span class="tok-str">"by"</span>: <span class="tok-str">"kim.eng"</span>}),
+        config,
+    )</code></pre>
+</figure>
+<h2 id="audit">Audit logs and the approval trail</h2>
+<p>Because every pause is a durable checkpoint, you can build an audit trail without adding a separate control plane. The checkpoint records the proposed action and state; the resume payload records who decided and what they decided. Write both to an append-only log at the moment of resume, before the write tool fires. For a regulated line, each record should include the proposed tool call, reviewer ID, approve or reject, timestamp, and thread_id that ties it back to the full agent transcript.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> audit_log.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-com"># Append-only audit record, written at the moment of decision.</span>
+<span class="tok-kw">import</span> json, time, logging
+
+audit = logging.<span class="tok-fn">getLogger</span>(<span class="tok-str">"agent.audit"</span>)   <span class="tok-com"># ships to on-prem log store</span>
+
+
+<span class="tok-kw">def</span> <span class="tok-fn">resume_with_audit</span>(graph, config, decision: dict) -&gt; dict:
+    snapshot = graph.<span class="tok-fn">get_state</span>(config)
+    proposed = snapshot.values[<span class="tok-str">"action"</span>]
+    audit.<span class="tok-fn">info</span>(json.<span class="tok-fn">dumps</span>({
+        <span class="tok-str">"thread_id"</span>: config[<span class="tok-str">"configurable"</span>][<span class="tok-str">"thread_id"</span>],
+        <span class="tok-str">"action"</span>: proposed,
+        <span class="tok-str">"decision"</span>: <span class="tok-str">"approve"</span> <span class="tok-kw">if</span> decision[<span class="tok-str">"approve"</span>] <span class="tok-kw">else</span> <span class="tok-str">"reject"</span>,
+        <span class="tok-str">"by"</span>: decision[<span class="tok-str">"by"</span>],
+        <span class="tok-str">"ts"</span>: time.<span class="tok-fn">time</span>(),
+    }))
+    <span class="tok-kw">return</span> graph.<span class="tok-fn">invoke</span>(<span class="tok-fn">Command</span>(resume=decision), config)</code></pre>
+</figure>
+<p>Now every write on the line has a name and a timestamp behind it, stored on the same network as the action itself. That is the record an auditor, or a post-mortem after a bad lot, actually needs.</p>
+<figure>
+<div aria-label="Human-in-the-loop approval flow diagram" class="diagram">
+<svg aria-label="Agent proposes a write, the graph interrupts and persists to Postgres, a human approves or rejects, then the write executes and is logged." role="img" viewbox="0 0 640 260" width="100%">
+<rect fill="#FCFBF8" height="258" rx="12" stroke="#E8E4DB" width="638" x="1" y="1"></rect>
+<!-- Agent box -->
+<rect fill="#FFFFFF" height="52" rx="9" stroke="#DBD5C8" width="112" x="26" y="104"></rect>
+<text fill="#3A382F" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="82" y="127">Agent</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="82" y="145">proposes write</text>
+<!-- Gate / interrupt -->
+<rect fill="#FBEDE7" height="52" rx="9" stroke="#D97757" width="120" x="186" y="104"></rect>
+<text fill="#B24A28" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="246" y="127">interrupt()</text>
+<text fill="#B24A28" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="246" y="145">gate · pause</text>
+<!-- Postgres persistence (below the gate) -->
+<rect fill="#FFFFFF" height="40" rx="9" stroke="#DBD5C8" width="120" x="186" y="196"></rect>
+<text fill="#6B6862" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="246" y="221">PostgresSaver</text>
+<!-- Human -->
+<rect fill="#FFFFFF" height="52" rx="9" stroke="#DBD5C8" width="120" x="354" y="104"></rect>
+<text fill="#3A382F" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="414" y="127">Engineer</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="414" y="145">approve / reject</text>
+<!-- Execute -->
+<rect fill="#FFFFFF" height="52" rx="9" stroke="#DBD5C8" width="96" x="522" y="104"></rect>
+<text fill="#3A382F" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="570" y="127">Execute</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="570" y="145">+ log</text>
+<!-- Arrows -->
+<defs>
+<marker id="ah" markerheight="9" markerwidth="9" orient="auto" refx="7" refy="3">
+<path d="M0 0 L7 3 L0 6 Z" fill="#8A8578"></path>
+</marker>
+</defs>
+<line marker-end="url(#ah)" stroke="#8A8578" stroke-width="1.6" x1="138" x2="182" y1="130" y2="130"></line>
+<line marker-end="url(#ah)" stroke="#8A8578" stroke-width="1.6" x1="306" x2="350" y1="130" y2="130"></line>
+<line marker-end="url(#ah)" stroke="#8A8578" stroke-width="1.6" x1="474" x2="518" y1="130" y2="130"></line>
+<line marker-end="url(#ah)" stroke="#8A8578" stroke-width="1.6" x1="246" x2="246" y1="156" y2="192"></line>
+<text fill="#3A382F" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="320" y="34">Read tools run free · every write passes the gate</text>
+</svg>
+</div>
+<figcaption>Figure 1. The write path: propose → interrupt, persist state to Postgres, human approves, then execute and log.</figcaption>
+</figure>
+<h2 id="drift">Retraining, drift watch, and the MLOps loop</h2>
+<p>The approval gate is also your best data source. Every rejection is a labeled example of the model being wrong in a way a human caught. Track the reject rate over time, sliced by tool and shift. A rising reject rate is often the earliest signal that the agent has drifted away from how the line actually runs: a new recipe family, a changed SOP, or a retooled chamber.</p>
+<p>Because the fab is air-gapped, the MLOps loop stays entirely on-prem. No telemetry leaves the network, and no managed retraining service is required. A practical loop looks like this:</p>
+<ul>
+<li>Watch — dashboard the reject rate and read-tool retrieval quality; alert when either crosses a threshold.</li>
+<li>Collect — mine the audit log for rejected actions and the corrected decision the engineer made instead.</li>
+<li>Refresh — re-index the RAG corpus first, because it is cheap and fixes most drift; fine-tune the local model only when retrieval alone cannot close the gap.</li>
+<li>Release gate — treat a new model version as a state-changing action: shadow it, compare its would-be decisions against approved history, and require sign-off before it serves the line.</li>
+</ul>
+<p>None of this needs a cloud MLOps platform. It needs a durable checkpoint store, an honest audit log, and a metric, reject rate, that a human on the floor already understands.</p>
+<hr/>
+<p>The pattern is small, and it is the point: read freely, write behind a gate, persist the pause to Postgres, and log who decided. An agent built this way is not just accurate. It is accountable, restart-safe, and safe enough to bring near a running line. The deep-dive deck below walks the full agent-and-MCP build slide by slide, including the tool wiring this article assumes.</p>
+</div>
+<!-- deep-dive deck link -->
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">Go deeper</span>
+<h3>Take the full course on this topic</h3>
+<p>This article is a field note. The interactive deck walks the whole subject slide by slide, with diagrams and worked examples.</p>
+</div>
+<a class="btn btn-primary" href="../../llm_apply/LLM_slide.html">Open the deck <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+<!-- share -->
+<div class="share">
+<span class="lbl">Share</span>
+<button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+</div>
+<!-- author bio card (E-E-A-T) -->
+<aside class="author-card">
+<span aria-hidden="true" class="avatar">AE</span>
+<div class="a-body">
+<div class="k">About the author</div>
+<h3>AI Edu Archive</h3>
+<p>PhD in physics (IGZO / graphene semiconductor properties) and a semiconductor process engineer working on deposition. Builds air-gapped LLM, RAG, and agent systems, plus reinforcement-learning and anomaly-detection tooling, for the fab. Writes here about turning process know-how into an on-prem knowledge asset that never leaves the network.</p>
+<a href="../about.html">More about the author</a>
+</div>
+</aside>
+<!-- related -->
+<section aria-label="Related articles" class="related">
+<span class="eyebrow">Keep reading</span>
+<h2>Related from the Journal</h2>
+<div class="related-grid">
+<a class="rel-card" href="langchain-core-explained.html">
+<span class="cat-tag" data-cat="agents">Agents &amp; MCP</span>
+<h3>LangChain core, explained for the on-prem stack</h3>
+</a>
+<a class="rel-card" href="rag-over-sealed-documents.html">
+<span class="cat-tag" data-cat="rag">RAG</span>
+<h3>RAG over sealed documents that never leave the network</h3>
+</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>Free, in-depth, and open.</h2>
+<p>Everything here, courses and journal alike, is free to read with no signup.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>Explore</h4>
+<a href="../../index.html">Hub home</a>
+<a href="../../index.html#courses">All courses</a>
+<a href="../index.html">Journal</a>
+</div>
+<div class="foot-col">
+<h4>Courses</h4>
+<a href="../../overview/index.html">Fab AI</a>
+<a href="../../watsonx/index.html">Air-gapped LLM</a>
+<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
+</div>
+<div class="foot-col">
+<h4>Site</h4>
+<a href="../about.html">About</a>
+<a href="../contact.html">Contact</a>
+<a href="../privacy.html">Privacy</a>
+<a href="../terms.html">Terms</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig?fig.querySelector('pre'):null;
+      if(!code)return;
+      var text=code.innerText;
+      var done=function(){
+        btn.textContent='Copied';btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1600);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done,function(){});
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

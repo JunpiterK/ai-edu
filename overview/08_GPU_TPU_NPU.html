@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GPU · TPU · NPU 완전 정복</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700;800&family=Noto+Serif+KR:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#15202A;--ink2:#2A3942;--bg:#EEF2F5;--line:#D5DEE4;--line2:#C6D2DA;--teal:#0E7C72;--teal-d:#0B6258;--mint:#5EC8BC;--tint:#E1F0EE;--tint2:#F2F6F8;--muted:#7A8893;--muted2:#5A6873;--muted3:#46545E;--red:#B0392E;--amber:#C77D2E;--purple:#7A5BD0;--mono:'JetBrains Mono','Consolas',monospace;--sans:'Noto Sans KR',system-ui,sans-serif;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden;background:#0c1116;font-family:var(--sans);color:var(--ink)}
+  .deck{position:fixed;inset:0;background:#0c1116;overflow:hidden}
+  .stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform:translate(-50%,-50%);transform-origin:center center}
+  .slide{position:absolute;inset:0;opacity:0;visibility:hidden;background:var(--bg);display:flex;flex-direction:column;overflow:hidden;transition:opacity .5s ease}
+  .slide.active{opacity:1;visibility:visible} .slide.dark{background:var(--ink);color:#fff}
+  .bar{display:flex;align-items:center;gap:16px;padding:24px 90px;background:#fff;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:23px;letter-spacing:.1em;color:var(--teal)}
+  .bar .sq{width:10px;height:10px;background:var(--teal);display:inline-block} .bar .r{margin-left:auto;color:var(--muted)}
+  .body{flex:1;padding:44px 90px;display:flex;flex-direction:column;justify-content:center}
+  h2.t{font-weight:700;letter-spacing:-.02em;line-height:1.12;color:var(--ink);font-size:46px}
+  .eyebrow{font-family:var(--mono);font-size:24px;letter-spacing:.1em;color:var(--teal)}
+  .lede{font-size:29px;line-height:1.55;color:var(--ink2)} p.s{font-size:24px;line-height:1.5;color:var(--muted2)}
+  strong{color:var(--ink)} em{font-style:italic}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px} .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px} .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .card{background:#fff;border:1px solid var(--line);padding:22px 26px} .card.t{border-top:4px solid var(--teal)} .card.l{border-left:5px solid var(--teal)}
+  .card h4{font-size:23px;font-weight:700;margin-bottom:9px} .card p{font-size:20px;line-height:1.45;color:var(--muted3)}
+  .k{font-family:var(--mono);font-size:20px;color:var(--teal)}
+  .dark-box{background:var(--ink);color:#fff;padding:22px 34px;display:flex;gap:16px;align-items:center} .dark-box .lab{font-family:var(--mono);font-size:21px;color:var(--mint);flex-shrink:0} .dark-box span.x{font-size:23px;line-height:1.5}
+  .tealbox{background:var(--tint);border:1px solid #9FD3CC;padding:20px 28px}
+  .tag{display:inline-block;font-family:var(--mono);font-size:18px;padding:5px 13px;background:var(--tint);color:var(--teal-d);border:1px solid #9FD3CC;margin:3px} .tag.d{background:#fff;color:var(--muted3);border-color:var(--line2)}
+  .codebox{background:var(--ink);color:#E5F4F1;font-family:var(--mono);font-size:20px;line-height:1.6;padding:22px 28px;white-space:pre-wrap} .codebox .g{color:var(--mint)} .codebox .m{color:var(--muted)} .codebox .r{color:#F0B6AC} .codebox .y{color:#E8C98A}
+  table.tb{width:100%;border-collapse:collapse;font-size:21px} table.tb th{background:var(--ink);color:#fff;font-family:var(--mono);font-size:18px;font-weight:500;padding:13px 16px;text-align:left;letter-spacing:.04em} table.tb td{padding:13px 16px;border-bottom:1px solid var(--line);color:var(--ink2)} table.tb tr:nth-child(even) td{background:#fff} table.tb .mono{font-family:var(--mono);color:var(--teal-d)} table.tb .h{color:var(--ink);font-weight:700}
+  .note{font-size:20px;color:var(--muted);font-style:italic}
+  .body.sim{justify-content:flex-start;padding-top:26px} .slide.active .body.sim>*{animation:none}
+  .controls{display:flex;align-items:center;gap:12px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+  .btn{font-family:var(--mono);font-size:19px;padding:10px 20px;border:none;border-radius:8px;background:var(--teal);color:#fff;cursor:pointer;transition:background .15s} .btn:hover{background:var(--teal-d)} .btn.sec{background:#fff;color:var(--ink2);border:1px solid var(--line2)} .btn.sec:hover{background:var(--tint2)}
+  .stat{font-family:var(--mono);font-size:19px;color:var(--ink2);background:#fff;border:1px solid var(--line);padding:9px 16px;border-radius:8px} .stat b{color:var(--teal-d)}
+  .mmcell{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px}
+  .navbar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;background:#000;color:#fff;border-radius:999px;padding:6px;font-family:var(--mono);font-size:15px;z-index:50;opacity:.85}
+  .navbar button{background:transparent;border:none;color:#fff;font-size:16px;cursor:pointer;padding:6px 12px;border-radius:999px} .navbar button:hover{background:rgba(255,255,255,.15)} .navbar .ct{padding:0 10px} .navbar .kb{opacity:.5;font-size:13px;padding-left:8px;border-left:1px solid rgba(255,255,255,.2);margin-left:4px}
+  .deck.presenting .navbar{display:none}
+  #gate{display:none} #gate svg{width:100%;height:100%;display:block}
+  #gate .hint{position:absolute;bottom:5.5%;left:0;right:0;text-align:center;font-family:var(--mono);font-size:24px;letter-spacing:2px;color:var(--mint);animation:pulse 1.9s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.4}50%{opacity:.95}}
+  .card{transition:transform .22s ease, box-shadow .22s ease} .card:hover{transform:translateY(-5px);box-shadow:0 12px 30px rgba(21,32,42,.12)}
+  .slide.active .body>*{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
+  .slide.active .body>*:nth-child(2){animation-delay:.07s}.slide.active .body>*:nth-child(3){animation-delay:.14s}.slide.active .body>*:nth-child(4){animation-delay:.21s}.slide.active .body>*:nth-child(5){animation-delay:.28s}
+  @keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  #gate g circle{animation:nodepulse 2.2s ease-in-out infinite} @keyframes nodepulse{0%,100%{opacity:1}50%{opacity:.45}}
+  .progress{position:fixed;left:0;top:0;height:4px;width:0;background:linear-gradient(90deg,#0E7C72,#5EC8BC);z-index:60;transition:width .5s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 12px rgba(94,200,188,.55)}
+  @media (prefers-reduced-motion:reduce){.slide.active .body>*,#gate g circle{animation:none}}
+.eduhome{position:fixed;left:16px;top:14px;z-index:80;font-family:var(--mono),monospace;font-size:15px;color:#fff;background:rgba(21,32,42,.85);border:1px solid rgba(255,255,255,.22);padding:7px 14px;border-radius:999px;text-decoration:none;opacity:.55;transition:opacity .15s} .eduhome:hover{opacity:1} .deck.presenting .eduhome{display:none}
+</style>
+</head>
+<body>
+<div class="deck" id="deck"><a class="eduhome" href="../" title="AI EDU 자료실로 돌아가기">⌂ 자료실</a><div class="stage" id="stage">
+
+  <!-- COVER -->
+  <section class="slide dark" data-label="표지">
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 110px;position:relative;overflow:hidden">
+      <svg viewBox="0 0 1920 1080" style="position:absolute;inset:0;width:100%;height:100%;opacity:.5" preserveAspectRatio="xMidYMid slice"><defs><pattern id="g" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#22323d" stroke-width="1"/></pattern></defs><rect width="1920" height="1080" fill="url(#g)"/><g opacity=".55" stroke="#0E7C72" stroke-width="1.5" fill="none"><rect x="1440" y="210" width="150" height="150" rx="8"/><rect x="1460" y="230" width="110" height="110" rx="4" stroke="#5EC8BC"/><line x1="1440" y1="250" x2="1410" y2="250"/><line x1="1440" y1="290" x2="1410" y2="290"/><line x1="1440" y1="330" x2="1410" y2="330"/><line x1="1590" y1="250" x2="1620" y2="250"/><line x1="1590" y1="290" x2="1620" y2="290"/><line x1="1590" y1="330" x2="1620" y2="330"/></g></svg>
+      <div style="position:relative">
+        <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:24px;color:var(--mint);letter-spacing:.06em;margin-bottom:54px"><span>AI × Hardware · 08</span><span style="color:var(--muted)">같은 신경망, 다른 칩</span></div>
+        <div style="display:inline-flex;align-items:center;gap:14px;font-family:var(--mono);font-size:26px;letter-spacing:.1em;color:var(--teal);margin-bottom:28px"><span style="width:12px;height:12px;background:var(--teal);display:inline-block"></span>GPU · TPU · NPU 완전 정복</div>
+        <h1 style="font-size:80px;font-weight:800;letter-spacing:-.03em;line-height:1.06;color:#F4F6F8">학습은 <span style="color:var(--mint)">거대 클러스터</span>,<br>실행은 <span style="color:var(--mint)">손안의 칩</span></h1>
+        <p style="margin-top:30px;max-width:1440px;font-size:30px;line-height:1.6;color:#AFC0CA">세 칩의 설계 철학 → 학습/추론/엣지의 분업 → LLM·로봇·자율차까지 <strong style="color:#fff">"어디에 어떤 칩"</strong>을 한눈에.</p>
+        <div style="margin-top:42px"><span class="tag" style="font-size:20px;padding:7px 16px;background:rgba(14,124,114,.15);color:#5EC8BC;border-color:#0E7C72">GPU · TPU · NPU</span><span class="tag d" style="font-size:20px;padding:7px 16px;background:transparent;color:#9FB2BD;border-color:#3a4f5a">LLM</span><span class="tag d" style="font-size:20px;padding:7px 16px;background:transparent;color:#9FB2BD;border-color:#3a4f5a">로봇 VLA</span><span class="tag d" style="font-size:20px;padding:7px 16px;background:transparent;color:#9FB2BD;border-color:#3a4f5a">자율차</span></div>
+        <div style="margin-top:36px;font-family:var(--mono);font-size:21px;color:var(--muted)">신경망=행렬곱 원리 → 07 · 스펙은 빠르게 변하므로 "경향"으로 읽기</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 세 칩 철학 -->
+  <section class="slide" data-label="설계 철학">
+    <div class="bar"><span class="sq"></span>① 근본 차이<span class="r">설계 철학</span></div>
+    <div class="body">
+      <h2 class="t">GPU · TPU · NPU — 같은 행렬곱, 다른 목표</h2>
+      <div class="grid3" style="margin-top:24px;align-items:stretch">
+        <div class="card t"><div class="k">GPU</div><h4 style="margin-top:6px">범용 병렬 가속</h4><p>수천 코어로 어떤 행렬곱이든. <strong>유연성·생태계(CUDA)</strong>가 강점 → 연구·학습의 기본값. (NVIDIA)</p><div style="margin-top:12px"><span class="tag" style="font-size:16px">학습</span><span class="tag" style="font-size:16px">클라우드 추론</span></div></div>
+        <div class="card t"><div class="k">TPU</div><h4 style="margin-top:6px">행렬 전용 ASIC</h4><p><strong>시스톨릭 배열</strong>로 행렬곱·누적에 특화. 대규모 학습/추론을 데이터센터 규모로 효율화. (Google)</p><div style="margin-top:12px"><span class="tag" style="font-size:16px">대규모 학습</span><span class="tag" style="font-size:16px">대량 추론</span></div></div>
+        <div class="card t"><div class="k">NPU</div><h4 style="margin-top:6px">저전력 추론 엔진</h4><p>휴대폰·노트북·로봇·차량에 내장. <strong>와트당 성능</strong>이 핵심 → 엣지에서 상시 추론. (Apple·Qualcomm·Jetson)</p><div style="margin-top:12px"><span class="tag" style="font-size:16px">엣지 추론</span></div></div>
+      </div>
+      <div class="dark-box" style="margin-top:22px"><span class="lab">한 줄</span><span class="x">셋 다 <strong style="color:var(--mint)">행렬곱 기계</strong>입니다. 차이는 "유연성 vs 처리량 vs 전력효율"의 어디에 무게를 뒀나.</span></div>
+    </div>
+  </section>
+
+  <!-- 스펙 경향 -->
+  <section class="slide" data-label="스펙 경향">
+    <div class="bar"><span class="sq"></span>① 근본 차이<span class="r">경향 비교</span></div>
+    <div class="body">
+      <h2 class="t">숫자로 보는 차이 — 절대값보다 "경향"</h2>
+      <table class="tb" style="margin-top:22px">
+        <tr><th>관점</th><th>GPU</th><th>TPU</th><th>NPU(엣지)</th></tr>
+        <tr><td class="h">주 용도</td><td>학습·클라우드 추론</td><td>대규모 학습·추론</td><td>온디바이스 추론</td></tr>
+        <tr><td class="h">유연성</td><td class="mono">매우 높음</td><td class="mono">중간(행렬 특화)</td><td class="mono">낮음(고정 워크로드)</td></tr>
+        <tr><td class="h">전력</td><td>수백 W급</td><td>수백 W급</td><td class="mono">수 W~수십 W</td></tr>
+        <tr><td class="h">정밀도</td><td>FP32/FP16/FP8</td><td>BF16/INT8 등</td><td class="mono">INT8/INT4 위주</td></tr>
+        <tr><td class="h">생태계</td><td class="mono">CUDA(가장 넓음)</td><td>JAX/XLA·자체</td><td>벤더 SDK</td></tr>
+      </table>
+      <p class="note" style="margin-top:18px">세대마다 스펙이 크게 바뀝니다 — 위 표는 "어떤 축이 다른가"를 보는 용도. 정확한 수치는 그때의 데이터시트로 확인하세요.</p>
+    </div>
+  </section>
+
+  <!-- ★ CPU vs GPU 레이스 LIVE -->
+  <section class="slide" data-label="병렬 레이스 LIVE">
+    <div class="bar"><span class="sq"></span>★ CPU vs GPU LIVE<span class="r">같은 행렬곱, 누가 빠른가</span></div>
+    <div class="body sim no-advance">
+      <h2 class="t" style="font-size:36px;text-align:center">행렬곱 6×6 — CPU는 한 칸씩, GPU는 여러 칸을 동시에</h2>
+      <div style="display:flex;gap:60px;justify-content:center;align-items:flex-start;margin-top:18px">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+          <div style="font-family:var(--mono);font-size:20px;color:var(--ink2)"><b>CPU</b> · 코어 소수 (순차)</div>
+          <div id="mmCpu" style="display:grid;gap:3px;background:#fff;border:1px solid var(--line);padding:6px"></div>
+          <div class="stat" id="mmCpuStat">클럭 <b>0</b> · 완료 0/36</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+          <div style="font-family:var(--mono);font-size:20px;color:var(--teal-d)"><b>GPU</b> · 코어 <span id="mmCoresL">12</span>개 (병렬)</div>
+          <div id="mmGpu" style="display:grid;gap:3px;background:#fff;border:1px solid var(--line);padding:6px"></div>
+          <div class="stat" id="mmGpuStat">클럭 <b>0</b> · 완료 0/36</div>
+        </div>
+        <div style="width:380px;display:flex;flex-direction:column;gap:14px">
+          <div class="card l"><h4>왜 차이가 나나</h4><p>출력 C의 각 칸은 <strong>독립적인 내적</strong> — 서로 안 기다림. GPU는 이 칸들을 <strong>수천 갈래로 동시에</strong> 계산.</p></div>
+          <div class="card l"><h4>이게 "병렬"의 본질</h4><p>행렬곱이 곧 병렬 가능 → 학습 시간을 <strong>며칠 → 몇 시간</strong>으로. Tensor Core는 더 가속.</p></div>
+          <div class="stat" id="mmWin" style="font-size:21px">결과를 기다리는 중…</div>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="btn" id="mmRun">▶ 동시 출발 (레이스)</button>
+        <button class="btn sec" id="mmReset">↻ 초기화</button>
+        <span class="stat">GPU 코어 수: <button class="btn sec" id="mmC6" style="padding:6px 12px">6</button> <button class="btn sec" id="mmC12" style="padding:6px 12px">12</button> <button class="btn sec" id="mmC36" style="padding:6px 12px">36</button></span>
+      </div>
+      <p class="note" style="text-align:center;margin-top:10px">CPU는 36클럭(한 칸씩), GPU는 코어 수만큼 나눠 동시에 — 코어 36이면 단 1클럭. 실제 칩은 코어가 수천 개.</p>
+    </div>
+  </section>
+
+  <!-- 학습 vs 추론 vs 엣지 -->
+  <section class="slide" data-label="3가지 운명">
+    <div class="bar"><span class="sq"></span>② 분업<span class="r">학습·추론·엣지</span></div>
+    <div class="body">
+      <h2 class="t">같은 모델의 3가지 다른 운명</h2>
+      <div class="grid3" style="margin-top:24px;align-items:stretch">
+        <div class="card l"><div class="k">학습 (Train)</div><h4 style="margin-top:6px">한 번, 아주 무겁게</h4><p>역전파 포함 — 가장 무거움. <strong>GPU/TPU 클러스터</strong>에서 며칠~몇 주. 메모리·인터커넥트가 병목.</p></div>
+        <div class="card l"><div class="k">클라우드 추론</div><h4 style="margin-top:6px">매일, 대량으로</h4><p>순전파만. <strong>처리량·비용·지연</strong>이 관건 → GPU/TPU + INT8 양자화로 효율화.</p></div>
+        <div class="card l"><div class="k">엣지 추론</div><h4 style="margin-top:6px">기기 안에서, 즉시</h4><p>네트워크 없이 <strong>NPU</strong>가 저전력으로. 프라이버시·지연·오프라인이 강점.</p></div>
+      </div>
+      <div class="tealbox" style="margin-top:22px"><div class="k" style="margin-bottom:8px">의사결정 프레임 — "어떤 칩?"</div><div style="font-size:23px;color:var(--ink2);line-height:1.5">① 학습인가 추론인가 → ② 지연·프라이버시가 기기 내 처리를 요구하나 → ③ 전력 예산은 → ④ 생태계/이식성. 이 순서로 좁히면 답이 거의 정해집니다.</div></div>
+    </div>
+  </section>
+
+  <!-- LLM 하드웨어 -->
+  <section class="slide" data-label="LLM 하드웨어">
+    <div class="bar"><span class="sq"></span>③ LLM<span class="r">학습·추론·엣지</span></div>
+    <div class="body">
+      <h2 class="t">LLM 하드웨어 — 거대 학습부터 폰까지</h2>
+      <table class="tb" style="margin-top:22px">
+        <tr><th>단계</th><th>하드웨어</th><th>특징</th></tr>
+        <tr><td class="h">학습</td><td class="mono">수천~수만 GPU/TPU 클러스터</td><td>수 주, 고속 인터커넥트가 핵심 (GPT·Gemini·Claude 등)</td></tr>
+        <tr><td class="h">클라우드 추론</td><td class="mono">GPU/TPU + 양자화·서빙 최적화</td><td>KV캐시·배칭으로 처리량↑·지연↓</td></tr>
+        <tr><td class="h">엣지 추론</td><td class="mono">폰/노트북 NPU (소형·양자화 모델)</td><td>오프라인·프라이버시. 작은 모델이 기기 내에서 직접 구동</td></tr>
+        <tr><td class="h">현장 온프레</td><td class="mono">온프레미스 GPU 서버 + 오픈웨이트</td><td>망분리·데이터보안 (gpt-oss 등) → 10·RAG 자료</td></tr>
+      </table>
+      <div class="dark-box" style="margin-top:20px"><span class="lab">경향</span><span class="x">"<strong style="color:var(--mint)">학습은 점점 더 크게, 실행은 점점 더 작게·가까이</strong>" — 양자화·증류로 같은 능력을 더 작은 칩에서.</span></div>
+    </div>
+  </section>
+
+  <!-- Physical AI / 로봇 -->
+  <section class="slide" data-label="로봇 VLA">
+    <div class="bar"><span class="sq"></span>④ Physical AI<span class="r">로봇 · VLA</span></div>
+    <div class="body">
+      <h2 class="t">로봇 — 보고 · 듣고 · 행동하는 VLA</h2>
+      <div class="grid2" style="margin-top:22px;align-items:stretch">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="card l"><h4>VLA = Vision-Language-Action</h4><p>카메라 영상 + 언어 지시 → <strong>행동(관절 명령)</strong>을 직접 출력하는 모델. "컵을 집어"를 보고 바로 움직임으로.</p></div>
+          <div class="card l"><h4>이중 구조 — 학습 vs 실행</h4><p>거대 모델은 <strong>클라우드에서 학습</strong>, 로봇 안에서는 <strong>NPU가 실시간 추론</strong>. 지연이 안전과 직결.</p></div>
+          <div class="dark-box"><span class="lab">탑재 칩</span><span class="x">로봇용 NPU의 사실상 표준은 <strong style="color:var(--mint)">NVIDIA Jetson</strong> 계열 — 저전력으로 비전+제어를 한 보드에.</span></div>
+        </div>
+        <div class="codebox">[카메라] [마이크/지시문]
+     ↓ 인코더(비전+언어)
+   <span class="g">공통 표현</span>
+     ↓ 정책(Transformer)
+[관절 토크 · 그리퍼 명령]
+     ↓
+   실행 → 다시 관찰 (폐루프)
+
+<span class="m"># 학습: 클라우드 GPU 클러스터</span>
+<span class="m"># 실행: 로봇 내 NPU(Jetson 등)</span>
+<span class="y"># 핵심 = 저지연 · 저전력</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 자율차 -->
+  <section class="slide" data-label="자율차">
+    <div class="bar"><span class="sq"></span>⑤ 자율주행<span class="r">차량용 칩</span></div>
+    <div class="body">
+      <h2 class="t">자율차 — 차 안에 들어간 추론 컴퓨터</h2>
+      <div class="grid3" style="margin-top:24px;align-items:stretch">
+        <div class="card t"><div class="k">Tesla FSD</div><h4 style="margin-top:6px">자체 칩 + end-to-end</h4><p>자체 설계 추론 칩에 <strong>영상→주행을 직접 학습</strong>한 모델 탑재. 수직 통합형 접근.</p></div>
+        <div class="card t"><div class="k">NVIDIA Drive</div><h4 style="margin-top:6px">OEM 공용 플랫폼</h4><p>Drive(Thor 등) — 여러 완성차사가 쓰는 <strong>범용 차량 AI 컴퓨터</strong> + 소프트웨어 스택.</p></div>
+        <div class="card t"><div class="k">Mobileye</div><h4 style="margin-top:6px">EyeQ 비전 SoC</h4><p>비전 중심의 <strong>전용 SoC</strong>로 ADAS~자율주행. 효율적 저전력 인식.</p></div>
+      </div>
+      <div class="dark-box" style="margin-top:22px"><span class="lab">공통점</span><span class="x">셋 다 <strong style="color:var(--mint)">차량 내 저전력·실시간 추론(NPU/전용 SoC)</strong> + 클라우드 대규모 학습의 조합. 로봇과 같은 "이중 구조".</span></div>
+      <p class="note" style="margin-top:14px">제조사별 칩 명칭·세대·성능은 빠르게 갱신됩니다 — 접근 방식의 차이로 읽어 주세요.</p>
+    </div>
+  </section>
+
+  <!-- 요약 -->
+  <section class="slide dark" data-label="요약">
+    <div class="body" style="justify-content:center">
+      <div class="eyebrow" style="color:var(--mint)">하드웨어 한 장 정리</div>
+      <h2 style="font-size:50px;font-weight:800;color:#fff;margin-top:16px;line-height:1.2">"같은 신경망, 어디서 도느냐가 칩을 정한다"</h2>
+      <div style="margin-top:34px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1640px">
+        <div style="border:1px solid #2C3A44;border-left:4px solid #0E7C72;padding:20px 24px"><div class="k" style="color:var(--mint)">학습</div><div style="font-size:21px;color:#C9D6DC;margin-top:8px;line-height:1.5">GPU/TPU 클러스터 · 무겁고 한 번</div></div>
+        <div style="border:1px solid #2C3A44;border-left:4px solid #0E7C72;padding:20px 24px"><div class="k" style="color:var(--mint)">클라우드 추론</div><div style="font-size:21px;color:#C9D6DC;margin-top:8px;line-height:1.5">GPU/TPU + 양자화 · 대량·저비용</div></div>
+        <div style="border:1px solid #2C3A44;border-left:4px solid #5EC8BC;padding:20px 24px"><div class="k" style="color:var(--mint)">엣지 추론</div><div style="font-size:21px;color:#C9D6DC;margin-top:8px;line-height:1.5">NPU · 저전력·즉시·오프라인 (폰·로봇·차)</div></div>
+      </div>
+      <p style="font-size:27px;color:#AFC0CA;margin-top:36px;max-width:1580px;line-height:1.6">어떤 칩이든 결국 <strong style="color:#fff">행렬곱을 얼마나 효율적으로</strong>의 문제입니다(→ 07). 망분리 환경의 LLM 운영은 <strong style="color:#fff">10·RAG 자료</strong>로 이어집니다.</p>
+      <div style="margin-top:30px;font-family:var(--mono);font-size:20px;color:var(--muted)">행렬곱 원리 → 07 · 온프레 LLM → 10 · 계통도 → 11</div>
+    </div>
+  </section>
+
+</div><!-- /stage --></div>
+<div class="progress" id="prog"></div>
+<div class="navbar" id="navbar"><button id="prev">‹</button><span class="ct"><b id="cur">1</b> / <span id="tot">1</span></span><button id="next">›</button><span class="kb">← → 이동 · R 처음 · F5 전체화면</span></div>
+<div id="gate">
+  <svg viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid meet"><defs><pattern id="gg" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#22323d" stroke-width="1"/></pattern></defs><rect width="1280" height="720" fill="#15202A"/><rect width="1280" height="720" fill="url(#gg)" opacity=".45"/><g opacity=".6" stroke="#0E7C72" stroke-width="1.4" fill="none"><rect x="980" y="110" width="120" height="120" rx="6"/><rect x="996" y="126" width="88" height="88" rx="3" stroke="#5EC8BC"/><line x1="980" y1="140" x2="956" y2="140"/><line x1="980" y1="170" x2="956" y2="170"/><line x1="980" y1="200" x2="956" y2="200"/><line x1="1100" y1="140" x2="1124" y2="140"/><line x1="1100" y1="170" x2="1124" y2="170"/><line x1="1100" y1="200" x2="1124" y2="200"/></g>
+  <rect x="80" y="61" width="13" height="13" fill="#0E7C72"/><text x="105" y="73" font-family="'JetBrains Mono',monospace" font-size="21" letter-spacing="1.5" fill="#5EC8BC">AI × Hardware · 08</text>
+  <rect x="81" y="291" width="11" height="11" fill="#0E7C72"/><text x="103" y="302" font-family="'JetBrains Mono',monospace" font-size="23" letter-spacing="2" fill="#0E7C72">GPU · TPU · NPU 완전 정복</text>
+  <text x="76" y="402" font-family="'Noto Sans KR',sans-serif" font-size="74" font-weight="800" letter-spacing="-2" fill="#F4F6F8">학습은 거대 클러스터,</text>
+  <text x="76" y="494" font-family="'Noto Sans KR',sans-serif" font-size="74" font-weight="800" letter-spacing="-2" fill="#F4F6F8">실행은 <tspan fill="#5EC8BC">손안의 칩</tspan></text>
+  <text x="80" y="586" font-family="'JetBrains Mono',monospace" font-size="22" fill="#9FB2BD">학습 · 추론 · 엣지 · LLM · 로봇 · 자율차</text>
+  <text x="80" y="650" font-family="'JetBrains Mono',monospace" font-size="20" letter-spacing="1" fill="#7A8893">같은 신경망, 다른 칩</text></svg>
+  <div class="hint">▶ 클릭 · Space · → 키로 시작 &nbsp;|&nbsp; F5 전체화면</div>
+</div>
+<script>
+(function(){
+  var stage=document.getElementById('stage'),deck=document.getElementById('deck');
+  function fit(){var s=Math.min(window.innerWidth/1920,window.innerHeight/1080);stage.style.transform='translate(-50%,-50%) scale('+s+')';}
+  window.addEventListener('resize',fit);fit();
+  var slides=[].slice.call(document.querySelectorAll('.slide')),idx=0;
+  document.getElementById('tot').textContent=slides.length;
+  var stoppers=[];
+  function go(n){idx=Math.max(0,Math.min(slides.length-1,n));for(var i=0;i<slides.length;i++)slides[i].classList.toggle('active',i===idx);document.getElementById('cur').textContent=idx+1;var pg=document.getElementById('prog');if(pg)pg.style.width=((idx+1)/slides.length*100)+'%';for(var s=0;s<stoppers.length;s++)stoppers[s]();}
+  go(0);
+  document.getElementById('prev').onclick=function(){go(idx-1)};document.getElementById('next').onclick=function(){go(idx+1)};
+  stage.addEventListener('click',function(e){if(e.target.closest('button,input,a,.sim,.no-advance,.navbar'))return;go(idx+1);});
+  var pres=false;function fsEl(){return document.fullscreenElement||document.webkitFullscreenElement;}
+  function setPres(v){pres=v;deck.classList.toggle('presenting',v);}
+  document.addEventListener('fullscreenchange',function(){setPres(!!fsEl());});document.addEventListener('webkitfullscreenchange',function(){setPres(!!fsEl());});
+  document.addEventListener('keydown',function(e){if(e.metaKey||e.ctrlKey||e.altKey)return;var k=e.key;
+    if(k==='F5'||e.keyCode===116){e.preventDefault();if(pres||fsEl()){if(fsEl())(document.exitFullscreen||document.webkitExitFullscreen).call(document);else setPres(false);}else{var el=deck;var r=el.requestFullscreen||el.webkitRequestFullscreen;if(r){try{var p=r.call(el);if(p&&p.catch)p.catch(function(){setPres(true);});}catch(_){setPres(true);}}else setPres(true);}return;}
+    if(k==='ArrowRight'||k==='PageDown'||k===' '||k==='Spacebar'){go(idx+1);e.preventDefault();}else if(k==='ArrowLeft'||k==='PageUp'){go(idx-1);e.preventDefault();}else if(k==='Home'){go(0);}else if(k==='End'){go(slides.length-1);}else if(k==='r'||k==='R'){go(0);}else if(/^[0-9]$/.test(k)){var n=k==='0'?9:parseInt(k,10)-1;if(n<slides.length)go(n);}
+  },false);
+  var gate=document.getElementById('gate');if(gate)gate.remove();
+
+  /* ===================== CPU vs GPU 행렬곱 레이스 ===================== */
+  (function(){
+    var N=6,TOT=N*N,cores=12;
+    var elCpu=document.getElementById('mmCpu'),elGpu=document.getElementById('mmGpu');
+    if(!elCpu)return;
+    var cpuDone,gpuDone,clkC,clkG,timer=null;
+    function build(el){el.style.gridTemplateColumns='repeat('+N+',38px)';var h='';for(var i=0;i<TOT;i++)h+='<div class="mmcell" data-i="'+i+'" style="width:38px;height:38px;background:#F1F5F7;color:#C6D2DA;border:1px solid #E6ECEF">·</div>';el.innerHTML=h;}
+    function fill(el,i){var c=el.querySelector('[data-i="'+i+'"]');if(c){c.style.background='rgba(14,124,114,0.85)';c.style.color='#fff';c.style.border='1px solid #0B6258';c.textContent='✓';}}
+    function reset(){stop();cpuDone=0;gpuDone=0;clkC=0;clkG=0;build(elCpu);build(elGpu);upd();document.getElementById('mmWin').textContent='결과를 기다리는 중…';document.getElementById('mmWin').style.color='';}
+    function upd(){document.getElementById('mmCpuStat').innerHTML='클럭 <b>'+clkC+'</b> · 완료 '+cpuDone+'/'+TOT;document.getElementById('mmGpuStat').innerHTML='클럭 <b>'+clkG+'</b> · 완료 '+gpuDone+'/'+TOT;}
+    function run(){
+      if(timer)return;reset();
+      timer=setInterval(function(){
+        var act=false;
+        if(cpuDone<TOT){fill(elCpu,cpuDone);cpuDone++;clkC++;act=true;}
+        if(gpuDone<TOT){for(var c=0;c<cores&&gpuDone<TOT;c++){fill(elGpu,gpuDone);gpuDone++;}clkG++;act=true;}
+        upd();
+        if(!act){stop();var w=document.getElementById('mmWin');var sp=(clkC/clkG).toFixed(1);w.innerHTML='✓ GPU 완승 — CPU '+clkC+'클럭 vs GPU '+clkG+'클럭 <b style="color:#0E7C72">('+sp+'배 빠름)</b>';w.style.color='#15202A';}
+      },180);
+    }
+    function stop(){if(timer){clearInterval(timer);timer=null;}}
+    stoppers.push(stop);
+    document.getElementById('mmRun').onclick=run;
+    document.getElementById('mmReset').onclick=reset;
+    function setCores(n){cores=n;document.getElementById('mmCoresL').textContent=n;reset();}
+    document.getElementById('mmC6').onclick=function(){setCores(6);};
+    document.getElementById('mmC12').onclick=function(){setCores(12);};
+    document.getElementById('mmC36').onclick=function(){setCores(36);};
+    reset();
+  })();
+})();
+</script>
+</body>
+</html>

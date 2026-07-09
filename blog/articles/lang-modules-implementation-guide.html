@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lang modules implementation guide - AI Edu Archive Journal</title>
+<meta content="A practical guide to LangChain and LangGraph modules: what core, providers, loaders, splitters, vector stores, retrievers, tools, LCEL, and StateGraph do, when to use them, and how to implement them." name="description"/>
+<meta content="AI Edu Archive" name="author"/>
+<meta content="#FAF9F5" name="theme-color"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/lang-modules-implementation-guide.html" rel="canonical"/>
+<link href="https://ai-edu-archive.example.com/blog/ko/articles/lang-modules-implementation-guide.html" hreflang="ko" rel="alternate"/>
+<link href="https://ai-edu-archive.example.com/blog/articles/lang-modules-implementation-guide.html" hreflang="x-default" rel="alternate"/>
+<meta content="index,follow" name="robots"/>
+<meta content="article" property="og:type"/>
+<meta content="Lang modules implementation guide - AI Edu Archive Journal" property="og:title"/>
+<meta content="A practical guide to LangChain and LangGraph modules: what core, providers, loaders, splitters, vector stores, retrievers, tools, LCEL, and StateGraph do, when to use them, and how to implement them." property="og:description"/>
+<meta content="AI Edu Archive" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="ko_KR" property="og:locale:alternate"/>
+<meta content="2026-07-06" property="article:published_time"/>
+<meta content="Python Stack" property="article:section"/>
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Lang modules implementation guide",
+  "description": "A practical guide to LangChain and LangGraph modules: what core, providers, loaders, splitters, vector stores, retrievers, tools, LCEL, and StateGraph do, when to use them, and how to implement them.",
+  "inLanguage": "en",
+  "datePublished": "2026-07-06",
+  "dateModified": "2026-07-06",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive"
+  },
+  "url": "https://ai-edu-archive.example.com/blog/articles/lang-modules-implementation-guide.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.example.com/blog/articles/lang-modules-implementation-guide.html"
+  }
+}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="../assets/blog.css" rel="stylesheet"/>
+<meta content="A practical guide to LangChain and LangGraph modules: what core, providers, loaders, splitters, vector stores, retrievers, tools, LCEL, and StateGraph do, when to use them, and how to implement them." name="twitter:description"/><meta content="Lang modules implementation guide - AI Edu Archive Journal" name="twitter:title"/><meta content="https://ai-edu-archive.example.com/blog/articles/lang-modules-implementation-guide.html" property="og:url"/><link href="https://ai-edu-archive.example.com/blog/articles/lang-modules-implementation-guide.html" hreflang="en" rel="alternate"/></head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+<div class="wrap">
+<a aria-label="AI Edu Archive home" class="brand" href="../../index.html">
+<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</a>
+<nav aria-label="Primary" class="nav-links">
+<a href="../../index.html#courses">Courses</a>
+<a href="../index.html">Articles</a>
+<a href="../portfolio.html">Portfolio</a>
+<a href="../about.html">About</a>
+<div aria-label="Language selector" class="language-switch">
+<a aria-current="true" href="lang-modules-implementation-guide.html" lang="en" title="English">🇺🇸 EN</a>
+<a href="../ko/articles/lang-modules-implementation-guide.html" lang="ko" title="한국어">🇰🇷 KO</a>
+<a href="lang-modules-implementation-guide.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a>
+<a href="lang-modules-implementation-guide.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a>
+<a href="lang-modules-implementation-guide.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a>
+<a href="lang-modules-implementation-guide.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a>
+<a href="lang-modules-implementation-guide.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a>
+</div>
+</nav>
+</div>
+</header>
+<main id="main">
+<article itemscope="" itemtype="https://schema.org/TechArticle">
+<div class="article-hero">
+<div class="wrap">
+<nav aria-label="Breadcrumb" class="breadcrumb">
+<a href="../../index.html">Home</a>
+<span aria-hidden="true" class="sep">/</span>
+<a href="../index.html">Journal</a>
+<span aria-hidden="true" class="sep">/</span>
+<span aria-current="page">Lang modules guide</span>
+</nav>
+<div class="post-meta">
+<span class="cat-tag">Python Stack</span>
+<span class="post-dot"></span>
+<time datetime="2026-07-06" itemprop="datePublished">Jul 6, 2026</time>
+<span class="post-dot"></span>
+<span class="rt">18 min read</span>
+</div>
+<h1 itemprop="headline">Lang modules implementation guide</h1>
+<div class="byline">
+<span aria-hidden="true" class="avatar">AE</span>
+<span class="who">
+<b itemprop="author">AI Edu Archive</b>
+<span>Semiconductor process engineer · Air-gapped LLM / RAG / Agents</span>
+</span>
+</div>
+</div>
+</div>
+<nav aria-label="Table of contents" class="toc">
+<div class="toc-title">On this page</div>
+<ol>
+<li><a href="#map">The module map</a></li>
+<li><a href="#builds">What you can build</a></li>
+<li><a href="#install">Install set</a></li>
+<li><a href="#chat">Chat model + prompt + parser</a></li>
+<li><a href="#rag">Load, split, embed, retrieve</a></li>
+<li><a href="#tools">Tools and structured calls</a></li>
+<li><a href="#graph">LangGraph workflow</a></li>
+<li><a href="#project">Mini project layout</a></li>
+</ol>
+</nav>
+<div class="article-body" itemprop="articleBody">
+<p>The confusing part of the Lang ecosystem is not one API. It is knowing which package owns which job. Once that clicks, the stack becomes ordinary Python: model in, prompt in, parser out, documents in, retriever out, tools in, graph out.</p>
+<p>Think of the Lang modules as building blocks for LLM applications. A plain model call is only one block. The real value appears when you combine prompts, parsers, retrieval, tools, and graph state into workflows that can answer from your files, call local functions, ask for approval, and recover from errors.</p>
+<h2 id="map">The module map</h2>
+<p>Use this table as the mental model before writing code.</p>
+<table>
+<thead>
+<tr><th>Module</th><th>What it does</th><th>Use it when</th></tr>
+</thead>
+<tbody>
+<tr><td>langchain-core</td><td>Base abstractions: messages, prompts, output parsers, runnables, tools, documents.</td><td>You are composing chains or defining tools. This is the common base of most Lang applications.</td></tr>
+<tr><td>langchain-openai, langchain-ollama, etc.</td><td>Provider-specific chat models and embeddings.</td><td>You need to call a model provider or a local model server.</td></tr>
+<tr><td>langchain-community</td><td>Community integrations: loaders, vector stores, tools, utilities.</td><td>You need an integration that is not in core.</td></tr>
+<tr><td>langchain-text-splitters</td><td>Chunking utilities for documents.</td><td>You are building RAG and need stable retrieval units.</td></tr>
+<tr><td>langgraph</td><td>Stateful, multi-step, cyclic agent workflows.</td><td>You need memory, branching, approval, retry, or long-running state.</td></tr>
+</tbody>
+</table>
+<p>Rule of thumb. If it is a reusable interface, it probably lives in langchain-core. If it talks to a vendor or external system, it probably lives in a provider or community package. If the workflow has state and branches, reach for LangGraph.</p>
+<h2 id="builds">What you can build</h2>
+<p>Before the imports, it helps to see the destination. These are realistic projects you can build with the same modules in this article.</p>
+<table>
+<thead>
+<tr><th>Project</th><th>What it does</th><th>Main modules</th></tr>
+</thead>
+<tbody>
+<tr><td>Local document Q&amp;A</td><td>Ask questions over manuals, PDFs, Markdown notes, or SOPs.</td><td>loaders, splitters, embeddings, vector store, retriever, prompt</td></tr>
+<tr><td>Meeting note summarizer</td><td>Turn messy transcripts into decisions, action items, and risks.</td><td>prompt templates, chat model, output parser, structured output</td></tr>
+<tr><td>Engineering troubleshooting assistant</td><td>Search known issues, retrieve relevant fixes, and suggest next checks.</td><td>retriever, reranking pattern, tools, LangGraph route node</td></tr>
+<tr><td>Local coding helper</td><td>Explain a repo, draft patches, run tests through a controlled tool.</td><td>tools, MCP/Goose integration, LangGraph approval state</td></tr>
+<tr><td>Spec compliance checker</td><td>Compare a design note against policy documents and cite violations.</td><td>document loaders, retriever, JSON parser, graph branch</td></tr>
+<tr><td>GPU sizing assistant</td><td>Estimate whether a model fits a consumer GPU and explain the tradeoff.</td><td>@tool functions, prompt, structured output</td></tr>
+<tr><td>Manufacturing SOP agent</td><td>Answer what should I do next from procedures while refusing unsafe actions.</td><td>RAG, tools, safety prompt, LangGraph human approval</td></tr>
+<tr><td>Research digest bot</td><td>Load notes, summarize, cluster, and create a reading plan.</td><td>loaders, splitters, map-reduce pattern, output parsers</td></tr>
+<tr><td>CSV / log explainer</td><td>Read a log or CSV summary and produce anomalies or next checks.</td><td>community loaders, tools, model, parser</td></tr>
+<tr><td>Personal knowledge base</td><td>Index notes and let a local LLM answer with source links.</td><td>Chroma/Qdrant, retriever, prompt, local embeddings</td></tr>
+</tbody>
+</table>
+<p>The same pattern repeats: model alone is good for language work, RAG is good when answers must come from documents, tools are good when the model must ask Python to do something, and LangGraph is good when the workflow needs state, routing, retry, or approval.</p>
+<h2 id="install">Install set</h2>
+<p>For a home PC or local LLM tutorial, start with Ollama-compatible local serving. You can swap providers later without rewriting the whole app.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">shell</span>install.ps1</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code>python -m venv .venv
+.\.venv\Scripts\activate
+pip install -U langchain-core langchain-ollama langchain-community langchain-text-splitters langgraph chromadb</code></pre>
+</figure>
+<p>Expected output. You should end with installed packages and an activated shell prompt.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">output</span>pip-output.txt</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code>Successfully installed langchain-core-... langchain-ollama-... langgraph-... chromadb-...
+(.venv) PS C:\coding\lang-lab&gt;</code></pre>
+</figure>
+<h2 id="chat">Chat model + prompt + parser</h2>
+<p>This is the smallest Lang app: a chat model, a prompt, and an output parser. Use it when you want deterministic text transformation, summarization, or a simple assistant response without tools or retrieval.</p>
+<p>Use this pattern for: email rewriting, Korean/English technical translation, meeting-note summarization, code explanation, glossary generation, report drafting, and any task where the model only needs the user's input and the instructions you provide.</p>
+<p>Do not use only this pattern for: questions that require private documents, current database values, exact calculations, or actions like writing files and running tests. Those need retrieval or tools.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span>01_chat_chain.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain_ollama <span class="tok-kw">import</span> ChatOllama
+<span class="tok-kw">from</span> langchain_core.prompts <span class="tok-kw">import</span> ChatPromptTemplate
+<span class="tok-kw">from</span> langchain_core.output_parsers <span class="tok-kw">import</span> StrOutputParser
+
+model = ChatOllama(model=<span class="tok-str">"qwen2.5:7b-instruct"</span>, temperature=<span class="tok-num">0.2</span>)
+
+prompt = ChatPromptTemplate.from_messages([
+    (<span class="tok-str">"system"</span>, <span class="tok-str">"You explain AI engineering in clear Korean."</span>),
+    (<span class="tok-str">"human"</span>, <span class="tok-str">"Explain {topic} in 5 bullet points."</span>),
+])
+
+chain = prompt | model | StrOutputParser()
+
+print(chain.invoke({<span class="tok-str">"topic"</span>: <span class="tok-str">"LangChain LCEL"</span>}))</code></pre>
+</figure>
+<p>What each module did. ChatOllama called the local model. ChatPromptTemplate turned variables into chat messages. StrOutputParser converted the model message into plain text. The pipe operator created a runnable chain.</p>
+<p>Practical variation. If you need a JSON object instead of text, replace StrOutputParser with a structured-output parser or ask the model through a schema-capable interface. Example outputs include risk classification or blog metadata generation.</p>
+<p>Expected output.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">output</span>chat-output.txt</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code>- LCEL connects LangChain components as a pipeline.
+- prompt | model | parser makes the data flow visible.
+- invoke, stream, and batch share the same runnable interface.
+- You can swap the model or parser without rewriting the whole chain.
+- The same style scales from simple chains to RAG pipelines.</code></pre>
+</figure>
+<h2 id="rag">Load, split, embed, retrieve</h2>
+<p>RAG uses four families of modules. Loaders turn files into Document objects. Splitters make chunks. Embeddings turn chunks into vectors. Vector stores save and search those vectors. Retrievers expose a simple query-to-documents interface.</p>
+<p>Use RAG when the answer must be grounded. If the user asks what a policy says, which SOP mentions an alarm, or where a claim came from, the model should retrieve source text first and answer from that text.</p>
+<p>What each RAG module is for:</p>
+<ul>
+<li>Document loaders: read external material into a standard Document shape with page_content and metadata.</li>
+<li>Text splitters: cut long documents into retrievable chunks. Bad chunks make good models look foolish.</li>
+<li>Embeddings: convert text into vectors so similar meaning can be searched.</li>
+<li>Vector stores: save vectors and perform similarity search.</li>
+<li>Retrievers: hide storage details behind invoke(question).</li>
+</ul>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span>02_tiny_rag.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-kw">from</span> pathlib <span class="tok-kw">import</span> Path
+<span class="tok-kw">from</span> langchain_core.documents <span class="tok-kw">import</span> Document
+<span class="tok-kw">from</span> langchain_text_splitters <span class="tok-kw">import</span> RecursiveCharacterTextSplitter
+<span class="tok-kw">from</span> langchain_ollama <span class="tok-kw">import</span> OllamaEmbeddings, ChatOllama
+<span class="tok-kw">from</span> langchain_community.vectorstores <span class="tok-kw">import</span> Chroma
+<span class="tok-kw">from</span> langchain_core.prompts <span class="tok-kw">import</span> ChatPromptTemplate
+<span class="tok-kw">from</span> langchain_core.output_parsers <span class="tok-kw">import</span> StrOutputParser
+
+docs_dir = Path(<span class="tok-str">"docs"</span>)
+docs_dir.mkdir(exist_ok=<span class="tok-kw">True</span>)
+(docs_dir / <span class="tok-str">"policy.txt"</span>).write_text(
+    <span class="tok-str">"Local LLM lab policy: tools are read-only by default. "</span>
+    <span class="tok-str">"Shell commands require explicit approval. Secrets must not be indexed."</span>,
+    encoding=<span class="tok-str">"utf-8"</span>,
+)
+
+raw_docs = [
+    Document(page_content=p.read_text(encoding=<span class="tok-str">"utf-8"</span>), metadata={<span class="tok-str">"source"</span>: str(p)})
+    <span class="tok-kw">for</span> p <span class="tok-kw">in</span> docs_dir.glob(<span class="tok-str">"*.txt"</span>)
+]
+
+splitter = RecursiveCharacterTextSplitter(chunk_size=<span class="tok-num">300</span>, chunk_overlap=<span class="tok-num">40</span>)
+chunks = splitter.split_documents(raw_docs)
+
+embeddings = OllamaEmbeddings(model=<span class="tok-str">"nomic-embed-text"</span>)
+vectorstore = Chroma.from_documents(chunks, embedding=embeddings, collection_name=<span class="tok-str">"lab_docs"</span>)
+retriever = vectorstore.as_retriever(search_kwargs={<span class="tok-str">"k"</span>: <span class="tok-num">2</span>})
+
+prompt = ChatPromptTemplate.from_template(
+    <span class="tok-str">"""Answer from the context only.
+
+Context:
+{context}
+
+Question: {question}
+Answer:"""</span>
+)
+model = ChatOllama(model=<span class="tok-str">"qwen2.5:7b-instruct"</span>, temperature=<span class="tok-num">0</span>)
+
+<span class="tok-kw">def</span> <span class="tok-fn">format_docs</span>(docs):
+    <span class="tok-kw">return</span> <span class="tok-str">"\n\n"</span>.join(f<span class="tok-str">"[{d.metadata['source']}]\n{d.page_content}"</span> <span class="tok-kw">for</span> d <span class="tok-kw">in</span> docs)
+
+question = <span class="tok-str">"Can tools run shell commands by default?"</span>
+hits = retriever.invoke(question)
+answer = (prompt | model | StrOutputParser()).invoke({
+    <span class="tok-str">"context"</span>: format_docs(hits),
+    <span class="tok-str">"question"</span>: question,
+})
+
+print(answer)
+print(<span class="tok-str">"\nSources:"</span>, [d.metadata[<span class="tok-str">"source"</span>] <span class="tok-kw">for</span> d <span class="tok-kw">in</span> hits])</code></pre>
+</figure>
+<p>Expected output.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">output</span>rag-output.txt</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code>No. Tools are read-only by default, and shell commands require explicit approval.
+
+Sources: ['docs\\policy.txt']</code></pre>
+</figure>
+<p>When to use each piece. Use loaders when the source is external or messy. Use splitters whenever documents are longer than your retrieval target. Use embeddings and vector stores when semantic search matters. Use retrievers when the rest of the app should not care how search is implemented.</p>
+<p>Common practical choices. Use a small persistent vector store for personal notes or a prototype. Use Qdrant, Postgres with pgvector, or another server-backed store when multiple apps or users need the same index. Use metadata filters when the question includes document type, date, equipment, product, author, or permission scope.</p>
+<h2 id="tools">Tools and structured calls</h2>
+<p>Tools are functions with schemas. Use them when the model should ask the system to do something: calculate, search, look up a file, call an internal API, or query an MCP server. Keep the first tools boring and safe.</p>
+<p>Use tools when language is not enough. Models are bad calculators, unreliable database clients, and dangerous shell users unless capabilities are wrapped carefully. A tool is the wrapper. The model asks for estimate_weight_memory; your Python code performs the calculation; the model explains the result.</p>
+<p>Good first tools:</p>
+<ul>
+<li>Calculator: exact arithmetic, unit conversion, GPU memory estimates.</li>
+<li>Search: query a local index or controlled file list.</li>
+<li>Lookup: read a known config, policy, or glossary entry.</li>
+<li>Test runner: run pytest only inside a disposable workspace.</li>
+<li>Ticket draft: create a draft object, not a live external ticket at first.</li>
+</ul>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span>03_tools.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain_core.tools <span class="tok-kw">import</span> tool
+
+<span class="tok-dec">@tool</span>
+<span class="tok-kw">def</span> <span class="tok-fn">estimate_weight_memory</span>(params_billion: float, bits: int = <span class="tok-num">4</span>) -&gt; str:
+    <span class="tok-str">"""Estimate raw LLM weight memory in GB before KV cache and overhead."""</span>
+    gb = params_billion * bits / <span class="tok-num">8</span>
+    <span class="tok-kw">return</span> f<span class="tok-str">"Raw weights need about {gb:.1f} GB."</span>
+
+print(estimate_weight_memory.invoke({<span class="tok-str">"params_billion"</span>: <span class="tok-num">7</span>, <span class="tok-str">"bits"</span>: <span class="tok-num">4</span>}))</code></pre>
+</figure>
+<p>Expected output.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">output</span>tool-output.txt</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code>Raw weights need about 3.5 GB.</code></pre>
+</figure>
+<p>Design rule. A tool docstring is not decoration. It is part of the interface the model reads. Write tool names, argument names, and docstrings as if a tired junior engineer will use them at 2 a.m.</p>
+<p>Danger rule. Do not expose a general shell tool on day one. Start with narrow tools. run_tests() is safer than run_command(command). read_policy(name) is safer than read_file(path). The more general the tool, the more validation and approval you need.</p>
+<h2 id="graph">LangGraph workflow</h2>
+<p>LCEL is great for straight-line chains. LangGraph is for workflows with state: classify, retrieve, answer, ask for approval, retry, or stop. The core idea is a StateGraph: each node reads the current state and returns a partial update.</p>
+<p>Use LangGraph when you catch yourself writing workflow flags. If your code has variables like needs_retrieval, tool_failed, approval_required, retry_count, or final_answer, you are already building a graph mentally. LangGraph makes that state explicit.</p>
+<p>Practical graph patterns:</p>
+<ul>
+<li>Router graph: send questions to chat, RAG, tool, or refusal path.</li>
+<li>RAG retry graph: retrieve, grade evidence, rewrite the query, retrieve again.</li>
+<li>Human approval graph: draft an action, pause, resume only after approval.</li>
+<li>Coding agent graph: inspect repo, propose patch, run tests, fix failures, summarize diff.</li>
+<li>Incident assistant graph: classify alarm, retrieve SOP, call read-only diagnostics, produce next steps.</li>
+</ul>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span>04_graph.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-kw">from</span> typing <span class="tok-kw">import</span> TypedDict, Literal
+<span class="tok-kw">from</span> langgraph.graph <span class="tok-kw">import</span> StateGraph, END
+
+<span class="tok-kw">class</span> <span class="tok-fn">AgentState</span>(TypedDict):
+    question: str
+    route: Literal[<span class="tok-str">"rag"</span>, <span class="tok-str">"tool"</span>, <span class="tok-str">"stop"</span>]
+    answer: str
+
+<span class="tok-kw">def</span> <span class="tok-fn">route</span>(state: AgentState):
+    q = state[<span class="tok-str">"question"</span>].lower()
+    <span class="tok-kw">if</span> <span class="tok-str">"memory"</span> <span class="tok-kw">in</span> q <span class="tok-kw">or</span> <span class="tok-str">"gpu"</span> <span class="tok-kw">in</span> q:
+        <span class="tok-kw">return</span> {<span class="tok-str">"route"</span>: <span class="tok-str">"tool"</span>}
+    <span class="tok-kw">if</span> <span class="tok-str">"policy"</span> <span class="tok-kw">in</span> q:
+        <span class="tok-kw">return</span> {<span class="tok-str">"route"</span>: <span class="tok-str">"rag"</span>}
+    <span class="tok-kw">return</span> {<span class="tok-str">"route"</span>: <span class="tok-str">"stop"</span>}
+
+<span class="tok-kw">def</span> <span class="tok-fn">answer_with_tool</span>(state: AgentState):
+    <span class="tok-kw">return</span> {<span class="tok-str">"answer"</span>: <span class="tok-str">"Use the VRAM estimator tool for model memory questions."</span>}
+
+<span class="tok-kw">def</span> <span class="tok-fn">answer_with_rag</span>(state: AgentState):
+    <span class="tok-kw">return</span> {<span class="tok-str">"answer"</span>: <span class="tok-str">"Use the local policy documents as context before answering."</span>}
+
+<span class="tok-kw">def</span> <span class="tok-fn">stop</span>(state: AgentState):
+    <span class="tok-kw">return</span> {<span class="tok-str">"answer"</span>: <span class="tok-str">"I do not know which workflow to use yet."</span>}
+
+<span class="tok-kw">def</span> <span class="tok-fn">choose_next</span>(state: AgentState):
+    <span class="tok-kw">return</span> state[<span class="tok-str">"route"</span>]
+
+graph = StateGraph(AgentState)
+graph.add_node(<span class="tok-str">"route"</span>, route)
+graph.add_node(<span class="tok-str">"tool"</span>, answer_with_tool)
+graph.add_node(<span class="tok-str">"rag"</span>, answer_with_rag)
+graph.add_node(<span class="tok-str">"stop"</span>, stop)
+graph.set_entry_point(<span class="tok-str">"route"</span>)
+graph.add_conditional_edges(<span class="tok-str">"route"</span>, choose_next, {
+    <span class="tok-str">"tool"</span>: <span class="tok-str">"tool"</span>,
+    <span class="tok-str">"rag"</span>: <span class="tok-str">"rag"</span>,
+    <span class="tok-str">"stop"</span>: <span class="tok-str">"stop"</span>,
+})
+graph.add_edge(<span class="tok-str">"tool"</span>, END)
+graph.add_edge(<span class="tok-str">"rag"</span>, END)
+graph.add_edge(<span class="tok-str">"stop"</span>, END)
+
+app = graph.compile()
+print(app.invoke({<span class="tok-str">"question"</span>: <span class="tok-str">"How much GPU memory do I need?"</span>}))</code></pre>
+</figure>
+<p>Expected output.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">output</span>graph-output.txt</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code>{'question': 'How much GPU memory do I need?',
+ 'route': 'tool',
+ 'answer': 'Use the VRAM estimator tool for model memory questions.'}</code></pre>
+</figure>
+<p>When to use LangGraph. Use it when the application is no longer a single pipe. If you need conditional branches, human approval, retries, memory, checkpointing, or multiple agents, a graph is usually clearer than a giant function.</p>
+<h3>A combined practical flow</h3>
+<p>Here is how the modules fit together in a real local assistant:</p>
+<ol>
+<li>User asks: Can my 12GB GPU run a 7B model for local RAG?</li>
+<li>LangGraph routes the question to the tool path because it mentions GPU memory.</li>
+<li>A tool estimates raw model memory and warns about KV cache overhead.</li>
+<li>The retriever fetches the local lab policy about safe model settings.</li>
+<li>The prompt combines tool result and retrieved policy.</li>
+<li>The model answers with a recommendation and source note.</li>
+</ol>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">text</span>combined-flow.txt</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code>User question
+  -&gt; LangGraph route node
+  -&gt; Tool: estimate_weight_memory(7, 4)
+  -&gt; Retriever: search local GPU/RAG policy
+  -&gt; Prompt: combine question + tool result + docs
+  -&gt; Chat model
+  -&gt; Parser
+  -&gt; Answer with recommendation and sources</code></pre>
+</figure>
+<h2 id="project">Mini project layout</h2>
+<p>When these examples grow, split them by responsibility. This layout is small enough for a home PC lab and serious enough to become a portfolio project.</p>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">text</span>project-tree.txt</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code>lang-lab/
+  src/
+    models.py        # ChatOllama, embeddings, provider config
+    prompts.py       # ChatPromptTemplate definitions
+    rag.py           # load, split, embed, retrieve
+    tools.py         # @tool functions
+    graph.py         # StateGraph workflow
+  docs/
+    policy.txt
+  tests/
+    test_tools.py
+  run_chat.py
+  run_rag.py
+  run_graph.py</code></pre>
+</figure>
+<p>That is the shape to remember: core abstractions, provider calls, retrieval modules, tools, and graph orchestration. The names look big. The jobs are small.</p>
+<h3>How to choose the next module</h3>
+<p>When building a real app, do not add everything at once. Let the problem pull in the module.</p>
+<table>
+<thead>
+<tr><th>If the problem is...</th><th>Add this</th><th>Why</th></tr>
+</thead>
+<tbody>
+<tr><td>The model writes the wrong format.</td><td>Output parser / structured output</td><td>The response needs a contract, not a better vibe.</td></tr>
+<tr><td>The answer must come from our files.</td><td>Loader + splitter + retriever</td><td>The model needs evidence before generation.</td></tr>
+<tr><td>The model needs exact math or lookup.</td><td>@tool</td><td>Let Python do exact work and let the model explain it.</td></tr>
+<tr><td>The app has multiple possible paths.</td><td>LangGraph router</td><td>Branching belongs in state, not prompt spaghetti.</td></tr>
+<tr><td>A human must approve before action.</td><td>LangGraph interrupt / approval state</td><td>Approval is a workflow step, not a prompt paragraph.</td></tr>
+<tr><td>The same index powers several apps.</td><td>Server-backed vector store</td><td>Local in-memory prototypes stop scaling quickly.</td></tr>
+<tr><td>The agent can edit files or run tests.</td><td>Narrow tools + graph + logs</td><td>Actions need boundaries, audit, and rollback.</td></tr>
+</tbody>
+</table>
+<h3>Recommended learning order</h3>
+<ol>
+<li>Plain chat chain: prompt, model, parser.</li>
+<li>Structured output: force the model to return a predictable shape.</li>
+<li>Tiny RAG: one text file, one retriever, one answer with source.</li>
+<li>One safe tool: exact calculation or read-only lookup.</li>
+<li>Router graph: decide chat vs RAG vs tool.</li>
+<li>Agent workflow: inspect, plan, call tool, summarize.</li>
+<li>Approval and logging: make it safe enough to use repeatedly.</li>
+</ol>
+<p>If you follow that order, you will understand why each Lang module exists before you depend on it. That is much better than starting with a full agent template and wondering which part broke.</p>
+<div class="callout">
+<p>Security note. Treat model output as untrusted. Do not pass arbitrary model-generated strings directly into file paths, SQL filters, shell commands, or deserializers. The more tools you add, the more boring validation matters.</p>
+</div>
+</div>
+<aside class="deck-link">
+<div class="dl-text">
+<span class="eyebrow">Go deeper</span>
+<h3>Build the local LLM lab first</h3>
+<p>This article explains the Lang modules. The consumer GPU lab shows how to run the local model, MCP server, and Goose-style coding agent on a normal PC.</p>
+</div>
+<a class="btn btn-primary" href="consumer-gpu-onprem-llm-agent-lab.html">Open the lab <span aria-hidden="true" class="arw">→</span></a>
+</aside>
+<div class="related">
+<span class="eyebrow">Related</span>
+<h2>Continue the path</h2>
+<div class="related-grid">
+<a class="rel-card" href="langchain-core-explained.html">
+<span class="cat-tag">Python Stack</span>
+<h3>LangChain core, explained: LLMs, prompts, and LCEL</h3>
+</a>
+<a class="rel-card" href="langgraph-stateful-workflows.html">
+<span class="cat-tag">Python Stack</span>
+<h3>LangGraph: stateful, resumable agent workflows</h3>
+</a>
+</div>
+</div>
+</article>
+</main>
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-lead">
+<h2>Keep the know-how in. Keep the cloud out.</h2>
+<p>A free, in-depth archive for local LLM, RAG, and agent systems.</p>
+</div>
+<div class="foot-nav-cols">
+<div class="foot-col">
+<h4>Explore</h4>
+<a href="../../index.html">Hub home</a>
+<a href="../index.html">Journal</a>
+<a href="../portfolio.html">Portfolio</a>
+</div>
+<div class="foot-col">
+<h4>Site</h4>
+<a href="../about.html">About</a>
+<a href="../contact.html">Contact</a>
+<a href="../privacy.html">Privacy</a>
+<a href="../terms.html">Terms</a>
+<a href="../disclosure.html">Disclosure</a>
+</div>
+</div>
+</div>
+<div class="foot-bottom">
+<div class="foot-brand">
+<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
+<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
+<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
+</svg>
+<span class="brand-name">AI Edu <em>Archive</em></span>
+</div>
+<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var fig=btn.closest('.code-figure');
+      var code=fig&&fig.querySelector('pre code');
+      if(!code)return;
+      navigator.clipboard&&navigator.clipboard.writeText(code.innerText).then(function(){
+        btn.textContent='Copied';
+        btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1300);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
