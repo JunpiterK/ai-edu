@@ -2,23 +2,23 @@
 
 <html lang="en">
 <head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- ══ SEO ══════════════════════════════════════════════════════════ -->
 <title>Choosing an open model for air-gapped use - AI Edu Archive Journal</title>
-<meta content="How to choose an open-weight model for an air-gapped fab by checking license, GPU footprint, and benchmarks in the right order, including the EXAONE non-commercial license trap." name="description"/>
+<meta content="A dated engineering decision record for screening exact open-weight artifacts, licenses, legal review, GPU footprint, and task evidence for air-gapped evaluation." name="description"/>
 <meta content="AI Edu Archive" name="author"/>
 <meta content="#FAF9F5" name="theme-color"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/choosing-open-models.html" rel="canonical"/>
-<link href="https://ai-edu-archive.example.com/blog/ko/articles/choosing-open-models.html" hreflang="ko" rel="alternate"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/choosing-open-models.html" hreflang="x-default" rel="alternate"/>
+<link href="https://ai-edu-archive.pages.dev/blog/articles/choosing-open-models.html" rel="canonical"/>
+
 <meta content="index,follow" name="robots"/>
 <!-- Open Graph -->
 <meta content="article" property="og:type"/>
 <meta content="Choosing an open model for air-gapped use - AI Edu Archive Journal" property="og:title"/>
-<meta content="How to choose an open-weight model for an air-gapped fab by checking license, GPU footprint, and benchmarks in the right order, including the EXAONE non-commercial license trap." property="og:description"/>
+<meta content="A dated engineering decision record for screening exact open-weight artifacts, licenses, legal review, GPU footprint, and task evidence for air-gapped evaluation." property="og:description"/>
 <meta content="AI Edu Archive" property="og:site_name"/>
-<meta content="https://ai-edu-archive.example.com/blog/articles/choosing-open-models.html" property="og:url"/>
+<meta content="https://ai-edu-archive.pages.dev/blog/articles/choosing-open-models.html" property="og:url"/>
 <meta content="en_US" property="og:locale"/>
 <meta content="ko_KR" property="og:locale:alternate"/>
 <meta content="2026-07-04" property="article:published_time"/>
@@ -26,34 +26,34 @@
 <meta content="On-Prem LLM" property="article:section"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="Choosing an open model for air-gapped use - AI Edu Archive Journal" name="twitter:title"/>
-<meta content="How to choose an open-weight model for an air-gapped fab by checking license, GPU footprint, and benchmarks in the right order, including the EXAONE non-commercial license trap." name="twitter:description"/>
+<meta content="A dated engineering decision record for screening exact open-weight artifacts, licenses, legal review, GPU footprint, and task evidence for air-gapped evaluation." name="twitter:description"/>
 <!-- JSON-LD: Article schema -->
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "Choosing an open model for air-gapped use",
-  "description": "How to choose an open-weight model for an air-gapped fab by checking license, GPU footprint, and benchmarks in the right order, including the EXAONE non-commercial license trap.",
+  "description": "A dated engineering decision record for screening exact open-weight artifacts, licenses, legal review, GPU footprint, and task evidence for air-gapped evaluation.",
   "inLanguage": "en",
-  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "image": "https://ai-edu-archive.pages.dev/blog/assets/visuals/article-visual-template.svg",
   "datePublished": "2026-07-04",
   "dateModified": "2026-07-04",
   "author": {
     "@type": "Person",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html",
     "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
   },
   "publisher": {
     "@type": "Organization",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html"
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ai-edu-archive.example.com/blog/articles/choosing-open-models.html"
+    "@id": "https://ai-edu-archive.pages.dev/blog/articles/choosing-open-models.html"
   },
   "name": "Choosing an open model for air-gapped use",
-  "url": "https://ai-edu-archive.example.com/blog/articles/choosing-open-models.html"
+  "url": "https://ai-edu-archive.pages.dev/blog/articles/choosing-open-models.html"
 }</script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -61,7 +61,7 @@
 <link href="../assets/blog.css" rel="stylesheet"/>
 <!-- article-scoped table styling, matched to the hub design system -->
 <style>
-  .tbl-wrap{max-width:var(--readw);margin:26px auto;overflow-x:auto;
+  .tbl-wrap{max-width:var(--widew);width:100%;margin:26px auto;overflow-x:auto;
     border:1px solid var(--line);border-radius:12px;background:var(--card-2);
     box-shadow:var(--shadow-sm)}
   table.tbl{border-collapse:collapse;width:100%;min-width:560px;
@@ -85,33 +85,31 @@
     table.tbl th,table.tbl td{padding:9px 11px}
   }
 </style>
-<link href="https://ai-edu-archive.example.com/blog/articles/choosing-open-models.html" hreflang="en" rel="alternate"/></head>
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/choosing-open-models.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/choosing-open-models.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/choosing-open-models.html">
+</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="nav" id="nav">
-<div class="wrap">
-<a aria-label="AI Edu Archive — home" class="brand" href="../../index.html">
-<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</a>
-<nav aria-label="Primary" class="nav-links">
-<a href="../../index.html#courses">Courses</a>
-<a href="../index.html">Articles</a>
-<a href="../about.html">About</a>
-<div aria-label="Language selector" class="language-switch">
-<a aria-current="true" href="choosing-open-models.html" lang="en" title="English">🇺🇸 EN</a>
-<a href="../ko/articles/choosing-open-models.html" lang="ko" title="한국어">🇰🇷 KO</a>
-<a href="choosing-open-models.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a>
-<a href="choosing-open-models.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a>
-<a href="choosing-open-models.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a>
-<a href="choosing-open-models.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a>
-<a href="choosing-open-models.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a>
-</div>
-</nav>
-</div>
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="choosing-open-models.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/choosing-open-models.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
 </header>
 <main id="main">
 <article itemscope="" itemtype="https://schema.org/Article">
@@ -136,7 +134,7 @@
 <span aria-hidden="true" class="avatar">AE</span>
 <span class="who">
 <b itemprop="author">AI Edu Archive</b>
-<span>Semiconductor process engineer · Air-gapped LLM / RAG / Agents</span>
+<span>Manufacturing AI and on-prem systems</span>
 </span>
 </div>
 </div>
@@ -146,73 +144,90 @@
 <ol>
 <li>BYO-model: what “open” actually buys you</li>
 <li>License first: the filter before benchmarks</li>
-<li>The EXAONE trap: open weights, non-commercial license</li>
+<li>EXAONE 4.0: release-specific license boundary</li>
 <li>Sizing by GPU: what fits on what</li>
 <li>A decision path for the fab</li>
 </ol>
 </nav>
 <div class="article-body" itemprop="articleBody">
-<p>The weights may be free; the license is not always free for your use case. Once you accept that the model has to run inside the air gap, the next question is which model to copy in. For a manufacturer, the honest answer is that this is a procurement and governance decision before it is a benchmark decision. You are choosing a weight file you will host, audit, and defend for years. The useful order is license, GPU footprint, then benchmark.</p>
+    <div class="field-story">
+      <span class="note-k">Engineering decision record</span>
+      <p><b>EDR template date: July 14, 2026.</b> Decision scope: shortlist release-specific open-weight artifacts for an air-gapped evaluation. Status: proposed, not approved for production. The record begins with artifact identity and license, then moves to memory and task evidence. The repository links below are mutable discovery links, not frozen evidence. A completed EDR must capture the resolved commit SHA, the license and use-policy files with their hashes, and a SHA256 manifest for every imported artifact before legal or technical approval.</p>
+    </div>
+
+    <div class="reader-shortcut">
+      <span class="note-k">Decision rule</span>
+      <p>Record the exact repository, resolved commit SHA, artifact filenames and SHA256 values, license and use-policy hashes, runtime, quantization, hardware, and evaluation result. Family names and mutable branch links are too broad for approval because releases and derivative artifacts can carry different files and terms.</p>
+    </div>
+
+<p><span class="lead-in">The opening artifact is not a leaderboard; it is a release-record template.</span> A downloadable model may still be the wrong dependency for the intended use. Screen the captured revision and exact license bundle, deployment footprint, and task evidence in that order. This record is engineering input to procurement, security, and legal review, not legal advice or a license determination.</p>
+<div class="field-note"><span class="note-k">Illustrative scenario: license review ends the benchmark early</span><p>A team shortlists the highest-scoring 32B model and expects quantization to be the difficult part. The repository review changes the order of work: the linked release does not clear the intended commercial-use gate. Benchmark quality and VRAM tuning are now irrelevant for that candidate. The decision becomes <b>hold</b>, pending documented permission for the exact artifact. This scenario is constructed and does not report a plant selection.</p></div>
 <h2 id="byo">BYO-model: what “open” actually buys you</h2>
-<p>The organizing principle is BYO-model: bring your own model. An open-weight release ships the actual parameter files. You copy them across the air gap once, serve them on your own GPUs, and stop calling an external API. Capability becomes something you install, not something you rent by the token. That is the only shape that survives a sealed network.</p>
-<p>But “open weights” and “open license” are different claims. A model can be fully downloadable and still forbid the one thing a for-profit plant needs: commercial operation. Before any benchmark table, read the license as if it were a production dependency, because it is.</p>
+<p>Under a BYO-model design, the approved parameter files, tokenizer, configuration, runtime dependencies, and license bundle are transferred through the site's controlled import process and served on local hardware. Local serving can remove runtime model-API calls, but network controls and packet evidence are still required to verify the sealed boundary.</p>
+<p>“Open weights” and “open license” answer different questions. Download access does not establish permission for a particular commercial use, modification, or redistribution path. Read the license, use policy, notices, and artifact revision as parts of the dependency bundle before spending time on a benchmark.</p>
 <h2 id="license">License first: the filter before benchmarks</h2>
-<p>For an air-gapped deployment, only a few license questions matter. They all reduce to what you may do without asking anyone else.</p>
+<p>For an air-gapped deployment, the review should answer several license and use-policy questions before technical evaluation.</p>
 <ul>
-<li>Commercial use. Can a for-profit company run this in production? A permissive license such as Apache 2.0 or MIT says yes plainly. A community or NC license may not.</li>
+<li>Commercial use. Does counsel confirm that the exact artifact and intended use fit the license grant and related policies? A permissive license may simplify the review but does not eliminate it.</li>
 <li>Redistribution and naming. If you fine-tune and share the result, must you rename it or carry an attribution notice? Meta’s license, for instance, requires derivative models to keep Llama in the name and ship a notice file.</li>
 <li>User-count or field-of-use caps. Some licenses add thresholds, such as Llama’s 700M monthly active user clause, or use restrictions you must confirm you clear.</li>
 <li>Offline auditability. The license text must travel with the weights and hold up in an on-prem review. Click-through terms fetched at runtime do not help when there is no runtime internet.</li>
 </ul>
 <div class="tbl-wrap">
 <table class="tbl">
-<caption>Table 1. Open-model licensing at a glance. Verify the exact release you download.</caption>
+<caption>Table 1. Candidate screening as of July 14, 2026. Links are mutable discovery pages; the completed EDR must replace branch identity with a captured commit SHA and artifact hashes. Legal approval remains required.</caption>
 <thead>
 <tr>
 <th scope="col">Family</th>
-<th scope="col">License</th>
-<th scope="col">Commercial?</th>
-<th scope="col">Notable conditions</th>
+<th scope="col">Candidate repository</th>
+<th scope="col">Current license discovery link</th>
+<th scope="col">Engineering screen</th>
+<th scope="col">Legal-review note</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="name">Qwen3</td>
-<td>Apache 2.0</td>
-<td class="ok">Yes</td>
-<td>Permissive; attribution only. Dense 0.6B-32B plus MoE variants.</td>
+<td><a class="link" href="https://huggingface.co/Qwen/Qwen3-14B">Qwen/Qwen3-14B</a></td>
+<td><a class="link" href="https://huggingface.co/Qwen/Qwen3-14B/blob/main/LICENSE">Apache 2.0 file</a></td>
+<td class="ok">Advance to technical evaluation.</td>
+<td>Confirm notices, patent terms, artifact revision, and intended distribution.</td>
 </tr>
 <tr>
-<td class="name">DeepSeek V3 / R1</td>
-<td>MIT</td>
-<td class="ok">Yes</td>
-<td>Permissive; host, modify, and commercialize freely.</td>
+<td class="name">DeepSeek R1</td>
+<td><a class="link" href="https://huggingface.co/deepseek-ai/DeepSeek-R1">deepseek-ai/DeepSeek-R1</a></td>
+<td><a class="link" href="https://huggingface.co/deepseek-ai/DeepSeek-R1/blob/main/LICENSE">MIT file</a></td>
+<td class="ok">Advance this artifact to technical evaluation.</td>
+<td>Distilled variants may inherit Qwen or Llama terms; review the exact derivative separately.</td>
 </tr>
 <tr>
 <td class="name">gpt-oss (OpenAI)</td>
-<td>Apache 2.0</td>
-<td class="ok">Yes</td>
-<td>Permissive. 20B / 120B open-weight releases.</td>
+<td><a class="link" href="https://huggingface.co/openai/gpt-oss-20b">openai/gpt-oss-20b</a></td>
+<td><a class="link" href="https://huggingface.co/openai/gpt-oss-20b/blob/main/LICENSE">Apache 2.0 file</a></td>
+<td class="ok">Advance to technical evaluation.</td>
+<td>Review the repository's usage policy, notices, and intended use in addition to the license.</td>
 </tr>
 <tr>
 <td class="name">Llama 3.3</td>
-<td>Llama Community</td>
-<td class="ok">Yes*</td>
-<td>*Derivative naming and notice requirements; 700M MAU threshold; acceptable use policy applies.</td>
+<td><a class="link" href="https://huggingface.co/meta-llama/Llama-3.3-70B-Instruct">meta-llama/Llama-3.3-70B-Instruct</a></td>
+<td><a class="link" href="https://github.com/meta-llama/llama-models/blob/main/models/llama3_3/LICENSE">Llama 3.3 Community License</a></td>
+<td>Hold for license-specific review.</td>
+<td>Review attribution, naming, acceptable-use, redistribution, and scale provisions against the planned use.</td>
 </tr>
 <tr>
-<td class="name">EXAONE (LG)</td>
-<td>EXAONE 1.x - NC</td>
-<td class="no">No</td>
-<td>Non-commercial / research and education only unless a separate production agreement exists.</td>
+<td class="name">EXAONE 4.0</td>
+<td><a class="link" href="https://huggingface.co/LGAI-EXAONE/EXAONE-4.0-32B">LGAI-EXAONE/EXAONE-4.0-32B</a></td>
+<td><a class="link" href="https://huggingface.co/LGAI-EXAONE/EXAONE-4.0-32B/blob/main/LICENSE">EXAONE AI Model License 1.2 - NC</a></td>
+<td class="no">Do not advance for commercial plant use without a separate agreement.</td>
+<td>Legal must determine whether the planned evaluation or use is permitted; technical access is not permission.</td>
 </tr>
 </tbody>
 </table>
 </div>
-<blockquote>A downloadable weight file is not a usable production model until its license clears your legal team. For a fab, “non-commercial” is a disqualifier, not a footnote.</blockquote>
-<h2 id="exaone">The EXAONE trap: open weights, non-commercial license</h2>
-<p>This deserves its own section because it is an easy mistake to make in a Korean plant. LG’s EXAONE models can be strong and downloadable from Hugging Face, but some releases are under the EXAONE AI Model License with an NC restriction. NC means non-commercial. Research, academic, and educational use may be allowed; commercial deployment requires a separate arrangement with LG AI Research.</p>
-<p>For a self-learning pilot or a university lab, that may be fine. For a for-profit fab putting the model in front of process engineers to do real work, it is a disqualifier unless a separate commercial agreement exists. The trap is that nothing technical stops you from running it. The weights load, answers look good, and the issue appears later when an audit or customer security review checks the license. Read those two letters before you build.</p>
+<blockquote>A downloadable weight file is not an approved production dependency. Legal review must cover the exact artifact, license, use policy, intended use, modifications, and distribution path.</blockquote>
+<h2 id="exaone">EXAONE 4.0: release-specific license boundary</h2>
+<p>The EXAONE 4.0 32B discovery page currently exposes the EXAONE AI Model License Agreement 1.2 - NC. Its text limits the grant to research and educational purposes and restricts commercial use unless separately agreed. Do not treat the mutable <code>main</code> link as evidence of what was reviewed: resolve and record the repository commit SHA, preserve the exact license bytes and hash, and bind them to the imported artifact manifest. The conclusion then applies only to that captured revision, not automatically to every past or future EXAONE artifact.</p>
+<p>Do not infer permission from the ability to download or run the weights. Legal review must classify the proposed lab evaluation, internal business use, fine-tuning, output use, and any derivative or redistribution before the artifact enters the approved pipeline.</p>
 <figure>
 <div aria-label="Decision diagram: from license clearance to model choice for air-gapped use" class="diagram">
 <svg aria-labelledby="cmTitle cmDesc" role="img" viewbox="0 0 660 300" width="100%">
@@ -267,7 +282,7 @@
 <p>Once a model family clears the license gate, the second filter is physical: how much VRAM you have and how much the model needs. The practical lever is quantization. Serving 4-bit (Q4) weights roughly halves 8-bit memory and cuts FP16 memory by about three quarters, usually with an acceptable quality tradeoff for grounded document Q&amp;A.</p>
 <div class="tbl-wrap">
 <table class="tbl">
-<caption>Table 2. Approximate VRAM by model size. Weights only; add serving and KV-cache overhead.</caption>
+<caption>Table 2. Illustrative planning values, not measurements from this environment. Weights only; runtime, quantization format, KV cache, context, batching, and concurrency add overhead.</caption>
 <thead>
 <tr>
 <th scope="col">Size</th>
@@ -312,7 +327,8 @@
 </div>
 <p>Two planning footnotes matter. First, these numbers are weights only; leave headroom for the serving runtime and the KV cache, which grows with context length and concurrency. Second, Mixture-of-Experts (MoE) models change the math. gpt-oss-120b has 117B total parameters but activates only a smaller subset per token, so the serving footprint can be much lower than the headline size suggests. Size for real concurrency, not just parameter count.</p>
 <h2 id="pick">A decision path for the fab</h2>
-<p>Put the filters in order and most of the field narrows on its own. This is the concept, not a deployment recipe, but it captures the sequence a review will expect.</p>
+<p>Put the filters in order and the shortlist becomes easier to defend. The pseudocode captures review sequence, not legal logic or a deployment recipe.</p>
+<div class="beginner-example"><span class="note-k">Five-minute decision record</span><p><b>Start with this checklist:</b></p><ol><li>Open one candidate discovery page and record the repository name plus the resolved commit SHA; do not record <code>main</code> as the revision.</li><li>Export the exact license, use policy, notices, tokenizer, configuration, and weight-file list at that commit. Record a SHA256 value for each imported file or for a signed manifest that enumerates them.</li><li>Write the intended use, users, modifications, output use, and distribution path, then name the required legal and security reviewers.</li><li>Estimate weight plus runtime memory and name the target GPU, context length, concurrency, and fixed evaluation set owner.</li><li><b>Pass to test</b> only when the captured SHA and hashes reproduce the candidate, required reviewers clear the intended use, and the target host has measured headroom. <b>Stop</b> on a mutable-only reference, unresolved terms, a hash mismatch, missing files, an unreviewed derivative, or no representative evaluation owner.</li></ol><p>Limit: this checklist narrows candidates; it does not grant rights or prove model quality.</p></div>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -322,14 +338,13 @@
           </span>
 <button class="copy-btn" data-copy="" type="button">Copy</button>
 </div>
-<pre><code><span class="tok-com"># License clears first, then hardware, then benchmark. Air-gapped fab.</span>
-PERMISSIVE = {<span class="tok-str">"apache-2.0"</span>, <span class="tok-str">"mit"</span>}          <span class="tok-com"># run without asking</span>
+<pre><code><span class="tok-com"># Illustrative workflow pseudocode; it does not decide license rights.</span>
+PERMISSIVE = {<span class="tok-str">"apache-2.0"</span>, <span class="tok-str">"mit"</span>}
 
 <span class="tok-kw">def</span> <span class="tok-fn">pick</span>(candidate, gpu_vram_gb):
+    <span class="tok-fn">require_legal_signoff</span>(candidate)         <span class="tok-com"># exact artifact and intended use</span>
     <span class="tok-kw">if</span> candidate.license_class == <span class="tok-str">"non-commercial"</span>:
-        <span class="tok-kw">return</span> <span class="tok-str">"reject: NC — research-only (e.g. EXAONE)"</span>
-    <span class="tok-kw">if</span> candidate.license_id <span class="tok-kw">not in</span> PERMISSIVE:
-        <span class="tok-fn">require_legal_signoff</span>(candidate)     <span class="tok-com"># Llama: rename, notice, MAU cap</span>
+        <span class="tok-kw">return</span> <span class="tok-str">"hold unless legal documents separate permission"</span>
 
     need = candidate.<span class="tok-fn">vram_q4_gb</span>()             <span class="tok-com"># 4-bit footprint + overhead</span>
     <span class="tok-kw">if</span> need &gt; gpu_vram_gb:
@@ -337,9 +352,9 @@ PERMISSIVE = {<span class="tok-str">"apache-2.0"</span>, <span class="tok-str">"
 
     <span class="tok-kw">return</span> <span class="tok-fn">best_on_bench</span>(candidate, task=<span class="tok-str">"grounded_rag_qa"</span>)  <span class="tok-com"># only now, benchmark</span></code></pre>
 </figure>
-<p>For a first air-gapped pilot, the practical sweet spot is usually a permissively licensed 14B-32B dense model at Q4 on a single data-center GPU. That is enough capability for grounded document Q&amp;A while staying small enough to serve without a cluster. Move to 70B or MoE only when the task genuinely needs more reasoning and the VRAM budget supports it. Whatever you choose, copy the license text along with the weights; an air-gapped audit will ask for both.</p>
+<p>For an initial evaluation, 14B and 32B dense artifacts are candidate size tiers, not recommendations. Measure task quality, peak VRAM, latency, throughput, restart behavior, and concurrency on the target runtime and hardware. Archive the artifact hash, configuration, license, notices, use policy, and legal approval with the evaluation record.</p>
 <hr/>
-<p>Headline benchmarks should come last, not first. The license decides whether you may run the model at all. The GPU footprint decides whether you can run it. Only then should a leaderboard break the tie. Get that order right and the model you copy across the gap today is still defensible two years from now.</p>
+<p>EDR outcome: advance only release-specific artifacts that clear the required legal, security, hardware, and task reviews. Public benchmarks can shape the test set but cannot substitute for it. Reopen this record when the artifact, license, runtime, quantization, hardware, use case, or distribution plan changes. With a candidate recorded, the natural next read is <a href="onprem-llm-serving.html">on-prem serving</a>, where the question shifts from “may we evaluate it?” to “can we operate it under the declared load?”</p>
 </div>
 <!-- deep-dive deck link -->
 <aside class="deck-link">
@@ -354,8 +369,8 @@ PERMISSIVE = {<span class="tok-str">"apache-2.0"</span>, <span class="tok-str">"
 <div class="share">
 <span class="lbl">Share</span>
 <button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
-<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
-<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Fchoosing-open-models.html" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Fchoosing-open-models.html" rel="noopener" target="_blank">LinkedIn</a>
 </div>
 <!-- author bio card (E-E-A-T) -->
 <aside class="author-card">
@@ -363,7 +378,7 @@ PERMISSIVE = {<span class="tok-str">"apache-2.0"</span>, <span class="tok-str">"
 <div class="a-body">
 <div class="k">About the author</div>
 <h3>AI Edu Archive</h3>
-<p>PhD in physics (IGZO / graphene semiconductor properties) and a semiconductor process engineer working on deposition. Builds air-gapped LLM, RAG, and agent systems, plus reinforcement-learning and anomaly-detection tooling, for the fab. Writes here about turning process know-how into on-prem knowledge assets without letting it leave the network.</p>
+<p>Science PhD with manufacturing process-improvement experience. Writes about testable on-prem LLM, RAG, and agent architectures while separating verified experience from instructional examples.</p>
 <a href="../about.html">More about the author →</a>
 </div>
 </aside>
@@ -385,45 +400,35 @@ PERMISSIVE = {<span class="tok-str">"apache-2.0"</span>, <span class="tok-str">"
 </article>
 </main>
 <footer class="site-foot">
-<div class="wrap">
-<div class="foot-top">
-<div class="foot-lead">
-<h2>Keep the know-how in. Keep the cloud out.</h2>
-<p>Everything here, courses and journal alike, is free to read with no signup.</p>
-</div>
-<div class="foot-nav-cols">
-<div class="foot-col">
-<h4>Explore</h4>
-<a href="../../index.html">Hub home</a>
-<a href="../../index.html#courses">All courses</a>
-<a href="../index.html">Journal</a>
-</div>
-<div class="foot-col">
-<h4>Courses</h4>
-<a href="../../overview/index.html">Fab AI</a>
-<a href="../../watsonx/index.html">Air-gapped LLM</a>
-<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
-</div>
-<div class="foot-col">
-<h4>Site</h4>
-<a href="../about.html">About</a>
-<a href="../contact.html">Contact</a>
-<a href="../privacy.html">Privacy</a>
-<a href="../terms.html">Terms</a>
-</div>
-</div>
-</div>
-<div class="foot-bottom">
-<div class="foot-brand">
-<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</div>
-<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
-</div>
-</div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
 </footer>
 <script>
 (function(){
@@ -449,5 +454,6 @@ PERMISSIVE = {<span class="tok-str">"apache-2.0"</span>, <span class="tok-str">"
   });
 })();
 </script>
+<script src="../assets/theme.js"></script>
 </body>
 </html>

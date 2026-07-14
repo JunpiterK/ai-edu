@@ -1,296 +1,147 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="A field guide for manufacturers building LLM, RAG, and agent systems inside a secure air-gapped network — turning fab process know-how into an on-prem knowledge asset. 폐쇄망 LLM·RAG·Agent 실전 아카이브." name="description"/>
-<meta content="AI Edu Archive" name="author"/>
-<meta content="#FAF9F5" name="theme-color"/>
-<link href="https://ai-edu-archive.example.com/blog/" hreflang="en" rel="alternate"/>
-<link href="https://ai-edu-archive.example.com/blog/ko/" hreflang="ko" rel="alternate"/>
-<link href="https://ai-edu-archive.example.com/blog/" hreflang="x-default" rel="alternate"/>
-<link href="https://ai-edu-archive.example.com/blog/" rel="canonical"/>
-<title>Your plant's know-how, made queryable — without it ever leaving the network. - AI Edu Archive Journal</title>
-<!-- Open Graph / social -->
-<meta content="website" property="og:type"/>
-<meta content="Your plant's know-how, made queryable — without it ever leaving the network. - AI Edu Archive Journal" property="og:title"/>
-<meta content="A field guide for manufacturers building LLM, RAG, and agent systems inside a secure air-gapped network — turning fab process know-how into an on-prem knowledge asset. 폐쇄망 LLM·RAG·Agent 실전 아카이브." property="og:description"/>
-<meta content="AI Edu Archive" property="og:site_name"/>
-<meta content="en_US" property="og:locale"/>
-<meta content="ko_KR" property="og:locale:alternate"/>
-<meta content="summary_large_image" name="twitter:card"/>
-<meta content="Your plant's know-how, made queryable — without it ever leaving the network. - AI Edu Archive Journal" name="twitter:title"/>
-<meta content="A field guide for manufacturers building LLM, RAG, and agent systems inside a secure air-gapped network — turning fab process know-how into an on-prem knowledge asset. 폐쇄망 LLM·RAG·Agent 실전 아카이브." name="twitter:description"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
-<link href="assets/blog.css" rel="stylesheet"/>
-<meta content="https://ai-edu-archive.example.com/blog/" property="og:url"/></head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manufacturing AI Field Journal - AI Edu Archive</title>
+<meta name="description" content="A field journal for manufacturing engineers building automotive AI, FAB AI, RAG, agents, on-prem LLM systems, and Python workflows.">
+<meta name="author" content="AI Edu Archive">
+<meta name="theme-color" content="#FAF9F5">
+<link rel="canonical" href="https://ai-edu-archive.pages.dev/blog/">
+
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Manufacturing AI Field Journal - AI Edu Archive">
+<meta property="og:description" content="Practical field notes on automotive AI, FAB AI, RAG, agents, on-prem LLM systems, and Python workflows.">
+<meta property="og:site_name" content="AI Edu Archive">
+<meta property="og:url" content="https://ai-edu-archive.pages.dev/blog/">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/blog.css">
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/index.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/index.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/index.html">
+</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="nav" id="nav">
-<div class="wrap">
-<a aria-label="AI Edu Archive — home" class="brand" href="../index.html">
-<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</a>
-<nav aria-label="Primary" class="nav-links">
-<a href="../index.html#courses">Courses</a>
-<a aria-current="page" href="index.html">Articles</a>
-<a href="portfolio.html">Portfolio</a>
-<a href="about.html">About</a>
-<div aria-label="Language selector" class="language-switch">
-<a aria-current="true" href="index.html" lang="en" title="English">🇺🇸 EN</a>
-<a href="ko/index.html" lang="ko" title="한국어">🇰🇷 KO</a>
-<a href="index.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a>
-<a href="index.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a>
-<a href="index.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a>
-<a href="index.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a>
-<a href="index.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a>
-</div>
-</nav>
-</div>
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../index.html#courses">Courses</a>
+      <a href="index.html" aria-current="page">Articles</a>
+      <a href="learning-paths.html">Learning Paths</a>
+      <a href="search.html">Search</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="index.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="ko/index.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
 </header>
 <main id="main">
-<section class="page-head">
-<div class="wrap">
-<span class="eyebrow">The Journal</span>
-<h1>Your plant's know-how, made <em>queryable</em> — without it ever leaving the network.</h1>
-<p class="kr">공정 노하우를 폐쇄망 안에서 LLM·RAG·Agent로 자산화하는 실전 기록.</p>
-<p class="lede">
-        A working archive for manufacturers who can't send their data to the cloud.
-        How to stand up <strong>on-prem LLMs</strong>, build <strong>RAG</strong> over
-        sealed internal documents, and run <strong>agents</strong> — all air-gapped,
-        all in real Python. Fab process know-how turned into a knowledge asset that
-        stays inside the plant.
-      </p>
-<p class="lede">
-        New here? Start with the <a class="link" href="portfolio.html" style="color:var(--coral-deep);text-decoration:underline;text-underline-offset:3px">portfolio view</a>:
-        four project-style case studies covering robotics AI, air-gapped knowledge systems,
-        RAG/MCP agents, and semiconductor AI.
-      </p>
-<!-- category filter chips -->
-<div aria-label="Filter articles by category" class="filters" role="group">
-<button aria-pressed="true" class="chip" data-filter="all"><span class="cdot"></span>All</button>
-<button aria-pressed="false" class="chip" data-filter="onprem">On-Prem LLM</button>
-<button aria-pressed="false" class="chip" data-filter="rag">RAG</button>
-<button aria-pressed="false" class="chip" data-filter="agents">Agents &amp; MCP</button>
-<button aria-pressed="false" class="chip" data-filter="python">Python Stack</button>
-<button aria-pressed="false" class="chip" data-filter="mfg">Manufacturing AI</button>
-</div>
-</div>
-</section>
-<section aria-label="Featured series" class="lab-strip">
-<div class="wrap">
-<div class="lab-grid">
-<a class="lab-card primary" href="articles/consumer-gpu-onprem-llm-agent-lab.html">
-<span class="k">Flagship Lab</span>
-<h2>Consumer GPU LLM · MCP · Goose agent lab</h2>
-<p>Start from a normal gaming GPU PC and build toward a local Claude Code / Codex-style coding agent.</p>
-<div class="mini-tags"><span>Ollama</span><span>Hugging Face</span><span>MCP</span><span>Goose</span></div>
-<span class="go">Open lab <span aria-hidden="true" class="arw">→</span></span>
-</a>
-<a class="lab-card" href="articles/lang-modules-implementation-guide.html">
-<span class="k">Implementation Map</span>
-<h2>Lang modules, from prompt to graph</h2>
-<p>Which LangChain and LangGraph module to use, when to use it, and what you can build with it.</p>
-<div class="mini-tags"><span>LCEL</span><span>RAG</span><span>Tools</span><span>LangGraph</span></div>
-<span class="go">Read guide <span aria-hidden="true" class="arw">→</span></span>
-</a>
-<a class="lab-card" href="portfolio.html">
-<span class="k">Portfolio View</span>
-<h2>AI · robotics systems portfolio</h2>
-<p>See the archive as project work: robotics AI, on-prem knowledge systems, agents, and semiconductor AI.</p>
-<div class="mini-tags"><span>Robotics</span><span>RAG</span><span>Agents</span><span>Fab AI</span></div>
-<span class="go">View portfolio <span aria-hidden="true" class="arw">→</span></span>
-</a>
-</div>
-</div>
-</section>
-<section class="section">
-<div class="wrap">
-<ol aria-label="Articles" class="article-index" id="articleIndex">
-<li><a class="post" data-cat="onprem agents python" href="articles/consumer-gpu-onprem-llm-agent-lab.html">
-<div class="post-meta"><span class="cat-tag">On-Prem LLM</span><span class="post-dot"></span><time datetime="2026-07-06">Jul 6, 2026</time><span class="post-dot"></span><span class="rt">15 min</span></div>
-<h2>On-prem LLM, MCP, and agents on a gaming GPU<span class="kr-sub">H100 없이 가정용 PC에서 로컬 LLM · MCP · Agent 실험실 만들기</span></h2>
-<p class="excerpt">A step-by-step home PC series: Ollama, Hugging Face 4-bit inference, local RAG, MCP tools, Goose, and coding-agent loops on consumer GPU hardware.</p>
-<span class="go">Read article <span aria-hidden="true" class="arw">→</span></span>
-</a></li>
-<li><a class="post" data-cat="python rag agents" href="articles/lang-modules-implementation-guide.html">
-<div class="post-meta"><span class="cat-tag">Python Stack</span><span class="post-dot"></span><time datetime="2026-07-06">Jul 6, 2026</time><span class="post-dot"></span><span class="rt">18 min</span></div>
-<h2>Lang modules implementation guide<span class="kr-sub">LangChain · LangGraph 모듈을 언제 쓰고 어떻게 구현하는가</span></h2>
-<p class="excerpt">A module-by-module guide to chat models, prompts, LCEL, loaders, splitters, vector stores, retrievers, tools, and LangGraph workflows with runnable examples.</p>
-<span class="go">Read article <span aria-hidden="true" class="arw">→</span></span>
-</a></li>
-<li><a class="post" data-cat="onprem mfg" href="articles/why-air-gapped-llm-manufacturing.html">
-<div class="post-meta"><span class="cat-tag">On-Prem LLM</span><span class="post-dot"></span><time datetime="2026-07-04">Jul 4, 2026</time><span class="post-dot"></span><span class="rt">9 min</span></div>
-<h2>Why manufacturers must run LLMs air-gapped<span class="kr-sub">왜 FAB·제조업은 LLM을 폐쇄망에 올려야 하나</span></h2>
-<p class="excerpt">Process recipes and yield data are the moat — a cloud prompt is a one-way door out of the plant. The risks, and the "weights in, data out never" architecture.</p>
-<span class="go">Read article <span aria-hidden="true" class="arw">→</span></span>
-</a></li>
-<li><a class="post" data-cat="mfg onprem" href="articles/knowledge-asset-roadmap.html">
-<div class="post-meta"><span class="cat-tag">Manufacturing AI</span><span class="post-dot"></span><time datetime="2026-07-03">Jul 3, 2026</time><span class="post-dot"></span><span class="rt">10 min</span></div>
-<h2>From tribal knowledge to a plant knowledge asset<span class="kr-sub">암묵지에서 사내 지식 자산으로 — 도입 로드맵</span></h2>
-<p class="excerpt">A staged roadmap (PoC → Pilot → Scale) for capturing undocumented process know-how into an on-prem LLM/RAG system, with deliverables and gates at each step.</p>
-<span class="go">Read article <span aria-hidden="true" class="arw">→</span></span>
-</a></li>
-<li><a class="post" data-cat="onprem" href="articles/onprem-llm-serving.html">
-<div class="post-meta"><span class="cat-tag">On-Prem LLM</span><span class="post-dot"></span><time datetime="2026-06-30">Jun 30, 2026</time><span class="post-dot"></span><span class="rt">11 min</span></div>
-<h2>Serving LLMs on-prem: vLLM, Ollama, and GPU sizing<span class="kr-sub">온프렘 LLM 서빙 실전 — vLLM·Ollama·GPU 사이징</span></h2>
-<p class="excerpt">Standing up open-weight models on air-gapped GPUs: vLLM vs Ollama, OpenAI-compatible endpoints, concurrency, and a rule of thumb for VRAM budgeting.</p>
-<span class="go">Read article <span aria-hidden="true" class="arw">→</span></span>
-</a></li>
-<li><a class="post" data-cat="onprem" href="articles/choosing-open-models.html">
-<div class="post-meta"><span class="cat-tag">On-Prem LLM</span><span class="post-dot"></span><time datetime="2026-06-26">Jun 26, 2026</time><span class="post-dot"></span><span class="rt">10 min</span></div>
-<h2>Choosing an open model for air-gapped use<span class="kr-sub">폐쇄망에 올릴 오픈 모델 고르기 — 라이선스·GPU</span></h2>
-<p class="excerpt">Llama, Qwen, DeepSeek, gpt-oss, EXAONE — licensing that survives an on-prem audit (and the EXAONE non-commercial trap), sizing, and the BYO-model principle.</p>
-<span class="go">Read article <span aria-hidden="true" class="arw">→</span></span>
-</a></li>
-<li><a class="post" data-cat="rag mfg" href="articles/rag-over-sealed-documents.html">
-<div class="post-meta"><span class="cat-tag">RAG</span><span class="post-dot"></span><time datetime="2026-06-22">Jun 22, 2026</time><span class="post-dot"></span><span class="rt">12 min</span></div>
-<h2>Building RAG over sealed internal documents<span class="kr-sub">폐쇄망 사내 문서로 RAG 만들기 — 5단계 실전</span></h2>
-<p class="excerpt">A working 5-stage pipeline over SOPs, spec sheets, and equipment logs — chunking, on-prem embeddings, a local vector store, and cited answers. LangChain 0.3 code.</p>
-<span class="go">Read article <span aria-hidden="true" class="arw">→</span></span>
-</a></li>
-<li><a class="post" data-cat="rag" href="articles/chunking-technical-docs.html">
-<div class="post-meta"><span class="cat-tag">RAG</span><span class="post-dot"></span><time datetime="2026-06-18">Jun 18, 2026</time><span class="post-dot"></span><span class="rt">9 min</span></div>
-<h2>Chunking technical documents for RAG<span class="kr-sub">기술 문서 청킹 전략 — 표·수식·구조 다루기</span></h2>
-<p class="excerpt">How to split SOPs and manuals so retrieval actually works: recursive vs structural splitting, the chunk-size/overlap trade-off, and handling tables and code.</p>
-<span class="go">Read article <span aria-hidden="true" class="arw">→</span></span>
-</a></li>
-<li><a class="post" data-cat="rag" href="articles/embeddings-korean-technical.html">
-<div class="post-meta"><span class="cat-tag">RAG</span><span class="post-dot"></span><time datetime="2026-06-14">Jun 14, 2026</time><span class="post-dot"></span><span class="rt">9 min</span></div>
-<h2>Embeddings for Korean and technical text<span class="kr-sub">한국어·기술 텍스트 임베딩 — bge-m3·e5</span></h2>
-<p class="excerpt">Picking a local embedding model for mixed Korean/English jargon: bge-m3 vs multilingual-e5, prefixes, normalization, and a top-k sanity check on your own corpus.</p>
-<span class="go">Read article <span aria-hidden="true" class="arw">→</span></span>
-</a></li>
-<li><a class="post" data-cat="rag" href="articles/knowledge-graph-process.html">
-<div class="post-meta"><span class="cat-tag">RAG</span><span class="post-dot"></span><time datetime="2026-06-10">Jun 10, 2026</time><span class="post-dot"></span><span class="rt">11 min</span></div>
-<h2>A knowledge graph for process know-how<span class="kr-sub">공정 지식을 지식그래프로 — 트리플·PROV-O</span></h2>
-<p class="excerpt">Triples, TBox/ABox, standard-ontology reuse, and why PROV-O provenance is non-negotiable for a fab audit — with runnable rdflib and SPARQL over equipment/lot facts.</p>
-<span class="go">Read article <span aria-hidden="true" class="arw">→</span></span>
-</a></li>
-<li><a class="post" data-cat="rag" href="articles/hybrid-retrieval-vector-graph.html">
-<div class="post-meta"><span class="cat-tag">RAG</span><span class="post-dot"></span><time datetime="2026-06-06">Jun 6, 2026</time><span class="post-dot"></span><span class="rt">10 min</span></div>
-<h2>Hybrid retrieval: vectors + knowledge graph<span class="kr-sub">벡터 + 지식그래프 하이브리드 검색</span></h2>
-<p class="excerpt">Where vector search falls short on relationships and exact facts — and how to combine it with a graph: candidates by similarity, verified and expanded by the graph, then reranked.</p>
-<span class="go">Read article <span aria-hidden="true" class="arw">→</span></span>
-</a></li>
-<li aria-hidden="false"><div aria-label="In-feed advertisement placeholder" class="ad-slot ad-infeed" role="complementary"><span class="ad-note">In-feed ad slot — blends with the flow when live.</span></div></li>
-<li><a class="post" data-cat="agents mfg" href="articles/agents-mcp-mes.html">
-<div class="post-meta"><span class="cat-tag">Agents &amp; MCP</span><span class="post-dot"></span><time datetime="2026-06-01">Jun 1, 2026</time><span class="post-dot"></span><span class="rt">13 min</span></div>
-<h2>Wiring an agent to internal systems with MCP<span class="kr-sub">MCP로 에이전트를 사내 시스템에 연결</span></h2>
-<p class="excerpt">Giving an air-gapped agent safe, audited access to MES and equipment tools — tool schemas, an MCP server for internal APIs, guardrails, and human approval.</p>
-<span class="go">Read article <span aria-hidden="true" class="arw">→</span></span>
-</a></li>
-<li><a class="post" data-cat="agents" href="articles/hitl-mlops-onprem.html">
-<div class="post-meta"><span class="cat-tag">Agents &amp; MCP</span><span class="post-dot"></span><time datetime="2026-05-27">May 27, 2026</time><span class="post-dot"></span><span class="rt">12 min</span></div>
-<h2>Human-in-the-loop and MLOps for on-prem agents<span class="kr-sub">폐쇄망 에이전트의 사람 검증·운영</span></h2>
-<p class="excerpt">Why nothing runs without approval: approval gates, audit logs, drift monitoring, and persisting agent state with a checkpointer (and why MemorySaver is a trap).</p>
-<span class="go">Read article <span aria-hidden="true" class="arw">→</span></span>
-</a></li>
-<li><a class="post" data-cat="python" href="articles/langchain-core-explained.html">
-<div class="post-meta"><span class="cat-tag">Python Stack</span><span class="post-dot"></span><time datetime="2026-05-22">May 22, 2026</time><span class="post-dot"></span><span class="rt">13 min</span></div>
-<h2>LangChain core, explained — LLMs, prompts, and LCEL<span class="kr-sub">LangChain 핵심 — ChatModel·Prompt·Parser·LCEL</span></h2>
-<p class="excerpt">The lang stack from the ground up: ChatModel invoke/stream/batch, prompt templates, output parsers, and why <code>prompt | model | parser</code> is the abstraction that scales.</p>
-<span class="go">Read article <span aria-hidden="true" class="arw">→</span></span>
-</a></li>
-<li><a class="post" data-cat="python rag" href="articles/langchain-rag-components.html">
-<div class="post-meta"><span class="cat-tag">Python Stack</span><span class="post-dot"></span><time datetime="2026-05-17">May 17, 2026</time><span class="post-dot"></span><span class="rt">12 min</span></div>
-<h2>The lang RAG stack, component by component<span class="kr-sub">LangChain RAG 부품 해부</span></h2>
-<p class="excerpt">Loaders, splitters, embeddings, vector stores, retrievers — each explained function by function, with current split-package imports and a manufacturing use for each.</p>
-<span class="go">Read article <span aria-hidden="true" class="arw">→</span></span>
-</a></li>
-<li><a class="post" data-cat="python agents" href="articles/langchain-tools-agents.html">
-<div class="post-meta"><span class="cat-tag">Python Stack</span><span class="post-dot"></span><time datetime="2026-05-12">May 12, 2026</time><span class="post-dot"></span><span class="rt">12 min</span></div>
-<h2>Tools and agents in LangChain<span class="kr-sub">LangChain 도구와 에이전트 — @tool·tool calling</span></h2>
-<p class="excerpt">From a plain function to a tool an LLM can call: the @tool decorator, bind_tools, and building a ReAct-style agent with the current API (no deprecated initialize_agent).</p>
-<span class="go">Read article <span aria-hidden="true" class="arw">→</span></span>
-</a></li>
-<li><a class="post" data-cat="python agents" href="articles/langgraph-stateful-workflows.html">
-<div class="post-meta"><span class="cat-tag">Python Stack</span><span class="post-dot"></span><time datetime="2026-05-07">May 7, 2026</time><span class="post-dot"></span><span class="rt">14 min</span></div>
-<h2>LangGraph: stateful, resumable agent workflows<span class="kr-sub">LangGraph 상태 기반 워크플로 — 체크포인트·HITL</span></h2>
-<p class="excerpt">Modelling a review-and-approve process as a graph: StateGraph, nodes and conditional edges, checkpointing for resumability, and human-in-the-loop interrupts.</p>
-<span class="go">Read article <span aria-hidden="true" class="arw">→</span></span>
-</a></li>
-</ol>
-<p class="empty-note" id="emptyNote">No articles in this category yet. Check back soon — or browse <a class="link" href="index.html" style="color:var(--coral-deep)">all posts</a>.</p>
-</div>
+<section class="journal-shell" aria-label="Article category browser">
+  <div class="wrap journal-layout">
+    <aside class="journal-rail" aria-label="Article categories">
+      <section class="rail-box">
+        <h2>Applied AI Archive</h2>
+        <span class="rail-category-title">Primary category · AI</span>
+        <ul class="rail-tree">
+          <li><a href="ai-categories.html"><span>All AI Articles</span><small>28</small></a>
+            <ul class="rail-sub">
+              <li class="rail-topic"><a href="categories/automotive-ai-robotics.html"><span>Automotive AI &amp; Robotics</span><small>3</small></a></li>
+              <li class="rail-topic"><a href="categories/fab-ai-foundations.html"><span>FAB AI Foundations</span><small>4</small></a></li>
+              <li class="rail-topic"><a href="categories/rag-knowledge-systems.html"><span>RAG &amp; Knowledge Systems</span><small>7</small></a></li>
+              <li class="rail-topic"><a href="categories/agents-mcp-controls.html"><span>Agents, MCP &amp; Controls</span><small>4</small></a></li>
+              <li class="rail-topic"><a href="categories/onprem-llm-operations.html"><span>On-Prem LLM Operations</span><small>4</small></a></li>
+              <li class="rail-topic"><a href="categories/python-langchain-langgraph.html"><span>Python, LangChain &amp; LangGraph</span><small>5</small></a></li>
+              <li class="rail-topic"><a href="categories/generative-ai-field-work.html"><span>Generative AI at Work</span><small>1</small></a></li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+    </aside>
+    <div class="journal-main">
+      <section class="page-head journal-titlebar">
+        <div class="wrap">
+          <span class="eyebrow">AI Edu Archive · Field Journal</span>
+          <h1>AI that <em>survives the factory floor.</em></h1>
+          <p class="kr">Practical notes for semiconductor fabs, vehicle production lines, and secure plant networks.</p>
+          <p class="lede">A field archive for manufacturing engineers working with noisy equipment data, protected process knowledge, air-gapped infrastructure, approval gates, and production systems that must keep running.</p>
+          <div class="titlebar-topics" aria-label="Core topics"><span>FAB AI</span><span>Automotive Robotics</span><span>On-Prem LLM</span><span>RAG</span><span>Agents &amp; MCP</span><span>Python</span></div>
+          <div class="filters" aria-label="Filter articles by category" role="group">
+            <button aria-pressed="true" class="chip" data-filter="all"><span class="cdot"></span>All</button>
+            <button aria-pressed="false" class="chip" data-filter="auto">Automotive AI</button>
+            <button aria-pressed="false" class="chip" data-filter="mfg">Manufacturing AI</button>
+            <button aria-pressed="false" class="chip" data-filter="rag">RAG</button>
+            <button aria-pressed="false" class="chip" data-filter="agents">Agents &amp; MCP</button>
+            <button aria-pressed="false" class="chip" data-filter="onprem">On-Prem LLM</button>
+            <button aria-pressed="false" class="chip" data-filter="python">Python Stack</button>
+            <button aria-pressed="false" class="chip" data-filter="fieldai">Generative AI at Work</button>
+          </div>
+        </div>
+      </section>
+      <div class="monetization-reserve" aria-hidden="true"></div>
+      <section class="section journal-catalog" aria-labelledby="catalogTitle">
+        <div class="wrap">
+          <div class="catalog-head" aria-live="polite">
+            <div class="catalog-head-copy">
+              <span class="eyebrow" id="catalogEyebrow">Complete archive</span>
+              <h2 id="catalogTitle">All field articles</h2>
+              <p id="catalogDescription">Choose a category on the left to focus the archive on that field.</p>
+            </div>
+            <span class="catalog-count" id="catalogCount">All articles</span>
+          </div>
+          <ol class="article-index" id="articleIndex" aria-label="Articles"></ol>
+          <p class="empty-note" id="emptyNote" role="status">No articles are available in this category. Choose the complete archive to see every article.</p>
+        </div>
+      </section>
+    </div>
+  </div>
 </section>
 </main>
 <footer class="site-foot">
-<div class="wrap">
-<div class="foot-top">
-<div class="foot-lead">
-<h2>Keep the know-how in. Keep the cloud out.</h2>
-<p>A free, in-depth archive for manufacturers building air-gapped LLM, RAG, and agent systems. No signup — just working code and hard-won practice.</p>
-</div>
-<div class="foot-nav-cols">
-<div class="foot-col">
-<h4>Explore</h4>
-<a href="../index.html">Hub home</a>
-<a href="../index.html#courses">All courses</a>
-<a href="index.html">Journal</a>
-<a href="portfolio.html">Portfolio</a>
-</div>
-<div class="foot-col">
-<h4>Courses</h4>
-<a href="../overview/index.html">Fab AI</a>
-<a href="../watsonx/index.html">Air-gapped LLM</a>
-<a href="../llm_apply/LLM_slide.html">Enterprise LLM</a>
-</div>
-<div class="foot-col">
-<h4>Site</h4>
-<a href="about.html">About</a>
-<a href="contact.html">Contact</a>
-<a href="privacy.html">Privacy</a>
-<a href="terms.html">Terms</a>
-</div>
-</div>
-</div>
-<div class="foot-bottom">
-<div class="foot-brand">
-<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</div>
-<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
-</div>
-</div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../index.html#courses">Courses</a>
+          <a href="index.html">Articles</a>
+          <a href="learning-paths.html">Learning Paths</a>
+          <a href="search.html">Search</a>
+          <a href="portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
 </footer>
-<script>
-(function(){
-  // sticky nav border on scroll
-  var nav=document.getElementById('nav');
-  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
-  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
-
-  // category filtering
-  var chips=document.querySelectorAll('.chip');
-  var posts=document.querySelectorAll('#articleIndex .post');
-  var empty=document.getElementById('emptyNote');
-  chips.forEach(function(chip){
-    chip.addEventListener('click',function(){
-      chips.forEach(function(c){c.setAttribute('aria-pressed','false')});
-      chip.setAttribute('aria-pressed','true');
-      var f=chip.getAttribute('data-filter');
-      var shown=0;
-      posts.forEach(function(p){
-        var cats=(p.getAttribute('data-cat')||'').split(' ');
-        var show=(f==='all')||cats.indexOf(f)!==-1;
-        p.closest('li').hidden=!show;
-        if(show)shown++;
-      });
-      empty.style.display=shown?'none':'block';
-    });
-  });
-})();
-</script>
+<script src="assets/theme.js"></script>
+<script src="assets/journal.js"></script>
 </body>
 </html>

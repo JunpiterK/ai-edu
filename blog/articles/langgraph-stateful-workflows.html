@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 
 <html lang="en">
 <head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- ══ SEO ══════════════════════════════════ -->
@@ -10,16 +10,15 @@
 <meta content="How to build stateful, resumable agent workflows with LangGraph: state, nodes, edges, conditional branching, checkpoints, and interrupt-based human approval." name="description"/>
 <meta content="AI Edu Archive" name="author"/>
 <meta content="#FAF9F5" name="theme-color"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/langgraph-stateful-workflows.html" rel="canonical"/>
-<link href="https://ai-edu-archive.example.com/blog/ko/articles/langgraph-stateful-workflows.html" hreflang="ko" rel="alternate"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/langgraph-stateful-workflows.html" hreflang="x-default" rel="alternate"/>
+<link href="https://ai-edu-archive.pages.dev/blog/articles/langgraph-stateful-workflows.html" rel="canonical"/>
+
 <meta content="index,follow" name="robots"/>
 <!-- Open Graph -->
 <meta content="article" property="og:type"/>
 <meta content="LangGraph: stateful, resumable agent workflows - AI Edu Archive Journal" property="og:title"/>
 <meta content="How to build stateful, resumable agent workflows with LangGraph: state, nodes, edges, conditional branching, checkpoints, and interrupt-based human approval." property="og:description"/>
 <meta content="AI Edu Archive" property="og:site_name"/>
-<meta content="https://ai-edu-archive.example.com/blog/articles/langgraph-stateful-workflows.html" property="og:url"/>
+<meta content="https://ai-edu-archive.pages.dev/blog/articles/langgraph-stateful-workflows.html" property="og:url"/>
 <meta content="en_US" property="og:locale"/>
 <meta content="ko_KR" property="og:locale:alternate"/>
 <meta content="2026-07-04" property="article:published_time"/>
@@ -35,58 +34,56 @@
   "headline": "LangGraph: stateful, resumable agent workflows",
   "description": "How to build stateful, resumable agent workflows with LangGraph: state, nodes, edges, conditional branching, checkpoints, and interrupt-based human approval.",
   "inLanguage": "en",
-  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "image": "https://ai-edu-archive.pages.dev/blog/assets/visuals/article-visual-template.svg",
   "datePublished": "2026-07-04",
   "dateModified": "2026-07-04",
   "author": {
     "@type": "Person",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html",
     "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
   },
   "publisher": {
     "@type": "Organization",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html"
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ai-edu-archive.example.com/blog/articles/langgraph-stateful-workflows.html"
+    "@id": "https://ai-edu-archive.pages.dev/blog/articles/langgraph-stateful-workflows.html"
   },
   "name": "LangGraph: stateful, resumable agent workflows",
-  "url": "https://ai-edu-archive.example.com/blog/articles/langgraph-stateful-workflows.html"
+  "url": "https://ai-edu-archive.pages.dev/blog/articles/langgraph-stateful-workflows.html"
 }</script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link href="../assets/blog.css" rel="stylesheet"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/langgraph-stateful-workflows.html" hreflang="en" rel="alternate"/></head>
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/langgraph-stateful-workflows.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/langgraph-stateful-workflows.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/langgraph-stateful-workflows.html">
+</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="nav" id="nav">
-<div class="wrap">
-<a aria-label="AI Edu Archive home" class="brand" href="../../index.html">
-<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</a>
-<nav aria-label="Primary" class="nav-links">
-<a href="../../index.html#courses">Courses</a>
-<a href="../index.html">Articles</a>
-<a href="../about.html">About</a>
-<div aria-label="Language selector" class="language-switch">
-<a aria-current="true" href="langgraph-stateful-workflows.html" lang="en" title="English">🇺🇸 EN</a>
-<a href="../ko/articles/langgraph-stateful-workflows.html" lang="ko" title="한국어">🇰🇷 KO</a>
-<a href="langgraph-stateful-workflows.html" lang="en" title="English shown for now">🇪🇸 ES</a>
-<a href="langgraph-stateful-workflows.html" lang="en" title="English shown for now">🇨🇳 ZH</a>
-<a href="langgraph-stateful-workflows.html" lang="en" title="English shown for now">🇯🇵 JA</a>
-<a href="langgraph-stateful-workflows.html" lang="en" title="English shown for now">🇩🇪 DE</a>
-<a href="langgraph-stateful-workflows.html" lang="en" title="English shown for now">🇫🇷 FR</a>
-</div>
-</nav>
-</div>
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="langgraph-stateful-workflows.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/langgraph-stateful-workflows.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
 </header>
 <main id="main">
 <article itemscope="" itemtype="https://schema.org/Article">
@@ -128,31 +125,27 @@
 </ol>
 </nav>
 <div class="article-body" itemprop="articleBody">
-<p><span class="lead-in">A chain runs start to finish.</span> That is fine until a
-      step needs a decision it cannot make alone — an SPC deviation report the model
-      drafted, a recipe change it proposes, a maintenance ticket it wants to close.
-      In a fab, those steps do not just <em>run</em>; they get <strong>reviewed and
-      approved</strong> by an engineer before anything commits. LangGraph exists for
-      exactly that shape of work: a workflow that can <strong>pause, wait for a human,
-      and resume from where it stopped</strong> — with no cloud call and no lost state.
-      멈췄다가 사람의 승인을 받고 그 지점부터 다시 이어가는 워크플로를 코드로 모델링한다.</p>
+    <div class="field-story">
+      <span class="note-k">Illustrative restart test</span>
+      <p>An SPC excursion produces a draft deviation report and a bundle of source references. A quick review window makes an in-memory pause seem sufficient, but a service restart clears that state before the reviewer returns. The failed resume changes the design to a durable checkpoint keyed by report ID. A process engineer may reject the draft with revision instructions or accept it into a review repository. The equipment ID, report ID, and decisions below are constructed examples, not plant events.</p>
+    </div>
+
+<p><span class="lead-in">The workflow must survive the wait between draft and review.</span> It also needs an authenticated reviewer, a durable checkpoint, an expiry rule, an idempotent commit, and an audit event for every decision. LangGraph can coordinate those transitions. It does not authenticate users, approve a deviation under a quality system, or confer regulatory approval. Those controls remain in the surrounding application and governed business process.</p>
+<div class="reader-shortcut"><span class="note-k">State shortcut</span><p>Write the restart point, resume identity, expiry, and external-effect key beside every interrupt. If any one is undefined, the graph is not ready for a durable pause.</p></div>
 <h2 id="why-graph">Why a graph, not a chain</h2>
-<p>A linear chain has one path: A → B → C. A real approval process is not linear.
-      It loops back when a reviewer rejects, it skips a step when the change is trivial,
+<p>A linear chain is useful for a fixed A → B → C path. This deviation example needs more than that.
+      It loops back when a reviewer rejects, it can skip a step when the workflow contract allows it,
       and it must survive the reviewer going home for the night and coming back the next
       shift. LangGraph models the workflow as a <strong>directed graph</strong> — nodes
       are units of work, edges are the transitions, and a <strong>checkpointer</strong>
       persists the state between them. Because the state is saved after every node, the
       graph is <strong>resumable</strong>: you can stop it mid-run, close the process,
-      and pick up on a different day at the exact node where you paused.</p>
+      and resume the identified run at its saved transition.</p>
 <blockquote>
-        A chain answers a question. A graph runs a process — one that can wait for a
-        human without losing its place.
-        <cite>— the one line to remember</cite>
+        Choose a graph here because the required contract includes branching, pause,
+        expiry, and resume. A straight chain remains appropriate for fixed pipelines.
 </blockquote>
-<p>Everything below runs on the local <a class="link" href="../../watsonx/index.html">air-gapped
-      stack</a>: an on-prem LLM through Ollama, weights on disk, state in a local
-      checkpointer. Nothing about the graph reaches out to a network.</p>
+<p>The example points to a local <a class="link" href="../../watsonx/index.html">LLM stack</a> and SQLite checkpoint file. Verify package downloads, model endpoints, telemetry, backups, file permissions, and audit destinations against the site's approved network design.</p>
 <h2 id="state">State, nodes, edges</h2>
 <p>The <strong>state</strong> is a typed dictionary that flows through the graph.
       Each node receives it, returns a partial update, and LangGraph merges that update
@@ -177,6 +170,13 @@
     messages: Annotated[<span class="tok-kw">list</span>, add_messages]  <span class="tok-com"># append, don't overwrite</span>
     draft: <span class="tok-kw">str</span>                              <span class="tok-com"># the report the LLM wrote</span>
     verdict: Literal[<span class="tok-str">"approved"</span>, <span class="tok-str">"rejected"</span>, <span class="tok-str">""</span>]
+    rejection_reason: <span class="tok-kw">str</span>                   <span class="tok-com"># why the reviewer rejected it</span>
+    revision_instructions: <span class="tok-kw">str</span>               <span class="tok-com"># guidance for the next draft</span>
+    reviewer_id: <span class="tok-kw">str</span>                         <span class="tok-com"># server-authenticated principal</span>
+    requester_id: <span class="tok-kw">str</span>                        <span class="tok-com"># authenticated workflow requester</span>
+    review_expires_at: <span class="tok-kw">str</span>                   <span class="tok-com"># ISO-8601 UTC deadline</span>
+    report_id: <span class="tok-kw">str</span>                           <span class="tok-com"># business record identifier</span>
+    commit_key: <span class="tok-kw">str</span>                          <span class="tok-com"># idempotency key</span>
     revisions: <span class="tok-kw">int</span>                          <span class="tok-com"># loop guard</span></code></pre>
 </figure>
 <p>A <strong>node</strong> is just a function: it takes the state and returns the
@@ -191,14 +191,20 @@
           </span>
 <button class="copy-btn" data-copy="" type="button">Copy</button>
 </div>
-<pre><code><span class="tok-com"># On-prem model via Ollama — no egress. 로컬 모델로 초안 생성.</span>
+<pre><code><span class="tok-com"># Local model endpoint; verify network behavior in the target environment.</span>
 <span class="tok-kw">from</span> langchain_ollama <span class="tok-kw">import</span> ChatOllama
 
 llm = <span class="tok-fn">ChatOllama</span>(model=<span class="tok-str">"qwen2.5:14b"</span>, base_url=<span class="tok-str">"http://localhost:11434"</span>)
 
 
 <span class="tok-kw">def</span> <span class="tok-fn">draft_report</span>(state: ReviewState) -&gt; <span class="tok-kw">dict</span>:
-    reply = llm.<span class="tok-fn">invoke</span>(state[<span class="tok-str">"messages"</span>])
+    messages = state[<span class="tok-str">"messages"</span>]
+    <span class="tok-kw">if</span> state[<span class="tok-str">"revisions"</span>]:
+        messages = messages + [(<span class="tok-str">"user"</span>,
+            f<span class="tok-str">"Rejection reason: {state['rejection_reason']}\n"</span>
+            f<span class="tok-str">"Revision instructions: {state['revision_instructions']}\n"</span>
+            <span class="tok-str">"Rewrite the report and address both items explicitly."</span>)]
+    reply = llm.<span class="tok-fn">invoke</span>(messages)
     <span class="tok-kw">return</span> {<span class="tok-str">"draft"</span>: reply.content, <span class="tok-str">"messages"</span>: [reply]}</code></pre>
 </figure>
 <p><strong>Edges</strong> connect nodes. A plain edge always goes from one node to
@@ -224,7 +230,7 @@ llm = <span class="tok-fn">ChatOllama</span>(model=<span class="tok-str">"qwen2.
 
 
 <span class="tok-kw">def</span> <span class="tok-fn">route_after_review</span>(state: ReviewState) -&gt; <span class="tok-kw">str</span>:
-    <span class="tok-kw">if</span> state[<span class="tok-str">"verdict"</span>] == <span class="tok-str">"approved"</span>:
+    <span class="tok-kw">if</span> state[<span class="tok-str">"verdict"</span>] == <span class="tok-str">"approved"</span> <span class="tok-kw">and</span> state[<span class="tok-str">"reviewer_id"</span>]:
         <span class="tok-kw">return</span> <span class="tok-str">"commit"</span>
     <span class="tok-kw">if</span> state[<span class="tok-str">"revisions"</span>] &gt;= <span class="tok-num">2</span>:      <span class="tok-com"># give up after 2 rejects</span>
         <span class="tok-kw">return</span> END
@@ -274,16 +280,10 @@ llm = <span class="tok-fn">ChatOllama</span>(model=<span class="tok-str">"qwen2.
 </div>
 <figcaption>Figure 1. The review loop as a graph. <code>human_review</code> pauses on
         <code>interrupt()</code>; the verdict routes to <code>commit</code> or loops back
-        to <code>draft_report</code>. 검토 노드에서 멈추고, 승인이면 커밋, 반려면 재작성으로 되돌아간다.</figcaption>
+        to <code>draft_report</code>. Approval commits the result; rejection returns it for revision.</figcaption>
 </figure>
 <h2 id="checkpoint">Checkpoints make it resumable</h2>
-<p>A <strong>checkpointer</strong> saves the full state after every node. That one
-      choice is what turns a script into a durable process: the run is keyed by a
-      <code>thread_id</code>, so you can walk away and resume the same thread hours later
-      at the node where it stopped. For development an in-memory saver is enough; for a
-      real deployment you swap in the SQLite or Postgres checkpointer without touching
-      the graph. On an isolated network, that store is a local file — no external
-      database, no telemetry.</p>
+<p>A checkpointer stores graph state under a <code>thread_id</code>. This example uses <code>SqliteSaver</code> so a process restart does not erase the paused run. The service owner still needs file permissions, encryption where required, backup/restore tests, retention, concurrent-access tests, and a mapping between <code>thread_id</code> and the deviation record.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -293,9 +293,10 @@ llm = <span class="tok-fn">ChatOllama</span>(model=<span class="tok-str">"qwen2.
           </span>
 <button class="copy-btn" data-copy="" type="button">Copy</button>
 </div>
-<pre><code><span class="tok-com"># Wire the nodes into a graph and compile with a checkpointer.</span>
+<pre><code><span class="tok-com"># Durable local checkpoint for the illustrative single-service workflow.</span>
+<span class="tok-kw">import</span> sqlite3
 <span class="tok-kw">from</span> langgraph.graph <span class="tok-kw">import</span> StateGraph, START, END
-<span class="tok-kw">from</span> langgraph.checkpoint.memory <span class="tok-kw">import</span> InMemorySaver
+<span class="tok-kw">from</span> langgraph.checkpoint.sqlite <span class="tok-kw">import</span> SqliteSaver
 
 builder = <span class="tok-fn">StateGraph</span>(ReviewState)
 builder.<span class="tok-fn">add_node</span>(<span class="tok-str">"draft"</span>, draft_report)
@@ -307,17 +308,11 @@ builder.<span class="tok-fn">add_edge</span>(<span class="tok-str">"draft"</span
 builder.<span class="tok-fn">add_conditional_edges</span>(<span class="tok-str">"human_review"</span>, route_after_review)
 builder.<span class="tok-fn">add_edge</span>(<span class="tok-str">"commit"</span>, END)
 
-<span class="tok-com"># swap InMemorySaver → SqliteSaver for on-disk persistence</span>
-graph = builder.<span class="tok-fn">compile</span>(checkpointer=<span class="tok-fn">InMemorySaver</span>())</code></pre>
+checkpoint_db = sqlite3.<span class="tok-fn">connect</span>(<span class="tok-str">"review_checkpoints.sqlite"</span>, check_same_thread=<span class="tok-kw">False</span>)
+graph = builder.<span class="tok-fn">compile</span>(checkpointer=<span class="tok-fn">SqliteSaver</span>(checkpoint_db))</code></pre>
 </figure>
 <h2 id="hitl">Human-in-the-loop with interrupt()</h2>
-<p>Here is the node that makes this a review process. Inside
-      <code>human_review</code>, calling <code>interrupt()</code> <strong>stops the graph
-      and hands a payload to whatever is driving it</strong> — a UI, a CLI, a review
-      queue. The graph state is checkpointed at that exact point. When an engineer
-      responds, you resume by re-invoking the graph with a <code>Command(resume=...)</code>;
-      the value you pass in becomes the return value of the <code>interrupt()</code> call,
-      and the node continues as if it had never stopped.</p>
+<p><code>interrupt()</code> pauses and returns a review payload to the application. The application authenticates the reviewer, checks role and expiry, and supplies a structured resume value. Do not trust a browser-supplied reviewer ID. Also keep side effects out of the pre-interrupt portion because the node may be replayed during resume.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -333,26 +328,37 @@ graph = builder.<span class="tok-fn">compile</span>(checkpointer=<span class="to
 
 <span class="tok-kw">def</span> <span class="tok-fn">human_review</span>(state: ReviewState) -&gt; <span class="tok-kw">dict</span>:
     <span class="tok-com"># Pause and surface the draft to the reviewer. Execution stops here.</span>
-    decision = <span class="tok-fn">interrupt</span>({
+    review = <span class="tok-fn">interrupt</span>({
         <span class="tok-str">"draft"</span>: state[<span class="tok-str">"draft"</span>],
-        <span class="tok-str">"ask"</span>: <span class="tok-str">"Approve this deviation report? (approved / rejected)"</span>,
+        <span class="tok-str">"report_id"</span>: state[<span class="tok-str">"report_id"</span>],
+        <span class="tok-str">"requester_id"</span>: state[<span class="tok-str">"requester_id"</span>],
+        <span class="tok-str">"expires_at"</span>: state[<span class="tok-str">"review_expires_at"</span>],
+        <span class="tok-str">"ask"</span>: <span class="tok-str">"Return verdict, rejection_reason, and revision_instructions."</span>,
     })
     <span class="tok-com"># Resumes here once Command(resume=...) is supplied.</span>
     <span class="tok-kw">return</span> {
-        <span class="tok-str">"verdict"</span>: decision,
-        <span class="tok-str">"revisions"</span>: state[<span class="tok-str">"revisions"</span>] + (<span class="tok-num">1</span> <span class="tok-kw">if</span> decision == <span class="tok-str">"rejected"</span> <span class="tok-kw">else</span> <span class="tok-num">0</span>),
-    }</code></pre>
+        <span class="tok-str">"verdict"</span>: review[<span class="tok-str">"verdict"</span>],
+        <span class="tok-str">"rejection_reason"</span>: review.<span class="tok-fn">get</span>(<span class="tok-str">"rejection_reason"</span>, <span class="tok-str">""</span>),
+        <span class="tok-str">"revision_instructions"</span>: review.<span class="tok-fn">get</span>(<span class="tok-str">"revision_instructions"</span>, <span class="tok-str">""</span>),
+        <span class="tok-str">"reviewer_id"</span>: review[<span class="tok-str">"reviewer_id"</span>],
+        <span class="tok-str">"revisions"</span>: state[<span class="tok-str">"revisions"</span>] + (<span class="tok-num">1</span> <span class="tok-kw">if</span> review[<span class="tok-str">"verdict"</span>] == <span class="tok-str">"rejected"</span> <span class="tok-kw">else</span> <span class="tok-num">0</span>),
+    }
+
+
+<span class="tok-kw">def</span> <span class="tok-fn">commit_report</span>(state: ReviewState) -&gt; <span class="tok-kw">dict</span>:
+    <span class="tok-com"># One transaction writes the report and required audit-outbox event.</span>
+    created = report_repo.<span class="tok-fn">put_with_audit_outbox</span>(
+        key=state[<span class="tok-str">"commit_key"</span>], report_id=state[<span class="tok-str">"report_id"</span>],
+        draft=state[<span class="tok-str">"draft"</span>], reviewer_id=state[<span class="tok-str">"reviewer_id"</span>],
+        audit_event={<span class="tok-str">"event"</span>: <span class="tok-str">"deviation_draft_accepted"</span>,
+                     <span class="tok-str">"report_id"</span>: state[<span class="tok-str">"report_id"</span>],
+                     <span class="tok-str">"reviewer_id"</span>: state[<span class="tok-str">"reviewer_id"</span>],
+                     <span class="tok-str">"commit_key"</span>: state[<span class="tok-str">"commit_key"</span>]})
+    <span class="tok-kw">return</span> {<span class="tok-str">"messages"</span>: [(<span class="tok-str">"system"</span>, <span class="tok-str">"Draft stored for governed review."</span>)]}</code></pre>
 </figure>
-<p>Two things make this safe for a regulated floor. First, the model never commits
-      anything on its own — the <code>commit</code> node is only reachable through an
-      explicit human <code>approved</code>. Second, because the pause is a real
-      checkpoint, the reviewer is under no clock: approve now, or next shift, and the
-      graph resumes identically. 사람이 승인해야만 커밋에 도달하고, 언제 돌아와도 같은 지점에서 이어진다.</p>
+<p>The graph route requires a verdict and authenticated reviewer ID. The application additionally rejects expired or context-mismatched reviews, and the repository's unique commit key makes a repeated resume return the existing write rather than duplicate it. <code>put_with_audit_outbox()</code> is one database transaction: if either the report write or required outbox insert fails, both roll back. A protected dispatcher can deliver that durable event to the audit sink and reconcile its receipt without creating an unaudited commit. These are workflow controls, not evidence that the deviation has received regulatory or quality-system approval.</p>
 <h2 id="run">Running the review loop</h2>
-<p>Drive it in two phases. The first invocation runs until the interrupt and
-      returns the payload. You show that to the engineer, collect a verdict, then resume
-      with a <code>Command</code>. The <code>thread_id</code> ties both phases to one
-      durable run.</p>
+<p>The first invocation runs to the interrupt. A trusted server handler then derives <code>reviewer_id</code> from its authenticated principal, checks the role and deadline, writes the decision attempt to the audit sink, and resumes the same <code>thread_id</code>. The example rejects once to demonstrate that feedback reaches the next draft.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -362,41 +368,105 @@ graph = builder.<span class="tok-fn">compile</span>(checkpointer=<span class="to
           </span>
 <button class="copy-btn" data-copy="" type="button">Copy</button>
 </div>
-<pre><code><span class="tok-kw">from</span> langgraph.types <span class="tok-kw">import</span> Command
+<pre><code><span class="tok-kw">from</span> dataclasses <span class="tok-kw">import</span> dataclass
+<span class="tok-kw">from</span> datetime <span class="tok-kw">import</span> datetime, timedelta, timezone
+<span class="tok-kw">import</span> hashlib, hmac
+<span class="tok-kw">from</span> langgraph.types <span class="tok-kw">import</span> Command
 
-config = {<span class="tok-str">"configurable"</span>: {<span class="tok-str">"thread_id"</span>: <span class="tok-str">"dev-2317"</span>}}
 
-<span class="tok-com"># Phase 1: run until the graph pauses at interrupt().</span>
+<span class="tok-dec">@dataclass</span>(frozen=<span class="tok-kw">True</span>)
+<span class="tok-kw">class</span> <span class="tok-fn">ReviewBinding</span>:
+    thread_id: str
+    interrupt_id: str
+    requester_id: str
+    resource_id: str
+    draft_hash: str
+
+
+<span class="tok-kw">def</span> <span class="tok-fn">bind_pending_review</span>(result: <span class="tok-kw">dict</span>) -&gt; ReviewBinding:
+    <span class="tok-com"># Store this object server-side; never rebuild it from browser fields.</span>
+    pending = result[<span class="tok-str">"__interrupt__"</span>]
+    <span class="tok-kw">if</span> <span class="tok-fn">len</span>(pending) != <span class="tok-num">1</span>:
+        <span class="tok-kw">raise</span> <span class="tok-fn">RuntimeError</span>(<span class="tok-str">"expected exactly one pending review"</span>)
+    <span class="tok-kw">return</span> <span class="tok-fn">ReviewBinding</span>(
+        thread_id=f<span class="tok-str">"deviation:{result['report_id']}"</span>, interrupt_id=pending[<span class="tok-num">0</span>].id,
+        requester_id=result[<span class="tok-str">"requester_id"</span>], resource_id=result[<span class="tok-str">"report_id"</span>],
+        draft_hash=hashlib.<span class="tok-fn">sha256</span>(result[<span class="tok-str">"draft"</span>].<span class="tok-fn">encode</span>()).<span class="tok-fn">hexdigest</span>())
+
+
+<span class="tok-kw">def</span> <span class="tok-fn">resume_as_reviewer</span>(graph, binding: ReviewBinding, form: <span class="tok-kw">dict</span>, principal):
+    <span class="tok-com"># principal and binding come from trusted server-side services.</span>
+    <span class="tok-kw">if</span> (<span class="tok-str">"process_engineer"</span> <span class="tok-kw">not in</span> principal.roles <span class="tok-kw">or</span>
+            <span class="tok-kw">not</span> principal.<span class="tok-fn">can_review</span>(binding.resource_id)):
+        <span class="tok-kw">raise</span> <span class="tok-fn">PermissionError</span>(<span class="tok-str">"review authorization required"</span>)
+    config = {<span class="tok-str">"configurable"</span>: {<span class="tok-str">"thread_id"</span>: binding.thread_id}}
+    snapshot = graph.<span class="tok-fn">get_state</span>(config)
+    current = snapshot.values
+    pending = [i <span class="tok-kw">for</span> task <span class="tok-kw">in</span> snapshot.tasks <span class="tok-kw">for</span> i <span class="tok-kw">in</span> task.interrupts]
+    current_hash = hashlib.<span class="tok-fn">sha256</span>(current[<span class="tok-str">"draft"</span>].<span class="tok-fn">encode</span>()).<span class="tok-fn">hexdigest</span>()
+    <span class="tok-kw">if</span> (<span class="tok-fn">len</span>(pending) != <span class="tok-num">1</span> <span class="tok-kw">or</span> pending[<span class="tok-num">0</span>].id != binding.interrupt_id <span class="tok-kw">or</span>
+            current[<span class="tok-str">"report_id"</span>] != binding.resource_id <span class="tok-kw">or</span>
+            current[<span class="tok-str">"requester_id"</span>] != binding.requester_id <span class="tok-kw">or</span>
+            <span class="tok-kw">not</span> hmac.<span class="tok-fn">compare_digest</span>(current_hash, binding.draft_hash)):
+        <span class="tok-kw">raise</span> <span class="tok-fn">PermissionError</span>(<span class="tok-str">"review context no longer matches"</span>)
+    <span class="tok-kw">if</span> form.<span class="tok-fn">get</span>(<span class="tok-str">"verdict"</span>) <span class="tok-kw">not in</span> {<span class="tok-str">"approved"</span>, <span class="tok-str">"rejected"</span>}:
+        <span class="tok-kw">raise</span> <span class="tok-fn">ValueError</span>(<span class="tok-str">"invalid verdict"</span>)
+    expires = datetime.<span class="tok-fn">fromisoformat</span>(current[<span class="tok-str">"review_expires_at"</span>])
+    <span class="tok-kw">if</span> datetime.<span class="tok-fn">now</span>(timezone.utc) &gt;= expires:
+        audit.<span class="tok-fn">write</span>({<span class="tok-str">"event"</span>: <span class="tok-str">"review_expired"</span>, <span class="tok-str">"report_id"</span>: current[<span class="tok-str">"report_id"</span>]})
+        <span class="tok-kw">raise</span> <span class="tok-fn">TimeoutError</span>(<span class="tok-str">"review window expired"</span>)
+    payload = {**form, <span class="tok-str">"reviewer_id"</span>: principal.subject}
+    receipt = audit.<span class="tok-fn">append_required</span>({<span class="tok-str">"event"</span>: <span class="tok-str">"review_submitted"</span>,
+                 <span class="tok-str">"thread_id"</span>: binding.thread_id, <span class="tok-str">"interrupt_id"</span>: binding.interrupt_id,
+                 <span class="tok-str">"report_id"</span>: binding.resource_id, <span class="tok-str">"requester_id"</span>: binding.requester_id,
+                 <span class="tok-str">"reviewer_id"</span>: principal.subject, <span class="tok-str">"verdict"</span>: form[<span class="tok-str">"verdict"</span>]})
+    <span class="tok-kw">if</span> <span class="tok-kw">not</span> receipt:
+        <span class="tok-kw">raise</span> <span class="tok-fn">RuntimeError</span>(<span class="tok-str">"durable audit receipt required"</span>)
+    <span class="tok-kw">return</span> graph.<span class="tok-fn">invoke</span>(
+        <span class="tok-fn">Command</span>(resume={binding.interrupt_id: payload}), config)
+
+config = {<span class="tok-str">"configurable"</span>: {<span class="tok-str">"thread_id"</span>: <span class="tok-str">"deviation:DEV-2317"</span>}}
+expires_at = (datetime.<span class="tok-fn">now</span>(timezone.utc) + <span class="tok-fn">timedelta</span>(hours=<span class="tok-num">8</span>)).<span class="tok-fn">isoformat</span>()
+
 state = graph.<span class="tok-fn">invoke</span>(
     {<span class="tok-str">"messages"</span>: [(<span class="tok-str">"user"</span>, <span class="tok-str">"Draft a deviation report for EV chamber #3."</span>)],
-     <span class="tok-str">"revisions"</span>: <span class="tok-num">0</span>},
-    config,
-)
-<span class="tok-fn">print</span>(state[<span class="tok-str">"__interrupt__"</span>])   <span class="tok-com"># the payload sent to the reviewer</span>
+     <span class="tok-str">"verdict"</span>: <span class="tok-str">""</span>, <span class="tok-str">"rejection_reason"</span>: <span class="tok-str">""</span>,
+     <span class="tok-str">"revision_instructions"</span>: <span class="tok-str">""</span>, <span class="tok-str">"reviewer_id"</span>: <span class="tok-str">""</span>,
+     <span class="tok-str">"requester_id"</span>: requester.subject,
+     <span class="tok-str">"review_expires_at"</span>: expires_at, <span class="tok-str">"report_id"</span>: <span class="tok-str">"DEV-2317"</span>,
+     <span class="tok-str">"commit_key"</span>: <span class="tok-str">"DEV-2317:r1"</span>, <span class="tok-str">"revisions"</span>: <span class="tok-num">0</span>}, config)
+<span class="tok-fn">print</span>(state[<span class="tok-str">"__interrupt__"</span>])
+binding = <span class="tok-fn">bind_pending_review</span>(state)
 
-<span class="tok-com"># Phase 2: engineer decides → resume the same thread.</span>
-result = graph.<span class="tok-fn">invoke</span>(<span class="tok-fn">Command</span>(resume=<span class="tok-str">"approved"</span>), config)
-<span class="tok-fn">print</span>(result[<span class="tok-str">"verdict"</span>])       <span class="tok-com"># -&gt; "approved", commit ran</span></code></pre>
+result = <span class="tok-fn">resume_as_reviewer</span>(graph, binding, {
+    <span class="tok-str">"verdict"</span>: <span class="tok-str">"rejected"</span>,
+    <span class="tok-str">"rejection_reason"</span>: <span class="tok-str">"The pressure excursion lacks a timestamp."</span>,
+    <span class="tok-str">"revision_instructions"</span>: <span class="tok-str">"Cite the metrology timestamp and separate fact from hypothesis."</span>}, principal)
+<span class="tok-fn">print</span>(result[<span class="tok-str">"__interrupt__"</span>])  <span class="tok-com"># revised draft awaiting review</span>
+binding = <span class="tok-fn">bind_pending_review</span>(result)  <span class="tok-com"># new draft, new interrupt binding</span>
+
+result = <span class="tok-fn">resume_as_reviewer</span>(graph, binding, {
+    <span class="tok-str">"verdict"</span>: <span class="tok-str">"approved"</span>, <span class="tok-str">"rejection_reason"</span>: <span class="tok-str">""</span>,
+    <span class="tok-str">"revision_instructions"</span>: <span class="tok-str">""</span>}, principal)
+<span class="tok-fn">print</span>(result[<span class="tok-str">"verdict"</span>])</code></pre>
 </figure>
-<p>That is the whole pattern: a state definition, a few node functions, one
-      conditional edge, a checkpointer, and a single <code>interrupt()</code>. The same
-      skeleton scales to any fab workflow that a person must sign off on — a recipe-change
-      proposal, an alarm triage, a shift handover summary. The model does the drafting
-      and the routing; the engineer keeps the authority; and because every step is
-      checkpointed on the local network, the run survives interruptions without ever
-      leaving the air gap.</p>
+<p>Test restart/resume, rejected revision, unauthorized reviewer, expired review, duplicate resume, unavailable audit sink, and repository failure before a controlled trial. The authenticated application principal, not the model or form payload, supplies reviewer identity. The repository and quality workflow remain the authority for the deviation record.</p>
 <hr/>
-<p>LangGraph is where the agent pieces — RAG retrieval, tool calls, an on-prem LLM —
-      stop being a script and become a <strong>process you can trust to pause for a
-      human</strong>. If you are building agents on the isolated stack, the deck below
-      walks the full workflow toolkit slide by slide.</p>
+<h3>Transition-table drill</h3>
+<p><strong>Simplified exercise.</strong> On paper, walk one report through <code>draft -&gt; review -&gt; rejected -&gt; draft -&gt; review -&gt; approved</code>. At each arrow, record state before, authenticated actor, event, state after, checkpoint key, audit event, and possible external effect.</p>
+<ul>
+<li><strong>Pass:</strong> a restart can resume every waiting state, rejection feedback reaches the next draft, expired or unauthorized resumes are denied, and a duplicate approval resolves to the existing commit.</li>
+<li><strong>Stop:</strong> identity comes from the form, two transitions can write the same report without an idempotency key, or an audit outage still permits the commit.</li>
+<li><strong>Limit:</strong> the drill checks transition design. It does not validate evidence, prove exactly-once behavior in an external repository, or grant quality-system approval.</li>
+</ul>
+<p>LangGraph supplies state transitions, pause, and resume for this constructed workflow. The next-reading bridge is the HITL/MLOps article, which moves the focus from graph mechanics to approval payloads, durable evidence, and release monitoring.</p>
 </div>
 <!-- deep-dive deck link -->
 <aside class="deck-link">
 <div class="dl-text">
 <span class="eyebrow">Go deeper</span>
 <h3>Take the full course on this topic</h3>
-<p>This article is a field note. The interactive deck walks the whole subject slide by slide, with diagrams and worked examples. 심화 자료로 이어집니다.</p>
+<p>This article is a field note. The interactive deck walks the whole subject slide by slide, with diagrams and worked examples.</p>
 </div>
 <a class="btn btn-primary" href="../../llm_apply/LLM_slide.html">Open the deck <span aria-hidden="true" class="arw">→</span></a>
 </aside>
@@ -404,8 +474,8 @@ result = graph.<span class="tok-fn">invoke</span>(<span class="tok-fn">Command</
 <div class="share">
 <span class="lbl">Share</span>
 <button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
-<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
-<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Flanggraph-stateful-workflows.html" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Flanggraph-stateful-workflows.html" rel="noopener" target="_blank">LinkedIn</a>
 </div>
 <!-- author bio card (E-E-A-T) -->
 <aside class="author-card">
@@ -413,11 +483,7 @@ result = graph.<span class="tok-fn">invoke</span>(<span class="tok-fn">Command</
 <div class="a-body">
 <div class="k">About the author</div>
 <h3>AI Edu Archive</h3>
-<p>PhD in physics (IGZO / graphene semiconductor properties) and a semiconductor
-        process engineer working on deposition. Builds air-gapped LLM, RAG, and agent
-        systems — plus reinforcement-learning and anomaly-detection tooling — for the
-        fab. Writes here about turning process know-how into an on-prem knowledge asset
-        that never leaves the network.</p>
+<p>PhD in physics (IGZO / graphene semiconductor properties) and semiconductor process-improvement experience. Writes implementation notes about local AI and manufacturing data systems.</p>
 <a href="../about.html">More about the author →</a>
 </div>
 </aside>
@@ -426,11 +492,11 @@ result = graph.<span class="tok-fn">invoke</span>(<span class="tok-fn">Command</
 <span class="eyebrow">Keep reading</span>
 <h2>Related from the Journal</h2>
 <div class="related-grid">
-<a class="rel-card" href="rag-over-sealed-documents.html">
-<span class="cat-tag">RAG</span>
+<a class="rel-card" href="hitl-mlops-onprem.html">
+<span class="cat-tag">Agents &amp; MCP</span>
 <h3>Human-in-the-loop and MLOps for on-prem agents</h3>
 </a>
-<a class="rel-card" href="agents-mcp-mes.html">
+<a class="rel-card" href="langchain-tools-agents.html">
 <span class="cat-tag">Agents &amp; MCP</span>
 <h3>LangChain tools and agents</h3>
 </a>
@@ -439,45 +505,35 @@ result = graph.<span class="tok-fn">invoke</span>(<span class="tok-fn">Command</
 </article>
 </main>
 <footer class="site-foot">
-<div class="wrap">
-<div class="foot-top">
-<div class="foot-lead">
-<h2>Free, in-depth, and open.</h2>
-<p>Everything here, courses and journal alike, is free to read with no signup.</p>
-</div>
-<div class="foot-nav-cols">
-<div class="foot-col">
-<h4>Explore</h4>
-<a href="../../index.html">Hub home</a>
-<a href="../../index.html#courses">All courses</a>
-<a href="../index.html">Journal</a>
-</div>
-<div class="foot-col">
-<h4>Courses</h4>
-<a href="../../overview/index.html">Fab AI</a>
-<a href="../../watsonx/index.html">Air-gapped LLM</a>
-<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
-</div>
-<div class="foot-col">
-<h4>Site</h4>
-<a href="../about.html">About</a>
-<a href="../contact.html">Contact</a>
-<a href="../privacy.html">Privacy</a>
-<a href="../terms.html">Terms</a>
-</div>
-</div>
-</div>
-<div class="foot-bottom">
-<div class="foot-brand">
-<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</div>
-<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
-</div>
-</div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
 </footer>
 <script>
 (function(){
@@ -502,5 +558,6 @@ result = graph.<span class="tok-fn">invoke</span>(<span class="tok-fn">Command</
   });
 })();
 </script>
+<script src="../assets/theme.js"></script>
 </body>
 </html>

@@ -9,7 +9,12 @@ import re
 from datetime import date
 from pathlib import Path
 
-SITE_URL = "https://ai-edu-archive.example.com"
+try:
+    from tools.site_contract import normalize_blog_shell
+except ModuleNotFoundError:  # Direct execution: python tools/new_article.py
+    from site_contract import normalize_blog_shell
+
+SITE_URL = "https://ai-edu-archive.pages.dev"
 AUTHOR = "AI Edu Archive"
 
 
@@ -37,20 +42,31 @@ def article_html(
     journal_href = "../index.html" if not is_ko else "../index.html"
     about_href = "../about.html"
     css_href = "../../assets/blog.css" if is_ko else "../assets/blog.css"
+    visual_href = "../../assets/visuals/article-visual-template.svg" if is_ko else "../assets/visuals/article-visual-template.svg"
+    theme_href = "../../assets/theme.js" if is_ko else "../assets/theme.js"
     article_path = f"/blog/{'ko/' if is_ko else ''}articles/{slug}.html"
     canonical = f"{SITE_URL}{article_path}"
     en_url = f"{SITE_URL}/blog/articles/{slug}.html"
     ko_url = f"{SITE_URL}/blog/ko/articles/{slug}.html"
     locale = "ko_KR" if is_ko else "en_US"
     alt_locale = "en_US" if is_ko else "ko_KR"
-    label_read = "Read time" if not is_ko else "Read time"
-    back_label = "Journal" if not is_ko else "Journal"
+    label_read = "Read time" if not is_ko else "읽는 시간"
+    back_label = "Articles" if not is_ko else "글"
+    home_label = "Home" if not is_ko else "홈"
+    breadcrumb_label = "Breadcrumb" if not is_ko else "현재 위치"
+    byline_role = "Applied AI, robotics, manufacturing systems" if not is_ko else "응용 AI, 로보틱스, 제조 시스템"
+    draft_lead = "Draft lead." if not is_ko else "초안 도입부."
+    draft_copy = (
+        "Replace this opening with the field problem, the constraint, and the promise of the article."
+        if not is_ko
+        else "현장의 문제, 제약 조건, 이 글에서 얻을 수 있는 내용을 적으세요."
+    )
 
     safe_title = html.escape(title)
     safe_description = html.escape(description)
     safe_category = html.escape(category)
 
-    return f"""<!DOCTYPE html>
+    document = f"""<!DOCTYPE html>
 <html lang="{lang}">
 <head>
 <meta charset="utf-8">
@@ -71,19 +87,21 @@ def article_html(
 <meta property="og:url" content="{canonical}">
 <meta property="og:locale" content="{locale}">
 <meta property="og:locale:alternate" content="{alt_locale}">
+<meta property="og:image" content="{SITE_URL}/blog/assets/visuals/article-visual-template.svg">
 <meta property="article:published_time" content="{published}">
 <meta property="article:author" content="{AUTHOR}">
 <meta property="article:section" content="{safe_category}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{safe_title} - AI Edu Archive Journal">
 <meta name="twitter:description" content="{safe_description}">
+<meta name="twitter:image" content="{SITE_URL}/blog/assets/visuals/article-visual-template.svg">
 <script type="application/ld+json">{{
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "{safe_title}",
   "description": "{safe_description}",
   "inLanguage": "{lang}",
-  "image": "{SITE_URL}/blog/assets/og-default.png",
+  "image": "{SITE_URL}/blog/assets/visuals/article-visual-template.svg",
   "datePublished": "{published}",
   "dateModified": "{published}",
   "author": {{
@@ -124,8 +142,8 @@ def article_html(
 <article itemscope itemtype="https://schema.org/Article">
   <div class="article-hero">
     <div class="wrap">
-      <nav class="breadcrumb" aria-label="Breadcrumb">
-        <a href="{prefix}/index.html">Home</a>
+      <nav class="breadcrumb" aria-label="{breadcrumb_label}">
+        <a href="{prefix}/index.html">{home_label}</a>
         <span class="sep" aria-hidden="true">/</span>
         <a href="{journal_href}">{back_label}</a>
         <span class="sep" aria-hidden="true">/</span>
@@ -143,13 +161,25 @@ def article_html(
         <span class="avatar" aria-hidden="true">AE</span>
         <span class="who">
           <b itemprop="author">{AUTHOR}</b>
-          <span>Applied AI, robotics, manufacturing systems</span>
+          <span>{byline_role}</span>
         </span>
       </div>
     </div>
   </div>
   <div class="article-body" itemprop="articleBody">
-    <p><span class="lead-in">Draft lead.</span> Replace this opening with the field problem, the constraint, and the promise of the article.</p>
+    <p><span class="lead-in">{draft_lead}</span> {draft_copy}</p>
+    <figure class="visual-figure media-figure media-figure--diagram">
+      <img src="{visual_href}" alt="Starter article concept map" loading="lazy" decoding="async">
+      <figcaption><span class="figure-label">Figure.</span> Replace this starter schematic with the article's real visual: a field photo with source credit, a process flowchart, an architecture diagram, a comparison schematic, or an evaluation matrix.</figcaption>
+    </figure>
+    <div class="field-story">
+      <span class="note-k">Field story</span>
+      <p>Replace this with the lived engineering moment: what you expected at first, where the build or operation became harder than expected, what you changed, and what mistake the reader can avoid.</p>
+    </div>
+    <div class="reader-shortcut">
+      <span class="note-k">Shortcut I wish I had</span>
+      <p>Replace this with the reader's shortcut: the practical rule, test, or design habit that would have saved you time before you learned it the hard way.</p>
+    </div>
     <h2 id="problem">Problem</h2>
     <p>Write the practical context here.</p>
     <h2 id="implementation">Implementation</h2>
@@ -163,9 +193,12 @@ def article_html(
   </div>
 </article>
 </main>
+<script src="{theme_href}"></script>
 </body>
 </html>
 """
+    blog_path = f"{'ko/' if is_ko else ''}articles/{slug}.html"
+    return normalize_blog_shell(document, blog_path, lang)
 
 
 def write_article(path: Path, content: str) -> None:

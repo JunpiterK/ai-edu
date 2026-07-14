@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Takt-aware AI agents for automotive assembly lines - AI Edu Archive Journal</title>
+<meta name="description" content="A practical guide to takt-aware AI agents in automotive assembly: line cadence, Andon, station events, approval gates, containment, MES/QMS tools, and safe action design.">
+<meta name="author" content="AI Edu Archive">
+<meta name="theme-color" content="#FAF9F5">
+<link rel="canonical" href="https://ai-edu-archive.pages.dev/blog/articles/takt-aware-ai-agents-assembly-lines.html">
+
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Takt-aware AI agents for automotive assembly lines - AI Edu Archive Journal">
+<meta property="og:description" content="A practical guide to takt-aware AI agents in automotive assembly: line cadence, Andon, station events, approval gates, containment, MES/QMS tools, and safe action design.">
+<meta property="og:site_name" content="AI Edu Archive">
+<meta property="og:url" content="https://ai-edu-archive.pages.dev/blog/articles/takt-aware-ai-agents-assembly-lines.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="article:published_time" content="2026-07-13">
+<meta property="article:author" content="AI Edu Archive">
+<meta property="article:section" content="Automotive AI & Robotics">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Takt-aware AI agents for automotive assembly lines","description":"A practical guide to takt-aware AI agents in automotive assembly: line cadence, Andon, station events, approval gates, containment, MES/QMS tools, and safe action design.","inLanguage":"en","datePublished":"2026-07-13","dateModified":"2026-07-13","author":{"@type":"Person","name":"AI Edu Archive"},"publisher":{"@type":"Organization","name":"AI Edu Archive"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ai-edu-archive.pages.dev/blog/articles/takt-aware-ai-agents-assembly-lines.html"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/blog.css">
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/takt-aware-ai-agents-assembly-lines.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/takt-aware-ai-agents-assembly-lines.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/takt-aware-ai-agents-assembly-lines.html">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="takt-aware-ai-agents-assembly-lines.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/takt-aware-ai-agents-assembly-lines.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<article data-cat="auto agents mfg" itemscope itemtype="https://schema.org/Article">
+  <div class="article-hero"><div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span class="sep" aria-hidden="true">/</span><a href="../automotive-ai-robotics.html">Automotive AI & Robotics</a><span class="sep" aria-hidden="true">/</span><span aria-current="page">Takt-aware AI agents</span></nav><div class="post-meta"><span class="cat-tag">Automotive AI & Robotics</span><span class="post-dot"></span><time datetime="2026-07-13" itemprop="datePublished">Jul 13, 2026</time><span class="post-dot"></span><span class="rt">14 min read</span></div><h1 itemprop="headline">Takt-aware AI agents for automotive assembly lines</h1><div class="byline"><span class="avatar" aria-hidden="true">AE</span><span class="who"><b itemprop="author">AI Edu Archive</b><span>Applied AI, robotics, manufacturing systems</span></span></div></div></div>
+  <nav class="toc" aria-label="Table of contents"><div class="toc-title">On this page</div><ol><li><a href="#meaning">What takt-aware means</a></li><li><a href="#wrong-agent">The wrong agent design</a></li><li><a href="#tool-lanes">Tool lanes</a></li><li><a href="#approval">Approval gates</a></li><li><a href="#manifest">Starter manifest</a></li></ol></nav>
+  <div class="article-body" itemprop="articleBody">
+    
+    <figure class="visual-figure media-figure media-figure--diagram">
+      <img src="../assets/visuals/takt-agent-flow.svg" alt="Takt-aware agent escalation" loading="lazy" decoding="async">
+      <figcaption><span class="figure-label">Figure.</span> A takt-aware agent is not just an LLM with tools. It must respect station cadence, Andon state, approval gates, containment, and rework paths.</figcaption>
+    </figure>
+
+<p><span class="lead-in">Write four clocks on the architecture review board.</span> Demand cadence sets takt. The station reports observed cycle time. The AI service has advisory latency. The PLC and safety design has deterministic response requirements. If a proposed agent action cannot be assigned to the right clock and owner, it is not ready for the line-support queue.</p>
+    <h2 id="meaning">What takt-aware means</h2>
+    <p><b>Demand cadence</b> is available production time divided by required units. It is a planning target, not a PLC deadline. <b>Advisory latency</b> runs from an agent request to a usable recommendation. <b>PLC and safety response</b> belongs to validated control and safety functions; an LLM is not in that loop. <b>Attributable delay</b> is only the portion of a stop or slowdown caused by waiting for the advisory response after accounting for detection, operator handling, approval, maintenance, and recovery.</p>
+    <p>A takt-aware agent classifies response urgency, risk, owner, and approval path. It may summarize evidence during an event, but line control, interlocks, emergency stops, and safe-state transitions remain in their engineered PLC or safety systems.</p>
+    <figure class="visual-figure media-figure" id="agv-photo"><div class="diagram"><img src="../assets/photos/agv-carrying-trolley.jpg" alt="Automated guided vehicle carrying a material trolley inside an industrial facility" loading="lazy" decoding="async"></div><figcaption><span class="figure-label">Photo.</span> Takt loss does not begin only at the assembly tool. A delayed AGV, empty rack, unread scan, or blocked aisle can starve a station while the station controller itself remains healthy. The agent needs material-flow evidence before assigning delay to equipment or people. Photo: MakoGomez90, via <a class="link" href="https://commons.wikimedia.org/wiki/File:AGV_con_carro.jpg">Wikimedia Commons</a>, <a class="link" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Locally stored from Wikimedia's 1,280 px preview; no other edits.</figcaption></figure>
+    <div class="field-story"><span class="note-k">Illustrative scenario: the timeline separates delay ownership</span><p>A constructed station review starts from a five-minute agent response recorded beside five minutes of lost production. The event timeline changes that reading: two minutes elapsed before the request was sent, and another four minutes went to approval, inspection, and restart. Only the measured wait for a usable advisory response can be attributed to the agent, and even that estimate must account for buffers and parallel work. The snag is a clock-definition error, not proof of agent impact.</p></div>
+    <figure class="visual-figure media-figure media-figure--diagram" id="four-clocks-figure"><img src="../assets/visuals/takt-four-clocks.svg" alt="Timeline separating detection, AI advisory, approval, and recovery intervals" loading="lazy" decoding="async"><figcaption><span class="figure-label">Figure.</span> Detection, advisory wait, human approval, and physical recovery have different clocks and owners. Record them separately before calculating agent-attributable delay.</figcaption></figure>
+    <section class="interactive-lab" data-takt-sim data-minute-text="min">
+      <div class="interactive-lab-head"><div><span class="sim-badge">Illustrative scenario</span><h3>Separate cycle loss from agent-attributable delay</h3><p>Start with the observed advisory wait, then estimate only the share that actually blocked production after accounting for buffers and parallel work.</p></div></div>
+      <div class="sim-control"><label for="takt-en">Planned takt <output data-takt-value="takt"></output></label><input id="takt-en" data-takt-input="takt" data-unit=" s" type="range" min="30" max="120" step="5" value="60"></div>
+      <div class="sim-control"><label for="cycle-en">Actual cycle time <output data-takt-value="cycle"></output></label><input id="cycle-en" data-takt-input="cycle" data-unit=" s" type="range" min="30" max="150" step="5" value="65"></div>
+      <div class="sim-control"><label for="response-en">Observed advisory wait per event <output data-takt-value="response"></output></label><input id="response-en" data-takt-input="response" data-unit=" s" type="range" min="0" max="600" step="30" value="300"></div>
+      <div class="sim-control"><label for="attribution-en">Share that blocked production <output data-takt-value="attribution"></output></label><input id="attribution-en" data-takt-input="attribution" data-unit="%" type="range" min="0" max="100" step="5" value="60"></div>
+      <div class="sim-control"><label for="events-en">Events per shift <output data-takt-value="events"></output></label><input id="events-en" data-takt-input="events" data-unit="" type="range" min="0" max="12" value="4"></div>
+      <div class="sim-control"><label for="shift-en">Shift length <output data-takt-value="shift"></output></label><input id="shift-en" data-takt-input="shift" data-unit=" h" type="range" min="6" max="12" step="0.5" value="8"></div>
+      <div class="sim-results"><div><span>Planned units</span><strong data-takt-planned></strong></div><div><span>Estimated units</span><strong data-takt-actual></strong></div><div><span>Baseline cycle loss</span><strong data-takt-cycle-lost></strong></div><div><span>Agent-attributable loss</span><strong data-takt-agent-lost></strong></div><div><span>Total modeled loss</span><strong data-takt-lost></strong></div><div><span>Attributed downtime</span><strong data-takt-downtime></strong></div></div>
+      <p class="sim-note">Example values, not plant measurements. “Share that blocked production” is an assumption to challenge against the event timeline, buffer state, and parallel work. This simplified model excludes recovery, breaks, starvation, station interaction, and delay from detection, approval, repair, and restart. It is not an OEE forecast or proof that the agent caused the full event duration.</p>
+    </section>
+    <div class="tbl-wrap"><table class="tbl"><caption>Agent response classes.</caption><thead><tr><th>Class</th><th>Time posture</th><th>Typical action</th><th>Owner</th></tr></thead><tbody><tr><td class="name">Immediate</td><td>Current takt window</td><td>Escalate Andon, summarize evidence, call owner.</td><td>Line leader or supervisor.</td></tr><tr><td class="name">Near-term</td><td>Current shift</td><td>Prepare containment list, compare station windows, draft handover note.</td><td>Quality and production.</td></tr><tr><td class="name">Planned stop</td><td>Next break or planned downtime</td><td>Recommend robot-cell inspection or tool check.</td><td>Maintenance and automation.</td></tr><tr><td class="name">Engineering</td><td>After stabilization</td><td>Analyze patterns, update control plan, prepare 8D evidence.</td><td>Quality engineering.</td></tr></tbody></table></div>
+    <h2 id="wrong-agent">The wrong agent design</h2>
+    <p>The wrong design is an agent that can answer broad questions but has no concept of station state, line cadence, or authority. It might say, "Stop the line and inspect affected vehicles," without knowing whether that suggestion is already covered by a control plan, whether the line leader approved it, or whether the suspected VIN range is even correct.</p>
+    <p>A controlled first pilot should read evidence, summarize, classify urgency, identify owners, and draft actions. Any enabled write route needs a separate authorization, payload review, audit event, expiry, and recovery test.</p>
+    <div class="fab-voice"><span class="note-k">Control boundary</span><p>An agent should not stop or restart a line. It can assemble evidence and route a recommendation; the named production, quality, maintenance, or safety owner acts through the approved control path.</p></div>
+    <h2 id="tool-lanes">Tool lanes</h2>
+    <p>Separate tools into lanes. This keeps the agent useful without making it reckless.</p>
+    <div class="tbl-wrap"><table class="tbl"><caption>Tool permission lanes.</caption><thead><tr><th>Lane</th><th>Examples</th><th>Default permission</th></tr></thead><tbody><tr><td class="name">Read-only evidence</td><td>MES station events, Andon history, robot logs, torque results, vision results.</td><td>Allowed with audit log.</td></tr><tr><td class="name">Knowledge retrieval</td><td>Work instruction, control plan, FMEA, troubleshooting guide, past 8D.</td><td>Allowed with citation.</td></tr><tr><td class="name">Draft action</td><td>Containment list, shift handover, QMS issue draft, maintenance request draft.</td><td>Allowed, not submitted.</td></tr><tr><td class="name">Write action</td><td>Open QMS issue, assign containment, request hold, schedule robot inspection.</td><td>Approval required.</td></tr><tr><td class="name">Physical action</td><td>Robot motion, safety bypass, line stop/restart.</td><td>Not exposed to the agent identity; verify the block in integration tests.</td></tr></tbody></table></div>
+    <h2 id="approval">Approval gates</h2>
+    <p>Automotive agents need named approval gates, not vague "human review." The approval owner depends on the action:</p>
+    <ul>
+      <li><b>Line owner:</b> takt, manpower, station blocking, Andon escalation.</li>
+      <li><b>Quality owner:</b> containment, defect disposition, rework rule, customer risk.</li>
+      <li><b>Safety owner:</b> robot zone, interlock, maintenance mode, human entry.</li>
+      <li><b>Maintenance or automation owner:</b> robot program, fixture, tool calibration, PLC/robot recovery.</li>
+      <li><b>Process or manufacturing engineer:</b> recurring pattern, control plan update, long-term corrective action.</li>
+    </ul>
+    <p>The agent should produce an approval card: evidence, suspected scope, proposed action, affected VIN range, risk if delayed, rollback path, and owner. The card supports a decision; it does not transfer accountability to the model.</p>
+    <div class="reader-shortcut"><span class="note-k">Worked exercise: one-event routing card</span><p>Choose a recorded training event and assign its four clocks, response class, evidence sources, approver, allowed tool lane, and fallback path. <b>Pass:</b> the agent can produce the same scoped card on replay, stays within the approved advisory-latency target, and exposes missing evidence instead of filling gaps. <b>Stop:</b> hold the pilot when urgency has no owner, a write payload cannot be previewed, or the fallback depends on the agent being available. <b>Limit:</b> this test evaluates routing and evidence handling, not PLC response, functional safety, or projected line output.</p></div>
+    <h2 id="manifest">Starter manifest</h2>
+    <p>Start with one use case: station delay plus quality signal. Keep the tool surface small.</p>
+    <pre><code>takt_aware_agent_manifest:
+  scope:
+    line: "final-assembly-1"
+    stations: ["torque-220", "vision-310"]
+    response_classes: ["immediate", "near_term", "planned_stop", "engineering"]
+  read_tools:
+    - mes_station_events
+    - andon_history
+    - torque_results
+    - vision_results
+    - work_instruction_search
+    - control_plan_search
+  draft_tools:
+    - containment_note_draft
+    - shift_handover_draft
+    - maintenance_request_draft
+  write_tools:
+    - qms_issue_create
+    - containment_assignment
+  hard_blocks:
+    - robot_motion_command
+    - safety_bypass
+    - line_restart
+  approval_fields:
+    - owner
+    - evidence
+    - affected_vin_range
+    - risk_if_delayed
+    - rollback_path</code></pre>
+    <p>The manifest is a starting contract, and its <code>hard_blocks</code> still need integration tests that confirm those tool routes are unavailable to the agent identity. For the operating follow-through, read the <a class="link" href="agent-incident-response-runbook.html">manufacturing AI agent incident-response runbook</a> and rehearse what happens when a retrieval, approval, or tool boundary fails.</p>
+  </div>
+<aside class="article-endcap" aria-label="Article information">
+  <p>Illustrative architecture; validate timing and authority with production, controls, and safety owners.</p>
+  <div class="article-endcap-actions">
+    <a href="../index.html">Back to Journal</a>
+    <a href="../ai-categories.html">Browse AI categories</a>
+  </div>
+</aside>
+</article>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
+</footer>
+<script src="../assets/theme.js"></script>
+<script src="../assets/interactive-labs.js"></script>
+</body>
+</html>

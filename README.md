@@ -34,6 +34,13 @@ The build generates:
 - `dist/rss.xml`
 - `dist/blog/ko/rss.xml`
 - `dist/llms.txt`
+- `dist/search.json`
+- `dist/content-audit.json`
+- `dist/site.webmanifest`
+- `dist/favicon.svg`
+- `dist/opensearch.xml`
+- `dist/404.html`
+- `dist/_redirects`
 - `dist/blog/articles.json`
 - `dist/blog/ko/articles.json`
 - `dist/_headers`
@@ -59,7 +66,9 @@ python tools\validate_dist.py
 ```
 
 The validator checks required generated files, placeholder domains, local links,
-RSS XML, sitemap XML, and the English/Korean article JSON indexes.
+redirect rules, RSS XML, OpenSearch XML, sitemap XML, the search index, content
+audit JSON, web manifest, favicon SVG, and the English/Korean article JSON
+indexes.
 
 ## Deploy Check
 
@@ -91,5 +100,5 @@ python tools\new_article.py "Article title" `
   --with-ko
 ```
 
-Then add the article links to `blog/index.html` and `blog/ko/index.html`, build,
-and validate.
+Then build and validate. The build refreshes the English and Korean article
+indexes from article metadata automatically.

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIN genealogy vs wafer genealogy: 자동차 AI를 위한 이력 추적 - AI Edu Archive Journal</title>
+<meta name="description" content="자동차 제조 AI에서 VIN 이력과 FAB wafer 이력을 비교합니다. 부품, station, robot log, torque result, vision inspection, QMS, EOL test를 연결하는 법을 설명합니다.">
+<meta name="author" content="AI Edu Archive">
+<meta name="theme-color" content="#FAF9F5">
+<link rel="canonical" href="https://ai-edu-archive.pages.dev/blog/ko/articles/vin-genealogy-vs-wafer-genealogy.html">
+
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VIN genealogy vs wafer genealogy: 자동차 AI를 위한 이력 추적 - AI Edu Archive Journal">
+<meta property="og:description" content="자동차 제조 AI에서 VIN 이력과 FAB wafer 이력을 비교합니다. 부품, station, robot log, torque result, vision inspection, QMS, EOL test를 연결하는 법을 설명합니다.">
+<meta property="og:site_name" content="AI Edu Archive">
+<meta property="og:url" content="https://ai-edu-archive.pages.dev/blog/ko/articles/vin-genealogy-vs-wafer-genealogy.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="article:published_time" content="2026-07-13">
+<meta property="article:author" content="AI Edu Archive">
+<meta property="article:section" content="Automotive AI & Robotics">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"VIN genealogy vs wafer genealogy: 자동차 AI를 위한 이력 추적","description":"자동차 제조 AI에서 VIN 이력과 FAB wafer 이력을 비교합니다. 부품, station, robot log, torque result, vision inspection, QMS, EOL test를 연결하는 법을 설명합니다.","inLanguage":"ko","datePublished":"2026-07-13","dateModified":"2026-07-13","author":{"@type":"Person","name":"AI Edu Archive"},"publisher":{"@type":"Organization","name":"AI Edu Archive"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ai-edu-archive.pages.dev/blog/ko/articles/vin-genealogy-vs-wafer-genealogy.html"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/blog.css">
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/vin-genealogy-vs-wafer-genealogy.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/vin-genealogy-vs-wafer-genealogy.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/vin-genealogy-vs-wafer-genealogy.html">
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="../../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="주요 메뉴">
+      <a href="../../../index.html#courses">강의</a>
+      <a href="../index.html" aria-current="page">글</a>
+      <a href="../learning-paths.html">학습 경로</a>
+      <a href="../search.html">검색</a>
+      <a href="../portfolio.html">포트폴리오</a>
+      <a href="../about.html">소개</a>
+      <div class="language-switch" aria-label="언어 선택">
+        <a href="../../articles/vin-genealogy-vs-wafer-genealogy.html" lang="en" title="English">EN</a>
+        <a href="vin-genealogy-vs-wafer-genealogy.html" lang="ko" aria-current="true" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<article data-cat="auto mfg rag agents" itemscope itemtype="https://schema.org/Article">
+  <div class="article-hero"><div class="wrap"><nav class="breadcrumb" aria-label="현재 위치"><a href="../../../index.html">홈</a><span class="sep" aria-hidden="true">/</span><a href="../automotive-ai-robotics.html">자동차 AI & 로봇</a><span class="sep" aria-hidden="true">/</span><span aria-current="page">VIN genealogy vs wafer genealogy</span></nav><div class="post-meta"><span class="cat-tag">자동차 AI & 로봇</span><span class="post-dot"></span><time datetime="2026-07-13" itemprop="datePublished">2026.07.13</time><span class="post-dot"></span><span class="rt">13분</span></div><h1 itemprop="headline">VIN genealogy vs wafer genealogy: 자동차 AI를 위한 이력 추적</h1><div class="byline"><span class="avatar" aria-hidden="true">AE</span><span class="who"><b itemprop="author">AI Edu Archive</b><span>제조 AI · 로봇 · 생산 시스템</span></span></div></div></div>
+  <nav class="toc" aria-label="목차"><div class="toc-title">이 글의 내용</div><ol><li><a href="#meaning">Genealogy의 의미</a></li><li><a href="#compare">VIN vs wafer</a></li><li><a href="#timeline">증거 timeline</a></li><li><a href="#rag">RAG에 왜 필요한가</a></li><li><a href="#manifest">시작 manifest</a></li></ol></nav>
+  <div class="article-body" itemprop="articleBody">
+    
+    <figure class="visual-figure media-figure media-figure--diagram">
+      <img src="../../assets/visuals/vin-wafer-timeline.svg" alt="VIN genealogy vs wafer genealogy" loading="lazy" decoding="async">
+      <figcaption><span class="figure-label">그림.</span> Genealogy는 evidence timeline입니다. FAB과 자동차는 구조가 비슷하지만 ID, event, inspection, quality action은 각 공장의 조사 단위에 맞춰 따로 설계합니다.</figcaption>
+    </figure>
+
+    <div class="field-story">
+      <span class="note-k">합성 장면: 제외 근거가 보이지 않는 품질 회의</span>
+      <p>EOL 실패 차량 한 대가 화면에 올라오고, 품질 담당자는 같은 station을 지난 VIN 범위를 묻습니다. 조회 결과에는 수십 대가 나오지만 robot program revision과 rework 시각이 빠져 있어 어느 차량을 제외할지 설명할 수 없습니다. 처음에는 database에 event를 더 넣으면 풀릴 것처럼 보이지만, 실제 쟁점은 suspect set의 포함·제외 규칙입니다. 현장에서 흔한 조사 질문을 합친 가상 장면이며 특정 회사의 실제 회의가 아닙니다.</p>
+    </div>
+
+    <div class="reader-shortcut">
+      <span class="note-k">범위 정하는 법</span>
+      <p>첫 manifest에는 품질 질문에 실제로 쓰이는 열만 표시해 보세요. VIN, station window, tool 또는 robot ID, 검사 결과, rework 여부, containment 상태부터 놓고 각 열이 포함 또는 제외 판단에 쓰이는지 적습니다. 어느 판단에도 쓰이지 않는 열은 보류하고, 빠진 근거가 확인될 때 supplier lot·작업조·maintenance 이력을 붙입니다.</p>
+    </div>
+
+<p><span class="lead-in">기술적 판단의 출발점은 영향을 받은 대상과 제외 근거를 같은 timeline에서 재현하는 일입니다.</span> FAB의 wafer genealogy는 lot, tool, chamber, recipe, step, metrology, hold 이력을 연결합니다. 자동차의 VIN genealogy는 차량별 부품, station, robot, torque tool, vision check, rework, EOL test를 잇습니다. 아래 필드와 manifest는 비교용 제안 프레임워크이며 실제 적용에서는 사업장의 식별자·보존 정책·품질 규칙으로 바꿉니다.</p>
+    <div class="beginner-example"><span class="note-k">먼저 볼 화면</span><p>VIN 하나를 조회했을 때 station 이벤트, 공구 결과, 검사, 재작업, hold가 시간순으로 이어지는지 봅니다. timestamp 기준과 식별자 매핑이 다르면 AI 연결은 보류하고 같은 사건의 중복·누락부터 정리합니다.</p></div>
+    <h2 id="meaning">Genealogy의 의미</h2>
+    <p>Genealogy는 감사 대응용 traceability만 뜻하지 않습니다. 품질 조사의 backbone입니다. 차량이 EOL brake test에서 실패하거나 나중에 warranty symptom으로 돌아오면, 엔지니어는 그 VIN과 함께 이동한 제조 사실들을 따라가며 공통 조건과 제외 조건을 가릅니다.</p>
+    <p>Genealogy가 없으면 AI는 말 잘하는 검색창에 머물기 쉽습니다. Genealogy가 있으면 RAG와 Agent가 정확한 범위로 증거를 가져올 수 있습니다. 이 차량, 이 supplier lot, 이 station window, 이 robot program, 이 model variant, 이 shift, 이 containment boundary처럼 말입니다.</p>
+    <figure class="visual-figure media-figure" id="vin-plate-photo"><div class="diagram"><img src="../../assets/photos/xiaomi-su7-vin-plate.jpg" alt="차량 제조 이력의 물리적 식별 기준이 되는 Xiaomi SU7 VIN 명판" loading="lazy" decoding="async"></div><figcaption><span class="figure-label">사진.</span> VIN 명판은 물리적 identity anchor일 뿐입니다. 제조 genealogy가 되려면 이 ID에 부품 장착, station 결과, 재작업, 검사, disposition 기록이 연결되어야 합니다. 사진: Shwangtianyuan, <a class="link" href="https://commons.wikimedia.org/wiki/File:VIN_plate_of_Xiaomi_SU7_Max-20240413.jpg">Wikimedia Commons</a>, <a class="link" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Wikimedia 1,280px 축소본을 내려받아 로컬에 저장했으며 추가 편집은 없습니다.</figcaption></figure>
+    <h2 id="compare">VIN vs wafer</h2>
+    <div class="tbl-wrap"><table class="tbl"><caption>두 세계의 traceability object.</caption><thead><tr><th>Layer</th><th>FAB genealogy</th><th>Automotive genealogy</th></tr></thead><tbody><tr><td class="name">Product ID</td><td>Wafer ID, lot ID, carrier, product, route.</td><td>VIN, body number, module ID, part serial, variant.</td></tr><tr><td class="name">Process location</td><td>Tool, chamber, recipe, operation, step.</td><td>Plant, line, station, robot cell, fixture, tool.</td></tr><tr><td class="name">Process evidence</td><td>Trace, alarm, SPC, metrology, inspection, APC action.</td><td>PLC event, robot log, torque curve, vision image, Andon, rework.</td></tr><tr><td class="name">Quality action</td><td>Hold, release, remeasure, rework, excursion review.</td><td>Containment, sort, rework, deviation, 8D, EOL retest.</td></tr></tbody></table></div>
+    <h2 id="timeline">증거 timeline</h2>
+    <p>설명을 위해 단순화한 가상 파일럿으로 body shop weld cell, final assembly torque tool, vision inspection, EOL test를 먼저 연결한다고 가정해보겠습니다. 한 VIN의 이벤트가 시간순으로 이어지고 원천 시스템까지 추적되는지 확인한 뒤, 공통 station window와 supplier lot으로 범위를 넓힙니다. 실제 우선순위는 고객 위험, 데이터 품질, 조사 빈도에 따라 달라집니다.</p>
+    <ul>
+      <li><b>Before station:</b> VIN, model variant, build option, supplier lot, incoming inspection state.</li>
+      <li><b>During station:</b> station start/end, robot program, PLC state, tool ID, operator ID or team, safety state.</li>
+      <li><b>Quality evidence:</b> torque result, image result, defect code, rework reason, bypass reason.</li>
+      <li><b>After station:</b> release, hold, containment, EOL test, warranty feedback, field symptom.</li>
+    </ul>
+    <div class="field-note"><span class="note-k">Worked example: suspect set 만들기</span><p>설명을 위해 만든 가상 기록 6대를 놓고, 조건을 <b>station T-220 통과 / program rev-B / 검사 전 rework 없음</b>으로 정합니다. VIN-A·B·C가 앞의 두 조건을 공유하지만 VIN-B에는 검사 전 승인된 rework가 있습니다. 따라서 1차 suspect set은 A와 C, 제외 목록에는 B와 제외 근거를 남깁니다. 이어 torque 원시 기록과 EOL 결과를 원천 시스템에서 확인한 뒤 containment 범위를 확정합니다. Timestamp가 서로 다른 clock을 쓰거나 rework가 수기로만 남았다면 이 결과는 잠정 범위일 뿐 원인 증명이 아닙니다.</p></div>
+    <figure class="visual-figure media-figure media-figure--diagram" id="containment-graph"><img src="../../assets/visuals/vin-containment-graph.svg" alt="supplier lot, station event, EOL 증상과 품질 조치를 연결한 VIN containment graph" loading="lazy" decoding="async"><figcaption><span class="figure-label">그림.</span> 시간 구간 조회는 첫 filter일 뿐입니다. 부품 교체, station 재진입, EOL 증상, 품질 조치를 graph로 연결해야 VIN이 containment 안팎에 들어간 이유를 설명할 수 있습니다.</figcaption></figure>
+    <div class="fab-voice"><span class="note-k">현장 말투로 말하면</span><p>어떤 모델이 같은 station window, supplier lot, robot program, rework pattern을 공유하는 VIN 범위를 말하지 못한다면 품질 조사에 투입하기 이릅니다. 챗봇일 수는 있어도 아직 제조 assistant는 아닙니다.</p></div>
+    <h2 id="rag">RAG에 왜 필요한가</h2>
+    <p>자동차 RAG는 genealogy로 검색 범위를 잡을 때 훨씬 강해집니다. "왜 EOL test가 실패했나요?"는 너무 넓습니다. 더 좋은 질문은 이렇습니다. "이 VIN에 대해 EOL failure, 이전 station event, 관련 torque record, 같은 증상의 DTC note, repair manual section, 과거 8D case를 가져와라."</p>
+    <p>여기서는 vector search와 structured filter가 같이 움직여야 합니다. Vector search는 비슷한 설명을 찾고, structured genealogy는 답변을 올바른 차량, 시간 구간, model variant, 품질 boundary 안에 고정합니다.</p>
+    <h2 id="manifest">시작 manifest</h2>
+    <p>아래 manifest의 plant, line, station, 질문은 설명을 위해 단순화한 가상 사례입니다. 실제 사업장의 VIN 키, station 코드, timestamp 기준, 품질 판정과 보존 규칙으로 교체한 뒤 품질·생산·IT 책임자의 승인을 받아야 합니다.</p>
+    <pre><code>vin_genealogy_manifest:
+  scope:
+    plant: "plant-a"
+    line: "final-assembly-1"
+    stations: ["torque-220", "vision-310", "eol-900"]
+  entities:
+    - VIN
+    - station_event
+    - tool_result
+    - vision_result
+    - eol_result
+    - quality_action
+  required_keys:
+    - vin
+    - timestamp
+    - station_id
+    - equipment_id
+    - result_status
+    - source_system
+  first_questions:
+    - "Which VINs share this failed EOL symptom?"
+    - "Which station window is common?"
+    - "Which torque or vision evidence changed before the failure?"
+    - "Which rework or containment action already exists?"</code></pre>
+    <p>VIN timeline이 원천까지 추적되고 제외 근거가 남으면 AI는 요약, 검색, 비교, 조사 메모 초안을 도울 수 있습니다. 다만 상관관계가 원인을 증명하지는 않습니다. 같은 station window를 공유했다는 이유만으로 결함 원인을 확정하지 않고, 측정·재현 시험과 품질 책임자의 판정을 별도로 둡니다. 이 evidence chain을 시간 등급과 승인 흐름으로 연결하려면 다음 글인 <a class="link" href="takt-aware-ai-agents-assembly-lines.html">자동차 조립 라인을 위한 Takt-aware AI Agent</a>로 이어가세요.</p>
+  </div>
+<aside class="article-endcap" aria-label="글 안내">
+  <p>제안 프레임워크이며, 실제 적용 전 사업장의 식별자·품질·보존 규칙으로 바꾸고 담당 책임자의 검토를 거칩니다.</p>
+  <div class="article-endcap-actions">
+    <a href="../index.html">글 목록으로 돌아가기</a>
+    <a href="../ai-categories.html">AI 카테고리 보기</a>
+  </div>
+</aside>
+</article>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>누구나 볼 수 있는 실용적인 AI 교육 자료입니다.</h2>
+        <p>현장에서 쓸 수 있는 AI 시스템을 위한 강의, 글, 실전 기록을 모았습니다.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>둘러보기</h4>
+          <a href="../../../index.html#courses">강의</a>
+          <a href="../index.html">글</a>
+          <a href="../learning-paths.html">학습 경로</a>
+          <a href="../search.html">검색</a>
+          <a href="../portfolio.html">포트폴리오</a>
+        </div>
+        <div class="foot-col">
+          <h4>사이트</h4>
+          <a href="../about.html">소개</a>
+          <a href="../contact.html">연락처</a>
+          <a href="../privacy.html">개인정보 처리방침</a>
+          <a href="../terms.html">이용약관</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · 한국어와 영어로 제공하는 AI 교육</span>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/theme.js"></script>
+</body>
+</html>

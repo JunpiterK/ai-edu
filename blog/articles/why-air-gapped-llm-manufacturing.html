@@ -1,92 +1,89 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 
 <html lang="en">
 <head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- ══ SEO ══════════════════════════════════════════════════════════ -->
-<title>Why manufacturers must run LLMs air-gapped - AI Edu Archive Journal</title>
-<meta content="Why fabs and manufacturers should run LLMs inside an air-gapped network: data leakage risk, process know-how, local model capability, and a practical engineering checklist." name="description"/>
+<title>Choosing an isolation boundary for manufacturing LLMs - AI Edu Archive Journal</title>
+<meta content="A security decision framework for manufacturing LLMs: air gap, no-egress on-prem, controlled transfer, and private cloud boundaries." name="description"/>
 <meta content="AI Edu Archive" name="author"/>
 <meta content="#FAF9F5" name="theme-color"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/why-air-gapped-llm-manufacturing.html" rel="canonical"/>
-<link href="https://ai-edu-archive.example.com/blog/ko/articles/why-air-gapped-llm-manufacturing.html" hreflang="ko" rel="alternate"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/why-air-gapped-llm-manufacturing.html" hreflang="x-default" rel="alternate"/>
+<link href="https://ai-edu-archive.pages.dev/blog/articles/why-air-gapped-llm-manufacturing.html" rel="canonical"/>
+
 <meta content="index,follow" name="robots"/>
 <!-- Open Graph -->
 <meta content="article" property="og:type"/>
-<meta content="Why manufacturers must run LLMs air-gapped - AI Edu Archive Journal" property="og:title"/>
-<meta content="Why fabs and manufacturers should run LLMs inside an air-gapped network: data leakage risk, process know-how, local model capability, and a practical engineering checklist." property="og:description"/>
+<meta content="Choosing an isolation boundary for manufacturing LLMs - AI Edu Archive Journal" property="og:title"/>
+<meta content="A security decision framework for manufacturing LLMs: air gap, no-egress on-prem, controlled transfer, and private cloud boundaries." property="og:description"/>
 <meta content="AI Edu Archive" property="og:site_name"/>
-<meta content="https://ai-edu-archive.example.com/blog/articles/why-air-gapped-llm-manufacturing.html" property="og:url"/>
+<meta content="https://ai-edu-archive.pages.dev/blog/articles/why-air-gapped-llm-manufacturing.html" property="og:url"/>
 <meta content="en_US" property="og:locale"/>
 <meta content="ko_KR" property="og:locale:alternate"/>
 <meta content="2026-07-04" property="article:published_time"/>
 <meta content="AI Edu Archive" property="article:author"/>
 <meta content="On-Prem LLM" property="article:section"/>
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="Why manufacturers must run LLMs air-gapped - AI Edu Archive Journal" name="twitter:title"/>
-<meta content="Why fabs and manufacturers should run LLMs inside an air-gapped network: data leakage risk, process know-how, local model capability, and a practical engineering checklist." name="twitter:description"/>
+<meta content="Choosing an isolation boundary for manufacturing LLMs - AI Edu Archive Journal" name="twitter:title"/>
+<meta content="A security decision framework for manufacturing LLMs: air gap, no-egress on-prem, controlled transfer, and private cloud boundaries." name="twitter:description"/>
 <!-- JSON-LD: Article schema -->
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Why manufacturers must run LLMs air-gapped",
-  "description": "Why fabs and manufacturers should run LLMs inside an air-gapped network: data leakage risk, process know-how, local model capability, and a practical engineering checklist.",
+  "headline": "Choosing an isolation boundary for manufacturing LLMs",
+  "description": "A security decision framework for manufacturing LLMs: air gap, no-egress on-prem, controlled transfer, and private cloud boundaries.",
   "inLanguage": "en",
-  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "image": "https://ai-edu-archive.pages.dev/blog/assets/visuals/article-visual-template.svg",
   "datePublished": "2026-07-04",
   "dateModified": "2026-07-04",
   "author": {
     "@type": "Person",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html",
     "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
   },
   "publisher": {
     "@type": "Organization",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html"
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ai-edu-archive.example.com/blog/articles/why-air-gapped-llm-manufacturing.html"
+    "@id": "https://ai-edu-archive.pages.dev/blog/articles/why-air-gapped-llm-manufacturing.html"
   },
-  "name": "Why manufacturers must run LLMs air-gapped",
-  "url": "https://ai-edu-archive.example.com/blog/articles/why-air-gapped-llm-manufacturing.html"
+  "name": "Choosing an isolation boundary for manufacturing LLMs",
+  "url": "https://ai-edu-archive.pages.dev/blog/articles/why-air-gapped-llm-manufacturing.html"
 }</script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link href="../assets/blog.css" rel="stylesheet"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/why-air-gapped-llm-manufacturing.html" hreflang="en" rel="alternate"/></head>
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/why-air-gapped-llm-manufacturing.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/why-air-gapped-llm-manufacturing.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/why-air-gapped-llm-manufacturing.html">
+</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="nav" id="nav">
-<div class="wrap">
-<a aria-label="AI Edu Archive home" class="brand" href="../../index.html">
-<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</a>
-<nav aria-label="Primary" class="nav-links">
-<a href="../../index.html#courses">Courses</a>
-<a href="../index.html">Articles</a>
-<a href="../about.html">About</a>
-<div aria-label="Language selector" class="language-switch">
-<a aria-current="true" href="why-air-gapped-llm-manufacturing.html" lang="en" title="English">🇺🇸 EN</a>
-<a href="../ko/articles/why-air-gapped-llm-manufacturing.html" lang="ko" title="한국어">🇰🇷 KO</a>
-<a href="why-air-gapped-llm-manufacturing.html" lang="en" title="English shown for now">🇪🇸 ES</a>
-<a href="why-air-gapped-llm-manufacturing.html" lang="en" title="English shown for now">🇨🇳 ZH</a>
-<a href="why-air-gapped-llm-manufacturing.html" lang="en" title="English shown for now">🇯🇵 JA</a>
-<a href="why-air-gapped-llm-manufacturing.html" lang="en" title="English shown for now">🇩🇪 DE</a>
-<a href="why-air-gapped-llm-manufacturing.html" lang="en" title="English shown for now">🇫🇷 FR</a>
-</div>
-</nav>
-</div>
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="why-air-gapped-llm-manufacturing.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/why-air-gapped-llm-manufacturing.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
 </header>
 <main id="main">
 <article itemscope="" itemtype="https://schema.org/Article">
@@ -97,7 +94,7 @@
 <span aria-hidden="true" class="sep">/</span>
 <a href="../index.html">Journal</a>
 <span aria-hidden="true" class="sep">/</span>
-<span aria-current="page">Why manufacturers must run LLMs air-gapped</span>
+<span aria-current="page">Choosing an isolation boundary for manufacturing LLMs</span>
 </nav>
 <div class="post-meta">
 <span class="cat-tag">On-Prem LLM</span>
@@ -106,7 +103,7 @@
 <span class="post-dot"></span>
 <span class="rt">12 min read</span>
 </div>
-<h1 itemprop="headline">Why manufacturers must run LLMs air-gapped</h1>
+<h1 itemprop="headline">Choosing an isolation boundary for manufacturing LLMs</h1>
 <div class="byline">
 <span aria-hidden="true" class="avatar">AE</span>
 <span class="who">
@@ -120,125 +117,65 @@
 <div class="toc-title">On this page</div>
 <ol>
 <li><a href="#risk">What actually leaves when you paste into a cloud LLM</a></li>
-<li><a href="#architecture">The alternative: the model comes in, the data stays</a></li>
-<li><a href="#myth">Air-gapped means weaker? Not anymore</a></li>
-<li><a href="#checklist">A first-pass checklist for engineers</a></li>
+<li><a href="#architecture">Choose the boundary</a></li>
+<li><a href="#myth">Capability and operational tradeoffs</a></li>
+<li><a href="#checklist">Decision and verification checklist</a></li>
 <li><a href="#next">Where this series goes next</a></li>
 </ol>
 </nav>
 <div class="article-body" itemprop="articleBody">
-<p><span class="lead-in">The first time I proposed putting an LLM inside the
-      fab, security killed it in ten minutes — and they were right.</span> I'd sketched
-      a slick little assistant that would answer process questions from a hosted API,
-      and I hadn't thought for one second about where the question itself would go. The
-      reviewer asked one thing: "So the deposition recipe leaves the building the moment
-      someone types it?" I didn't have an answer. That meeting is why I'm writing this.</p>
-<p>Here's what took me too long to internalize: in a fab or a process plant, the
-      deposition parameters, the yield-vs-defect curves, the failure signatures your
-      veterans read at a glance — that undocumented know-how <em>is</em> the company.
-      And the uncomfortable part of adopting AI is that the moment an engineer pastes a
-      real process question into a cloud LLM, that know-how has already left. So the
-      thing I got wrong up front, and eventually got right, is the whole point of this
-      piece: <strong>for manufacturers, the model has to come to the data, not the data
-      to the model.</strong> 제조업에서 노하우는 곧 회사이고, 클라우드 LLM 프롬프트는
-      그 노하우가 나가는 문이라는 걸 저는 저 회의에서 처음 제대로 깨달았습니다.</p>
+<p><span class="lead-in">Start with a blank data-flow worksheet.</span> Give every row six fields: payload, classification, source, destination, transfer mechanism, and evidence owner. Include prompts, retrieved passages, outputs, logs, model artifacts, software packages, telemetry, identities, and administrator access. The network pattern follows the completed sheet; “air-gapped” is not a synonym for every local deployment.</p>
+<div class="field-story"><span class="note-k">Illustrative scenario: local was not the boundary</span><p>A rack-mounted GPU can make the deployment feel self-contained. The offline-start test is where that confidence slips: the embedding component attempts DNS resolution for a missing model artifact. No protected payload is shown leaving in this scenario, but the architecture claim is now unsupported. The release stops while the team inventories the missing artifact and reviews the attempted route. This is a constructed example, not a reported plant event.</p></div>
+<div class="reader-shortcut"><span class="note-k">Worksheet rule</span><p>If a component, payload, route, or owner is missing from the sheet, the boundary is not ready for approval. A deployment location is a fact; an isolation claim needs test evidence.</p></div>
+<div class="field-note"><span class="note-k">Decision framework</span><p>Use an air gap when policy or hazard analysis requires physical or equivalent isolation and controlled import/export. Use no-egress on-prem when the workload can stay on a routed internal network with outbound traffic denied. Use controlled transfer when approved artifacts or reviewed outputs cross a boundary through a managed gate. Use private cloud when contracts, region, tenant controls, identity, logging, and data handling satisfy the classification. Security, system, data, and business owners approve the choice.</p></div>
 <h2 id="risk">What actually leaves when you paste into a cloud LLM</h2>
-<p>"Just try ChatGPT on it" feels harmless because the box looks like a search
-      bar. It isn't, and I learned the shape of the problem by watching a well-meaning
-      colleague do it. He pasted a real excursion write-up — tool ID, the recipe step,
-      the actual defect numbers — into a public model to get help wording a summary. No
-      malice, genuinely trying to move fast. But every character of that prompt is an
-      <strong>outbound transfer</strong> to infrastructure none of us control, and once
-      it's out, it's out. Here's the exposure I now walk people through, in the order it
-      bit us:</p>
+<p>A request to an externally hosted service is an outbound transfer. The payload can include more than the visible question: retrieved chunks, conversation history, system prompts, tool results, attachments, identifiers, and diagnostic logs. Review the actual provider, contract, region, retention, training-use settings, subprocessors, and client telemetry rather than inferring them from the chat interface.</p>
 <ul>
-<li><strong>The trade secret <em>is</em> the prompt.</strong> To get a useful
-        answer you have to describe the real problem — the recipe, the tool, the
-        numbers. The context that makes the answer good is the exact context you can't
-        afford to send. You can't have one without the other, and I kept underestimating
-        that.</li>
+<li><strong>Prompts can contain protected know-how.</strong> Recipe context, tool identifiers, process windows, and troubleshooting notes may carry the information needed for a useful answer.</li>
 <li><strong>Yield &amp; defect data is competitive intelligence.</strong> A
         defect-rate table or an excursion timeline tells a competitor precisely where
-        your process is soft. That's not something you leak on purpose — you leak it one
-        "quick question" at a time.</li>
-<li><strong>The NDA doesn't care that it "was just a chatbot."</strong> Customer
-        NDAs, and in a lot of sectors export-control rules, draw no line between
-        "emailed the file" and "pasted it into a model." Both are disclosure to a third
-        party. I've had a legal review make exactly that point, and there's no arguing it.</li>
-<li><strong>Once it crosses a border, you've lost the thread.</strong> The
-        moment bytes land in a cloud region, you often can't say where they live, who
-        can subpoena them, or whether they're quietly informing someone else's system.</li>
+        process is weak. Apply the site's classification and approved-use rules.</li>
+<li><strong>Contractual and regulatory duties depend on context.</strong> Legal, export-control, privacy, and customer obligations should be assessed by the responsible specialists for the specific data and service.</li>
+<li><strong>Location and handling need evidence.</strong> Confirm processing region, storage, retention, access, deletion, and incident terms for the selected service.</li>
 </ul>
-<p>None of this needs a villain. The ordinary, well-meaning use of a cloud LLM
-      <em>is</em> the leak — that's the part that's hard to police, because nobody feels
-      like they did anything wrong. 악의가 있어야 새는 게 아닙니다. 선의로 쓴 한 번의
-      질의에 민감정보·수율 데이터·NDA 대상 정보가 그대로 나가더군요.</p>
+<p>An unapproved transfer does not require malicious intent. Usable controls include approved tools, clear data-handling rules, technical blocking where appropriate, and review paths that do not force engineers to improvise.</p>
 <div class="callout">
-<p><strong>흔한 실수 ①: "로컬로 돌리니까 데이터는 안 나가겠지."</strong></p>
-<p>❌ 로컬 LLM만 세우면 무조건 폐쇄라고 믿는 것. → 저도 처음 로컬 스택을 세우고
-        안심했는데, 뒤늦게 <code>tcpdump</code>를 걸어보니 인퍼런스 엔진이 아니라 그
-        옆에 붙인 <strong>벡터 DB 클라이언트</strong>가 익명 텔레메트리를 밖으로
-        쏘고 있더군요(Chroma의 PostHog 텔레메트리가 커뮤니티에서 반복적으로 보고되는
-        대표 사례입니다). 모델은 조용한데 라이브러리가 전화를 걸고 있던 겁니다.
-        → ✅ 해결은 단순합니다: 스택 전체를 올린 뒤 loopback·API 포트를 제외하고
-        패킷을 실제로 캡처해 <em>아무것도 안 나가는지</em> 눈으로 확인하고, 임베딩·DB
-        라이브러리의 텔레메트리 옵트아웃(예: 텔레메트리 비활성 플래그)을 명시적으로
-        끕니다. "안 나갈 것이다"는 검증이 아니라 가정입니다.</p>
+<p><strong>Common mistake 1: "It runs locally, so no data can leave."</strong></p>
+<p>A local inference process does not establish the boundary for embedding clients, vector stores, package managers, observability, DNS, authentication, or administration. Inventory the complete stack, deny unapproved routes, and collect firewall, proxy, DNS, and configuration evidence under representative startup and load conditions. Packet capture can supplement those controls when the network owner approves it.</p>
 </div>
 <blockquote>
-        The data that makes a prompt worth asking is the same data you can never
-        afford to send.
+        The data that improves a prompt may also be the data that policy does not allow you to send.
       </blockquote>
-<h2 id="architecture">The alternative: the model comes in, the data stays</h2>
-<p>The fix that finally cleared that same security review wasn't "don't use LLMs."
-      It was to <strong>flip the direction of travel</strong>. Instead of shipping your
-      data out to a hosted model, you carry an open-weight model <em>in</em> and serve
-      it inside the fence. When I redrew the architecture that way, the reviewer's
-      objection just evaporated — there was no longer an outbound path to argue about.
-      The whole pattern fits on one diagram, and it's three pieces:</p>
+<h2 id="architecture">Choose the boundary</h2>
+<p>The four patterns below solve different assurance and operating problems. Select one from data classification, required integrations, update path, support model, recovery objective, and accepted residual risk.</p>
+<div class="tbl-wrap"><table class="tbl"><caption>Manufacturing LLM isolation patterns.</caption><thead><tr><th>Pattern</th><th>Boundary</th><th>Typical tradeoff</th></tr></thead><tbody><tr><td class="name">Air gap</td><td>No routine network path across the boundary; imports and exports use an approved controlled process.</td><td>Strong isolation evidence, with higher update, support, and artifact-transfer cost.</td></tr><tr><td class="name">No-egress on-prem</td><td>Internal routed network; outbound destinations are denied except explicitly approved services.</td><td>Easier internal integration, with continuing firewall, identity, telemetry, and administrator controls.</td></tr><tr><td class="name">Controlled transfer</td><td>Separate zones connected by a reviewed gateway, diode, broker, or media process.</td><td>Supports selected flows, with queueing, review, provenance, and gateway operations.</td></tr><tr><td class="name">Private cloud</td><td>Provider-hosted tenant or dedicated environment governed by contract and technical controls.</td><td>Managed scale and updates, with provider, region, identity, and service-dependency risk.</td></tr></tbody></table></div>
+<p>For the air-gap pattern shown below, the internal stack has three functional layers:</p>
 <ul>
 <li><strong>On-prem serving.</strong> An open-weight model (Llama, Qwen,
         gpt-oss, and peers) running on your own GPUs behind a serving stack like
         <code>vLLM</code> or <code>Ollama</code>. The weights are files you copied in
-        once; nothing calls home.</li>
-<li><strong>Air-gapped RAG.</strong> Your SOPs, spec sheets, and equipment
-        logs are embedded and indexed <em>locally</em>, so answers are grounded in
-        your own documents without those documents ever leaving.</li>
+        through an approved import process; runtime egress is blocked and verified.</li>
+<li><strong>Air-gapped RAG.</strong> Approved SOPs, spec sheets, and equipment
+        logs are embedded and indexed <em>locally</em>. The design intends to keep
+        document content inside the boundary; network, storage, logging, and transfer evidence must verify that claim.</li>
 <li><strong>Internal wiring.</strong> The model connects to in-house systems
-        (MES, historians) through audited tools — reads and acts inside the boundary.</li>
+        (MES, historians) through scoped tools. Read and write permissions, audit coverage, and approval gates are verified separately.</li>
 </ul>
 <div class="callout">
-<p><strong>흔한 실수 ②: "그냥 <code>pip install</code>하고 모델 받으면 되겠지."</strong></p>
-<p>❌ 인터넷 있는 개발 환경에서 짠 코드를 그대로 폐쇄망에 들고 들어가는 것.
-        → 이게 폐쇄망 입문자가 가장 크게 데이는 지점이고, 저도 여기서 하루를 날렸습니다.
-        진짜 에어갭 안에서는 <code>pip</code>도, <code>huggingface</code> 자동
-        다운로드도 전부 죽습니다. 코드가 런타임에 몰래 모델 카드나 토크나이저를
-        받으러 나가려다 조용히 멈추거나 타임아웃 나는 걸, 배포 당일에야 발견하죠.
-        → ✅ 해결: <em>모든</em> 가중치·의존성을 반입 전에 미리 받아 사내 미러/오프라인
-        캐시로 옮기고, <code>HF_HUB_OFFLINE=1</code> 같은 오프라인 모드를 강제해
-        런타임에 밖으로 나가는 경로 자체를 없앱니다. 반입은 해시 검증된 단방향 매체로
-        한 번만. 커뮤니티의 에어갭 구축 가이드가 하나같이 강조하는 게 이 "미리 다
-        받아두기"입니다.</p>
+<p><strong>Common mistake 2: "We can just run <code>pip install</code> and pull the model."</strong></p>
+<p>Automatic model and package downloads fail when no route exists and can create unreviewed supply-chain paths when a route does exist. Build a versioned bill of materials, verify licenses and hashes, scan artifacts, include tokenizers and runtime dependencies, test offline startup, and import through the approved mechanism. Settings such as <code>HF_HUB_OFFLINE=1</code> are useful application controls, not proof of network isolation.</p>
 </div>
-<p>The whole thing collapses to one sentence: <strong>the model comes in; the
-      data never goes out.</strong> Every query — the question, the retrieved context,
-      the answer, even the logs — completes one full cycle inside the air-gapped
-      boundary and never crosses it. And here's the practical payoff I didn't expect:
-      that single closed loop is also the exact picture you hand to a security reviewer.
-      The first version of my design got picked apart because I couldn't draw the
-      boundary; this one gets approved because the boundary <em>is</em> the drawing.
-      모델은 반입되고, 데이터·프롬프트·로그는 폐쇄망 경계를 한 번도 넘지 않습니다 —
-      감사 나가서 그릴 그림이 이거 하나로 끝납니다.</p>
+<p>In this pattern, model artifacts enter through the controlled import path while prompts, retrieved context, responses, and operational logs remain inside the defined boundary. The diagram is a design claim. Release evidence comes from the manifest, network controls, transfer records, identity tests, and observed runtime behavior.</p>
 <figure>
 <div aria-label="Air gap boundary diagram: a hosted cloud LLM outside, an on-prem LLM plus RAG inside, and the blocked data-egress path" class="diagram">
 <svg aria-labelledby="agTitle agDesc" role="img" viewbox="0 0 640 340" width="100%">
 <title id="agTitle">The model comes in, the data stays</title>
-<desc id="agDesc">Open model weights are copied one-way into the air-gapped intranet, where an on-prem LLM and local RAG serve queries; process data and prompts never cross the boundary outward.</desc>
+<desc id="agDesc">Open model weights follow a controlled import path into the isolated intranet, where an on-prem LLM and local RAG serve queries; outward data paths are denied and tested.</desc>
 <rect fill="#FCFBF8" height="338" rx="14" stroke="#E8E4DB" width="638" x="1" y="1"></rect>
 <!-- OUTSIDE / cloud zone -->
 <rect fill="#FBF3EF" height="292" rx="10" stroke="#E7C9BC" width="180" x="20" y="24"></rect>
 <text fill="#9B4A2C" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" text-anchor="middle" x="110" y="50">PUBLIC INTERNET</text>
-<text fill="#B07A64" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle" x="110" y="68">사외망 · 통제 밖</text>
+<text fill="#B07A64" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle" x="110" y="68">external · outside control</text>
 <rect fill="#FCFBF8" height="60" rx="9" stroke="#E7C9BC" width="132" x="44" y="92"></rect>
 <text fill="#8A4227" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="110" y="118">Hosted cloud</text>
 <text fill="#8A4227" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="110" y="137">LLM API</text>
@@ -253,7 +190,7 @@
 <!-- INSIDE / air-gapped zone -->
 <rect fill="#EEF6F4" height="292" rx="10" stroke="#A9D6CC" width="260" x="360" y="24"></rect>
 <text fill="#0B6258" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" text-anchor="middle" x="490" y="50">AIR-GAPPED INTRANET</text>
-<text fill="#3F8378" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle" x="490" y="68">사내 폐쇄망 · 데이터 무반출</text>
+<text fill="#3F8378" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle" x="490" y="68">internal · egress controls verified</text>
 <rect fill="#FCFBF8" height="56" rx="9" stroke="#A9D6CC" width="208" x="386" y="92"></rect>
 <text fill="#0B6258" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="490" y="125">On-prem LLM serving (vLLM)</text>
 <rect fill="#FCFBF8" height="56" rx="9" stroke="#A9D6CC" width="208" x="386" y="162"></rect>
@@ -276,86 +213,48 @@
 </defs>
 </svg>
 </div>
-<figcaption>Figure 1. The model weights are imported once, one-way, across the air gap; queries, retrieved context, and process data complete their cycle inside and never cross back out. 모델은 반입, 데이터는 무반출.</figcaption>
+<figcaption>Figure 1. The intended air-gap pattern imports reviewed model artifacts through a controlled path and denies outward routes for queries, retrieved context, and process data. The diagram states the design; transfer records and network tests supply the evidence.</figcaption>
 </figure>
-<h2 id="myth">Air-gapped means weaker? Not anymore</h2>
-<p>The objection I hear every single time — usually from the person who wanted the
-      hosted model — is that going on-prem means settling for a dumber one. A few years
-      ago I'd have half-agreed with you. Not now. For grounded, document-based work — the
-      retrieval-heavy Q&amp;A that is honestly 90% of what a plant actually asks — a
-      well-served open-weight model is more than enough, and I've watched skeptical
-      engineers stop caring about the leaderboard once the answers started landing. The
-      shift that made it real is <strong>BYO-model</strong> (bring your own model): open
-      families like Llama, Qwen, and gpt-oss ship weights you run yourself, so capability
-      is something you install once, not something you rent per token forever.</p>
-<p>And here's the part people miss because they're staring at benchmarks: the
-      plant-specific advantage runs the <em>other</em> way. A cloud model has never seen
-      your equipment logs and never will; an air-gapped RAG system reads them directly.
-      A slightly bigger model guessing about your process loses to a smaller one that's
-      actually grounded in your sealed documents — every time. 폐쇄망이라 성능이
-      떨어진다는 건 옛말입니다. 오픈 모델(Llama·Qwen·gpt-oss)로 충분하고, 제 경험상
-      사내 문서에 근거한 답이 더 큰 모델의 추측보다 오히려 셉니다.</p>
-<div class="callout">
-<p><strong>흔한 실수 ③: "VRAM이 24GB니까 이 모델 들어가겠네."</strong></p>
-<p>❌ 모델 가중치 크기만 보고 GPU 용량을 계산하는 것. → r/LocalLLaMA 같은 데서
-        가장 흔히 보이는 착각인데, 저도 짧은 컨텍스트로 멀쩡히 돌던 세팅이 긴 문서를
-        붙이자 <strong>KV 캐시</strong>가 폭발하며 3am에 OOM으로 뻗는 걸 겪었습니다.
-        컨텍스트가 길어지면 KV 캐시가 모델 가중치보다 더 큰 메모리를 먹습니다(128K에선
-        가중치의 몇 배). "8B니까 8GB면 되겠지"가 아니라 "8GB면 8B를 컨텍스트 몇 K까지"로
-        생각해야 하더군요. → ✅ 해결: 실제로 쓸 동시성·컨텍스트 길이로 사이징하고, 모자라면
-        컨텍스트를 줄이거나 KV 캐시를 INT8로 양자화합니다.</p>
-<p><strong>흔한 실수 ④: "양자화? 4비트로 최대한 줄이면 이득이지."</strong></p>
-<p>❌ VRAM 아끼겠다고 무턱대고 낮은 비트로 조이는 것. → 표준 후처리 양자화로
-        4비트까지 내리면 반올림 과정에서 추론·논리 정확도가 예상보다 뚝 떨어지는 경우가
-        있습니다. 벤치 점수만 보고 넘겼다가 실제 답 품질에서 데이는 전형적 함정이죠.
-        → ✅ 제 기준은 Q4_K_M 정도가 크기 대비 품질 균형점이고, 그 아래로는 반드시
-        <em>내 문서로</em> 품질을 재보고 결정합니다. 리더보드가 아니라 우리 RAG 답으로.</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<caption>Air-gap boundary verification matrix for a pilot release.</caption>
+<thead><tr><th>Path under test</th><th>Required evidence</th><th>Release decision</th></tr></thead>
+<tbody>
+<tr><td class="name">Model and package import</td><td>Approved manifest, license record, malware scan, and matching SHA256 for every weight and dependency.</td><td>Allow one-way import only when the manifest closes without missing artifacts.</td></tr>
+<tr><td class="name">Runtime network</td><td>Firewall deny logs and packet capture from serving, embedding, vector, and observability hosts during startup and load tests.</td><td>Any unapproved DNS, HTTP, telemetry, or model-download attempt blocks release.</td></tr>
+<tr><td class="name">Prompt and retrieval data</td><td>Trace IDs showing prompts, retrieved chunks, responses, and logs remain on approved internal storage.</td><td>No route to public endpoints; retention and access follow the data classification.</td></tr>
+<tr><td class="name">MES and historian tools</td><td>Role checks, read-only scopes, allowlisted operations, and auditable tool-call logs.</td><td>Deny the request and block release when identity, permission, or target-system validation is missing.</td></tr>
+</tbody>
+</table>
 </div>
-<h2 id="checklist">A first-pass checklist for engineers</h2>
-<p>You don't need to solve everything to start. But here's the short list I now
-      walk before any pilot — every item on it is something I, or someone whose war
-      story I trust, got wrong at least once:</p>
+<div class="field-note"><span class="note-k">Illustrative boundary test</span><p>Example procedure, not a plant test result: start the service with an empty local tokenizer cache and the intended network policy. Record attempted DNS and outbound connections from every component. Import missing artifacts through the approved manifest, repeat under the declared load, and let the network and security owners disposition any connection attempt before release.</p></div>
+<h2 id="myth">Capability and operational tradeoffs</h2>
+<p>Isolation does not determine answer quality by itself. Model family, quantization, context length, serving configuration, retrieval quality, language coverage, and evaluation set all matter. Open-weight families can be evaluated locally, but suitability is a measured use-case decision rather than a general claim about on-prem or hosted models.</p>
+<p>RAG can give a local model access to approved internal evidence. That grounding may improve a document-based task when retrieval returns the right current source, but it does not guarantee a correct answer. Compare candidate architectures on the same approved questions, sources, roles, latency conditions, and refusal cases.</p>
+<div class="callout">
+<p><strong>Common mistake 3: "The card has 24 GB of VRAM, so the model fits."</strong></p>
+<p>Weight size alone omits KV cache, runtime overhead, context length, batch shape, and concurrency. Test the intended prompt and output distributions under load, record peak memory and failures, and leave measured operating headroom. Cache quantization or shorter context can reduce memory use where the selected runtime supports them, with quality and latency re-evaluated.</p>
+<p><strong>Common mistake 4: "Four-bit quantization is automatically better because it is smaller."</strong></p>
+<p>Lower precision trades memory for task-dependent quality and performance. Treat formats such as <code>Q4_K_M</code> as candidates, then measure them on the approved retrieval and answer set. Do not infer a release threshold from format size alone.</p>
+</div>
+<h2 id="checklist">Decision and verification checklist</h2>
+<p>Record the accountable owner and acceptance evidence for each item before pilot release:</p>
 <ul>
-<li><strong>Model-import procedure — <em>and</em> the license.</strong> Weights
-        enter once, through a controlled one-way path (hash-verified media / a reviewed
-        inbound gate), nothing pulling from the internet at runtime. But read the license
-        <em>before</em> you build on the model, not after. "Open-weight" is not "open
-        source": several popular families ship community licenses with real strings —
-        usage thresholds, competitor and field-of-use restrictions, bans on training
-        other models. Getting that flagged by legal after you've shipped is a bad day.</li>
-<li><strong>GPU sizing, for real concurrency.</strong> Size to your actual
-        concurrency and context length, not a headline number — and remember the KV
-        cache, not just the weights (see the OOM story above). A single modern
-        data-center GPU already runs a capable mid-size open model.</li>
-<li><strong>A hard no-egress boundary.</strong> The serving host has no route
-        out. <em>Verify</em> it with a packet capture — assume, and you don't have an
-        air gap, you have a hope.</li>
-<li><strong>Access control &amp; audit.</strong> Who can query, which documents
-        each role may retrieve, and a log of every call. The closed loop only counts if
-        it's also an accountable one.</li>
-<li><strong>Data classification up front.</strong> Decide what's allowed into
-        the RAG index before you index it, not after someone asks an awkward question.</li>
+<li><strong>Boundary and transfers.</strong> Name the selected pattern, allowed flows, denied flows, import/export process, and recovery path.</li>
+<li><strong>Artifacts and licenses.</strong> Keep a bill of materials, hashes, scan results, provenance, and specialist review of applicable license terms.</li>
+<li><strong>Capacity.</strong> Declare model, quantization, GPU, context, concurrency, latency objective, and load-test result.</li>
+<li><strong>Identity and retrieval authorization.</strong> Test who can query, which sources each role can retrieve, administrator access, and audit retention.</li>
+<li><strong>Data governance.</strong> Record allowed classifications, source owners, retention, deletion, current-revision rules, and incident handling.</li>
 </ul>
+<div class="beginner-example"><span class="note-k">Boundary tabletop exercise</span><p>Select one prompt and trace every copy: client memory, gateway log, retrieval query, source chunk, model request, response, audit store, backup, and administrator view. <b>Pass</b> when each copy has an approved location, retention rule, access owner, and observed route consistent with the worksheet. <b>Stop</b> on an unknown sink, unapproved DNS or HTTP attempt, missing import record, or a write-capable plant tool without its named approving owner. Limit: a tabletop plus packet capture samples known paths; it does not prove the absence of every covert or future path.</p></div>
 <div class="callout">
-<p><strong>흔한 실수 ⑤: "라이브러리 다 깔았는데 왜 안 뜨지" — CUDA/드라이버 지옥.</strong></p>
-<p>❌ 폐쇄망 서버의 드라이버·CUDA 버전을 확인 안 하고 서빙 스택을 올리는 것.
-        → vLLM 같은 서빙 엔진의 GitHub 이슈가 이걸로 도배돼 있고(CUDA 12로 빌드된 게
-        13 위에서 <code>libcudart.so.12</code> 못 찾고 죽거나, 특정 NVIDIA 드라이버가
-        <code>--tensor-parallel-size</code>를 통째로 깨뜨리는 등), 저도 멀쩡한 코드가
-        폐쇄망 서버에서만 안 떠서 반나절을 태웠습니다. → ✅ 해결: 드라이버·CUDA·서빙
-        엔진 버전을 <em>사전에</em> 못 박아 검증하고, 멀티 GPU면 tensor-parallel 세팅이
-        실제 가시 GPU 수와 맞는지부터 확인. 폐쇄망에선 "일단 최신으로 업글"이 안 되니
-        버전을 처음부터 고정하는 게 답입니다.</p>
-<p><strong>흔한 실수 ⑥: RAG는 세웠는데 검색이 헛도는 것 — 임베딩 언어 미스매치.</strong></p>
-<p>❌ 영어권 예제 그대로 영어 위주 임베딩 모델을 쓰고 한국어 SOP를 인덱싱하는 것.
-        → 문서는 한국어인데 임베딩이 한국어를 제대로 못 잡으면, LLM이 아무리 좋아도
-        엉뚱한 걸 물어옵니다("답이 이상하다"의 범인이 사실 검색 단계인 경우가 많죠).
-        → ✅ 해결: <code>bge-m3</code>처럼 한국어 포함 다국어 검색이 검증된 임베딩을
-        쓰고, 반드시 <em>실제 우리 문서</em>로 검색 품질을 눈으로 확인한 뒤 넘어갑니다.</p>
+<p><strong>Common mistake 5: "Everything is installed, so why will it not start?" CUDA and driver mismatch.</strong></p>
+<p>Pin and validate the driver, accelerator runtime, serving engine, and model format together before import. Test cold start and multi-GPU visibility on representative hardware, and retain the previous compatible bundle for rollback.</p>
+<p><strong>Common mistake 6: RAG is running, but retrieval misses because the embedding language is wrong.</strong></p>
+<p>An English-centric embedder may miss Korean technical language. Evaluate multilingual candidates, such as <code>bge-m3</code>, against approved site documents and questions. A named model is an evaluation candidate, not a universal recommendation.</p>
 </div>
-<h3 id="snippet">Take the full course on this topic</h3>
-<p>This is the concept, not a deployment — but it shows the shape: local weights,
-      local retrieval, no network egress.</p>
+<h3 id="snippet">Local retrieval code sketch</h3>
+<p>This code sketches local weights and local retrieval. Network policy, telemetry controls, authentication, logging, and verification are outside the snippet.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -365,7 +264,7 @@
           </span>
 <button class="copy-btn" data-copy="" type="button">Copy</button>
 </div>
-<pre><code><span class="tok-com"># Everything below runs inside the air gap — no outbound calls.</span>
+<pre><code><span class="tok-com"># Local paths are shown; network isolation is enforced outside this snippet.</span>
 <span class="tok-kw">from</span> langchain_community.embeddings <span class="tok-kw">import</span> HuggingFaceEmbeddings
 <span class="tok-kw">from</span> langchain_community.vectorstores <span class="tok-kw">import</span> Chroma
 
@@ -374,25 +273,18 @@ kb    = <span class="tok-fn">Chroma</span>(persist_directory=<span class="tok-st
 
 <span class="tok-kw">def</span> <span class="tok-fn">answer</span>(question, k=<span class="tok-num">4</span>):
     hits = kb.<span class="tok-fn">similarity_search</span>(question, k=k)        <span class="tok-com"># retrieve from sealed docs</span>
-    <span class="tok-kw">return</span> llm.<span class="tok-fn">invoke</span>(<span class="tok-fn">prompt</span>(question, hits))       <span class="tok-com"># on-prem LLM, zero egress</span></code></pre>
+    <span class="tok-kw">return</span> llm.<span class="tok-fn">invoke</span>(<span class="tok-fn">prompt</span>(question, hits))       <span class="tok-com"># on-prem LLM endpoint</span></code></pre>
 </figure>
 <hr/>
 <h2 id="next">Where this series goes next</h2>
-<p>This piece is the map, not the manual — and honestly, half of it is the map of
-      where I already stepped on rakes so you don't have to. The one thing I want to
-      leave inarguable: if process know-how is the asset, the LLM belongs inside the
-      fence. From here this Journal gets concrete — <strong>serving open-weight models
-      behind the air gap, building RAG over your SOPs and equipment logs, and wiring
-      agents to internal systems</strong>, all in real Python, scars included. If you'd
-      rather see the whole architecture laid out slide by slide first, the deck below
-      walks it end to end.</p>
+<p>The next articles cover serving open-weight models, building RAG over controlled documents, and connecting agents to internal systems. Carry this worksheet into <a href="onprem-llm-serving.html">the serving guide</a>: model startup, metrics, package import, and client calls all become rows to verify. A later change in data classification, integration, provider, or transfer path should reopen the security review.</p>
 </div>
 <!-- deep-dive deck link -->
 <aside class="deck-link">
 <div class="dl-text">
 <span class="eyebrow">Go deeper</span>
 <h3>Take the full course on this topic</h3>
-<p>This article is a field note. The interactive deck walks the whole closed-loop design — import, serving, RAG, and MCP tools — with diagrams and worked examples. 심화 자료로 이어집니다.</p>
+<p>This article is a field note. The interactive deck walks the whole closed-loop design — import, serving, RAG, and MCP tools — with diagrams and worked examples for a deeper treatment.</p>
 </div>
 <a class="btn btn-primary" href="../../watsonx/index.html">Open the deck <span aria-hidden="true" class="arw">→</span></a>
 </aside>
@@ -400,8 +292,8 @@ kb    = <span class="tok-fn">Chroma</span>(persist_directory=<span class="tok-st
 <div class="share">
 <span class="lbl">Share</span>
 <button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
-<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
-<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Fwhy-air-gapped-llm-manufacturing.html" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Fwhy-air-gapped-llm-manufacturing.html" rel="noopener" target="_blank">LinkedIn</a>
 </div>
 <!-- author bio card (E-E-A-T) -->
 <aside class="author-card">
@@ -413,7 +305,7 @@ kb    = <span class="tok-fn">Chroma</span>(persist_directory=<span class="tok-st
         process engineer working on deposition. Builds air-gapped LLM, RAG, and agent
         systems — plus reinforcement-learning and anomaly-detection tooling — for the
         fab. Writes here about turning process know-how into an on-prem knowledge asset
-        that never leaves the network.</p>
+        under an approved network and data boundary.</p>
 <a href="../about.html">More about the author →</a>
 </div>
 </aside>
@@ -435,45 +327,35 @@ kb    = <span class="tok-fn">Chroma</span>(persist_directory=<span class="tok-st
 </article>
 </main>
 <footer class="site-foot">
-<div class="wrap">
-<div class="foot-top">
-<div class="foot-lead">
-<h2>Keep the know-how in. Keep the cloud out.</h2>
-<p>Everything here, courses and journal alike, is free to read with no signup.</p>
-</div>
-<div class="foot-nav-cols">
-<div class="foot-col">
-<h4>Explore</h4>
-<a href="../../index.html">Hub home</a>
-<a href="../../index.html#courses">All courses</a>
-<a href="../index.html">Journal</a>
-</div>
-<div class="foot-col">
-<h4>Courses</h4>
-<a href="../../overview/index.html">Fab AI</a>
-<a href="../../watsonx/index.html">Air-gapped LLM</a>
-<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
-</div>
-<div class="foot-col">
-<h4>Site</h4>
-<a href="../about.html">About</a>
-<a href="../contact.html">Contact</a>
-<a href="../privacy.html">Privacy</a>
-<a href="../terms.html">Terms</a>
-</div>
-</div>
-</div>
-<div class="foot-bottom">
-<div class="foot-brand">
-<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</div>
-<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
-</div>
-</div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
 </footer>
 <script>
 (function(){
@@ -499,5 +381,6 @@ kb    = <span class="tok-fn">Chroma</span>(persist_directory=<span class="tok-st
   });
 })();
 </script>
+<script src="../assets/theme.js"></script>
 </body>
 </html>

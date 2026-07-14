@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automotive AI vs FAB AI: same factory word, different physics - AI Edu Archive Journal</title>
+<meta name="description" content="A practical comparison of automotive manufacturing AI and semiconductor FAB AI: VIN vs wafer genealogy, takt time, robot cells, vision inspection, MES/QMS, safety, and agents.">
+<meta name="author" content="AI Edu Archive">
+<meta name="theme-color" content="#FAF9F5">
+<link rel="canonical" href="https://ai-edu-archive.pages.dev/blog/articles/automotive-ai-vs-fab-ai.html">
+
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Automotive AI vs FAB AI: same factory word, different physics - AI Edu Archive Journal">
+<meta property="og:description" content="A practical comparison of automotive manufacturing AI and semiconductor FAB AI: VIN vs wafer genealogy, takt time, robot cells, vision inspection, MES/QMS, safety, and agents.">
+<meta property="og:site_name" content="AI Edu Archive">
+<meta property="og:url" content="https://ai-edu-archive.pages.dev/blog/articles/automotive-ai-vs-fab-ai.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="article:published_time" content="2026-07-13">
+<meta property="article:author" content="AI Edu Archive">
+<meta property="article:section" content="Automotive AI & Robotics">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Automotive AI vs FAB AI: same factory word, different physics - AI Edu Archive Journal">
+<meta name="twitter:description" content="A practical comparison of automotive manufacturing AI and semiconductor FAB AI: VIN vs wafer genealogy, takt time, robot cells, vision inspection, MES/QMS, safety, and agents.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Automotive AI vs FAB AI: same factory word, different physics","description":"A practical comparison of automotive manufacturing AI and semiconductor FAB AI: VIN vs wafer genealogy, takt time, robot cells, vision inspection, MES/QMS, safety, and agents.","inLanguage":"en","datePublished":"2026-07-13","dateModified":"2026-07-13","author":{"@type":"Person","name":"AI Edu Archive"},"publisher":{"@type":"Organization","name":"AI Edu Archive"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ai-edu-archive.pages.dev/blog/articles/automotive-ai-vs-fab-ai.html"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/blog.css">
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/automotive-ai-vs-fab-ai.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/automotive-ai-vs-fab-ai.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/automotive-ai-vs-fab-ai.html">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="automotive-ai-vs-fab-ai.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/automotive-ai-vs-fab-ai.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<article data-cat="auto mfg agents rag" itemscope itemtype="https://schema.org/Article">
+  <div class="article-hero"><div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span class="sep" aria-hidden="true">/</span><a href="../automotive-ai-robotics.html">Automotive AI & Robotics</a><span class="sep" aria-hidden="true">/</span><span aria-current="page">Automotive AI vs FAB AI</span></nav><div class="post-meta"><span class="cat-tag">Automotive AI & Robotics</span><span class="post-dot"></span><time datetime="2026-07-13" itemprop="datePublished">Jul 13, 2026</time><span class="post-dot"></span><span class="rt">14 min read</span></div><h1 itemprop="headline">Automotive AI vs FAB AI: same factory word, different physics</h1><div class="byline"><span class="avatar" aria-hidden="true">AE</span><span class="who"><b itemprop="author">AI Edu Archive</b><span>Applied AI, robotics, manufacturing systems</span></span></div></div></div>
+  <nav class="toc" aria-label="Table of contents"><div class="toc-title">On this page</div><ol><li><a href="#short-answer">The short answer</a></li><li><a href="#control-unit">Unit of control</a></li><li><a href="#data">Data shape</a></li><li><a href="#robotics">Robotics changes the problem</a></li><li><a href="#agents">How agents should differ</a></li><li><a href="#series">Series roadmap</a></li></ol></nav>
+  <div class="article-body" itemprop="articleBody">
+        <div class="field-story">
+      <span class="note-k">Comparison boundary</span>
+      <p>This is a cross-domain engineering comparison, not a claim of automotive production experience. The station case below is constructed and must be reviewed by an automotive manufacturing SME before it is used for architecture, safety, quality, or line-control decisions.</p>
+    </div>
+
+    <div class="reader-shortcut">
+      <span class="note-k">Review question</span>
+      <p>For each proposed use case, identify the controlled unit, event clock, authoritative record, action owner, safe-state decision, and evidence needed for release. The answers differ between wafer processing and vehicle assembly.</p>
+    </div>
+
+<p><span class="lead-in">Put two handoff sheets side by side.</span> The fab sheet names a chamber, recipe revision, step trace, wafer, and later metrology. The assembly sheet names a VIN, station, robot program, fixture state, torque or vision result, Andon event, and takt window. Both are manufacturing evidence, but they describe different physics and different authority paths.</p>
+    <figure class="visual-figure media-figure"><div class="diagram"><img src="../assets/photos/ford-copenhagen-assembly-1923.jpg" alt="Ford vehicles moving through the Copenhagen assembly line in 1923" loading="lazy" decoding="async"></div><figcaption><span class="figure-label">Photo.</span> Even this early line makes the automotive data grain visible: a physical vehicle advances through fixed work positions. Modern stations add robots, PLCs, scans, and digital records, but product flow remains the organizing axis. Photo: Peter Elfelt, 1923, via <a class="link" href="https://commons.wikimedia.org/wiki/File:Ford_assembly_line_in_Copenhagen_1923.jpg">Wikimedia Commons</a>, public domain. Local copy: Wikimedia 1,280 px preview, otherwise unmodified.</figcaption></figure>
+    <div class="beginner-example"><span class="note-k">One-minute model</span><p>A fab engineer asks, "Which chamber, recipe step, trace shape, wafer, and metrology signal changed?" An automotive manufacturing engineer asks, "Which VIN, part, station, robot cell, torque result, vision image, operator action, and takt window changed?" Same AI vocabulary, different plant grammar.</p></div>
+    <h2 id="short-answer">Where the architectures part company</h2>
+    <p>Keep the data and control models separate even when the platform layer is shared. FAB AI is anchored in process state, equipment behavior, and delayed measurement. Automotive AI is anchored in product flow, station cadence, robot-cell state, and quality genealogy. RAG, on-prem model serving, MCP, knowledge graphs, and evaluation harnesses can serve both, but their filters, tools, and approval owners need domain-specific contracts.</p>
+    <div class="tbl-wrap"><table class="tbl"><caption>Why the content should split.</caption><thead><tr><th>Question</th><th>FAB AI</th><th>Automotive AI</th></tr></thead><tbody><tr><td class="name">Control unit</td><td>Wafer, lot, chamber, recipe step.</td><td>VIN, part, station, robot cell, takt window.</td></tr><tr><td class="name">Main risk</td><td>Yield loss, excursion, chamber drift, scrap.</td><td>Line stop, wrong part, torque escape, unsafe motion, recall risk.</td></tr><tr><td class="name">Data center</td><td>FDC traces, SPC, metrology, APC, equipment events.</td><td>PLC tags, robot logs, vision images, torque records, Andon, QMS, EOL test.</td></tr><tr><td class="name">Best first AI use</td><td>Fault detection, virtual metrology, recipe/context retrieval.</td><td>Vision inspection, robot-cell anomaly review, diagnostic RAG, takt-aware escalation.</td></tr></tbody></table></div>
+    <h2 id="control-unit">Unit of control</h2>
+    <p>In FAB work, the mental map often starts with the tool. The chamber runs a recipe. The wafer experiences process steps. Metrology later tells the team whether the hidden process behaved. That is why trace alignment, golden runs, chamber matching, recipe revision, and process context matter so much.</p>
+    <p>In automotive assembly, the mental map starts with product flow. A vehicle body, module, or part moves through stations. Robots weld, seal, paint, lift, place, tighten, scan, and inspect. The line has cadence. If one station loses rhythm, downstream stations feel it quickly.</p>
+    <div class="fab-voice"><span class="note-k">Evidence contrast</span><p>A fab review may begin with a trace shift that precedes metrology change. An automotive station review may begin with a nominal pass accompanied by longer cycle time, a changed torque curve, lower vision confidence, or repeated operator correction. These are example review patterns, not observed plant events.</p></div>
+    <h2 id="data">Data shape</h2>
+    <p>The data difference is the reason the content should not be merged. FAB data is often dense time-series plus recipe context. Automotive data is more like an event chain around a physical object: the VIN entered station 120, robot 4 executed program B, weld nugget signal was borderline, operator confirmed rework, torque tool passed, EOL test later raised a diagnostic symptom.</p>
+    <p>That means automotive AI content needs to teach readers how to build a plant evidence timeline, not only a model input table.</p>
+    <ul>
+      <li><b>VIN genealogy:</b> which parts, suppliers, lots, stations, tools, and test results belong to one vehicle.</li>
+      <li><b>Station events:</b> start, complete, blocked, bypassed, reworked, held, released.</li>
+      <li><b>Robot-cell evidence:</b> program ID, path segment, servo load, weld current, gun wear, fixture state, safety state.</li>
+      <li><b>Quality evidence:</b> inspection image, defect class, control plan item, FMEA linkage, 8D action, containment status.</li>
+    </ul>
+    <figure class="visual-figure media-figure media-figure--diagram" id="data-grain-figure"><img src="../assets/visuals/automotive-fab-data-grain.svg" alt="Automotive VIN flow compared with FAB wafer and chamber route data" loading="lazy" decoding="async"><figcaption><span class="figure-label">Figure.</span> Automotive evidence follows a VIN through fixed stations; FAB evidence follows wafers and lots through tools, chambers, recipe steps, and delayed metrology. Shared infrastructure does not require a shared data contract.</figcaption></figure>
+    <h2 id="robotics">Robotics changes the problem</h2>
+    <p>Automotive robotics is not only a data problem. It is an embodied automation problem. A robot cell has motion, zones, fixtures, sensors, people, and maintenance modes. An AI system that merely predicts "abnormal" is not enough. It must explain whether the signal is safe to act on, who owns the action, and whether the line can absorb the decision.</p>
+    <p>For example, a body-shop welding robot may show a slowly rising servo load and a small increase in weld defects. An anomaly score alone does not select an action. The review also needs gun wear, fixture condition, recent maintenance, affected VIN range, containment plan, and whether an approved stop can be used for inspection.</p>
+    <div class="field-note"><span class="note-k">Illustrative scenario: maintenance counters complicate the drift signal</span><p>Assume station <code>BS-120</code> joins a constructed body-side example with robot <code>R4</code>. During a hypothetical 20-minute window, median cycle time moves from 54 to 58 seconds, weld-gun servo load rises 9%, and three of 40 inspection images fall below an example confidence threshold of 0.82. Those images initially point the review toward vision-model drift. Fixture state and gun-maintenance counters then show that the image change overlaps a mechanical-state change, so model drift remains unproven. These values are not plant measurements or recommended limits.</p><p>The useful output is an evidence packet, not a robot command: VIN range, program revision, fixture state, weld-current trace, gun-maintenance counter, image IDs, operator interventions, and upstream/downstream station status. Production decides whether takt can absorb an inspection; quality defines containment and affected-product review; maintenance checks gun and fixture condition; the safety owner controls access and motion state. The AI may rank hypotheses and draft the packet, but state changes stay on approved PLC, safety, robot-controller, and stop/restart paths.</p><p><b>Pass:</b> VIN-to-event joins are complete for the reviewed window, timestamps meet the site's synchronization rule, safety state is present, and replay returns the same evidence set. <b>Stop:</b> do not recommend containment scope when VIN membership, program revision, or safety state is unresolved. <b>Limit:</b> the exercise excludes automatic line stop, robot motion, quality disposition, and restart.</p></div>
+    <h3>Automotive SME review gate</h3>
+    <p>Before adoption, an automotive manufacturing SME should verify the station vocabulary, event sequence, takt assumptions, ownership split, containment path, and interfaces to the control plan, PFMEA, QMS, MES, Andon, robot controller, PLC, and safety PLC. A safety specialist must separately review any safety-related claim; SME review of this example does not certify a system.</p>
+    <h2 id="agents">How agents should differ</h2>
+    <p>A fab agent and an automotive agent can share MCP, RAG, approval gates, and audit logs. Their permissions should differ.</p>
+    <div class="tbl-wrap"><table class="tbl"><caption>Agent permission examples.</caption><thead><tr><th>Agent action</th><th>FAB posture</th><th>Automotive posture</th></tr></thead><tbody><tr><td class="name">Read evidence</td><td>Recent alarms, traces, recipe revision, metrology.</td><td>VIN route, station events, robot logs, vision result, Andon history.</td></tr><tr><td class="name">Suggest action</td><td>Review chamber, hold lot, check PM state.</td><td>Escalate station, inspect affected VINs, prepare containment.</td></tr><tr><td class="name">Write action</td><td>Usually gated by process owner and MES control.</td><td>Usually gated by line owner, quality owner, and safety owner.</td></tr><tr><td class="name">Danger zone</td><td>Recipe, dispatch, hold/release, engineering change.</td><td>Robot motion, safety bypass, line stop/restart, quality disposition.</td></tr></tbody></table></div>
+    <p>The important phrase is <b>takt-aware</b>. An automotive agent cannot behave like a slow desk assistant if it is supporting the shop floor. It must know which answers are for immediate escalation, which are for the next shift handover, and which are for an engineering investigation after production stabilizes.</p>
+    <h2 id="series">Series roadmap</h2>
+    <p>The automotive series should start with concepts, then move into buildable artifacts:</p>
+    <ol>
+      <li><b>Automotive data 101:</b> PLC tags, robot logs, vision images, torque records, QMS, PLM, MES, EOL test.</li>
+      <li><b>VIN genealogy vs wafer genealogy:</b> traceability as the backbone of retrieval and quality investigation.</li>
+      <li><b>Takt-aware agents:</b> how to design agent responses around line cadence and approval gates.</li>
+      <li><b>Robot cell AI architecture:</b> camera, robot controller, PLC, safety PLC, MES, historian, and audit log.</li>
+      <li><b>Vision inspection:</b> golden samples, false alarms, defect taxonomy, rework loops, and model drift.</li>
+      <li><b>Safety and quality checklist:</b> robot safety, functional safety, IATF 16949 vocabulary, FMEA, control plan, and OT security.</li>
+    </ol>
+    <p>Use this comparison as a routing decision, not a maturity score. For the next layer of evidence, read <a class="link" href="vin-genealogy-vs-wafer-genealogy.html">VIN genealogy vs wafer genealogy</a>; it shows how the two domains build containment sets from their own event models.</p>
+  </div>
+<aside class="article-endcap" aria-label="Article information">
+  <p>Cross-domain reference with a constructed station example; automotive manufacturing and safety SME review is required before operational use.</p>
+  <div class="article-endcap-actions">
+    <a href="../index.html">Back to Journal</a>
+    <a href="../ai-categories.html">Browse AI categories</a>
+  </div>
+</aside>
+</article>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
+</footer>
+<script src="../assets/theme.js"></script>
+</body>
+</html>

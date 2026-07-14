@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Python, LangChain & LangGraph - AI Edu Archive Journal</title><meta name="description" content="Python, LangChain, LangGraph 구현 아카이브: prompt, retriever, tool, state graph, agent workflow."><link rel="canonical" href="https://ai-edu-archive.pages.dev/blog/ko/categories/python-langchain-langgraph.html"><link rel="stylesheet" href="../../assets/blog.css">
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/categories/python-langchain-langgraph.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/categories/python-langchain-langgraph.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/categories/python-langchain-langgraph.html">
+</head>
+<body><a class="skip-link" href="#main">본문으로 건너뛰기</a><header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="../../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="주요 메뉴">
+      <a href="../../../index.html#courses">강의</a>
+      <a href="../index.html" aria-current="page">글</a>
+      <a href="../learning-paths.html">학습 경로</a>
+      <a href="../search.html">검색</a>
+      <a href="../portfolio.html">포트폴리오</a>
+      <a href="../about.html">소개</a>
+      <div class="language-switch" aria-label="언어 선택">
+        <a href="../../categories/python-langchain-langgraph.html" lang="en" title="English">EN</a>
+        <a href="python-langchain-langgraph.html" lang="ko" aria-current="true" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
+</header><main id="main">
+<section class="category-archive"><div class="wrap archive-layout"><div class="archive-main"><nav class="archive-breadcrumb"><a href="../ai-categories.html">AI</a><span>/</span><span>Python, LangChain & LangGraph</span></nav><div class="archive-titlebar"><h1>Python, LangChain & LangGraph</h1><span class="archive-count">5개 글</span></div><p class="archive-intro">prompt, model, retriever, tool, state graph, agent workflow를 실제 구현 관점에서 읽고 싶은 독자를 위한 카테고리입니다.</p>
+    <div class="hub-voice">
+      <span class="note-k">글을 고르기 전에</span>
+      <p>이 글 묶음은 피해야 할 실수의 종류별로 나눴습니다. 첫 글로 방향을 잡고, 그 다음에는 지금 본인 시스템의 failure mode와 가장 닮은 글로 바로 이동하세요. 발행일 순서로 읽는 것보다 대개 빠릅니다.</p>
+    </div>
+
+<ol class="archive-post-list">
+<li><a class="archive-post-card" href="../articles/lang-modules-implementation-guide.html"><span class="archive-thumb">Code</span><span><span class="archive-meta"><span class="cat-tag">Guide</span></span><h2>Lang Modules Implementation Guide</h2><p>prompt, parser, retriever, tool 등 LLM application의 부품을 한 번에 잡는 구현 지도입니다.</p></span></a></li>
+<li><a class="archive-post-card" href="../articles/langchain-core-explained.html"><span class="archive-thumb">Core</span><span><span class="archive-meta"><span class="cat-tag">LangChain</span></span><h2>LangChain Core Explained</h2><p>chain, message, runnable, prompt, model call이 현재 LangChain 스타일에서 어떻게 맞물리는지 설명합니다.</p></span></a></li>
+<li><a class="archive-post-card" href="../articles/langchain-rag-components.html"><span class="archive-thumb">RAG</span><span><span class="archive-meta"><span class="cat-tag">검색</span></span><h2>LangChain RAG Components</h2><p>retriever, loader, splitter, embedding, vector store, prompt, evaluation을 구현 흐름으로 연결합니다.</p></span></a></li>
+<li><a class="archive-post-card" href="../articles/langchain-tools-agents.html"><span class="archive-thumb">Tools</span><span><span class="archive-meta"><span class="cat-tag">Agent</span></span><h2>LangChain Tools and Agents</h2><p>tool call이 어떻게 동작하고 어디서 실패하는지, 그 주변에 어떤 통제 패턴이 필요한지 다룹니다.</p></span></a></li>
+<li><a class="archive-post-card" href="../articles/langgraph-stateful-workflows.html"><span class="archive-thumb">Graph</span><span><span class="archive-meta"><span class="cat-tag">LangGraph</span></span><h2>LangGraph Stateful Workflows</h2><p>state machine, branching, retry, memory, explicit control flow로 Agent application을 구성하는 방법입니다.</p></span></a></li>
+</ol></div><aside class="archive-sidebar"><section class="sidebar-box"><h2>Menu</h2><ul class="sidebar-list"><li><a href="../ai-categories.html"><span>AI</span><small>전체</small></a></li></ul><ul class="sidebar-children"><li><a href="automotive-ai-robotics.html"><span>자동차 AI & 로봇</span><small>4</small></a></li><li><a href="fab-ai-foundations.html"><span>FAB AI 기초</span><small>4</small></a></li><li><a href="rag-knowledge-systems.html"><span>RAG & 지식 시스템</span><small>6</small></a></li><li><a href="agents-mcp-controls.html"><span>Agent, MCP & 제어</span><small>4</small></a></li><li><a href="onprem-llm-operations.html"><span>온프렘 LLM 운영</span><small>4</small></a></li><li><a href="python-langchain-langgraph.html" aria-current="page"><span>Python, LangChain & LangGraph</span><small>5</small></a></li></ul></section><section class="sidebar-box"><h2>추천 순서</h2><ol class="reading-order"><li>implementation guide를 먼저 봅니다.</li><li>LangChain core와 RAG를 읽습니다.</li><li>state가 중요해질 때 LangGraph로 갑니다.</li></ol></section></aside></div></section></main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>누구나 볼 수 있는 실용적인 AI 교육 자료입니다.</h2>
+        <p>현장에서 쓸 수 있는 AI 시스템을 위한 강의, 글, 실전 기록을 모았습니다.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>둘러보기</h4>
+          <a href="../../../index.html#courses">강의</a>
+          <a href="../index.html">글</a>
+          <a href="../learning-paths.html">학습 경로</a>
+          <a href="../search.html">검색</a>
+          <a href="../portfolio.html">포트폴리오</a>
+        </div>
+        <div class="foot-col">
+          <h4>사이트</h4>
+          <a href="../about.html">소개</a>
+          <a href="../contact.html">연락처</a>
+          <a href="../privacy.html">개인정보 처리방침</a>
+          <a href="../terms.html">이용약관</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · 한국어와 영어로 제공하는 AI 교육</span>
+    </div>
+  </div>
+</footer><script src="../../assets/theme.js"></script>
+</body></html>

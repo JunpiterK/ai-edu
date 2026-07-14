@@ -1,25 +1,24 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 
 <html lang="en">
 <head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- ══ SEO ══════════════════════════════════════════════════════════ -->
 <title>A knowledge graph for process know-how - AI Edu Archive Journal</title>
-<meta content="Turn fab process know-how into a queryable knowledge graph with RDF triples, TBox/ABox, reused ontologies, and PROV-O provenance for audit." name="description"/>
+<meta content="Model a hypothetical process excursion with SQL/RDF tradeoffs, SHACL source controls, and observation-level PROV-O provenance." name="description"/>
 <meta content="AI Edu Archive" name="author"/>
 <meta content="#FAF9F5" name="theme-color"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/knowledge-graph-process.html" rel="canonical"/>
-<link href="https://ai-edu-archive.example.com/blog/ko/articles/knowledge-graph-process.html" hreflang="ko" rel="alternate"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/knowledge-graph-process.html" hreflang="x-default" rel="alternate"/>
+<link href="https://ai-edu-archive.pages.dev/blog/articles/knowledge-graph-process.html" rel="canonical"/>
+
 <meta content="index,follow" name="robots"/>
 <!-- Open Graph -->
 <meta content="article" property="og:type"/>
 <meta content="A knowledge graph for process know-how - AI Edu Archive Journal" property="og:title"/>
-<meta content="Turn fab process know-how into a queryable knowledge graph with RDF triples, TBox/ABox, reused ontologies, and PROV-O provenance for audit." property="og:description"/>
+<meta content="Model a hypothetical process excursion with SQL/RDF tradeoffs, SHACL source controls, and observation-level PROV-O provenance." property="og:description"/>
 <meta content="AI Edu Archive" property="og:site_name"/>
-<meta content="https://ai-edu-archive.example.com/blog/articles/knowledge-graph-process.html" property="og:url"/>
+<meta content="https://ai-edu-archive.pages.dev/blog/articles/knowledge-graph-process.html" property="og:url"/>
 <meta content="en_US" property="og:locale"/>
 <meta content="ko_KR" property="og:locale:alternate"/>
 <meta content="2026-07-04" property="article:published_time"/>
@@ -27,66 +26,64 @@
 <meta content="RAG" property="article:section"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="A knowledge graph for process know-how - AI Edu Archive Journal" name="twitter:title"/>
-<meta content="Turn fab process know-how into a queryable knowledge graph with RDF triples, TBox/ABox, reused ontologies, and PROV-O provenance for audit." name="twitter:description"/>
+<meta content="Model a hypothetical process excursion with SQL/RDF tradeoffs, SHACL source controls, and observation-level PROV-O provenance." name="twitter:description"/>
 <!-- JSON-LD: Article schema -->
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "A knowledge graph for process know-how",
-  "description": "Turn fab process know-how into a queryable knowledge graph with RDF triples, TBox/ABox, reused ontologies, and PROV-O provenance for audit.",
+  "description": "Model a hypothetical process excursion with SQL/RDF tradeoffs, SHACL source controls, and observation-level PROV-O provenance.",
   "inLanguage": "en",
-  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "image": "https://ai-edu-archive.pages.dev/blog/assets/visuals/article-visual-template.svg",
   "datePublished": "2026-07-04",
   "dateModified": "2026-07-04",
   "author": {
     "@type": "Person",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html",
     "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
   },
   "publisher": {
     "@type": "Organization",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html"
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ai-edu-archive.example.com/blog/articles/knowledge-graph-process.html"
+    "@id": "https://ai-edu-archive.pages.dev/blog/articles/knowledge-graph-process.html"
   },
   "name": "A knowledge graph for process know-how",
-  "url": "https://ai-edu-archive.example.com/blog/articles/knowledge-graph-process.html"
+  "url": "https://ai-edu-archive.pages.dev/blog/articles/knowledge-graph-process.html"
 }</script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link href="../assets/blog.css" rel="stylesheet"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/knowledge-graph-process.html" hreflang="en" rel="alternate"/></head>
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/knowledge-graph-process.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/knowledge-graph-process.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/knowledge-graph-process.html">
+</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="nav" id="nav">
-<div class="wrap">
-<a aria-label="AI Edu Archive home" class="brand" href="../../index.html">
-<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</a>
-<nav aria-label="Primary" class="nav-links">
-<a href="../../index.html#courses">Courses</a>
-<a href="../index.html">Articles</a>
-<a href="../about.html">About</a>
-<div aria-label="Language selector" class="language-switch">
-<a aria-current="true" href="knowledge-graph-process.html" lang="en" title="English">🇺🇸 EN</a>
-<a href="../ko/articles/knowledge-graph-process.html" lang="ko" title="한국어">🇰🇷 KO</a>
-<a href="knowledge-graph-process.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a>
-<a href="knowledge-graph-process.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a>
-<a href="knowledge-graph-process.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a>
-<a href="knowledge-graph-process.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a>
-<a href="knowledge-graph-process.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a>
-</div>
-</nav>
-</div>
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="knowledge-graph-process.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/knowledge-graph-process.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
 </header>
 <main id="main">
 <article data-cat="rag" itemscope="" itemtype="https://schema.org/Article">
@@ -119,22 +116,30 @@
 <nav aria-label="Table of contents" class="toc">
 <div class="toc-title">On this page</div>
 <ol>
-<li><a href="#why">Why a graph, not a table</a></li>
+<li><a href="#why">Choosing SQL, RDF, or both</a></li>
 <li><a href="#triples">Triples: subject-predicate-object</a></li>
 <li><a href="#tbox-abox">TBox and ABox: schema vs. facts</a></li>
+<li><a href="#validate">SHACL and source controls</a></li>
 <li><a href="#reuse">Reuse standard ontologies</a></li>
-<li><a href="#prov">PROV-O: provenance for audit</a></li>
+<li><a href="#prov">PROV-O: observation-level provenance</a></li>
 <li><a href="#load">Loading triples with rdflib</a></li>
 <li><a href="#query">Querying with SPARQL</a></li>
 </ol>
 </nav>
 <div class="article-body" itemprop="articleBody">
-<p>A process spec is a web of relationships, not a list. An etch recipe belongs to a chamber; that chamber sits in an equipment group; a lot ran on it during a specific shift; a deviation report references both the lot and the recipe. Flatten that into a spreadsheet and the connections vanish. A knowledge graph keeps those relationships explicit and lets you ask questions that cross equipment, recipe, lot, report, and provenance boundaries.</p>
-<h2 id="why">Why a graph, not a table</h2>
-<p>Relational tables are excellent when the schema is fixed and the joins are known in advance. Fab know-how is rarely that tidy. New equipment types, failure modes, process relationships, and exception cases appear constantly. The interesting questions, such as which lots touched any chamber that later showed particle excursions, are exactly the multi-hop joins that tables handle poorly. A graph stores each fact as an edge, so adding a new relationship does not require altering a central schema. Because every node and edge has a stable identifier, the same entity can be described by many sources without collision.</p>
-<blockquote>A table answers the questions you designed it for. A graph answers the ones you have not thought of yet.</blockquote>
+    <div class="field-story">
+      <span class="note-k">Opening artifact: identity map</span>
+      <p><code>MES chamber=A-02</code>, <code>historian asset=CH_A2</code>, and <code>maintenance location=Bay7/A2</code> are three labels that may or may not describe one physical chamber. The graph should not merge them until a named source owner approves the mapping and its effective interval.</p>
+    </div>
+
+<p>The useful graph work begins before RDF syntax. Start from system-of-record rows: lot history, chamber events, recipe revisions, alarms, and metrology observations. Then make identifiers and relationships explicit while keeping the source record close enough for reconciliation.</p>
+<div class="reader-shortcut"><span class="note-k">Constructed identity check</span><p>Several lots were absent from a particle-excursion query, putting the SPARQL pattern under suspicion. The reconciliation report showed a more basic snag: two source aliases had been mapped to separate chamber nodes. After the source owner resolved the identity mapping, the query could be evaluated. The IDs and observations in this article are constructed, not plant records.</p></div>
+<h2 id="why">Choosing SQL, RDF, or both</h2>
+<p>Relational databases are a strong fit for controlled transactions, fixed constraints, aggregates, and well-understood joins. RDF is useful when multiple systems identify the same entities differently, relationships evolve, or a query must traverse several domains while retaining semantic labels and provenance. SQL engines can also execute multi-table joins well; RDF does not make an expensive or poorly indexed traversal disappear.</p>
+<p>A practical split is to keep MES and historian records in their governed relational stores, publish approved snapshots or change events, and build an RDF integration layer for cross-domain investigation. Use SQL for source reconciliation and quantitative calculations. Use SPARQL for relationship patterns and provenance traversal. Measure both against representative queries before choosing storage and indexing technology.</p>
+<blockquote>The design question is which representation preserves the required constraints, query performance, identifiers, and source trace for this workload.</blockquote>
 <h2 id="triples">Triples: subject-predicate-object</h2>
-<p>Everything in the graph is a triple: a subject, a predicate, and an object. Chamber-A ran Lot-4471. Lot-4471 usedRecipe Etch-Std-7. Each triple is one atomic fact, and facts compose into a graph by sharing subjects and objects. Read as sentences, a handful of triples already describes real fab structure.</p>
+<p>RDF statements use a subject, predicate, and object. In this illustrative scenario, Chamber-A ran Lot-4471 and Lot-4471 usedRecipe Etch-Std-7. Shared identifiers make the statements traversable. The identifiers still require mapping rules and source controls; matching labels alone is not entity resolution.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">turtle</span> fab_facts.ttl</span>
@@ -153,22 +158,31 @@ ex:Etch-Std-7  fab:hasStepPressure   <span class="tok-str">"5.0"</span>^^xsd:dec
 </figure>
 <p>Notice that ex:Lot-4471 appears as an object in one triple and a subject in the next. That shared identifier is the hinge that turns isolated facts into a traversable graph.</p>
 <h2 id="tbox-abox">TBox and ABox: schema vs. facts</h2>
-<p>A working ontology has two layers. The TBox, or terminology box, defines the types and relationships that are allowed: Chamber is a kind of Equipment, and ranLot connects a Chamber to a Lot. The ABox, or assertion box, holds the actual instances: Chamber-A is a Chamber, and it ran Lot-4471. Keeping them separate means every fact can be validated against the schema, and a reasoner can infer new facts. If ranLot has domain Equipment, then anything that ranLot something is automatically classified as equipment.</p>
+<p>A working ontology has two layers. The TBox, or terminology box, defines classes and relationships: Chamber is a kind of Equipment, and ranLot connects a Chamber to a Lot. The ABox holds instances and assertions. RDFS or OWL domains can infer a type; they do not, by themselves, reject bad input. Validation needs a constraint layer.</p>
 <ul>
 <li>TBox — fab:Chamber rdfs:subClassOf fab:Equipment. Defined once, changes rarely.</li>
 <li>ABox — ex:Chamber-A rdf:type fab:Chamber. Grows every shift as new lots, recipes, and reports arrive.</li>
 </ul>
+<h2 id="validate">SHACL and source controls</h2>
+<p>Use SHACL shapes to test required fields, cardinality, datatype, unit, and identifier patterns before publishing an ingest batch. For example, a process observation may require exactly one observed lot, one recipe revision, one source record, and one event timestamp. A failed shape goes to quarantine; it should not be silently repaired by the LLM or merged into the query graph.</p>
+<ul>
+<li><strong>Source allowlist:</strong> accept only registered exports or APIs with a named system owner.</li>
+<li><strong>Batch manifest:</strong> record source revision, extraction window, checksum, parser version, row count, and ingest run ID.</li>
+<li><strong>Identity and ACL mapping:</strong> resolve source principals and permission scopes before exposing graph results.</li>
+<li><strong>Reconciliation:</strong> compare accepted, rejected, and duplicate counts with the source snapshot, then retain the SHACL report.</li>
+</ul>
+<p>SHACL reports establish conformance to the declared shapes, not truth or regulatory acceptance. The source owner must resolve semantic conflicts and approve mappings.</p>
 <h2 id="reuse">Reuse standard ontologies</h2>
-<p>Do not invent vocabulary for concepts the world has already modelled. Reusing standard ontologies makes your graph interoperable, saves design effort, and, for a regulated fab, aligns provenance and measurement terms with language auditors already recognise. A few are worth knowing:</p>
+<p>Reuse established vocabulary where its semantics fit the source data and review requirements. Reuse can reduce mapping work, but an ontology name does not establish compliance or interoperability by itself. A few vocabularies are worth evaluating:</p>
 <ul>
 <li>rdf: / rdfs: — the base layer: typing with rdf:type, subclassing, labels, and comments.</li>
 <li>PROV-O (prov:) — the W3C provenance ontology: who or what generated a fact, from what, and when.</li>
 <li>QUDT or OM — units and quantities, so 5.0 is unambiguously 5.0 mTorr, not 5.0 anything.</li>
 <li>SOSA/SSN — sensors and observations, a natural fit for equipment telemetry and metrology.</li>
 </ul>
-<p>Define only what is genuinely fab-specific, such as Chamber, Recipe, Lot, ProcessStep, and ToolGroup, then reuse standard vocabularies for the rest. This keeps the model smaller, easier to audit, and easier to connect to other systems later.</p>
-<h2 id="prov">PROV-O: provenance for audit</h2>
-<p>In a regulated fab, a fact without a source is a liability. When the graph says a lot ran a particular recipe, an auditor will ask who says so, which record it came from, and when it was asserted. PROV-O answers exactly this with three core ideas: prov:Entity for the thing, prov:Activity for the process that produced it, and prov:Agent for the person or system responsible. Add predicates such as prov:wasGeneratedBy, prov:wasDerivedFrom, and prov:wasAttributedTo, and the graph stops being a claim and becomes evidence.</p>
+<p>Define fab-specific terms such as Chamber, Recipe, Lot, ProcessStep, and ToolGroup only after checking the source semantics. Document every mapping decision and its owner so later consumers know where two terms are equivalent, narrower, or merely similar.</p>
+<h2 id="prov">PROV-O: observation-level provenance</h2>
+<p>Attach provenance to the observation or assertion record, not only to a lot or recipe node. The statement that Lot-4471 used Etch-Std-7 may come from one MES event at a specific time; another statement about the same lot may come from metrology. Giving each observation its own identifier lets a query return the source record, extraction activity, responsible service, event time, and assertion time without implying that one source supports every fact about the entity.</p>
 <figure>
 <div aria-label="PROV-O provenance diagram for a fab triple" class="diagram">
 <svg aria-label="A fact entity was generated by an ingest activity, derived from a MES export, and attributed to an engineer agent" role="img" viewbox="0 0 720 260" width="100%">
@@ -206,10 +220,10 @@ ex:Etch-Std-7  fab:hasStepPressure   <span class="tok-str">"5.0"</span>^^xsd:dec
 <text fill="#8A5A46" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="540" y="146">wasAttributedTo</text>
 </svg>
 </div>
-<figcaption>Figure 1. PROV-O wraps each asserted fact with its generating activity, source record, and responsible agent.</figcaption>
+<figcaption>Figure 1. In this simplified diagram, an observation entity carries its generating activity, source record, and responsible service. A full implementation also records event and assertion times.</figcaption>
 </figure>
 <h2 id="load">Loading triples with rdflib</h2>
-<p>On an air-gapped host, rdflib is enough to build, store, and query a graph in pure Python. Bind your namespaces once, add triples with graph.add(...) as (subject, predicate, object) tuples, and attach PROV-O provenance to the facts you assert.</p>
+<p><code>rdflib</code> is enough for a local instructional graph. Bind namespaces, add triples, and create a separate observation entity for the provenance of the recipe-use assertion. Persistence, concurrency, authorization, backups, and query performance require separate evaluation.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> build_graph.py</span>
@@ -236,17 +250,20 @@ g.<span class="tok-fn">add</span>((EX[<span class="tok-str">"Lot-4471"</span>], 
 g.<span class="tok-fn">add</span>((EX[<span class="tok-str">"Etch-Std-7"</span>], FAB.stepPressure,
        <span class="tok-fn">Literal</span>(<span class="tok-str">"5.0"</span>, datatype=XSD.decimal)))
 
-<span class="tok-com"># --- PROV-O: where this fact came from ---</span>
-fact = EX[<span class="tok-str">"Lot-4471"</span>]
-g.<span class="tok-fn">add</span>((fact, PROV.wasGeneratedBy, EX[<span class="tok-str">"MES-Ingest-Run"</span>]))
-g.<span class="tok-fn">add</span>((fact, PROV.wasDerivedFrom, EX[<span class="tok-str">"MES-Export-9F"</span>]))
-g.<span class="tok-fn">add</span>((fact, PROV.wasAttributedTo, EX[<span class="tok-str">"Eng-K"</span>]))
+<span class="tok-com"># --- Observation-level PROV-O for the recipe-use assertion ---</span>
+obs = EX[<span class="tok-str">"Obs-RecipeUse-4471"</span>]
+g.<span class="tok-fn">add</span>((obs, RDF.type, FAB.ProcessObservation))
+g.<span class="tok-fn">add</span>((obs, FAB.observedLot, EX[<span class="tok-str">"Lot-4471"</span>]))
+g.<span class="tok-fn">add</span>((obs, FAB.observedRecipe, EX[<span class="tok-str">"Etch-Std-7"</span>]))
+g.<span class="tok-fn">add</span>((obs, PROV.wasGeneratedBy, EX[<span class="tok-str">"MES-Ingest-Run"</span>]))
+g.<span class="tok-fn">add</span>((obs, PROV.wasDerivedFrom, EX[<span class="tok-str">"MES-Export-9F"</span>]))
+g.<span class="tok-fn">add</span>((obs, PROV.wasAttributedTo, EX[<span class="tok-str">"MES-Ingest-Service"</span>]))
 
 g.<span class="tok-fn">serialize</span>(destination=<span class="tok-str">"fab_kg.ttl"</span>, format=<span class="tok-str">"turtle"</span>)</code></pre>
 </figure>
-<p>You can also ingest existing RDF instead of building every triple by hand. Point g.parse("export.ttl", format="turtle") at an MES export that already emits RDF, and the triples merge into the same graph.</p>
+<p>You can also parse existing RDF with <code>g.parse("export.ttl", format="turtle")</code>. Do so only after source registration, SHACL validation, and identifier reconciliation; parsing success is not an ingestion approval.</p>
 <h2 id="query">Querying with SPARQL</h2>
-<p>SPARQL is to a graph what SQL is to a table. You describe a pattern of triples with variables, and the engine returns every binding that matches. Because facts and provenance live in the same graph, one query can return both the answer and its source, which is what makes the result auditable.</p>
+<p>SPARQL matches graph patterns; SQL evaluates relational queries. Either can return joined data and provenance when the schema stores them. Here SPARQL is convenient because the investigation follows RDF relationships and returns the observation source in the same pattern.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> query_graph.py</span>
@@ -264,7 +281,9 @@ PREFIX prov: &lt;http://www.w3.org/ns/prov#&gt;
 SELECT ?chamber ?lot ?source WHERE {
     ?chamber fab:ranLot     ?lot .
     ?lot     fab:usedRecipe ?recipe .
-    OPTIONAL { ?lot prov:wasDerivedFrom ?source . }
+    ?obs fab:observedLot ?lot ;
+         fab:observedRecipe ?recipe .
+    OPTIONAL { ?obs prov:wasDerivedFrom ?source . }
     FILTER (?recipe = &lt;http://fab.local/id/Etch-Std-7&gt;)
 }
 """</span>
@@ -272,9 +291,10 @@ SELECT ?chamber ?lot ?source WHERE {
 <span class="tok-kw">for</span> row <span class="tok-kw">in</span> g.<span class="tok-fn">query</span>(q):
     <span class="tok-fn">print</span>(row.chamber, row.lot, row.source)   <span class="tok-com"># bound by variable name</span></code></pre>
 </figure>
-<p>You can pass namespaces programmatically with g.query(q, initNs={"fab": FAB}) instead of inline PREFIX lines, or pre-bind values with initBindings to parameterise reusable queries. The OPTIONAL block means lots without recorded provenance still appear. You can then flag them as ungoverned, which is precisely the gap an audit should surface.</p>
+<p>You can pass namespaces programmatically with <code>g.query(q, initNs={"fab": FAB})</code> or pre-bind values with <code>initBindings</code>. The required observation patterns exclude recipe links that lack a matching observation; the optional source exposes incomplete provenance separately. Decide whether to reject, quarantine, or display those results with the source owner.</p>
+<div class="tbl-wrap"><table class="tbl"><caption>One-relationship graph admission record.</caption><thead><tr><th>Check</th><th>Pass</th><th>Stop</th></tr></thead><tbody><tr><td class="name">Identity</td><td>Subject and object map to governed identifiers with owner and effective interval.</td><td>Label similarity is the only basis for a merge.</td></tr><tr><td class="name">Constraint</td><td>The assertion passes the relevant SHACL shape for cardinality, datatype, unit, and source.</td><td>The shape fails or the pipeline silently repairs input.</td></tr><tr><td class="name">Reconciliation</td><td>Accepted, rejected, duplicate, and quarantined counts balance to the source batch.</td><td>Any source row is unaccounted for.</td></tr><tr><td class="name">Limit</td><td>The record covers one predicate, source snapshot, mapping version, and query pattern.</td><td>Do not infer truth, completeness, or performance outside that scope.</td></tr></tbody></table></div>
 <hr/>
-<p>Start small: model three entity types, Chamber, Recipe, and Lot; reuse PROV-O for provenance from day one; and grow the ABox as data arrives. A graph built this way becomes the backbone for GraphRAG, where an LLM retrieves connected facts with their sources rather than loose text chunks. The full course walks the modelling, ontology choices, and query patterns end to end.</p>
+<p>Implement one source-to-observation mapping, its SHACL shape, and a reconciliation report, then compare the same investigation in SQL and SPARQL. A valid, sourced graph can still carry a wrong source observation or mapping. When the graph is ready to serve retrieval, continue with <a href="hybrid-retrieval-vector-graph.html">the vector-plus-graph pattern</a> and keep assertion provenance visible through fusion and reranking.</p>
 </div>
 <!-- deep-dive deck link -->
 <aside class="deck-link">
@@ -289,8 +309,8 @@ SELECT ?chamber ?lot ?source WHERE {
 <div class="share">
 <span class="lbl">Share</span>
 <button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
-<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
-<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Fknowledge-graph-process.html" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Fknowledge-graph-process.html" rel="noopener" target="_blank">LinkedIn</a>
 </div>
 <!-- author bio card (E-E-A-T) -->
 <aside class="author-card">
@@ -298,7 +318,7 @@ SELECT ?chamber ?lot ?source WHERE {
 <div class="a-body">
 <div class="k">About the author</div>
 <h3>AI Edu Archive</h3>
-<p>PhD in physics (IGZO / graphene semiconductor properties) and a semiconductor process engineer working on deposition. Builds air-gapped LLM, RAG, and agent systems, plus reinforcement-learning and anomaly-detection tooling, for the fab. Writes here about turning process know-how into an on-prem knowledge asset that never leaves the network.</p>
+<p>PhD in physics (IGZO / graphene semiconductor properties) and semiconductor process-improvement experience. Writes implementation notes about local AI and manufacturing data systems.</p>
 <a href="../about.html">More about the author</a>
 </div>
 </aside>
@@ -320,45 +340,35 @@ SELECT ?chamber ?lot ?source WHERE {
 </article>
 </main>
 <footer class="site-foot">
-<div class="wrap">
-<div class="foot-top">
-<div class="foot-lead">
-<h2>Free, in-depth, and open.</h2>
-<p>Everything here, courses and journal alike, is free to read with no signup.</p>
-</div>
-<div class="foot-nav-cols">
-<div class="foot-col">
-<h4>Explore</h4>
-<a href="../../index.html">Hub home</a>
-<a href="../../index.html#courses">All courses</a>
-<a href="../index.html">Journal</a>
-</div>
-<div class="foot-col">
-<h4>Courses</h4>
-<a href="../../overview/index.html">Fab AI</a>
-<a href="../../watsonx/index.html">Air-gapped LLM</a>
-<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
-</div>
-<div class="foot-col">
-<h4>Site</h4>
-<a href="../about.html">About</a>
-<a href="../contact.html">Contact</a>
-<a href="../privacy.html">Privacy</a>
-<a href="../terms.html">Terms</a>
-</div>
-</div>
-</div>
-<div class="foot-bottom">
-<div class="foot-brand">
-<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</div>
-<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
-</div>
-</div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
 </footer>
 <script>
 (function(){
@@ -383,5 +393,6 @@ SELECT ?chamber ?lot ?source WHERE {
   });
 })();
 </script>
+<script src="../assets/theme.js"></script>
 </body>
 </html>

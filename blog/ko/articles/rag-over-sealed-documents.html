@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
- ∨ SEO ​ 
+<!-- SEO -->
 <title>폐쇄망 내부 문서 위에 RAG 구축하기 - AI Edu Archive 한국어</title>
-<meta content="문서가 네트워크 밖으로 나가지 않는 상태에서 RAG를 구축하는 방법: ingestion, chunking, embedding, retrieval, local serving, source citation, 실전 tip." name="description"/>
+<meta content="문서가 네트워크 밖으로 나가지 않는 상태에서 RAG를 구축하는 방법: 인제션, 청킹, 임베딩, 검색, 로컬 서빙, 출처 인용, 실전 팁." name="description"/>
 <meta content="AI Edu Archive" name="author"/>
 <meta content="#FAF9F5" name="theme-color"/>
-<link href="https://ai-edu-archive.example.com/blog/ko/articles/rag-over-sealed-documents.html" rel="canonical"/><link href="https://ai-edu-archive.example.com/blog/articles/rag-over-sealed-documents.html" hreflang="en" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/ko/articles/rag-over-sealed-documents.html" hreflang="ko" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/articles/rag-over-sealed-documents.html" hreflang="x-default" rel="alternate"/>
+<link href="https://ai-edu-archive.pages.dev/blog/ko/articles/rag-over-sealed-documents.html" rel="canonical"/>
 <meta content="index,follow" name="robots"/>
- 오픈 그래프 
+<!-- Open Graph -->
 <meta content="article" property="og:type"/>
 <meta content="폐쇄망 내부 문서 위에 RAG 구축하기 - AI Edu Archive 한국어" property="og:title"/>
-<meta content="문서가 네트워크 밖으로 나가지 않는 상태에서 RAG를 구축하는 방법: ingestion, chunking, embedding, retrieval, local serving, source citation, 실전 tip." property="og:description"/>
+<meta content="문서가 네트워크 밖으로 나가지 않는 상태에서 RAG를 구축하는 방법: 인제션, 청킹, 임베딩, 검색, 로컬 서빙, 출처 인용, 실전 팁." property="og:description"/>
 <meta content="AI Edu Archive" property="og:site_name"/>
-<meta content="https://ai-edu-archive.example.com/blog/ko/articles/rag-over-sealed-documents.html" property="og:url"/>
+<meta content="https://ai-edu-archive.pages.dev/blog/ko/articles/rag-over-sealed-documents.html" property="og:url"/>
 <meta content="ko_KR" property="og:locale"/>
 <meta content="en_US" property="og:locale:alternate"/>
 <meta content="2026-07-04" property="article:published_time"/>
@@ -23,45 +24,45 @@
 <meta content="RAG" property="article:section"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="폐쇄망 내부 문서 위에 RAG 구축하기 - AI Edu Archive 한국어" name="twitter:title"/>
-<meta content="문서가 네트워크 밖으로 나가지 않는 상태에서 RAG를 구축하는 방법: ingestion, chunking, embedding, retrieval, local serving, source citation, 실전 tip." name="twitter:description"/>
- JSON-LD: 기사 스키마 
+<meta content="문서가 네트워크 밖으로 나가지 않는 상태에서 RAG를 구축하는 방법: 인제션, 청킹, 임베딩, 검색, 로컬 서빙, 출처 인용, 실전 팁." name="twitter:description"/>
+<!-- JSON-LD: 기사 스키마 -->
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "폐쇄망 내부 문서 위에 RAG 구축하기",
-  "description": "문서가 네트워크 밖으로 나가지 않는 상태에서 RAG를 구축하는 방법: ingestion, chunking, embedding, retrieval, local serving, source citation, 실전 tip.",
+  "description": "문서가 네트워크 밖으로 나가지 않는 상태에서 RAG를 구축하는 방법: 인제션, 청킹, 임베딩, 검색, 로컬 서빙, 출처 인용, 실전 팁.",
   "inLanguage": "ko",
-  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "image": "https://ai-edu-archive.pages.dev/blog/assets/visuals/article-visual-template.svg",
   "datePublished": "2026-07-04",
   "dateModified": "2026-07-04",
   "author": {
     "@type": "Person",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html",
     "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
   },
   "publisher": {
     "@type": "Organization",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html"
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ai-edu-archive.example.com/blog/ko/articles/rag-over-sealed-documents.html"
+    "@id": "https://ai-edu-archive.pages.dev/blog/ko/articles/rag-over-sealed-documents.html"
   },
   "name": "폐쇄망 내부 문서 위에 RAG 구축하기",
-  "url": "https://ai-edu-archive.example.com/blog/ko/articles/rag-over-sealed-documents.html"
+  "url": "https://ai-edu-archive.pages.dev/blog/ko/articles/rag-over-sealed-documents.html"
 }</script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link href="../../assets/blog.css" rel="stylesheet"/>
- == 기사-로컬 스타일: 시각적 우선, 넓은 바탕 화면 =============== 
+<!-- 기사 로컬 스타일: 시각적 우선, 넓은 화면 -->
 <style>
 /* ── Wide magazine hybrid: full-bleed visuals + narrow prose ────────── */
 .vf-doc{
-  --figw:min(1180px,calc(100% - 48px));  /* full-bleed visual width  */
-  --prosew:720px;                        /* optimal reading measure  */
+  --figw:100%;                           /* shared article content width */
+  --prosew:var(--figw);                  /* align prose with the content grid */
 }
 /* Center everything in a wide column; prose stays narrow inside it */
 .vf-body{
@@ -71,6 +72,7 @@
 .vf-body>.prose-block{
   width:100%;max-width:var(--prosew);align-self:center;
 }
+.vf-body>figure{width:100%;align-self:center;box-sizing:border-box}
 .vf-body>.figure-block{width:100%;max-width:var(--figw);align-self:center;margin:40px 0}
 .vf-body>section:not(.figure-block){width:100%;max-width:var(--figw);align-self:center;box-sizing:border-box}
 
@@ -258,38 +260,44 @@
     border-radius:0;padding:2px 0 2px 16px;max-width:100%;width:auto;
   }
   .vf-article .toc a{font-size:.88rem}
-  .vf-body{--figw:min(1180px, calc(100vw - var(--gutter) - 96px));max-width:var(--figw);margin:0 auto}
+  .vf-body{--figw:100%;max-width:100%;margin:0 auto}
 }
 @media(max-width:1179px){
   .vf-doc .toc{max-width:var(--prosew);margin:28px auto 0}
 }
 @media(max-width:640px){
-  .vf-doc{--figw:calc(100% - 32px)}
+  .vf-doc{--figw:100%}
   .vf-body>.figure-block{margin:28px 0}
   .search-demo{gap:16px}
   .widget{padding:20px}
   .prose-block p{font-size:18px}
 }
 </style>
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/rag-over-sealed-documents.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/rag-over-sealed-documents.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/rag-over-sealed-documents.html">
 </head>
 <body>
 <a class="skip-link" href="#main">본문으로 건너뛰기</a>
 <header class="nav" id="nav">
-<div class="wrap">
-<a aria-label="AI Edu Archive 홈" class="brand" href="../../../index.html">
-<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</a>
-<nav aria-label="주요 메뉴" class="nav-links">
-<a href="../../../index.html#courses">강의</a>
-<a href="../index.html">글</a>
-<a href="../about.html">소개</a>
-<div aria-label="언어 선택" class="language-switch"><a href="../../articles/rag-over-sealed-documents.html" lang="en" title="English">🇺🇸 EN</a><a aria-current="true" href="rag-over-sealed-documents.html" lang="ko" title="한국어">🇰🇷 KO</a><a href="../../articles/rag-over-sealed-documents.html" lang="en" title="English shown for now">🇪🇸 ES</a><a href="../../articles/rag-over-sealed-documents.html" lang="en" title="English shown for now">🇨🇳 ZH</a><a href="../../articles/rag-over-sealed-documents.html" lang="en" title="English shown for now">🇯🇵 JA</a><a href="../../articles/rag-over-sealed-documents.html" lang="en" title="English shown for now">🇩🇪 DE</a><a href="../../articles/rag-over-sealed-documents.html" lang="en" title="English shown for now">🇫🇷 FR</a></div>
-</nav>
-</div>
+  <div class="wrap">
+    <a class="brand" href="../../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="주요 메뉴">
+      <a href="../../../index.html#courses">강의</a>
+      <a href="../index.html" aria-current="page">글</a>
+      <a href="../learning-paths.html">학습 경로</a>
+      <a href="../search.html">검색</a>
+      <a href="../portfolio.html">포트폴리오</a>
+      <a href="../about.html">소개</a>
+      <div class="language-switch" aria-label="언어 선택">
+        <a href="../../articles/rag-over-sealed-documents.html" lang="en" title="English">EN</a>
+        <a href="rag-over-sealed-documents.html" lang="ko" aria-current="true" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
 </header>
 <main id="main">
 <article class="vf-doc vf-article" itemscope="" itemtype="https://schema.org/Article">
@@ -325,20 +333,38 @@
 <li><a href="#hero">다섯 단계, 전부 팹 내부에서</a></li>
 <li><a href="#motion">문서가 답변이 되는 과정 보기</a></li>
 <li><a href="#problem">검색되지 않는 지식</a></li>
-<li><a href="#chunk">chunk size가 모든 것을 결정하는 이유</a></li>
-<li><a href="#search">vector space로 보는 retrieval</a></li>
-<li><a href="#tradeoff">chunk size와 retrieval quality</a></li>
-<li><a href="#stack">온프레미스 stack 한눈에 보기</a></li>
-<li><a href="#code">다섯 개의 file</a></li>
-<li><a href="#quality">실제로 중요한 tip</a></li>
+<li><a href="#chunk">청크 크기가 품질을 좌우하는 이유</a></li>
+<li><a href="#search">벡터 공간으로 보는 검색</a></li>
+<li><a href="#tradeoff">청크 크기와 검색 품질</a></li>
+<li><a href="#stack">온프레미스 스택 한눈에 보기</a></li>
+<li><a href="#code">다섯 개의 파일</a></li>
+<li><a href="#quality">실제로 중요한 팁</a></li>
 </ol>
 </nav>
 <div class="vf-body article-body" itemprop="articleBody">
- === 1. HERO INFOGRAPHIC(풀 블리드) ====================== 
+
+    <figure class="visual-figure media-figure media-figure--diagram">
+      <img src="../../assets/visuals/sealed-rag-boundary.svg" alt="Sealed RAG trust boundary" loading="lazy" decoding="async">
+      <figcaption><span class="figure-label">그림.</span> 폐쇄망 RAG의 핵심은 신뢰 경계입니다. 문서, 임베딩, 검색, 생성, 인용, 감사 로그가 모두 내부망에 머물러야 합니다.</figcaption>
+    </figure>
+
+    <div class="field-story">
+      <span class="note-k">합성 점검 장면</span>
+      <p><strong>설명을 위해 단순화한 가상 사례입니다.</strong> 폐쇄망 검색 화면에는 “E-1420 대응 절차” 답변과 SOP 링크가 떴는데, 원문 뷰어를 열자 답변은 4.2절을 말하고 링크는 이전 개정판의 3.8절을 가리킨다고 합시다. 관찰 단서는 답변의 문체가 아니라 개정 라벨, 파싱된 절 번호, 청크의 원문 경로입니다. 세 값이 어디서 갈라졌는지 찾아야 수정 뒤에도 같은 질문으로 재검증할 수 있습니다.</p>
+    </div>
+
+    <div class="reader-shortcut">
+      <span class="note-k">기술 권고</span>
+      <p>대표 질문 하나를 고르고 입력 문서, 파싱 결과, 청크, top-k 결과, 최종 인용을 한 화면씩 확인하세요. 기대 문서가 입력에 없으면 수집 문제이고, 문서는 있으나 필요한 문장이 잘렸다면 파싱이나 청킹 문제입니다. 근거가 올바른데 답만 틀렸을 때 생성 설정을 조정합니다. 원문 자체에 대응 절차가 없거나 승인 상태가 불명확하면 시스템은 답을 보류해야 합니다.</p>
+    </div>
+
+    <p>이 글의 다섯 파일과 화면 예시는 기술 흐름을 설명하기 위한 비운영 구성입니다. 특정 사업장의 구축 경험이나 성능 수치를 뜻하지 않으며, 실제 배포에서는 문서 반입 승인, 역할별 ACL, 모델·패키지 검증, 감사 로그 보존 기준을 별도로 통과해야 합니다.</p>
+
+<!-- 1. Hero infographic (full bleed) -->
 <section aria-labelledby="hero-t" class="figure-block" id="hero">
 <span class="vf-eyebrow">전체 시스템, 하나의 다이어그램</span>
 <h2 class="vf-fig-title" id="hero-t">다섯 단계, 전부 팹 내부에서</h2>
-<p class="vf-fig-sub">팹은 이미 답을 알고 있습니다. 이는 SOP, 매뉴얼, 편차 보고서에 있습니다. RAG는 ​​해당 파일을 사용자가 일반 언어로 요청할 수 있는 것으로 변환하고 모든 바이트는 온프레미스에 유지됩니다. 데이터 무반출.</p>
+<p class="vf-fig-sub">SOP, 장비 매뉴얼, 편차 보고서, 정비 기록을 내부에서 수집하고 나눈 뒤 검색 색인을 만듭니다. 질문과 검색 결과, 생성 답변, 감사 로그가 승인된 내부 경계에 머무는지 단계별로 확인합니다.</p>
 <div class="hero-info">
 <svg aria-label="Hero infographic: RAG pipeline from documents through chunks, vectors, retrieval, to a cited answer — all inside the air-gapped network." role="img" viewbox="0 0 1180 440">
 <defs>
@@ -352,7 +378,7 @@
 <!-- air-gap boundary -->
 <rect fill="#FCFBF8" height="424" rx="18" stroke="#E8E4DB" width="1160" x="10" y="8"></rect>
 <rect fill="none" height="316" rx="14" stroke="#DBD5C8" stroke-dasharray="7 5" width="1128" x="26" y="60"></rect>
-<text fill="#3A3833" font-family="Inter,sans-serif" font-size="17" font-weight="600" text-anchor="middle" x="590" y="40">Air-gapped network · 폐쇄망 — no egress, no API keys, no data-review headache</text>
+<text fill="#3A3833" font-family="Inter,sans-serif" font-size="17" font-weight="600" text-anchor="middle" x="590" y="40">격리 경계 예시 — egress·telemetry·ACL을 별도 검증</text>
 <!-- stage 1: documents -->
 <g>
 <rect fill="url(#hg-doc)" height="196" rx="12" stroke="#B8CBB8" width="180" x="46" y="120"></rect>
@@ -429,13 +455,13 @@
 <text fill="#6B6862" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="929" y="372">Stage 5 · runs per query · 질의마다</text>
 </svg>
 </div>
-<p class="vf-caption">그림 1. 5단계 RAG 파이프라인. 수집(1~4)은 한 번 발생합니다. 검색 및 생성(5)은 모든 질문에 대해 실행되며 네트워크 경계를 넘는 것은 없습니다.</p>
+<p class="vf-caption">그림 1. 5단계 RAG 파이프라인. 수집과 색인화(1~4)는 배치로 실행되고, 검색과 생성(5)은 질문마다 실행됩니다. 어느 단계에서도 네트워크 경계를 넘지 않습니다.</p>
 </section>
- === 2. 애니메이션 "동영상" 
+<!-- 2. 애니메이션 데모 -->
 <section aria-labelledby="motion-t" class="figure-block" id="motion">
 <span class="vf-eyebrow">텍스트의 벽이 아닌 움직임</span>
 <h2 class="vf-fig-title" id="motion-t">문서가 답변이 되는 과정 보기</h2>
-<p class="vf-fig-sub">문서는 여러 개의 청크로 분할되고, 해당 청크는 점으로 벡터 공간에 분산된 다음 쿼리가 가장 가까운 이웃을 다시 가져옵니다. 한 번 자동 재생되며 움직임 감소를 준수합니다. 복원재생·절제.</p>
+<p class="vf-fig-sub">문서는 여러 청크로 나뉘고, 각 청크는 벡터 공간의 점으로 배치됩니다. 사용자의 질문도 같은 공간으로 들어가 가장 가까운 이웃을 가져옵니다. 애니메이션은 한 번 자동 재생되며, 움직임 감소 설정을 존중합니다.</p>
 <div class="anim-wrap">
 <svg aria-label="Animation: a document splits into chunks that fly into a 2-D vector space; a query point then draws lines to its nearest neighbours." class="rag-anim" id="ragAnim" role="img" viewbox="0 0 1180 360">
 <defs>
@@ -499,81 +525,81 @@
 </div>
 <div class="anim-controls">
 <button aria-pressed="false" class="anim-btn" id="animToggle" type="button">
-<span id="animIcon">▶</span> <span id="animLabel">플레이/플레이</span>
+<span id="animIcon">▶</span> <span id="animLabel">재생</span>
 </button>
 <span class="anim-hint" id="animHint">자동재생은 움직임 감소 설정을 존중합니다.</span>
 </div>
-<p class="vf-caption">그림 2. 모션과 동일한 개념: 청크 → 삽입 → 분산 → 최근접 이웃 검색. 개념적이며 확장 가능하지 않습니다.</p>
+<p class="vf-caption">그림 2. 같은 개념을 움직임으로 본 모습: 청크 → 임베딩 → 벡터 공간 배치 → 최근접 이웃 검색. 실제 차원 수를 줄여 그린 개념도입니다.</p>
 </section>
- === 산문: 왜 RAG ∨∨‿‿‿‿‿⋯⋯ 
+<!-- 산문: RAG가 필요한 이유 -->
 <div class="prose-block">
 <h2 id="problem">검색되지 않는 지식</h2>
-<p><span class="lead-in">새로운 엔지니어에게 물어보세요</span> "실 경보에 대한 응답 SOP는 무엇입니까 <code>E-1420</code>?" 그리고 정직한 대답은 종종 "B교대 선배에게 물어보세요"입니다. 그 지식은 실제이고 문서화되어 있습니다. <strong>검색할 수 없는</strong>. 수천 개의 PDF에 대한 키워드 검색은 아무것도 반환하지 않거나 모든 것을 반환합니다.</p>
-<p>RAG는 ​​문서를 <strong>의미론적 색인</strong>: 귀하가 자연어로 질문하면 시스템이 실제로 귀하에게 답변하는 구절을 검색하고 현지 LLM이 응답을 작성합니다. <em>인용과 함께</em>. 근거 문서를 인용하므로 환각을 걸러낼 수 있습니다.</p>
-<blockquote>RAG는 ​​문서에 추가되는 챗봇이 아닙니다. 이는 귀하를 위해 결과를 읽고 그 작업을 보여주는 검색 엔진입니다.</blockquote>
+<p><span class="lead-in">설명을 위해 단순화한 가상 사례입니다.</span> 신규 엔지니어가 "E-1420 경보가 났을 때 어느 SOP를 봐야 하나요?"라고 검색했는데 결과가 없다고 합시다. 문서 목록에는 해당 SOP가 있지만 스캔 PDF의 경보 코드가 OCR 과정에서 <code>E-I420</code>으로 바뀌어 있었습니다. 이 경우 원인은 임베딩보다 입력 품질에 가깝습니다.</p>
+<p>OCR 결과를 수정하고 문서 ID와 개정을 붙여 다시 색인한 뒤, 같은 질문에서 기대 SOP가 top-k에 들어오는지 확인합니다. 그 다음 로컬 LLM이 검색된 구절만 사용하고 원문 경로와 개정을 인용하는지 봅니다. 다만 문서 자체에 대응 절차가 없다면 RAG가 빈 내용을 만들어내지 않고 답변을 보류해야 합니다.</p>
+<blockquote>검색 결과에서 원문과 개정판까지 되짚을 수 있어야 답변을 검토할 수 있습니다.</blockquote>
 <div aria-hidden="true" class="steps-row">
-<span class="step-chip"><b>1</b> 짐</span>
-<span class="step-chip"><b>2</b> 큰 청크</span>
-<span class="step-chip"><b>3</b> 포함시키다</span>
+<span class="step-chip"><b>1</b> 적재</span>
+<span class="step-chip"><b>2</b> 청크 분할</span>
+<span class="step-chip"><b>3</b> 임베딩</span>
 <span class="step-chip"><b>4</b> 색인</span>
 <span class="step-chip"><b>5</b> 답변</span>
 </div>
-<p>아래의 모든 내용은 다음과 같습니다. <strong>랭체인 0.3</strong> 현재 분할 패키지를 사용하면 더 이상 사용되지 않는 가져오기가 없습니다. 첫째, 해당 단계 중 두 단계는 가치가 있습니다. <em>감동시키는</em>, 단지 읽는 것이 아닙니다.</p>
+<p>아래 예제는 <strong>LangChain 0.3</strong> 계열의 분리된 패키지를 사용합니다. 오래된 import를 피하고, 각 단계가 실제 운영에서 왜 필요한지 먼저 보여준 뒤 코드로 내려갑니다.</p>
 </div>
- === 3a. 청킹 슬라이더 위젯 =" 
+<!-- 3a. 청킹 슬라이더 위젯 -->
 <section aria-labelledby="chunk-t" class="figure-block" id="chunk">
-<span class="vf-eyebrow">대화형 · 드래그해 주세요</span>
-<h2 class="vf-fig-title" id="chunk-t">chunk size가 모든 것을 결정하는 이유</h2>
-<p class="vf-fig-sub">슬라이더를 이동하여 실시간으로 색상이 지정된 청크로 분할되는 실제 SOP를 확인하세요. 너무 작으면 청크가 컨텍스트를 잃습니다. 너무 크면 하나의 청크로 인해 여러 주제가 흐려집니다. 청킹 전략을 조정하세요.</p>
+<span class="vf-eyebrow">대화형 · 슬라이더 조정</span>
+<h2 class="vf-fig-title" id="chunk-t">청크 크기가 품질을 좌우하는 이유</h2>
+<p class="vf-fig-sub">슬라이더를 움직이면 SOP가 색으로 구분된 청크로 나뉘는 모습을 볼 수 있습니다. 너무 작으면 청크가 맥락을 잃고, 너무 크면 한 청크에 여러 주제를 담아 각각의 맥락이 흐려집니다. 청킹 전략은 실제 질문으로 조정해야 합니다.</p>
 <div aria-label="대화형 청킹 데모" class="widget" role="group">
 <div class="widget-head">
-<h4>RecursiveCharacterTextSplitter — 라이브</h4>
-<span class="tag">Chunk_size · 중복</span>
+<h4>청크 분할 미리보기</h4>
+<span class="tag">크기 · 겹침</span>
 </div>
 <div class="chunk-controls">
 <div class="ctrl">
-<label for="csSize">청크_크기 <b><span id="csSizeVal">120</span> 문자</b></label>
+<label for="csSize">청크 크기 <b><span id="csSizeVal">120</span>자</b></label>
 <input aria-describedby="csSizeVal" id="csSize" max="300" min="40" step="10" type="range" value="120"/>
 </div>
 <div class="ctrl">
-<label for="csOver">청크_겹침 <b><span id="csOverVal">20</span> 문자</b></label>
+<label for="csOver">겹치는 길이 <b><span id="csOverVal">20</span>자</b></label>
 <input aria-describedby="csOverVal" id="csOver" max="80" min="0" step="5" type="range" value="20"/>
 </div>
 </div>
 <div class="chunk-stats">
 <span><b id="csCount">0</b> 청크</span>
-<span>평균 <b id="csAvg">0</b> 문자</span>
-<span>겹치다 <b id="csOverPct">0</b>%</span>
+<span>평균 <b id="csAvg">0</b>자</span>
+<span>겹침 비율 <b id="csOverPct">0</b>%</span>
 </div>
 <div aria-label="청크 출력 미리보기" aria-live="polite" class="chunk-out" id="csOut"></div>
 <div class="chunk-legend">
 <span><span class="lg-dot" style="background:#C7D6E4"></span>청크 A</span>
 <span><span class="lg-dot" style="background:#D6E4C7"></span>청크 B</span>
 <span><span class="lg-dot" style="background:#E4D3C7"></span>청크 C…</span>
-<span><span class="lg-dot chunk-ov" style="background:transparent"></span>겹치는 영역 · 겹치는 부분</span>
+<span><span class="lg-dot chunk-ov" style="background:transparent"></span>청크 사이에 반복되는 영역</span>
 </div>
 </div>
-<p class="vf-caption">그림 3. 라이브 <code>RecursiveCharacterTextSplitter</code>. 수축 <code>chunk_size</code> 청크 수가 증가하는 것을 보려면; 분할된 문장을 이음새 전체에서 읽을 수 있도록 유지하려면 겹치는 부분을 늘립니다.</p>
+<p class="vf-caption">그림 3. <code>RecursiveCharacterTextSplitter</code> 데모. <code>chunk_size</code>를 줄이면 청크 수가 늘고, overlap을 늘리면 경계 근처 문장이 양쪽 청크에 함께 남습니다.</p>
 </section>
 <div class="prose-block">
-<div class="vf-callout"><b>경험 법칙.</b> 800~1,200자는 절차적 문서의 확실한 기본값이며 ~15% 중복됩니다. 밀도가 높은 SOP는 더 작은 청크를 원합니다. 서술적 편차 보고서는 더 큰 것을 원합니다. 커밋하기 전에 실제 질문에 대한 적중률을 측정하세요.</div>
+<div class="vf-callout"><b>초기 예시값.</b> 800~1,200자와 약 15% 겹침부터 시험할 수 있지만 고정 기준은 아닙니다. 절차 번호와 경고가 갈라진 오답이 보이면 경계를 조정하고, 한 청크가 여러 주제를 섞어 반환하면 크기를 줄입니다. 실제 질문 세트의 검색 적중과 인용 완전성으로 최종값을 정하세요.</div>
 </div>
- === 3b. 미니 검색 데모 =" 
+<!-- 3b. 미니 검색 데모 -->
 <section aria-labelledby="search-t" class="figure-block" id="search">
-<span class="vf-eyebrow">대화형 · 쿼리를 클릭하세요</span>
-<h2 class="vf-fig-title" id="search-t">vector space로 보는 retrieval</h2>
-<p class="vf-fig-sub">질문을 선택하세요. 쿼리는 2D 지도의 한 지점으로 이동하여 가장 가까운 청크에 선을 그립니다. 그러면 상위 k 증거 카드가 해당 소스 경로와 함께 켜집니다. 외계인 카드 표시.</p>
+<span class="vf-eyebrow">대화형 · 질문 선택</span>
+<h2 class="vf-fig-title" id="search-t">벡터 공간으로 보는 검색</h2>
+<p class="vf-fig-sub">질문을 선택하면 2차원 예시 지도에서 가까운 청크 세 개를 연결하고, 오른쪽에 원본 경로와 내용을 표시합니다. 위치와 유사도 점수는 동작 설명을 위한 가상 값입니다.</p>
 <div class="widget">
 <div class="widget-head">
-<h4>가장 가까운 이웃 검색 데모</h4>
-<span class="tag">탑케이 = 3</span>
+<h4>유사 문서 검색 예시</h4>
+<span class="tag">상위 3개</span>
 </div>
 <div class="search-demo">
 <div>
 <div aria-label="쿼리를 선택하세요" class="query-row" id="queryRow" role="group">
-<button class="query-btn" data-q="0" type="button">알람 E-1420 대응 SOP?</button>
-<button class="query-btn" data-q="1" type="button">Etcher RF 전력 드리프트 원인은 무엇입니까?</button>
-<button class="query-btn" data-q="2" type="button">CVD가 프로세스를 진행하고 있나요?</button>
+<button class="query-btn" data-q="0" type="button">E-1420 경보 대응 SOP는?</button>
+<button class="query-btn" data-q="1" type="button">식각기 RF 출력이 흔들리는 원인은?</button>
+<button class="query-btn" data-q="2" type="button">CVD 챔버 퍼지 절차는?</button>
 </div>
 <div class="scatter-box">
 <svg aria-label="2-D scatter plot of document chunks with a query point drawing lines to its nearest neighbours." id="scatterSvg" role="img" viewbox="0 0 460 320">
@@ -587,7 +613,7 @@
 <g id="queryLayer"></g>
 </svg>
 </div>
-<p class="demo-note">위치는 예시입니다. 즉, 수백 차원에서 실제 임베딩이 수행하는 작업을 2D로 투영한 것입니다. 메커니즘(쿼리 → 코사인에 가장 가까운 청크 → top-k)은 정확합니다.</p>
+<p class="demo-note">E-1420 사례, 위치, 점수는 설명을 위해 단순화한 가상 값입니다. 실제 임베딩은 더 높은 차원에서 계산되며, 검색 결과는 사용 중인 문서와 모델로 다시 평가해야 합니다.</p>
 </div>
 <div>
 <div aria-live="polite" class="result-cards" id="resultCards">
@@ -598,11 +624,11 @@
 </div>
 <p class="vf-caption">그림 4. 미니 의미 검색 데모. 리트리버는 가장 가까운 k개의 청크를 가져옵니다. LLM은 이들로부터만 응답하고 엔지니어가 확인할 수 있도록 소스 경로를 인쇄합니다.</p>
 </section>
- === 4. 거래 차트 
+<!-- 4. 청크 크기 절충 차트 -->
 <section aria-labelledby="trade-t" class="figure-block" id="tradeoff">
 <span class="vf-eyebrow">손잡이 뒤의 숫자</span>
-<h2 class="vf-fig-title" id="trade-t">chunk size와 retrieval quality</h2>
-<p class="vf-fig-sub">두 가지 힘이 반대 방향으로 끌어당깁니다. 작은 청크는 맥락을 잃고, 큰 청크는 주제를 흐리게 합니다. 검색 품질은 중간에서 최고조에 이릅니다. 정직하게 라벨이 붙은 개념적 곡선. 개념적 반대.</p>
+<h2 class="vf-fig-title" id="trade-t">청크 크기와 검색 품질</h2>
+<p class="vf-fig-sub">두 힘이 반대 방향으로 작동합니다. 작은 청크는 맥락을 잃고, 큰 청크는 주제를 흐리게 합니다. 검색 품질은 둘 사이의 적절한 지점에서 가장 좋아집니다. 아래 곡선은 개념도입니다.</p>
 <div class="vf-card chart-box">
 <svg aria-label="Line chart: context sufficiency rises with chunk size while topic precision falls; their combined retrieval quality peaks around 900 to 1100 characters." role="img" viewbox="0 0 1120 440">
 <!-- plot frame -->
@@ -640,36 +666,36 @@
 </g>
 </svg>
 </div>
-<p class="vf-caption">그림 5. 청크 크기는 상수가 아니라 절충 관계입니다. 실제로 관심을 갖고 있는 산호 곡선은 답변할 수 있을 만큼 크지만 한 가지 주제에 머물 수 있을 만큼 작은 청크의 최고점에 도달합니다.</p>
+<p class="vf-caption">그림 5. 청크 크기는 상수가 아니라 절충 관계입니다. 답변할 만큼 충분히 크고, 한 가지 주제에 머물 만큼 충분히 작은 지점에서 검색 품질이 가장 좋아집니다.</p>
 </section>
- === 5. 구조화된 스택 선택 
+<!-- 5. 구조화된 스택 선택 -->
 <section aria-labelledby="stack-t" class="figure-block" id="stack">
 <span class="vf-eyebrow">조각 선택</span>
-<h2 class="vf-fig-title" id="stack-t">온프레미스 stack 한눈에 보기</h2>
-<p class="vf-fig-sub">모든 구성요소는 로컬에서 실행됩니다. API 키도 없고 송신도 없습니다. 밀폐형 Fab 네트워크를 위해 무엇을 선택해야 하는지와 그 이유는 다음과 같습니다. 데이터 무반출.</p>
+<h2 class="vf-fig-title" id="stack-t">온프레미스 스택 한눈에 보기</h2>
+<p class="vf-fig-sub">모든 구성요소를 로컬 endpoint로 구성하는 참조안입니다. 로컬 실행만으로 무반출이 보장되지는 않으므로 방화벽, DNS, package·model telemetry, 문서 ACL과 packet capture를 별도 검증해야 합니다.</p>
 <div class="db-grid" style="margin-bottom:22px">
 <div class="db-card rec">
 <div class="db-name">크로마 <span class="db-pill">여기서 시작하세요</span></div>
 <ul>
-<li>임베디드, 프로세스 중 — 호스팅할 항목 없음</li>
-<li>로컬 디렉터리에 씁니다. 다시 삽입하지 않고 다시 로드</li>
-<li>단일 노드 Fab 지식 기반에 가장 적합</li>
+<li>프로세스 안에서 바로 실행되므로 별도 서버가 필요 없습니다.</li>
+<li>로컬 디렉터리에 저장하고, 다시 임베딩하지 않고 재로드할 수 있습니다.</li>
+<li>단일 노드 FAB 지식 기반에 적합합니다.</li>
 </ul>
 </div>
 <div class="db-card">
 <div class="db-name">Qdrant</div>
 <ul>
-<li>자체 호스팅 서버, 온프레미스 모드</li>
-<li>동일한 LangChain 패턴, 다중 노드 확장</li>
-<li>한 상자로는 충분하지 않을 때 손을 뻗으세요.</li>
+<li>자체 호스팅 서버로 온프레미스 운영이 가능합니다.</li>
+<li>같은 LangChain 패턴으로 다중 노드 확장에 대응할 수 있습니다.</li>
+<li>단일 장비로 부족해질 때 검토할 만합니다.</li>
 </ul>
 </div>
 <div class="db-card">
-<div class="db-name">bge-m3 <span class="db-pill">삽입하다</span></div>
+<div class="db-name">bge-m3 <span class="db-pill">임베딩</span></div>
 <ul>
-<li>다국어 — 한국어 잘 포함</li>
-<li>로컬 가중치, 다운로드 후 오프라인</li>
-<li>영어로만 구성된 모델이 한국 리콜을 조용히 파괴합니다.</li>
+<li>다국어 모델이라 한국어 문서와 영어 장비 용어가 섞인 코퍼스에 맞습니다.</li>
+<li>가중치를 사내로 반입한 뒤 오프라인으로 실행할 수 있습니다.</li>
+<li>영어 전용 모델은 한국어 질의의 재현율을 조용히 떨어뜨릴 수 있습니다.</li>
 </ul>
 </div>
 </div>
@@ -679,23 +705,22 @@
 <tr><th>단계</th><th>패키지(LangChain 0.3)</th><th>온프레미스 선택</th><th>밀봉된 상태로 유지되는 이유</th></tr>
 </thead>
 <tbody>
-<tr><td>짐</td><td><code>langchain_community</code></td><td>디렉토리 로더 · PyPDFLoader</td><td>로컬 파일만 읽습니다.</td></tr>
-<tr><td>큰 청크</td><td><code>langchain_text_splitters</code></td><td>RecursiveCharacterTextSplitter</td><td>순수 로컬 계산</td></tr>
-<tr><td>포함시키다</td><td><code>langchain_huggingface</code></td><td>bge-m3 로컬 가중치</td><td>호스팅된 임베딩 API 없음</td></tr>
-<tr><td>색인</td><td><code>langchain_chroma</code></td><td>크로마 지속_디렉토리</td><td>디스크에 쓰기, Phone-Home 없음</td></tr>
-<tr><td>답변</td><td><code>langchain_ollama</code></td><td>ChatOllama · qwen2.5</td><td>로컬 LLM, 제로 이그레스</td></tr>
+<tr><td>로드</td><td><code>langchain_community</code></td><td>DirectoryLoader · PyPDFLoader</td><td>로컬 파일만 읽습니다.</td></tr>
+<tr><td>청크 분할</td><td><code>langchain_text_splitters</code></td><td>RecursiveCharacterTextSplitter</td><td>로컬에서만 텍스트를 분할합니다.</td></tr>
+<tr><td>임베딩</td><td><code>langchain_huggingface</code></td><td>bge-m3 로컬 가중치</td><td>외부 임베딩 API를 호출하지 않습니다.</td></tr>
+<tr><td>저장</td><td><code>langchain_chroma</code></td><td>Chroma 로컬 저장 경로</td><td>벡터 인덱스를 로컬 디스크에 저장합니다.</td></tr>
+<tr><td>답변 생성</td><td><code>langchain_ollama</code></td><td>ChatOllama · qwen2.5</td><td>로컬 LLM만 호출합니다.</td></tr>
 </tbody>
 </table>
 </div>
-<p class="vf-caption">그림 6. 정확한 최신 가져오기가 포함된 전체 스택. 메타데이터 필터(기준: <code>tool</code>, <code>doc_type</code>) 쿼리 시 소음을 줄입니다. Etcher 질문은 CVD 매뉴얼을 검색하지 않습니다.</p>
+<p class="vf-caption">그림 6. 최신 문서만 검색하도록 관리되는 전체 스택. <code>tool</code>, <code>doc_type</code> 같은 메타데이터 필터는 질의 시 잡음을 줄입니다. 식각 장비 질문이 CVD 매뉴얼을 검색하지 않게 만드는 식입니다.</p>
 </section>
- === 6. 다섯 개의 파일(코드, 접을 수 있음) ================== 
+<!-- 6. 다섯 개의 파일(접을 수 있는 코드) -->
 <section id="code">
 <div class="prose-block">
-<h2>다섯 개의 file</h2>
-<p>텍스트 우선 독자는 여전히 코드를 원합니다. 다음은 각 단계의 하중을 견디는 스니펫입니다. 실행 가능한 전체 버전에 대한 파일을 확장합니다. <strong>랭체인 0.3</strong>.</p>
+<h2>다섯 개의 파일</h2>
+<p>텍스트보다 코드를 먼저 보고 싶은 독자를 위해 각 단계의 최소 예제를 모았습니다. 실제 운영에서는 이 스니펫에 권한, 로그, 예외 처리, 평가 하네스를 붙여야 합니다. 기준은 <strong>LangChain 0.3</strong> 계열입니다.</p>
 </div>
- 1개 부하 
 <details class="code-details" open="">
 <summary>01_load.py — 문서 트리를 탐색하고 소스 경로를 유지합니다.</summary>
 <figure class="code-figure">
@@ -718,7 +743,6 @@ docs = sop_loader.<span class="tok-fn">load</span>() + pdf_loader.<span class="t
 <span class="tok-fn">print</span>(<span class="tok-str">f"loaded {len(docs)} document pages"</span>)</code></pre>
 </figure>
 </details>
- 2청크 
 <details class="code-details">
 <summary>02_chunk.py — 중복으로 분할, 태그 메타데이터</summary>
 <figure class="code-figure">
@@ -741,7 +765,6 @@ chunks = splitter.<span class="tok-fn">split_documents</span>(docs)
     c.metadata[<span class="tok-str">"doc_type"</span>] = <span class="tok-str">"sop"</span> <span class="tok-kw">if</span> src.<span class="tok-fn">endswith</span>(<span class="tok-str">".txt"</span>) <span class="tok-kw">else</span> <span class="tok-str">"manual"</span></code></pre>
 </figure>
 </details>
- 3 삽입 
 <details class="code-details">
 <summary>03_embed.py — 로컬, 다국어 임베딩</summary>
 <figure class="code-figure">
@@ -762,7 +785,6 @@ embeddings = <span class="tok-fn">HuggingFaceEmbeddings</span>(
 <span class="tok-com"># embeddings = OllamaEmbeddings(model="bge-m3", base_url="http://localhost:11434")</span></code></pre>
 </figure>
 </details>
- 4 인덱스 
 <details class="code-details">
 <summary>04_index.py — 로컬 벡터 DB에 유지</summary>
 <figure class="code-figure">
@@ -782,7 +804,6 @@ vector_store = Chroma.<span class="tok-fn">from_documents</span>(
 <span class="tok-com"># Later runs just reopen it — no re-embedding.</span></code></pre>
 </figure>
 </details>
- 5 답변 
 <details class="code-details">
 <summary>05_answer.py — 검색 + 생성(인용 포함)</summary>
 <figure class="code-figure">
@@ -813,36 +834,39 @@ answer = llm.<span class="tok-fn">invoke</span>(prompt.<span class="tok-fn">invo
 </figure>
 </details>
 </section>
- ="품질 팁 =" 
 <div class="prose-block">
-<h2 id="quality">실제로 중요한 tip</h2>
+<h2 id="quality">실제로 중요한 팁</h2>
 <ul>
-<li><strong>청크 크기는 절충안입니다.</strong> 밀도가 높은 SOP는 더 작은 청크를 원합니다. 서술형 보고서는 더 큰 규모를 원합니다. 실제 질문에 대한 적중률을 먼저 측정하세요.</li>
-<li><strong>메타데이터 필터는 노이즈를 차단합니다.</strong> 장비 및 프로세스별로 태그를 지정하고 쿼리 시 필터링합니다. etcher 질문은 CVD 매뉴얼을 검색해서는 안됩니다.</li>
-<li><strong>항상 출처를 표면화하세요.</strong> 인용된 답변은 검증 가능합니다. 인용이 없으면 자신감 있는 추측을 할 수 있습니다. 그들과 함께 검색 도구를 사용하세요. 표지의 출처가 순환각의 핵심입니다.</li>
-<li><strong>Embedder를 언어와 일치시킵니다.</strong> 한국어 문서에는 bge-m3 또는 multilingual-e5가 필요합니다. 영어 전용 모델은 한국어에 대한 회상을 조용히 망가뜨립니다.</li>
-<li><strong>네트워크를 떠나는 것은 없습니다.</strong> 로더, 임베딩, 벡터 DB 및 LLM은 모두 로컬에서 실행됩니다. 데이터 무반출.</li>
+<li><strong>청크 크기는 절충안입니다.</strong> 밀도가 높은 SOP는 더 작은 청크가 맞는 경우가 많고, 서술형 보고서는 더 큰 청크가 유리할 수 있습니다. 실제 질문에 대한 적중률을 먼저 측정하세요.</li>
+<li><strong>메타데이터 필터는 잡음을 줄입니다.</strong> 장비와 공정별로 태그를 지정하고 질의 시 필터링합니다. 식각 장비 질문은 CVD 매뉴얼을 검색해서는 안 됩니다.</li>
+<li><strong>항상 출처를 보여주세요.</strong> 인용된 답변은 검증할 수 있습니다. 인용이 없으면 자신감 있는 추측과 구분하기 어렵습니다. 출처 경로와 개정판은 답변 품질의 일부입니다.</li>
+<li><strong>임베더를 언어에 맞춥니다.</strong> 한국어 문서에는 bge-m3 또는 multilingual-e5 같은 다국어 모델이 필요합니다. 영어 전용 모델은 한국어 질의의 재현율을 조용히 망가뜨립니다.</li>
+<li><strong>무반출은 시험 결과로 증명합니다.</strong> 로더, 임베딩, 벡터 DB, LLM을 로컬로 두고도 update·telemetry·DNS 경로가 남을 수 있습니다. 방화벽 정책, 실행 중 packet capture, ACL 거부 시험과 로그로 경계를 확인합니다.</li>
 </ul>
-<p>이는 5개의 짧은 파일로 구성된 완전한 에어갭 RAG 스택입니다. 하나의 문서 폴더와 12개의 실제 질문으로 시작하여 조정하세요. <code>chunk_size</code> 그리고 <code>k</code> 그들에 대항하고 거기에서 성장하십시오.</p>
+<div class="reader-shortcut">
+<span class="note-k">12문항 스모크 테스트</span>
+<p>승인된 문서 폴더 하나에서 직접 답할 수 있는 질문 6개, 개정판을 구분해야 하는 질문 2개, 권한 밖이라 거절해야 하는 질문 2개, 원문에 답이 없어 보류해야 하는 질문 2개를 준비하세요. 각 문항에 기대 문서·절·허용 역할을 적고 top-k 청크와 최종 인용을 저장합니다. 12문항 통과는 운영 품질의 증명이 아니라 파이프라인 연결을 확인하는 최소 점검입니다.</p>
+</div>
+<p>다섯 개의 짧은 파일은 폐쇄망 RAG 스택을 설명하는 예시입니다. 위 스모크 테스트에서 입력·개정·권한 관련 오류가 먼저 드러나면 <a href="rag-ingestion-pipeline-manufacturing.html">제조 RAG 인제션 파이프라인</a>에서 manifest와 롤백 단위를 보강하세요. 연결이 안정된 뒤에는 <a href="plant-rag-evaluation-harness.html">현장 RAG 평가 하네스</a>로 질문 수와 릴리스 게이트를 넓혀야 합니다.</p>
 </div>
 </div>
- 심층적인 데크 링크 
+<!-- 심층적인 데크 링크 -->
 <aside class="deck-link">
 <div class="dl-text">
 <span class="eyebrow">더 깊게 보기</span>
 <h3>이 주제의 전체 과정 보기</h3>
-<p>이 글은 현장노트입니다. 대화형 데크는 다이어그램 및 작업 예제와 함께 전체 RAG 빌드를 슬라이드별로 안내합니다. 관계로 연결됩니다.</p>
+<p>이 글은 현장 노트입니다. 대화형 데크에서는 다이어그램과 실행 예제로 전체 RAG 구축 과정을 단계별로 따라갑니다.</p>
 </div>
-<a class="btn btn-primary" href="../../../llm_apply/RAG_BUILD_SLIDE.html">deck 열기 <span aria-hidden="true" class="arw">→</span></a>
+<a class="btn btn-primary" href="../../../llm_apply/RAG_BUILD_SLIDE.html">데크 열기 <span aria-hidden="true" class="arw">→</span></a>
 </aside>
- 공유 
+<!-- 공유 -->
 <div class="share">
 <span class="lbl">공유</span>
 <button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">공유/링크 복사</button>
-<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">엑스 / 트위터</a>
-<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">링크드인</a>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Fko%2Farticles%2Frag-over-sealed-documents.html" rel="noopener" target="_blank">엑스 / 트위터</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Fko%2Farticles%2Frag-over-sealed-documents.html" rel="noopener" target="_blank">링크드인</a>
 </div>
- 저자 바이오 카드(E-E-A-T) 
+<!-- 저자 바이오 카드(E-E-A-T) -->
 <aside class="author-card">
 <span aria-hidden="true" class="avatar">AE</span>
 <div class="a-body">
@@ -856,16 +880,16 @@ answer = llm.<span class="tok-fn">invoke</span>(prompt.<span class="tok-fn">invo
 <a href="../about.html">저자에 대해 더 알아보기 →</a>
 </div>
 </aside>
- 관련된 
+<!-- 관련 글 -->
 <section aria-label="관련 기사" class="related">
 <span class="eyebrow">계속 읽기</span>
 <h2>저널의 관련 글</h2>
 <div class="related-grid">
-<a class="rel-card" href="rag-over-sealed-documents.html">
+<a class="rel-card" href="chunking-technical-docs.html">
 <span class="cat-tag">RAG</span>
 <h3>의미를 찢지 않고 기술 문서 chunking하기</h3>
 </a>
-<a class="rel-card" href="agents-mcp-mes.html">
+<a class="rel-card" href="hybrid-retrieval-vector-graph.html">
 <span class="cat-tag">에이전트 및 MCP</span>
 <h3>Hybrid retrieval: vector + knowledge graph</h3>
 </a>
@@ -874,45 +898,35 @@ answer = llm.<span class="tok-fn">invoke</span>(prompt.<span class="tok-fn">invo
 </article>
 </main>
 <footer class="site-foot">
-<div class="wrap">
-<div class="foot-top">
-<div class="foot-lead">
-<h2>무료로 깊게, 열린 방식으로</h2>
-<p>강의와 저널의 모든 콘텐츠는 회원가입 없이 무료로 읽을 수 있습니다.</p>
-</div>
-<div class="foot-nav-cols">
-<div class="foot-col">
-<h4>탐구하다</h4>
-<a href="../../index.html">허브 홈</a>
-<a href="../../../index.html#courses">모든 강좌</a>
-<a href="../index.html">저널</a>
-</div>
-<div class="foot-col">
-<h4>학습</h4>
-<a href="../../../overview/index.html">팹 AI</a>
-<a href="../../../watsonx/index.html">에어갭 LLM</a>
-<a href="../../../llm_apply/LLM_slide.html">엔터프라이즈 LLM</a>
-</div>
-<div class="foot-col">
-<h4>사이트</h4>
-<a href="../about.html">소개</a>
-<a href="../contact.html">연락하다</a>
-<a href="../privacy.html">개인정보</a>
-<a href="../terms.html">이용약관</a>
-</div>
-</div>
-</div>
-<div class="foot-bottom">
-<div class="foot-brand">
-<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</div>
-<span class="copyright">© 2026 AI Edu Archive · 열린 한국어 AI 교육</span>
-</div>
-</div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>누구나 볼 수 있는 실용적인 AI 교육 자료입니다.</h2>
+        <p>현장에서 쓸 수 있는 AI 시스템을 위한 강의, 글, 실전 기록을 모았습니다.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>둘러보기</h4>
+          <a href="../../../index.html#courses">강의</a>
+          <a href="../index.html">글</a>
+          <a href="../learning-paths.html">학습 경로</a>
+          <a href="../search.html">검색</a>
+          <a href="../portfolio.html">포트폴리오</a>
+        </div>
+        <div class="foot-col">
+          <h4>사이트</h4>
+          <a href="../about.html">소개</a>
+          <a href="../contact.html">연락처</a>
+          <a href="../privacy.html">개인정보 처리방침</a>
+          <a href="../terms.html">이용약관</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · 한국어와 영어로 제공하는 AI 교육</span>
+    </div>
+  </div>
 </footer>
 <script>
 (function(){
@@ -948,11 +962,11 @@ answer = llm.<span class="tok-fn">invoke</span>(prompt.<span class="tok-fn">invo
     anim.classList.toggle('playing',on);
     toggle.setAttribute('aria-pressed',on?'true':'false');
     icon.textContent=on?'❚❚':'▶';
-    label.textContent=on?'Pause / 정지':'Play / 재생';
+    label.textContent=on?'일시 정지':'재생';
   }
   toggle.addEventListener('click',function(){setPlay(!anim.classList.contains('playing'))});
   if(reduce){
-    hint.textContent='Reduced motion on — animation held still';
+    hint.textContent='움직임 감소 설정에 따라 애니메이션을 멈췄습니다.';
     setPlay(false);
   }else{
     // autoplay once visible
@@ -1012,14 +1026,14 @@ answer = llm.<span class="tok-fn">invoke</span>(prompt.<span class="tok-fn">invo
   /* ══ Mini search demo ═════════════════════════════════════════════ */
   // chunk points (illustrative 2-D positions) + their text
   var CHUNKS=[
-    {x:0.62,y:0.42,src:'etch/etch_e1420_sop.txt',txt:'E-1420 response: verify chamber pressure, re-strike RF if <80% target.'},
-    {x:0.55,y:0.60,src:'etch/etch_rf_match.txt', txt:'RF power drift is usually a matching-network fault; isolate and re-tune.'},
-    {x:0.70,y:0.30,src:'etch/etch_alarm_index.txt',txt:'Alarm index: E-14xx codes map to chamber pressure / RF subsystem.'},
-    {x:0.28,y:0.35,src:'cvd/cvd_purge_sop.txt',  txt:'CVD purge: N2 flush 3 cycles before venting; confirm interlock clears.'},
-    {x:0.20,y:0.62,src:'cvd/cvd_recipe.txt',     txt:'CVD recipe params: deposition rate vs chamber temperature curve.'},
-    {x:0.42,y:0.20,src:'common/eap_alarms.txt',  txt:'Acknowledge alarms on the EAP; every deviation must be logged.'},
-    {x:0.80,y:0.55,src:'etch/etch_maint.txt',    txt:'Etcher PM: matching network inspection every 2 weeks.'},
-    {x:0.35,y:0.80,src:'cvd/cvd_interlock.txt',  txt:'Interlock chain for CVD purge and vent sequence.'}
+    {x:0.62,y:0.42,src:'etch/etch_e1420_sop.txt',txt:'E-1420 대응: 챔버 압력을 확인하고 승인된 복구 절차를 조회합니다.'},
+    {x:0.55,y:0.60,src:'etch/etch_rf_match.txt', txt:'RF 출력 변동 시 matching network 상태와 관련 로그를 확인합니다.'},
+    {x:0.70,y:0.30,src:'etch/etch_alarm_index.txt',txt:'E-14xx 경보는 챔버 압력 또는 RF 계통 문서와 연결됩니다.'},
+    {x:0.28,y:0.35,src:'cvd/cvd_purge_sop.txt',  txt:'CVD 퍼지: vent 전 질소 퍼지와 interlock 해제 상태를 확인합니다.'},
+    {x:0.20,y:0.62,src:'cvd/cvd_recipe.txt',     txt:'CVD recipe 문서에는 챔버 온도와 증착률 조건이 정리되어 있습니다.'},
+    {x:0.42,y:0.20,src:'common/eap_alarms.txt',  txt:'EAP 경보 확인과 편차 기록 절차를 설명합니다.'},
+    {x:0.80,y:0.55,src:'etch/etch_maint.txt',    txt:'식각기 예방정비 문서에서 matching network 점검 항목을 확인합니다.'},
+    {x:0.35,y:0.80,src:'cvd/cvd_interlock.txt',  txt:'CVD 퍼지와 vent 순서에 적용되는 interlock 조건입니다.'}
   ];
   // per-query: index of query point + which chunk indices are the top-3 nearest
   var QUERIES=[
@@ -1081,5 +1095,6 @@ answer = llm.<span class="tok-fn">invoke</span>(prompt.<span class="tok-fn">invo
   runQuery(0);
 })();
 </script>
+<script src="../../assets/theme.js"></script>
 </body>
 </html>

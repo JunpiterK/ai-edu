@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 
 <html lang="en">
 <head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- ══ SEO ══════════════════════════════════════════════════════════ -->
@@ -10,16 +10,15 @@
 <meta content="How to build RAG over sealed internal documents without data leaving the network: ingestion, chunking, embeddings, retrieval, local serving, source citation, and practical tips." name="description"/>
 <meta content="AI Edu Archive" name="author"/>
 <meta content="#FAF9F5" name="theme-color"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/rag-over-sealed-documents.html" rel="canonical"/>
-<link href="https://ai-edu-archive.example.com/blog/ko/articles/rag-over-sealed-documents.html" hreflang="ko" rel="alternate"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/rag-over-sealed-documents.html" hreflang="x-default" rel="alternate"/>
+<link href="https://ai-edu-archive.pages.dev/blog/articles/rag-over-sealed-documents.html" rel="canonical"/>
+
 <meta content="index,follow" name="robots"/>
 <!-- Open Graph -->
 <meta content="article" property="og:type"/>
 <meta content="Building RAG over sealed internal documents - AI Edu Archive Journal" property="og:title"/>
 <meta content="How to build RAG over sealed internal documents without data leaving the network: ingestion, chunking, embeddings, retrieval, local serving, source citation, and practical tips." property="og:description"/>
 <meta content="AI Edu Archive" property="og:site_name"/>
-<meta content="https://ai-edu-archive.example.com/blog/articles/rag-over-sealed-documents.html" property="og:url"/>
+<meta content="https://ai-edu-archive.pages.dev/blog/articles/rag-over-sealed-documents.html" property="og:url"/>
 <meta content="en_US" property="og:locale"/>
 <meta content="ko_KR" property="og:locale:alternate"/>
 <meta content="2026-07-04" property="article:published_time"/>
@@ -35,26 +34,26 @@
   "headline": "Building RAG over sealed internal documents",
   "description": "How to build RAG over sealed internal documents without data leaving the network: ingestion, chunking, embeddings, retrieval, local serving, source citation, and practical tips.",
   "inLanguage": "en",
-  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "image": "https://ai-edu-archive.pages.dev/blog/assets/visuals/article-visual-template.svg",
   "datePublished": "2026-07-04",
   "dateModified": "2026-07-04",
   "author": {
     "@type": "Person",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html",
     "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
   },
   "publisher": {
     "@type": "Organization",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html"
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ai-edu-archive.example.com/blog/articles/rag-over-sealed-documents.html"
+    "@id": "https://ai-edu-archive.pages.dev/blog/articles/rag-over-sealed-documents.html"
   },
   "name": "Building RAG over sealed internal documents",
-  "url": "https://ai-edu-archive.example.com/blog/articles/rag-over-sealed-documents.html"
+  "url": "https://ai-edu-archive.pages.dev/blog/articles/rag-over-sealed-documents.html"
 }</script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -64,8 +63,8 @@
 <style>
 /* ── Wide magazine hybrid: full-bleed visuals + narrow prose ────────── */
 .vf-doc{
-  --figw:min(1180px,calc(100% - 48px));  /* full-bleed visual width  */
-  --prosew:720px;                        /* optimal reading measure  */
+  --figw:100%;                           /* shared article content width */
+  --prosew:var(--figw);                  /* align prose with the content grid */
 }
 /* Center everything in a wide column; prose stays narrow inside it */
 .vf-body{
@@ -75,6 +74,7 @@
 .vf-body>.prose-block{
   width:100%;max-width:var(--prosew);align-self:center;
 }
+.vf-body>figure{width:100%;align-self:center;box-sizing:border-box}
 .vf-body>.figure-block{width:100%;max-width:var(--figw);align-self:center;margin:40px 0}
 .vf-body>section:not(.figure-block){width:100%;max-width:var(--figw);align-self:center;box-sizing:border-box}
 
@@ -262,46 +262,44 @@
     border-radius:0;padding:2px 0 2px 16px;max-width:100%;width:auto;
   }
   .vf-article .toc a{font-size:.88rem}
-  .vf-body{--figw:min(1180px, calc(100vw - var(--gutter) - 96px));max-width:var(--figw);margin:0 auto}
+  .vf-body{--figw:100%;max-width:100%;margin:0 auto}
 }
 @media(max-width:1179px){
   .vf-doc .toc{max-width:var(--prosew);margin:28px auto 0}
 }
 @media(max-width:640px){
-  .vf-doc{--figw:calc(100% - 32px)}
+  .vf-doc{--figw:100%}
   .vf-body>.figure-block{margin:28px 0}
   .search-demo{gap:16px}
   .widget{padding:20px}
   .prose-block p{font-size:18px}
 }
 </style>
-<link href="https://ai-edu-archive.example.com/blog/articles/rag-over-sealed-documents.html" hreflang="en" rel="alternate"/></head>
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/rag-over-sealed-documents.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/rag-over-sealed-documents.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/rag-over-sealed-documents.html">
+</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="nav" id="nav">
-<div class="wrap">
-<a aria-label="AI Edu Archive home" class="brand" href="../../index.html">
-<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</a>
-<nav aria-label="Primary" class="nav-links">
-<a href="../../index.html#courses">Courses</a>
-<a href="../index.html">Articles</a>
-<a href="../about.html">About</a>
-<div aria-label="Language selector" class="language-switch">
-<a aria-current="true" href="rag-over-sealed-documents.html" lang="en" title="English">🇺🇸 EN</a>
-<a href="../ko/articles/rag-over-sealed-documents.html" lang="ko" title="한국어">🇰🇷 KO</a>
-<a href="rag-over-sealed-documents.html" lang="en" title="English shown for now">🇪🇸 ES</a>
-<a href="rag-over-sealed-documents.html" lang="en" title="English shown for now">🇨🇳 ZH</a>
-<a href="rag-over-sealed-documents.html" lang="en" title="English shown for now">🇯🇵 JA</a>
-<a href="rag-over-sealed-documents.html" lang="en" title="English shown for now">🇩🇪 DE</a>
-<a href="rag-over-sealed-documents.html" lang="en" title="English shown for now">🇫🇷 FR</a>
-</div>
-</nav>
-</div>
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="rag-over-sealed-documents.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/rag-over-sealed-documents.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
 </header>
 <main id="main">
 <article class="vf-doc vf-article" itemscope="" itemtype="https://schema.org/Article">
@@ -334,7 +332,7 @@
 <nav aria-label="Table of contents" class="toc">
 <div class="toc-title">On this page</div>
 <ol>
-<li><a href="#hero">Five stages, entirely inside the fab</a></li>
+<li><a href="#hero">Five stages within the reviewed boundary</a></li>
 <li><a href="#motion">Watch a document become an answer</a></li>
 <li><a href="#problem">Knowledge you cannot search</a></li>
 <li><a href="#chunk">Why chunk size decides everything</a></li>
@@ -346,11 +344,21 @@
 </ol>
 </nav>
 <div class="vf-body article-body" itemprop="articleBody">
+
+    <figure class="visual-figure media-figure media-figure--diagram">
+      <img src="../assets/visuals/sealed-rag-boundary.svg" alt="Sealed RAG trust boundary" loading="lazy" decoding="async">
+      <figcaption><span class="figure-label">Figure.</span> The intended trust boundary contains documents, embeddings, retrieval, generation, citations, and audit. Deployment evidence must confirm network and telemetry behavior.</figcaption>
+    </figure>
+
+<div class="field-story"><span class="note-k">Opening artifact: boundary review</span><p><code>source=/controlled/sops</code>, <code>owner=unassigned</code>, <code>acl_sync=not implemented</code>, <code>egress_test=pending</code>. A local model path does not close those review items. The prototype remains read-only and on hold until each item has evidence and an owner.</p></div>
+<p><span class="lead-in">The first design artifact is a document boundary.</span> List approved sources, document owners, current-revision rules, user roles, excluded content, expected citations, and the network checks that support the isolation claim. The model and vector store come after those inputs are reviewable.</p>
+<div class="field-note"><span class="note-k">Reference implementation scope</span><p>This build demonstrates local loading, chunking, embedding, retrieval, generation, and source display. It is suitable for a controlled prototype. It does not supply document governance, production ACL synchronization, high availability, backup, monitoring, or a safety approval.</p></div>
+
 <!-- ═══ 1. HERO INFOGRAPHIC (full-bleed) ═══════════════════════ -->
 <section aria-labelledby="hero-t" class="figure-block" id="hero">
 <span class="vf-eyebrow">The whole system, one diagram</span>
-<h2 class="vf-fig-title" id="hero-t">Five stages, entirely inside the fab</h2>
-<p class="vf-fig-sub">A fab already knows the answer — it's in an SOP, a manual, a deviation report. RAG turns that pile into something you can ask in plain language, and every byte stays on-prem. 데이터 무반출.</p>
+<h2 class="vf-fig-title" id="hero-t">Five stages within the reviewed boundary</h2>
+<p class="vf-fig-sub">A fab may already have the answer in an SOP, manual, or deviation report. RAG makes that material searchable in plain language. Data remains on-prem only when network policy, telemetry controls, and verification confirm that boundary.</p>
 <div class="hero-info">
 <svg aria-label="Hero infographic: RAG pipeline from documents through chunks, vectors, retrieval, to a cited answer — all inside the air-gapped network." role="img" viewbox="0 0 1180 440">
 <defs>
@@ -364,7 +372,7 @@
 <!-- air-gap boundary -->
 <rect fill="#FCFBF8" height="424" rx="18" stroke="#E8E4DB" width="1160" x="10" y="8"></rect>
 <rect fill="none" height="316" rx="14" stroke="#DBD5C8" stroke-dasharray="7 5" width="1128" x="26" y="60"></rect>
-<text fill="#3A3833" font-family="Inter,sans-serif" font-size="17" font-weight="600" text-anchor="middle" x="590" y="40">Air-gapped network · 폐쇄망 — no egress, no API keys, no data-review headache</text>
+<text fill="#3A3833" font-family="Inter,sans-serif" font-size="17" font-weight="600" text-anchor="middle" x="590" y="40">Illustrative isolated network — verify egress and telemetry controls</text>
 <!-- stage 1: documents -->
 <g>
 <rect fill="url(#hg-doc)" height="196" rx="12" stroke="#B8CBB8" width="180" x="46" y="120"></rect>
@@ -376,7 +384,7 @@
 <rect height="60" rx="4" width="46" x="122" y="192"></rect>
 </g>
 <g stroke="#9DB79D" stroke-width="1.4"><line x1="130" x2="158" y1="206" y2="206"></line><line x1="130" x2="158" y1="216" y2="216"></line><line x1="130" x2="150" y1="226" y2="226"></line></g>
-<text fill="#6B6862" font-family="JetBrains Mono,monospace" font-size="12.5" text-anchor="middle" x="136" y="278">SOP · PDF · 매뉴얼</text>
+<text fill="#6B6862" font-family="JetBrains Mono,monospace" font-size="12.5" text-anchor="middle" x="136" y="278">SOP · PDF · manual</text>
 <text fill="#8A867E" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="136" y="298">scattered, unsearchable</text>
 </g>
 <path d="M232 218 H262" fill="none" marker-end="url(#hg-arrow)" stroke="#C15F3C" stroke-width="2.5"></path>
@@ -404,7 +412,7 @@
 <circle cx="622" cy="235" r="4"></circle><circle cx="575" cy="222" r="4"></circle>
 </g>
 <text fill="#6B6862" font-family="JetBrains Mono,monospace" font-size="12.5" text-anchor="middle" x="588" y="288">local model</text>
-<text fill="#8A867E" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="588" y="306">bge-m3 · 다국어</text>
+<text fill="#8A867E" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="588" y="306">bge-m3 · multilingual</text>
 </g>
 <path d="M684 218 H714" fill="none" marker-end="url(#hg-arrow)" stroke="#C15F3C" stroke-width="2.5"></path>
 <!-- stage 4: vector DB -->
@@ -436,18 +444,18 @@
 <!-- ingest vs query band -->
 <rect height="0" width="632" x="46" y="340"></rect>
 <line stroke="#B8CBB8" stroke-linecap="round" stroke-width="3" x1="46" x2="678" y1="352" y2="352"></line>
-<text fill="#6B6862" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="362" y="372">Stages 1–4 · run once at ingest · 인제스트</text>
+<text fill="#6B6862" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="362" y="372">Stages 1–4 · run once during ingest</text>
 <line stroke="#C0B8CB" stroke-linecap="round" stroke-width="3" x1="724" x2="1134" y1="352" y2="352"></line>
-<text fill="#6B6862" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="929" y="372">Stage 5 · runs per query · 질의마다</text>
+<text fill="#6B6862" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="929" y="372">Stage 5 · runs for every query</text>
 </svg>
 </div>
-<p class="vf-caption">Figure 1. The five-stage RAG pipeline. Ingest (1–4) happens once; retrieve-and-generate (5) runs on every question — and nothing crosses the network boundary.</p>
+<p class="vf-caption">Figure 1. The five-stage RAG pipeline. Ingest (1-4) runs for an index build; retrieve-and-generate (5) runs per question. Boundary tests must cover both paths.</p>
 </section>
 <!-- ═══ 2. ANIMATED "VIDEO" ════════════════════════════════════ -->
 <section aria-labelledby="motion-t" class="figure-block" id="motion">
 <span class="vf-eyebrow">Motion, not a wall of text</span>
 <h2 class="vf-fig-title" id="motion-t">Watch a document become an answer</h2>
-<p class="vf-fig-sub">A document splits into chunks, the chunks scatter into vector space as points, then a query pulls its nearest neighbours back. Autoplays once, respects reduced-motion. 자동재생·절제.</p>
+<p class="vf-fig-sub">A document splits into chunks, the chunks scatter into vector space as points, then a query pulls its nearest neighbours back. It autoplays once and respects reduced-motion preferences.</p>
 <div class="anim-wrap">
 <svg aria-label="Animation: a document splits into chunks that fly into a 2-D vector space; a query point then draws lines to its nearest neighbours." class="rag-anim" id="ragAnim" role="img" viewbox="0 0 1180 360">
 <defs>
@@ -480,7 +488,7 @@
 <path d="M232 200 H300" fill="none" marker-end="url(#hg-arrow)" stroke="#C15F3C" stroke-width="2"></path>
 <text fill="#8A867E" font-family="JetBrains Mono,monospace" font-size="12" text-anchor="middle" x="266" y="188">embed</text>
 <!-- right: vector space -->
-<text fill="#6B6862" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="740" y="42">vector space · 최근접 검색</text>
+<text fill="#6B6862" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="740" y="42">vector space · nearest-neighbour search</text>
 <rect fill="#F3F0E8" height="270" rx="12" stroke="#DBD5C8" width="820" x="330" y="60"></rect>
 <!-- axes -->
 <line stroke="#DBD5C8" stroke-width="1.5" x1="360" x2="1120" y1="300" y2="300"></line>
@@ -511,7 +519,7 @@
 </div>
 <div class="anim-controls">
 <button aria-pressed="false" class="anim-btn" id="animToggle" type="button">
-<span id="animIcon">▶</span> <span id="animLabel">Play / 재생</span>
+<span id="animIcon">▶</span> <span id="animLabel">Play</span>
 </button>
 <span class="anim-hint" id="animHint">Autoplay respects your reduced-motion setting</span>
 </div>
@@ -520,8 +528,8 @@
 <!-- ═══ Prose: why RAG ═════════════════════════════════════════ -->
 <div class="prose-block">
 <h2 id="problem">Knowledge you cannot search</h2>
-<p><span class="lead-in">Ask a new engineer</span> "what's the response SOP for chamber alarm <code>E-1420</code>?" and the honest answer is often "ask the senior on B-shift." That knowledge is real and documented — and <strong>unsearchable</strong>. Keyword search over a thousand PDFs returns either nothing or everything.</p>
-<p>RAG turns documents into a <strong>semantic index</strong>: you ask in natural language, the system retrieves the passages that actually answer you, and a local LLM writes the response <em>with citations</em>. 근거 문서를 인용하므로 환각을 걸러낼 수 있습니다.</p>
+<div class="reader-shortcut"><span class="note-k">Constructed source-gap case</span><p>A new engineer asks for the response procedure for chamber alarm <code>E-1420</code>, and keyword search takes the blame for the poor result. The source review changes the diagnosis: the current SOP had never entered the approved folder, so no retrieval method could return it. After intake is corrected, RAG can retrieve candidate passages and show their sources; the current controlled procedure remains authoritative. This is a constructed snag, not an operating incident.</p></div>
+<p>RAG turns documents into a <strong>semantic index</strong>: you ask in natural language, the system retrieves the passages that actually answer you, and a local LLM writes the response <em>with citations</em>. Those source citations let an engineer verify the answer and catch unsupported claims.</p>
 <blockquote>RAG isn't a chatbot bolted onto your docs. It's a search engine that reads the results for you — and shows its work.</blockquote>
 <div aria-hidden="true" class="steps-row">
 <span class="step-chip"><b>1</b> Load</span>
@@ -530,13 +538,13 @@
 <span class="step-chip"><b>4</b> Index</span>
 <span class="step-chip"><b>5</b> Answer</span>
 </div>
-<p>Everything below runs on <strong>LangChain 0.3</strong> with the current split packages — no deprecated imports. First, two of those stages are worth <em>touching</em>, not just reading about.</p>
+<p>The examples target the <strong>LangChain v1</strong> split-package layout. Pin compatible versions and verify imports in the deployment environment. First, two stages are worth interacting with rather than only reading about.</p>
 </div>
 <!-- ═══ 3a. CHUNKING SLIDER WIDGET ═════════════════════════════ -->
 <section aria-labelledby="chunk-t" class="figure-block" id="chunk">
 <span class="vf-eyebrow">Interactive · drag me</span>
 <h2 class="vf-fig-title" id="chunk-t">Why chunk size decides everything</h2>
-<p class="vf-fig-sub">Move the sliders and watch a real SOP split into coloured chunks in real time. Too small and a chunk loses its context; too large and one chunk blurs several topics. 만지며 체감하세요.</p>
+<p class="vf-fig-sub">Move the sliders and watch a synthetic, non-operational training document split into coloured chunks. The thresholds and actions below are invented for the interface demo and must never be used as equipment instructions.</p>
 <div aria-label="Interactive chunking demonstration" class="widget" role="group">
 <div class="widget-head">
 <h4>RecursiveCharacterTextSplitter — live</h4>
@@ -562,7 +570,7 @@
 <span><span class="lg-dot" style="background:#C7D6E4"></span>chunk A</span>
 <span><span class="lg-dot" style="background:#D6E4C7"></span>chunk B</span>
 <span><span class="lg-dot" style="background:#E4D3C7"></span>chunk C…</span>
-<span><span class="lg-dot chunk-ov" style="background:transparent"></span>overlap region · 겹침</span>
+<span><span class="lg-dot chunk-ov" style="background:transparent"></span>overlap region</span>
 </div>
 </div>
 <p class="vf-caption">Figure 3. A live <code>RecursiveCharacterTextSplitter</code>. Shrink <code>chunk_size</code> to see chunk count climb; raise overlap to keep split sentences readable across the seam.</p>
@@ -574,7 +582,7 @@
 <section aria-labelledby="search-t" class="figure-block" id="search">
 <span class="vf-eyebrow">Interactive · click a query</span>
 <h2 class="vf-fig-title" id="search-t">Retrieval, drawn in vector space</h2>
-<p class="vf-fig-sub">Pick a question. The query lands as a point in the 2-D map, draws lines to its nearest chunks, and the top-k evidence cards light up with their source paths. 근거 카드 표시.</p>
+<p class="vf-fig-sub">Pick a question. The query lands as a point in the 2-D map, draws lines to its nearest chunks, and the top-k evidence cards light up with their source paths.</p>
 <div class="widget">
 <div class="widget-head">
 <h4>Nearest-neighbour retrieval demo</h4>
@@ -583,9 +591,9 @@
 <div class="search-demo">
 <div>
 <div aria-label="Choose a query" class="query-row" id="queryRow" role="group">
-<button class="query-btn" data-q="0" type="button">챔버 알람 E-1420 대응 SOP?</button>
-<button class="query-btn" data-q="1" type="button">Etcher RF power drift 원인?</button>
-<button class="query-btn" data-q="2" type="button">CVD 챔버 퍼지 절차?</button>
+<button class="query-btn" data-q="0" type="button">Response SOP for chamber alarm E-1420?</button>
+<button class="query-btn" data-q="1" type="button">What causes etcher RF power drift?</button>
+<button class="query-btn" data-q="2" type="button">What is the CVD chamber purge procedure?</button>
 </div>
 <div class="scatter-box">
 <svg aria-label="2-D scatter plot of document chunks with a query point drawing lines to its nearest neighbours." id="scatterSvg" role="img" viewbox="0 0 460 320">
@@ -614,7 +622,7 @@
 <section aria-labelledby="trade-t" class="figure-block" id="tradeoff">
 <span class="vf-eyebrow">The numbers behind the knob</span>
 <h2 class="vf-fig-title" id="trade-t">Chunk size vs retrieval quality</h2>
-<p class="vf-fig-sub">Two forces pull opposite ways: tiny chunks lose context, huge chunks blur topics. Retrieval quality peaks in the middle. Conceptual curves, honestly labelled. 개념적 곡선.</p>
+<p class="vf-fig-sub">Two forces pull opposite ways: tiny chunks lose context, huge chunks blur topics. Retrieval quality peaks in the middle. These are conceptual curves, labelled as such.</p>
 <div class="vf-card chart-box">
 <svg aria-label="Line chart: context sufficiency rises with chunk size while topic precision falls; their combined retrieval quality peaks around 900 to 1100 characters." role="img" viewbox="0 0 1120 440">
 <!-- plot frame -->
@@ -646,8 +654,8 @@
 <!-- legend -->
 <g font-family="Inter,sans-serif" font-size="13">
 <rect fill="#FCFBF8" height="96" rx="10" stroke="#EFEAE0" width="310" x="740" y="66"></rect>
-<line stroke="#7FA07F" stroke-width="3" x1="758" x2="788" y1="90" y2="90"></line><text fill="#3A3833" x="796" y="94">context sufficiency · 맥락 충분성</text>
-<line stroke="#7C9BC0" stroke-width="3" x1="758" x2="788" y1="116" y2="116"></line><text fill="#3A3833" x="796" y="120">topic precision · 주제 정밀도</text>
+<line stroke="#7FA07F" stroke-width="3" x1="758" x2="788" y1="90" y2="90"></line><text fill="#3A3833" x="796" y="94">context sufficiency</text>
+<line stroke="#7C9BC0" stroke-width="3" x1="758" x2="788" y1="116" y2="116"></line><text fill="#3A3833" x="796" y="120">topic precision</text>
 <line stroke="#C15F3C" stroke-width="3.5" x1="758" x2="788" y1="142" y2="142"></line><text fill="#3A3833" x="796" y="146"><tspan font-weight="600">combined retrieval quality</tspan></text>
 </g>
 </svg>
@@ -658,7 +666,7 @@
 <section aria-labelledby="stack-t" class="figure-block" id="stack">
 <span class="vf-eyebrow">Choosing the pieces</span>
 <h2 class="vf-fig-title" id="stack-t">The on-prem stack, at a glance</h2>
-<p class="vf-fig-sub">Every component runs local — no API key, no egress. Here's what to pick for a sealed fab network and why. 데이터 무반출.</p>
+<p class="vf-fig-sub">Each component is configured for a local endpoint or path. Package, plugin, update, DNS, firewall, and telemetry checks still determine whether the deployed stack meets the sealed-network design.</p>
 <div class="db-grid" style="margin-bottom:22px">
 <div class="db-card rec">
 <div class="db-name">Chroma <span class="db-pill">start here</span></div>
@@ -679,7 +687,7 @@
 <div class="db-card">
 <div class="db-name">bge-m3 <span class="db-pill">embedder</span></div>
 <ul>
-<li>Multilingual — embeds 한국어 well</li>
+<li>Multilingual — embeds Korean well</li>
 <li>Local weights, offline once downloaded</li>
 <li>English-only models quietly wreck Korean recall</li>
 </ul>
@@ -688,123 +696,150 @@
 <div class="vf-card" style="overflow-x:auto">
 <table class="vf-table">
 <thead>
-<tr><th>Stage</th><th>Package (LangChain 0.3)</th><th>On-prem choice</th><th>Why it stays sealed</th></tr>
+<tr><th>Stage</th><th>Package (LangChain v1 layout)</th><th>On-prem choice</th><th>Why it stays sealed</th></tr>
 </thead>
 <tbody>
 <tr><td>Load</td><td><code>langchain_community</code></td><td>DirectoryLoader · PyPDFLoader</td><td>Reads local files only</td></tr>
 <tr><td>Chunk</td><td><code>langchain_text_splitters</code></td><td>RecursiveCharacterTextSplitter</td><td>Pure local computation</td></tr>
 <tr><td>Embed</td><td><code>langchain_huggingface</code></td><td>bge-m3 local weights</td><td>No hosted embedding API</td></tr>
 <tr><td>Index</td><td><code>langchain_chroma</code></td><td>Chroma persist_directory</td><td>Writes to disk, no phone-home</td></tr>
-<tr><td>Answer</td><td><code>langchain_ollama</code></td><td>ChatOllama · qwen2.5</td><td>Local LLM, zero egress</td></tr>
+<tr><td>Answer</td><td><code>langchain_ollama</code></td><td>ChatOllama · qwen2.5</td><td>Local endpoint; verify firewall, DNS, update, and telemetry behavior</td></tr>
 </tbody>
 </table>
 </div>
-<p class="vf-caption">Figure 6. The full stack with the exact modern imports. Metadata filters (by <code>tool</code>, <code>doc_type</code>) cut noise at query time — an etcher question never retrieves a CVD manual.</p>
+<p class="vf-caption">Figure 6. The full stack with the exact modern imports. Metadata filters by <code>tool</code> and <code>doc_type</code> should exclude out-of-scope manuals, and role tests must verify the result.</p>
 </section>
 <!-- ═══ 6. THE FIVE FILES (code, collapsible) ══════════════════ -->
 <section id="code">
 <div class="prose-block">
 <h2>The five files</h2>
-<p>Text-first readers still want the code. Here's the load-bearing snippet for each stage; expand any file for the full, runnable version on <strong>LangChain 0.3</strong>.</p>
+<p>The following five files form a compact reference implementation. Put them in one directory, stage the model and documents at the configured local paths, and run <code>python build_index.py</code> followed by <code>python answer.py</code>. Install compatible pinned versions in the target environment; the required packages are <code>langchain-community</code>, <code>langchain-text-splitters</code>, <code>langchain-huggingface</code>, <code>langchain-chroma</code>, <code>langchain-ollama</code>, <code>langchain-core</code>, <code>pypdf</code>, and <code>sentence-transformers</code>.</p>
 </div>
-<!-- 1 load -->
+<!-- 1 config -->
 <details class="code-details" open="">
-<summary>01_load.py — walk the doc tree, keep source paths</summary>
+<summary>rag_config.py — shared local paths and embedding configuration</summary>
 <figure class="code-figure">
 <div class="code-bar">
-<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Python</span> 01_load.py</span>
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Python</span> rag_config.py</span>
 <button class="copy-btn" data-copy="" type="button">Copy</button>
 </div>
-<pre><code><span class="tok-com"># pip install langchain-community pypdf</span>
-<span class="tok-kw">from</span> langchain_community.document_loaders <span class="tok-kw">import</span> DirectoryLoader, TextLoader, PyPDFLoader
-
-sop_loader = <span class="tok-fn">DirectoryLoader</span>(
-    <span class="tok-str">"./docs/sops"</span>, glob=<span class="tok-str">"**/*.txt"</span>, loader_cls=TextLoader,
-    loader_kwargs={<span class="tok-str">"encoding"</span>: <span class="tok-str">"utf-8"</span>},   <span class="tok-com"># 한국어 문서는 utf-8 명시</span>
-    use_multithreading=<span class="tok-kw">True</span>,
-)
-pdf_loader = <span class="tok-fn">DirectoryLoader</span>(
-    <span class="tok-str">"./docs/manuals"</span>, glob=<span class="tok-str">"**/*.pdf"</span>, loader_cls=PyPDFLoader,
-)
-docs = sop_loader.<span class="tok-fn">load</span>() + pdf_loader.<span class="tok-fn">load</span>()
-<span class="tok-fn">print</span>(<span class="tok-str">f"loaded {len(docs)} document pages"</span>)</code></pre>
-</figure>
-</details>
-<!-- 2 chunk -->
-<details class="code-details">
-<summary>02_chunk.py — split with overlap, tag metadata</summary>
-<figure class="code-figure">
-<div class="code-bar">
-<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Python</span> 02_chunk.py</span>
-<button class="copy-btn" data-copy="" type="button">Copy</button>
-</div>
-<pre><code><span class="tok-com"># pip install langchain-text-splitters</span>
-<span class="tok-kw">from</span> langchain_text_splitters <span class="tok-kw">import</span> RecursiveCharacterTextSplitter
-
-splitter = <span class="tok-fn">RecursiveCharacterTextSplitter</span>(
-    chunk_size=<span class="tok-num">1000</span>, chunk_overlap=<span class="tok-num">150</span>,  <span class="tok-com"># ~15% overlap</span>
-    add_start_index=<span class="tok-kw">True</span>,
-)
-chunks = splitter.<span class="tok-fn">split_documents</span>(docs)
-
-<span class="tok-kw">for</span> c <span class="tok-kw">in</span> chunks:                      <span class="tok-com"># tag for metadata filters</span>
-    src = c.metadata[<span class="tok-str">"source"</span>]
-    c.metadata[<span class="tok-str">"tool"</span>]     = <span class="tok-str">"etcher"</span> <span class="tok-kw">if</span> <span class="tok-str">"etch"</span> <span class="tok-kw">in</span> src <span class="tok-kw">else</span> <span class="tok-str">"cvd"</span>
-    c.metadata[<span class="tok-str">"doc_type"</span>] = <span class="tok-str">"sop"</span> <span class="tok-kw">if</span> src.<span class="tok-fn">endswith</span>(<span class="tok-str">".txt"</span>) <span class="tok-kw">else</span> <span class="tok-str">"manual"</span></code></pre>
-</figure>
-</details>
-<!-- 3 embed -->
-<details class="code-details">
-<summary>03_embed.py — local, multilingual embeddings</summary>
-<figure class="code-figure">
-<div class="code-bar">
-<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Python</span> 03_embed.py</span>
-<button class="copy-btn" data-copy="" type="button">Copy</button>
-</div>
-<pre><code><span class="tok-com"># pip install langchain-huggingface sentence-transformers</span>
+<pre><code><span class="tok-kw">from</span> pathlib <span class="tok-kw">import</span> Path
 <span class="tok-kw">from</span> langchain_huggingface <span class="tok-kw">import</span> HuggingFaceEmbeddings
 
-embeddings = <span class="tok-fn">HuggingFaceEmbeddings</span>(
-    model_name=<span class="tok-str">"/opt/models/bge-m3"</span>,          <span class="tok-com"># local weights, multilingual</span>
-    model_kwargs={<span class="tok-str">"device"</span>: <span class="tok-str">"cuda"</span>},          <span class="tok-com"># "cpu" if no GPU</span>
-    encode_kwargs={<span class="tok-str">"normalize_embeddings"</span>: <span class="tok-kw">True</span>},
-)
-<span class="tok-com"># Alt — reuse a local Ollama server:</span>
-<span class="tok-com"># from langchain_ollama import OllamaEmbeddings</span>
-<span class="tok-com"># embeddings = OllamaEmbeddings(model="bge-m3", base_url="http://localhost:11434")</span></code></pre>
+SOP_DIR = Path(<span class="tok-str">"./docs/sops"</span>)
+MANUAL_DIR = Path(<span class="tok-str">"./docs/manuals"</span>)
+DB_DIR = Path(<span class="tok-str">"./fab_kb"</span>)
+COLLECTION = <span class="tok-str">"fab_kb"</span>
+MODEL_PATH = <span class="tok-str">"/opt/models/bge-m3"</span>
+
+<span class="tok-kw">def</span> <span class="tok-fn">make_embeddings</span>():
+    <span class="tok-kw">return</span> <span class="tok-fn">HuggingFaceEmbeddings</span>(
+        model_name=MODEL_PATH,
+        model_kwargs={<span class="tok-str">"device"</span>: <span class="tok-str">"cuda"</span>},  <span class="tok-com"># use "cpu" if no GPU</span>
+        encode_kwargs={<span class="tok-str">"normalize_embeddings"</span>: <span class="tok-kw">True</span>},
+    )</code></pre>
 </figure>
 </details>
-<!-- 4 index -->
+<!-- 2 load -->
 <details class="code-details">
-<summary>04_index.py — persist to a local vector DB</summary>
+<summary>load_docs.py — walk the document tree and keep source paths</summary>
 <figure class="code-figure">
 <div class="code-bar">
-<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Python</span> 04_index.py</span>
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Python</span> load_docs.py</span>
 <button class="copy-btn" data-copy="" type="button">Copy</button>
 </div>
-<pre><code><span class="tok-com"># pip install langchain-chroma</span>
-<span class="tok-kw">from</span> langchain_chroma <span class="tok-kw">import</span> Chroma
+<pre><code><span class="tok-kw">from</span> langchain_community.document_loaders <span class="tok-kw">import</span> DirectoryLoader, TextLoader, PyPDFLoader
+<span class="tok-kw">from</span> rag_config <span class="tok-kw">import</span> MANUAL_DIR, SOP_DIR
+
+<span class="tok-kw">def</span> <span class="tok-fn">load_documents</span>():
+    sop_loader = <span class="tok-fn">DirectoryLoader</span>(
+        str(SOP_DIR), glob=<span class="tok-str">"**/*.txt"</span>, loader_cls=TextLoader,
+        loader_kwargs={<span class="tok-str">"encoding"</span>: <span class="tok-str">"utf-8"</span>},
+        use_multithreading=<span class="tok-kw">True</span>,
+    )
+    pdf_loader = <span class="tok-fn">DirectoryLoader</span>(
+        str(MANUAL_DIR), glob=<span class="tok-str">"**/*.pdf"</span>, loader_cls=PyPDFLoader,
+    )
+    <span class="tok-kw">return</span> sop_loader.<span class="tok-fn">load</span>() + pdf_loader.<span class="tok-fn">load</span>()
+
+<span class="tok-kw">if</span> __name__ == <span class="tok-str">"__main__"</span>:
+    docs = <span class="tok-fn">load_documents</span>()
+    <span class="tok-fn">print</span>(<span class="tok-str">f"loaded {len(docs)} document pages"</span>)</code></pre>
+</figure>
+</details>
+<!-- 3 chunk -->
+<details class="code-details">
+<summary>chunk_docs.py — split with overlap and tag metadata</summary>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Python</span> chunk_docs.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain_text_splitters <span class="tok-kw">import</span> RecursiveCharacterTextSplitter
+<span class="tok-kw">from</span> load_docs <span class="tok-kw">import</span> load_documents
+
+<span class="tok-kw">def</span> <span class="tok-fn">chunk_documents</span>(docs=None):
+    docs = <span class="tok-fn">load_documents</span>() <span class="tok-kw">if</span> docs <span class="tok-kw">is</span> <span class="tok-kw">None</span> <span class="tok-kw">else</span> docs
+    splitter = <span class="tok-fn">RecursiveCharacterTextSplitter</span>(
+        chunk_size=<span class="tok-num">1000</span>, chunk_overlap=<span class="tok-num">150</span>, add_start_index=<span class="tok-kw">True</span>,
+    )
+    chunks = splitter.<span class="tok-fn">split_documents</span>(docs)
+    <span class="tok-kw">for</span> chunk <span class="tok-kw">in</span> chunks:
+        source = str(chunk.metadata[<span class="tok-str">"source"</span>]).<span class="tok-fn">lower</span>()
+        chunk.metadata[<span class="tok-str">"tool"</span>] = <span class="tok-str">"etcher"</span> <span class="tok-kw">if</span> <span class="tok-str">"etch"</span> <span class="tok-kw">in</span> source <span class="tok-kw">else</span> <span class="tok-str">"cvd"</span>
+        chunk.metadata[<span class="tok-str">"doc_type"</span>] = <span class="tok-str">"sop"</span> <span class="tok-kw">if</span> source.<span class="tok-fn">endswith</span>(<span class="tok-str">".txt"</span>) <span class="tok-kw">else</span> <span class="tok-str">"manual"</span>
+    <span class="tok-kw">return</span> chunks
+
+<span class="tok-kw">if</span> __name__ == <span class="tok-str">"__main__"</span>:
+    chunks = <span class="tok-fn">chunk_documents</span>()
+    <span class="tok-fn">print</span>(<span class="tok-str">f"created {len(chunks)} chunks"</span>)</code></pre>
+</figure>
+</details>
+<!-- 4 build -->
+<details class="code-details">
+<summary>build_index.py — embed chunks and persist the vector DB</summary>
+<figure class="code-figure">
+<div class="code-bar">
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Python</span> build_index.py</span>
+<button class="copy-btn" data-copy="" type="button">Copy</button>
+</div>
+<pre><code><span class="tok-kw">from</span> langchain_chroma <span class="tok-kw">import</span> Chroma
+<span class="tok-kw">from</span> chunk_docs <span class="tok-kw">import</span> chunk_documents
+<span class="tok-kw">from</span> rag_config <span class="tok-kw">import</span> COLLECTION, DB_DIR, make_embeddings
+
+chunks = <span class="tok-fn">chunk_documents</span>()
+<span class="tok-kw">if</span> <span class="tok-kw">not</span> chunks:
+    <span class="tok-kw">raise</span> <span class="tok-fn">RuntimeError</span>(<span class="tok-str">"No approved documents were loaded; index build stopped."</span>)
 
 vector_store = Chroma.<span class="tok-fn">from_documents</span>(
-    documents=chunks, embedding=embeddings,
-    collection_name=<span class="tok-str">"fab_kb"</span>,
-    persist_directory=<span class="tok-str">"./fab_kb"</span>,   <span class="tok-com"># local disk — reload, don't re-embed</span>
+    documents=chunks,
+    embedding=<span class="tok-fn">make_embeddings</span>(),
+    collection_name=COLLECTION,
+    persist_directory=str(DB_DIR),
 )
-<span class="tok-fn">print</span>(<span class="tok-str">f"indexed {vector_store._collection.count()} chunks"</span>)
-<span class="tok-com"># Later runs just reopen it — no re-embedding.</span></code></pre>
+<span class="tok-fn">print</span>(<span class="tok-str">f"indexed {vector_store._collection.count()} chunks in {DB_DIR}"</span>)</code></pre>
 </figure>
 </details>
 <!-- 5 answer -->
 <details class="code-details">
-<summary>05_answer.py — retrieve + generate, with citations</summary>
+<summary>answer.py — reopen, retrieve, and generate with citations</summary>
 <figure class="code-figure">
 <div class="code-bar">
-<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Python</span> 05_answer.py</span>
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Python</span> answer.py</span>
 <button class="copy-btn" data-copy="" type="button">Copy</button>
 </div>
-<pre><code><span class="tok-com"># pip install langchain-ollama langchain-core</span>
-<span class="tok-kw">from</span> langchain_ollama <span class="tok-kw">import</span> ChatOllama
+<pre><code><span class="tok-kw">from</span> langchain_chroma <span class="tok-kw">import</span> Chroma
 <span class="tok-kw">from</span> langchain_core.prompts <span class="tok-kw">import</span> ChatPromptTemplate
+<span class="tok-kw">from</span> langchain_ollama <span class="tok-kw">import</span> ChatOllama
+<span class="tok-kw">from</span> rag_config <span class="tok-kw">import</span> COLLECTION, DB_DIR, make_embeddings
+
+vector_store = <span class="tok-fn">Chroma</span>(
+    collection_name=COLLECTION,
+    persist_directory=str(DB_DIR),
+    embedding_function=<span class="tok-fn">make_embeddings</span>(),
+)
+<span class="tok-kw">if</span> vector_store._collection.<span class="tok-fn">count</span>() == <span class="tok-num">0</span>:
+    <span class="tok-kw">raise</span> <span class="tok-fn">RuntimeError</span>(<span class="tok-str">"Index is empty; run python build_index.py first."</span>)
 
 retriever = vector_store.<span class="tok-fn">as_retriever</span>(
     search_kwargs={<span class="tok-str">"k"</span>: <span class="tok-num">4</span>, <span class="tok-str">"filter"</span>: {<span class="tok-str">"tool"</span>: <span class="tok-str">"etcher"</span>}},  <span class="tok-com"># metadata filter</span>
@@ -816,11 +851,11 @@ prompt = ChatPromptTemplate.<span class="tok-fn">from_template</span>(
     <span class="tok-str">"Context:\n{context}\n\nQuestion: {question}"</span>
 )
 question = <span class="tok-str">"이 챔버 알람 코드 E-1420 대응 SOP는?"</span>
-hits = retriever.<span class="tok-fn">invoke</span>(question)                      <span class="tok-com"># retriever.invoke — 0.3 API</span>
+hits = retriever.<span class="tok-fn">invoke</span>(question)
 context = <span class="tok-str">"\n\n"</span>.<span class="tok-fn">join</span>(<span class="tok-str">f"[{d.metadata['source']}] {d.page_content}"</span> <span class="tok-kw">for</span> d <span class="tok-kw">in</span> hits)
 answer = llm.<span class="tok-fn">invoke</span>(prompt.<span class="tok-fn">invoke</span>({<span class="tok-str">"context"</span>: context, <span class="tok-str">"question"</span>: question}))
 <span class="tok-fn">print</span>(answer.content)
-<span class="tok-kw">for</span> d <span class="tok-kw">in</span> hits:                                        <span class="tok-com"># show the receipts</span>
+<span class="tok-kw">for</span> d <span class="tok-kw">in</span> hits:
     <span class="tok-fn">print</span>(<span class="tok-str">"source:"</span>, d.metadata[<span class="tok-str">"source"</span>])</code></pre>
 </figure>
 </details>
@@ -828,14 +863,16 @@ answer = llm.<span class="tok-fn">invoke</span>(prompt.<span class="tok-fn">invo
 <!-- ═══ Quality tips ═══════════════════════════════════════════ -->
 <div class="prose-block">
 <h2 id="quality">Tips that actually matter</h2>
+<div class="tbl-wrap"><table class="tbl"><caption>Operating procedure around the reference implementation.</caption><thead><tr><th>Gate</th><th>Required input or action</th><th>Owner</th></tr></thead><tbody><tr><td class="name">Intake</td><td>Approved source IDs, revisions, ACL snapshot, retention class, and acceptance questions.</td><td>Document owners and IT/security.</td></tr><tr><td class="name">Hold</td><td>Quarantine documents with missing ownership, revision conflict, parse loss, or ACL mismatch.</td><td>RAG platform owner.</td></tr><tr><td class="name">Release</td><td>Promote a named index only after retrieval, citation, revision, and role tests pass.</td><td>Service owner with domain approval.</td></tr><tr><td class="name">Rollback</td><td>Restore the previous index, metadata, ACL snapshot, prompt, and serving alias as one bundle.</td><td>Platform owner; security leads permission incidents.</td></tr></tbody></table></div>
 <ul>
 <li><strong>Chunk size is a trade-off.</strong> Dense SOPs want smaller chunks; narrative reports want larger. Measure hit-rate on real questions first.</li>
-<li><strong>Metadata filters cut noise.</strong> Tag by equipment and process, filter at query time. An etcher question should never retrieve a CVD manual.</li>
-<li><strong>Always surface sources.</strong> A cited answer is verifiable. Without citations you've built a confident guesser; with them, a search tool. 출처 표기가 환각 방지의 핵심입니다.</li>
-<li><strong>Match embedder to language.</strong> Korean docs need bge-m3 or multilingual-e5. An English-only model quietly wrecks recall on 한국어.</li>
-<li><strong>Nothing leaves the network.</strong> Loaders, embeddings, vector DB, and LLM all run local. 데이터 무반출.</li>
+<li><strong>Metadata filters cut noise.</strong> Tag by equipment and process, filter at query time, and test that an etcher question excludes CVD manuals under every supported role.</li>
+<li><strong>Surface sources.</strong> Citations make claims inspectable, although a citation does not by itself prove that the source is current or that the claim follows from it.</li>
+<li><strong>Match embedder to language.</strong> Korean docs need bge-m3 or multilingual-e5. An English-only model quietly wrecks recall on Korean text.</li>
+<li><strong>Verify the boundary.</strong> Local loaders, embeddings, vector DB, and LLM are necessary for this pattern; network and telemetry controls provide the egress evidence.</li>
 </ul>
-<p>That's a complete air-gapped RAG stack in five short files. Start with one document folder and a dozen real questions, tune <code>chunk_size</code> and <code>k</code> against them, and grow from there.</p>
+<div class="tbl-wrap"><table class="tbl"><caption>Read-only sealed-RAG commissioning check.</caption><thead><tr><th>Check</th><th>Pass / continue</th><th>Stop</th></tr></thead><tbody><tr><td class="name">Boundary</td><td>Firewall, DNS, proxy, update, plugin, and telemetry tests match the approved network design.</td><td>Any unexpected connection or unreviewed runtime component.</td></tr><tr><td class="name">Corpus</td><td>Every sampled chunk has owner, revision, effective status, source path, and access scope.</td><td>Missing authority, stale-current conflict, or ACL mismatch.</td></tr><tr><td class="name">Answer path</td><td>Test questions return required passages and display inspectable source paths.</td><td>Unsupported instructions, protected context, or no clear refusal when evidence is absent.</td></tr><tr><td class="name">Limit</td><td>The decision covers this host, package lock, corpus snapshot, role set, and read-only workflow.</td><td>Do not extend the result to write actions, another network zone, or a changed dependency set.</td></tr></tbody></table></div>
+<p><b>Limitations:</b> this five-file stack does not prove answer correctness, source authority, permission fidelity, or operational resilience. Keep the index on hold until the named owners accept the report, and roll back on a stale-current answer, protected-source exposure, or agreed retrieval regression. The next engineering layer is <a href="rag-ingestion-pipeline-manufacturing.html">the manufacturing ingestion pipeline</a>, which turns the approved folder into versioned, reconcilable index builds.</p>
 </div>
 </div>
 <!-- deep-dive deck link -->
@@ -843,7 +880,7 @@ answer = llm.<span class="tok-fn">invoke</span>(prompt.<span class="tok-fn">invo
 <div class="dl-text">
 <span class="eyebrow">Go deeper</span>
 <h3>Take the full course on this topic</h3>
-<p>This article is a field note. The interactive deck walks the entire RAG build slide by slide, with diagrams and worked examples. 심화 자료로 이어집니다.</p>
+<p>This article is a field note. The interactive deck walks the entire RAG build slide by slide, with diagrams and worked examples for a deeper treatment.</p>
 </div>
 <a class="btn btn-primary" href="../../llm_apply/RAG_BUILD_SLIDE.html">Open the deck <span aria-hidden="true" class="arw">→</span></a>
 </aside>
@@ -851,8 +888,8 @@ answer = llm.<span class="tok-fn">invoke</span>(prompt.<span class="tok-fn">invo
 <div class="share">
 <span class="lbl">Share</span>
 <button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
-<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
-<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Frag-over-sealed-documents.html" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Frag-over-sealed-documents.html" rel="noopener" target="_blank">LinkedIn</a>
 </div>
 <!-- author bio card (E-E-A-T) -->
 <aside class="author-card">
@@ -873,11 +910,11 @@ answer = llm.<span class="tok-fn">invoke</span>(prompt.<span class="tok-fn">invo
 <span class="eyebrow">Keep reading</span>
 <h2>Related from the Journal</h2>
 <div class="related-grid">
-<a class="rel-card" href="rag-over-sealed-documents.html">
+<a class="rel-card" href="chunking-technical-docs.html">
 <span class="cat-tag">RAG</span>
 <h3>Chunking technical docs without shredding the meaning</h3>
 </a>
-<a class="rel-card" href="agents-mcp-mes.html">
+<a class="rel-card" href="hybrid-retrieval-vector-graph.html">
 <span class="cat-tag">Agents &amp; MCP</span>
 <h3>Hybrid retrieval: vectors + knowledge graph</h3>
 </a>
@@ -886,45 +923,35 @@ answer = llm.<span class="tok-fn">invoke</span>(prompt.<span class="tok-fn">invo
 </article>
 </main>
 <footer class="site-foot">
-<div class="wrap">
-<div class="foot-top">
-<div class="foot-lead">
-<h2>Free, in-depth, and open.</h2>
-<p>Everything here, courses and journal alike, is free to read with no signup.</p>
-</div>
-<div class="foot-nav-cols">
-<div class="foot-col">
-<h4>Explore</h4>
-<a href="../../index.html">Hub home</a>
-<a href="../../index.html#courses">All courses</a>
-<a href="../index.html">Journal</a>
-</div>
-<div class="foot-col">
-<h4>Courses</h4>
-<a href="../../overview/index.html">Fab AI</a>
-<a href="../../watsonx/index.html">Air-gapped LLM</a>
-<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
-</div>
-<div class="foot-col">
-<h4>Site</h4>
-<a href="../about.html">About</a>
-<a href="../contact.html">Contact</a>
-<a href="../privacy.html">Privacy</a>
-<a href="../terms.html">Terms</a>
-</div>
-</div>
-</div>
-<div class="foot-bottom">
-<div class="foot-brand">
-<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</div>
-<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
-</div>
-</div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
 </footer>
 <script>
 (function(){
@@ -960,7 +987,7 @@ answer = llm.<span class="tok-fn">invoke</span>(prompt.<span class="tok-fn">invo
     anim.classList.toggle('playing',on);
     toggle.setAttribute('aria-pressed',on?'true':'false');
     icon.textContent=on?'❚❚':'▶';
-    label.textContent=on?'Pause / 정지':'Play / 재생';
+    label.textContent=on?'Pause':'Play';
   }
   toggle.addEventListener('click',function(){setPlay(!anim.classList.contains('playing'))});
   if(reduce){
@@ -977,7 +1004,7 @@ answer = llm.<span class="tok-fn">invoke</span>(prompt.<span class="tok-fn">invo
   }
 
   /* ══ Chunking slider widget ═══════════════════════════════════════ */
-  var SOP="ETCH CHAMBER ALARM E-1420 RESPONSE SOP. Step 1: acknowledge the alarm on the EAP and note the timestamp. Step 2: verify chamber pressure against the recipe setpoint before any purge. Step 3: if RF power reads below 80% of target, isolate the matching network and re-strike. Step 4: log the deviation and notify the B-shift lead. 챔버 압력과 RF 파워를 반드시 확인하고 편차를 기록한다.";
+  var SOP="SYNTHETIC TRAINING TEXT — NOT AN OPERATING PROCEDURE. Demo section A describes a fictional alert and records a timestamp. Demo section B asks the reader to compare an invented signal with an invented reference. Demo section C routes the fictional case to an authorized reviewer. The purpose is only to show how overlapping chunks preserve context.";
   var colors=['#C7D6E4','#D6E4C7','#E4D3C7','#E4C7DE','#D8C7E4','#C7E4E0','#E4E0C7'];
   var sizeEl=document.getElementById('csSize'),overEl=document.getElementById('csOver');
   var sizeVal=document.getElementById('csSizeVal'),overVal=document.getElementById('csOverVal');
@@ -1024,20 +1051,20 @@ answer = llm.<span class="tok-fn">invoke</span>(prompt.<span class="tok-fn">invo
   /* ══ Mini search demo ═════════════════════════════════════════════ */
   // chunk points (illustrative 2-D positions) + their text
   var CHUNKS=[
-    {x:0.62,y:0.42,src:'etch/etch_e1420_sop.txt',txt:'E-1420 response: verify chamber pressure, re-strike RF if <80% target.'},
-    {x:0.55,y:0.60,src:'etch/etch_rf_match.txt', txt:'RF power drift is usually a matching-network fault; isolate and re-tune.'},
-    {x:0.70,y:0.30,src:'etch/etch_alarm_index.txt',txt:'Alarm index: E-14xx codes map to chamber pressure / RF subsystem.'},
-    {x:0.28,y:0.35,src:'cvd/cvd_purge_sop.txt',  txt:'CVD purge: N2 flush 3 cycles before venting; confirm interlock clears.'},
-    {x:0.20,y:0.62,src:'cvd/cvd_recipe.txt',     txt:'CVD recipe params: deposition rate vs chamber temperature curve.'},
-    {x:0.42,y:0.20,src:'common/eap_alarms.txt',  txt:'Acknowledge alarms on the EAP; every deviation must be logged.'},
-    {x:0.80,y:0.55,src:'etch/etch_maint.txt',    txt:'Etcher PM: matching network inspection every 2 weeks.'},
-    {x:0.35,y:0.80,src:'cvd/cvd_interlock.txt',  txt:'Interlock chain for CVD purge and vent sequence.'}
+    {x:0.62,y:0.42,src:'training/demo_alert.txt',txt:'Synthetic example: compare fictional signal A with reference B.'},
+    {x:0.55,y:0.60,src:'training/demo_signal.txt',txt:'Synthetic example: route an unexplained signal to an authorized reviewer.'},
+    {x:0.70,y:0.30,src:'training/demo_index.txt',txt:'Synthetic index: demo alerts map to fictional subsystems.'},
+    {x:0.28,y:0.35,src:'training/demo_sequence.txt',txt:'Synthetic sequence: confirm prerequisites before continuing.'},
+    {x:0.20,y:0.62,src:'training/demo_recipe.txt',txt:'Synthetic parameters illustrate retrieval metadata only.'},
+    {x:0.42,y:0.20,src:'training/demo_log.txt',txt:'Synthetic example: record the event and source reference.'},
+    {x:0.80,y:0.55,src:'training/demo_maintenance.txt',txt:'Synthetic maintenance text contains no interval or plant instruction.'},
+    {x:0.35,y:0.80,src:'training/demo_interlock.txt',txt:'Synthetic interlock text is a retrieval placeholder, not guidance.'}
   ];
   // per-query: index of query point + which chunk indices are the top-3 nearest
   var QUERIES=[
-    {qx:0.66,qy:0.36,top:[0,2,1],label:'챔버 알람 E-1420 대응 SOP?'},
-    {qx:0.60,qy:0.56,top:[1,0,6],label:'Etcher RF power drift 원인?'},
-    {qx:0.24,qy:0.50,top:[3,4,7],label:'CVD 챔버 퍼지 절차?'}
+    {qx:0.66,qy:0.36,top:[0,2,1],label:'Response SOP for chamber alarm E-1420?'},
+    {qx:0.60,qy:0.56,top:[1,0,6],label:'What causes etcher RF power drift?'},
+    {qx:0.24,qy:0.50,top:[3,4,7],label:'What is the CVD chamber purge procedure?'}
   ];
   var SVGW=460,SVGH=320, PX=[40,440], PY=[30,285];
   function sx(v){return PX[0]+v*(PX[1]-PX[0]);}
@@ -1093,5 +1120,6 @@ answer = llm.<span class="tok-fn">invoke</span>(prompt.<span class="tok-fn">invo
   runQuery(0);
 })();
 </script>
+<script src="../assets/theme.js"></script>
 </body>
 </html>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc" viewBox="0 0 1200 675">
+  <title id="title">VIN containment evidence graph</title><desc id="desc">A vehicle is connected to supplier lots, installation events, torque results, rework, end-of-line tests, and containment decisions.</desc>
+  <style>
+    .bg{fill:#faf9f5}.panel{fill:#fff;stroke:#dbd5c8;stroke-width:2}.edge{stroke:#8b857d;stroke-width:3;fill:none}.node{fill:#fcfbf8;stroke:#168f91;stroke-width:2}.warn{fill:#fff8f3;stroke:#c85f42;stroke-width:2}.title{fill:#1f1e1c;font:700 36px Inter,Arial,sans-serif}.sub{fill:#5f5b55;font:500 18px Inter,Arial,sans-serif}.nt{fill:#1f1e1c;font:800 18px Inter,Arial,sans-serif}.nd{fill:#5f5b55;font:500 14px Inter,Arial,sans-serif}.edge-label{fill:#5f5b55;font:700 13px Inter,Arial,sans-serif}
+    @media(prefers-color-scheme:dark){.bg{fill:#07111f}.panel{fill:#101d31;stroke:#344a68}.edge{stroke:#7e91aa}.node{fill:#0f1d31;stroke:#70e0da}.warn{fill:#241a22;stroke:#ffaa87}.title,.nt{fill:#f2f7ff}.sub,.nd,.edge-label{fill:#c7d4e7}}
+  </style>
+  <rect class="bg" width="1200" height="675"/><rect class="panel" x="42" y="42" width="1116" height="591" rx="28"/>
+  <text class="title" x="82" y="106">Containment is a graph, not a time filter</text><text class="sub" x="82" y="142">Rework, part swaps, and late events can widen or narrow the candidate VIN set.</text>
+  <path class="edge" d="M300 276 C410 276 420 318 506 318"/><path class="edge" d="M300 446 C410 446 420 370 506 370"/><path class="edge" d="M694 342 C780 342 790 242 900 242"/><path class="edge" d="M694 342 C780 342 790 442 900 442"/><path class="edge" d="M994 302 V382"/>
+  <rect class="node" x="100" y="220" width="200" height="112" rx="18"/><text class="nt" x="200" y="262" text-anchor="middle">Supplier lot</text><text class="nd" x="200" y="289" text-anchor="middle">module / serial / batch</text>
+  <rect class="node" x="100" y="390" width="200" height="112" rx="18"/><text class="nt" x="200" y="432" text-anchor="middle">Station event</text><text class="nd" x="200" y="459" text-anchor="middle">tool + program + clock</text>
+  <rect class="node" x="506" y="286" width="188" height="112" rx="18"/><text class="nt" x="600" y="330" text-anchor="middle">VIN 0427</text><text class="nd" x="600" y="357" text-anchor="middle">variant + route history</text>
+  <rect class="warn" x="900" y="186" width="188" height="112" rx="18"/><text class="nt" x="994" y="228" text-anchor="middle">EOL symptom</text><text class="nd" x="994" y="255" text-anchor="middle">code + retest result</text>
+  <rect class="warn" x="900" y="386" width="188" height="112" rx="18"/><text class="nt" x="994" y="428" text-anchor="middle">Quality action</text><text class="nd" x="994" y="455" text-anchor="middle">hold / release / 8D</text>
+  <text class="edge-label" x="382" y="258">installed_as</text><text class="edge-label" x="382" y="450">observed_at</text><text class="edge-label" x="760" y="258">failed_with</text><text class="edge-label" x="760" y="456">scoped_by</text>
+  <text class="sub" x="82" y="570">Review both sides: why each VIN is included, and why every nearby VIN is excluded.</text><text class="sub" x="82" y="602">Freeze the source snapshot and retain superseded events; do not overwrite the evidence trail.</text>
+</svg>

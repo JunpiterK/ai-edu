@@ -1,21 +1,22 @@
-HTML
+<!DOCTYPE html>
 <html lang="ko">
 <head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
- ∨ SEO ​ 
+<!-- SEO -->
 <title>한국어·기술 텍스트 임베딩 모델 고르기 - AI Edu Archive 한국어</title>
 <meta content="폐쇄망 팹 안에서 한국어-영어 혼합 문서와 기술 용어를 검색하기 위해 bge-m3, multilingual-e5 같은 로컬 임베딩 모델을 고르는 방법." name="description"/>
 <meta content="AI Edu Archive" name="author"/>
 <meta content="#FAF9F5" name="theme-color"/>
-<link href="https://ai-edu-archive.example.com/blog/ko/articles/embeddings-korean-technical.html" rel="canonical"/><link href="https://ai-edu-archive.example.com/blog/articles/embeddings-korean-technical.html" hreflang="en" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/ko/articles/embeddings-korean-technical.html" hreflang="ko" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/articles/embeddings-korean-technical.html" hreflang="x-default" rel="alternate"/>
+<link href="https://ai-edu-archive.pages.dev/blog/ko/articles/embeddings-korean-technical.html" rel="canonical"/>
 <meta content="index,follow" name="robots"/>
- 오픈 그래프 
+<!-- Open Graph -->
 <meta content="article" property="og:type"/>
 <meta content="한국어·기술 텍스트 임베딩 모델 고르기 - AI Edu Archive 한국어" property="og:title"/>
 <meta content="폐쇄망 팹 안에서 한국어-영어 혼합 문서와 기술 용어를 검색하기 위해 bge-m3, multilingual-e5 같은 로컬 임베딩 모델을 고르는 방법." property="og:description"/>
 <meta content="AI Edu Archive" property="og:site_name"/>
-<meta content="https://ai-edu-archive.example.com/blog/ko/articles/embeddings-korean-technical.html" property="og:url"/>
+<meta content="https://ai-edu-archive.pages.dev/blog/ko/articles/embeddings-korean-technical.html" property="og:url"/>
 <meta content="ko_KR" property="og:locale"/>
 <meta content="en_US" property="og:locale:alternate"/>
 <meta content="2026-07-04" property="article:published_time"/>
@@ -24,57 +25,63 @@ HTML
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="한국어·기술 텍스트 임베딩 모델 고르기 - AI Edu Archive 한국어" name="twitter:title"/>
 <meta content="폐쇄망 팹 안에서 한국어-영어 혼합 문서와 기술 용어를 검색하기 위해 bge-m3, multilingual-e5 같은 로컬 임베딩 모델을 고르는 방법." name="twitter:description"/>
- JSON-LD: 기사 스키마 
+ <!-- JSON-LD: 기사 스키마 -->
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "한국어·기술 텍스트 임베딩 모델 고르기",
   "description": "폐쇄망 팹 안에서 한국어-영어 혼합 문서와 기술 용어를 검색하기 위해 bge-m3, multilingual-e5 같은 로컬 임베딩 모델을 고르는 방법.",
   "inLanguage": "ko",
-  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "image": "https://ai-edu-archive.pages.dev/blog/assets/visuals/article-visual-template.svg",
   "datePublished": "2026-07-04",
   "dateModified": "2026-07-04",
   "author": {
     "@type": "Person",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html",
     "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
   },
   "publisher": {
     "@type": "Organization",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html"
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ai-edu-archive.example.com/blog/ko/articles/embeddings-korean-technical.html"
+    "@id": "https://ai-edu-archive.pages.dev/blog/ko/articles/embeddings-korean-technical.html"
   },
   "name": "한국어·기술 텍스트 임베딩 모델 고르기",
-  "url": "https://ai-edu-archive.example.com/blog/ko/articles/embeddings-korean-technical.html"
+  "url": "https://ai-edu-archive.pages.dev/blog/ko/articles/embeddings-korean-technical.html"
 }</script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link href="../../assets/blog.css" rel="stylesheet"/>
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/embeddings-korean-technical.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/embeddings-korean-technical.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/embeddings-korean-technical.html">
 </head>
 <body data-cat="rag">
 <a class="skip-link" href="#main">본문으로 건너뛰기</a>
 <header class="nav" id="nav">
-<div class="wrap">
-<a aria-label="AI Edu Archive — 홈" class="brand" href="../../index.html">
-<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</a>
-<nav aria-label="주요 메뉴" class="nav-links">
-<a href="../../../index.html#courses">강의</a>
-<a href="../index.html">글</a>
-<a href="../about.html">소개</a>
-<div aria-label="언어 선택" class="language-switch"><a href="../../articles/embeddings-korean-technical.html" lang="en" title="English">🇺🇸 EN</a><a aria-current="true" href="embeddings-korean-technical.html" lang="ko" title="한국어">🇰🇷 KO</a><a href="../../articles/embeddings-korean-technical.html" lang="en" title="스페인어판은 추후 추가 예정이며 현재는 영어로 표시됩니다">🇪🇸 ES</a><a href="../../articles/embeddings-korean-technical.html" lang="en" title="중국어판은 추후 추가 예정이며 현재는 영어로 표시됩니다">🇨🇳 ZH</a><a href="../../articles/embeddings-korean-technical.html" lang="en" title="일본어판은 추후 추가 예정이며 현재는 영어로 표시됩니다">🇯🇵 JA</a><a href="../../articles/embeddings-korean-technical.html" lang="en" title="독일어판은 추후 추가 예정이며 현재는 영어로 표시됩니다">🇩🇪 DE</a><a href="../../articles/embeddings-korean-technical.html" lang="en" title="프랑스어판은 추후 추가 예정이며 현재는 영어로 표시됩니다">🇫🇷 FR</a></div>
-</nav>
-</div>
+  <div class="wrap">
+    <a class="brand" href="../../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="주요 메뉴">
+      <a href="../../../index.html#courses">강의</a>
+      <a href="../index.html" aria-current="page">글</a>
+      <a href="../learning-paths.html">학습 경로</a>
+      <a href="../search.html">검색</a>
+      <a href="../portfolio.html">포트폴리오</a>
+      <a href="../about.html">소개</a>
+      <div class="language-switch" aria-label="언어 선택">
+        <a href="../../articles/embeddings-korean-technical.html" lang="en" title="English">EN</a>
+        <a href="embeddings-korean-technical.html" lang="ko" aria-current="true" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
 </header>
 <main id="main">
 <article itemscope="" itemtype="https://schema.org/Article">
@@ -116,26 +123,36 @@ HTML
 </ol>
 </nav>
 <div class="article-body" itemprop="articleBody">
-<p>리트리버의 품질은 벡터 품질을 넘지 못합니다. 폐쇄망 팹에서는 호스팅 임베딩 API를 호출할 수 없습니다. 모델 가중치는 사내 네트워크 안, 직접 관리하는 GPU 위에 있어야 합니다. 이 제약은 선택지를 좁히고, 많은 RAG 튜토리얼이 건너뛰는 결정을 강제합니다. 한국어, 영어, 부품 번호, 챔버 ID, 내부 약어가 섞인 문서를 실제로 이해하는 임베딩 모델을 골라야 합니다.</p>
+    <div class="field-story">
+      <span class="note-k">합성 비교 장면</span>
+      <p><strong>설명을 위해 단순화한 가상 평가입니다.</strong> 평가 화면 왼쪽에는 “TOOL_A RF reflected power 알람 후 재가동 조건”이 있고, 오른쪽 top-5에는 장비명이 같은 점검표 네 건과 다른 장비의 재가동 절 한 건이 떠 있다고 합시다. 정확한 식별자는 잡았지만 한국어 질문의 의도인 “재가동 조건”은 놓친 결과입니다. 이때 모델 이름만 바꾸지 말고 질문 원문, 기대 절, 검색 청크, 적용된 metadata filter를 한 행에 놓아 식별자 매칭과 의미 매칭을 따로 판정합니다.</p>
+    </div>
+
+    <div class="reader-shortcut">
+      <span class="note-k">기술 권고</span>
+      <p>후보 모델을 받으면 승인된 질문 30개와 청크 스냅샷부터 고정하세요. 각 질문에 기대 문서·절을 붙이고 top-k 결과를 저장하면 모델 차이와 문서 분할 문제를 구분할 수 있습니다. 출처·개정·권한이 빠진 청크는 점수가 높아도 운영 후보에서 제외하며, 한 모델에만 유리하도록 질의 문구를 다듬지 않습니다.</p>
+    </div>
+
+<p>이 글의 권고는 특정 모델의 우승을 선언하는 것이 아니라 폐쇄망 안에서 재현 가능한 비교를 만드는 것입니다. 한국어, 영어, 부품 번호, 챔버 ID, 내부 약어가 한 문장에 섞였을 때 기대 절이 top-k 안에 드는지 보고, 처리 시간·가중치 반입 조건·라이선스도 함께 기록합니다. GPU가 필수인 것은 아니지만 문서량과 갱신 주기에 따른 CPU 처리 시간과 배치 크기는 직접 측정해야 합니다.</p>
 <h2 id="why">임베딩 모델이 RAG 품질을 결정하는 이유</h2>
 <p>임베딩 모델은 텍스트를 벡터로 바꾸고, 의미가 비슷한 텍스트가 가까운 위치에 놓이도록 만듭니다. 검색은 결국 이 벡터 공간에서 가까운 이웃을 찾는 일입니다. 모델이 한국어 질문과 그 답을 담은 영어 문서를 멀리 떨어뜨려 놓으면, 이후 LLM 프롬프트를 아무리 잘 써도 누락된 청크를 복구할 수 없습니다. 온프레미스 RAG가 답답하게 느껴질 때 가장 먼저 봐야 할 곳이 임베딩입니다.</p>
-<blockquote>LLM은 나중에 바꿀 수 있습니다. 하지만 임베딩 모델은 리트리버가 찾을 수 있는 세계의 경계를 조용히 결정합니다.</blockquote>
+<blockquote>LLM을 바꿔도 검색 단계에서 빠진 문서는 돌아오지 않습니다. 임베딩 평가는 답변 문체보다 먼저 끝내야 합니다.</blockquote>
 <h2 id="candidates">두 후보: bge-m3와 multilingual-e5</h2>
-<p>완전 오프라인으로 실행해야 하는 한국어-영어 혼합 문서에서는 두 오픈 웨이트 계열이 실용적인 출발점입니다. 둘 다 허용적 라이선스로 사용할 수 있고 단일 GPU에서도 서빙 가능한 크기입니다.</p>
+<p>완전 오프라인으로 실행해야 하는 한국어-영어 혼합 문서에서는 두 오픈 웨이트 계열이 실용적인 출발점입니다. 둘 다 현장 PoC에서 다루기 쉬운 크기이고, 단일 GPU 또는 CPU 보조 환경에서도 임베딩 배치를 운영할 수 있습니다. 다만 라이선스와 재배포 조건은 회사 반입 절차에서 별도로 확인해야 합니다.</p>
 <ul>
 <li>bge-m3(BAAI): 약 560M 파라미터, 1024차원 dense vector, 최대 8192 토큰 컨텍스트, 100개 이상 언어를 지원합니다. query instruction prefix가 필요 없어 질문과 문서를 같은 방식으로 임베딩합니다.</li>
 <li>multilingual-e5-large(intfloat): 1024차원이며 다국어 성능이 강하지만 prefix가 필요합니다. 모든 질문은 query:로, 저장 문서는 passage:로 시작해야 합니다. prefix를 빼먹으면 유사도 품질이 조용히 떨어집니다.</li>
 </ul>
-<p>최근 다국어 검색 벤치마크에서는 한국어 비중이 큰 작업에서 bge-m3가 자주 우세하며, 긴 컨텍스트도 SOP 섹션이 길 때 유리합니다. 첫 폐쇄망 구축이라면 bge-m3를 기본값으로 두는 편이 안전합니다. multilingual-e5는 자체 데이터 평가에서 비교 후보로 두기에 좋습니다.</p>
+<p>공개 벤치마크는 후보를 줄이는 자료로만 씁니다. 첫 비교에서는 bge-m3와 multilingual-e5를 같은 청크, 같은 질문, 같은 top-k 조건으로 실행하고 한국어·영어 혼합 질의를 따로 집계하는 편이 낫습니다. 긴 컨텍스트 지원이 곧 긴 SOP 전체를 한 청크로 넣어도 된다는 뜻은 아닙니다. 최종 선택은 내부 질문 세트의 적중률과 지연 시간, 반입·운영 조건을 함께 보고 정합니다.</p>
 <h2 id="jargon">한국어-영어 혼합 문서와 기술 용어</h2>
 <p>일반 다국어 모델은 일상적인 이중언어 텍스트를 잘 처리합니다. 팹에서 어려운 부분은 모델이 거의 보지 못했을 용어입니다. PECVD-03B 같은 챔버명, 결함 코드, 내부 약어는 subword tokenizer에서 의미 없는 조각으로 쪼개질 수 있습니다. 엔지니어가 보면 분명 관련 있는 문서도 벡터 공간에서는 멀어질 수 있습니다. 실용적인 완화책은 세 가지입니다.</p>
 <ul>
 <li>식별자를 청크 텍스트에 남깁니다. 전처리 중 부품 번호, 챔버 ID, 결함 코드를 제거하지 마세요. 질문에 정확한 이름이 들어올 때 강한 검색 앵커가 됩니다.</li>
 <li>하이브리드 키워드 채널을 추가합니다. dense vector를 BM25 같은 sparse 채널과 함께 써서 lot ID처럼 정확히 일치해야 하는 용어를 항상 찾을 수 있게 합니다.</li>
-<li>평가가 필요하다고 보여줄 때만 fine-tuning을 고려합니다. 도메인 fine-tuning은 실제 운영 부담이 크고 폐쇄망에서는 유지관리 비용도 큽니다. 시작점이 아니라 마지막 수단으로 다루세요.</li>
+<li>평가가 필요하다고 보여줄 때만 미세조정을 고려합니다. 도메인 미세조정은 실제 운영 부담이 크고 폐쇄망에서는 유지관리 비용도 큽니다. 시작점이 아니라 마지막 수단으로 다루세요.</li>
 </ul>
 <h2 id="normalize">차원, 정규화, 유사도</h2>
-<p>두 모델 모두 1024차원 벡터를 출력합니다. 하지만 숫자 자체보다 다음 두 설정이 더 중요합니다.</p>
+<p>두 모델 모두 1024차원 벡터를 출력합니다. 하지만 차원 수 자체보다 다음 두 설정이 더 중요합니다.</p>
 <ul>
 <li>벡터를 정규화합니다. normalize_embeddings=True를 설정하세요. 모든 벡터가 단위 길이가 되면 dot product와 cosine similarity가 같아지고, 많은 벡터 스토어에서 빠른 inner-product index를 쓸 수 있습니다.</li>
 <li>일관성을 유지합니다. 인덱싱과 질의에 같은 metric을 사용하세요. 임베딩 모델을 바꾸면 전체 코퍼스를 다시 임베딩해야 합니다. 예전 벡터 공간과 새 벡터 공간은 비교할 수 없습니다.</li>
@@ -173,7 +190,7 @@ HTML
 <figcaption>그림 1. 임베딩과 검색 루프 전체가 폐쇄망 안에 머뭅니다. 가중치는 로컬 디스크에서 로드되고, 런타임에는 인터넷에서 아무것도 다운로드하지 않습니다.</figcaption>
 </figure>
 <h2 id="code">로컬 임베딩 모델을 오프라인으로 로드하기</h2>
-<p>LangChain에서 Hugging Face 임베딩 모델을 실행할 때는 전용 langchain-huggingface 패키지를 사용하는 것이 현재 방식입니다. 폐쇄망 안으로 복사한 로컬 가중치 디렉터리를 지정하세요. 런타임에는 네트워크 호출이 없어야 합니다.</p>
+<p>LangChain에서 Hugging Face 임베딩 모델을 실행할 때는 전용 langchain-huggingface 패키지를 사용하는 것이 현재 방식입니다. 폐쇄망 안으로 반입한 로컬 가중치 디렉터리를 지정하세요. 런타임에는 네트워크 호출이 없어야 하며, 모델 파일 해시와 반입 승인 이력도 함께 남겨두는 편이 좋습니다.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -262,11 +279,15 @@ store = Chroma.<span class="tok-fn">from_documents</span>(
 hits = store.<span class="tok-fn">similarity_search</span>(<span class="tok-str">"챔버 압력 이상"</span>, k=<span class="tok-num">4</span>)</code></pre>
 </figure>
 <h2 id="evaluate">도입 전에 자체 데이터로 평가하기</h2>
-<p>리더보드만 보고 모델을 고르지 마세요. 엔지니어가 실제로 묻는 질문 30-50개를 실제 언어 그대로 모으고, 각 질문의 정답이 되는 SOP 섹션을 기록하세요. 그런 다음 각 후보 모델이 top-k 안에서 그 섹션을 찾아오는지 측정합니다. 이 작은 평가 세트가 프로젝트에서 가장 가치 있는 산출물이 될 수 있습니다.</p>
-<hr/>
-<p>임베딩은 온프레미스 RAG의 조용한 기반입니다. 모델 선택, 정규화, 기술 용어 처리가 맞아야 나머지 검색·생성 파이프라인도 안정적으로 올라갑니다. 아래 전체 과정에서는 검색 스택을 끝까지 연결해 봅니다.</p>
+<p>엔지니어가 실제로 쓸 법한 질문 30~50개를 원문 그대로 모으고, 질문마다 정답 SOP의 문서 ID와 절 ID를 기록합니다. 예를 들어 <code>TOOL_A RF reflected power 알람 후 재가동 조건</code>처럼 한글 문장에 가상 장비 식별자와 영문 알람명이 섞인 형태도 남깁니다. 후보별 top-k 적중 여부뿐 아니라 틀린 결과가 같은 문서의 다른 절인지, 전혀 다른 장비 문서인지도 분류하세요. 전자는 chunking 조정으로 나아질 수 있고, 후자는 임베딩이나 필터를 다시 봐야 합니다.</p>
+<div class="beginner-example">
+<span class="note-k">후보 비교표 만들기</span>
+<p>스프레드시트에 <code>질문</code>, <code>기대 절</code>, <code>후보 A 순위</code>, <code>후보 B 순위</code>, <code>첫 오답 유형</code>, <code>질의 지연</code> 여섯 열을 만드세요. 첫 오답 유형은 <code>같은 문서·다른 절</code>, <code>다른 장비</code>, <code>식별자 누락</code>, <code>권한 필터</code> 중 하나로 표시합니다. 세 문항만 채워도 “어느 모델이 더 좋아 보인다”가 아니라 “혼합 질의에서 어느 실패가 반복된다”로 대화가 바뀝니다. 소규모 결과는 통계적 우위를 증명하지 않으므로 최종 선정 근거로 단독 사용하지 않습니다.</p>
 </div>
- 심층적인 데크 링크 
+<hr/>
+<p>모델을 고른 뒤에는 모델 경로, 가중치 해시, 정규화 설정, prefix 규칙과 평가 결과를 한 묶음으로 버전 관리합니다. 다음 모델 교체 때 같은 질문 세트를 다시 실행해야 개선인지 회귀인지 판단할 수 있습니다. 이 기록을 들고 <a href="rag-over-sealed-documents.html">폐쇄망 내부 문서 RAG 구축</a>으로 넘어가면, 선택한 임베더를 로더·벡터 저장소·로컬 LLM 사이에 어디에 고정해야 하는지 이어서 확인할 수 있습니다.</p>
+</div>
+ <!-- 심층적인 데크 링크 -->
 <aside class="deck-link">
 <div class="dl-text">
 <span class="eyebrow">더 깊이 들어가세요</span>
@@ -275,14 +296,14 @@ hits = store.<span class="tok-fn">similarity_search</span>(<span class="tok-str"
 </div>
 <a class="btn btn-primary" href="../../../watsonx/index.html">데크를 열어보세요 <span aria-hidden="true" class="arw">→</span></a>
 </aside>
- 공유 
+ <!-- 공유 -->
 <div class="share">
 <span class="lbl">공유</span>
 <button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">공유/링크 복사</button>
-<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">엑스 / 트위터</a>
-<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">링크드인</a>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Fko%2Farticles%2Fembeddings-korean-technical.html" rel="noopener" target="_blank">엑스 / 트위터</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Fko%2Farticles%2Fembeddings-korean-technical.html" rel="noopener" target="_blank">링크드인</a>
 </div>
- 저자 바이오 카드(E-E-A-T) 
+ <!-- 저자 바이오 카드(E-E-A-T) -->
 <aside class="author-card">
 <span aria-hidden="true" class="avatar">AE</span>
 <div class="a-body">
@@ -292,7 +313,7 @@ hits = store.<span class="tok-fn">similarity_search</span>(<span class="tok-str"
 <a href="../about.html">저자에 대해 더 알아보기 →</a>
 </div>
 </aside>
- 관련된 
+ <!-- 관련된 -->
 <section aria-label="관련 기사" class="related">
 <span class="eyebrow">계속 읽으세요</span>
 <h2>저널의 관련 글</h2>
@@ -310,45 +331,35 @@ hits = store.<span class="tok-fn">similarity_search</span>(<span class="tok-str"
 </article>
 </main>
 <footer class="site-foot">
-<div class="wrap">
-<div class="foot-top">
-<div class="foot-lead">
-<h2>무료로 깊게, 열린 방식으로</h2>
-<p>강좌와 저널 글은 모두 가입 없이 무료로 읽을 수 있습니다.</p>
-</div>
-<div class="foot-nav-cols">
-<div class="foot-col">
-<h4>탐구하다</h4>
-<a href="../../index.html">허브 홈</a>
-<a href="../../../index.html#courses">모든 강좌</a>
-<a href="../index.html">저널</a>
-</div>
-<div class="foot-col">
-<h4>학습</h4>
-<a href="../../../overview/index.html">팹 AI</a>
-<a href="../../../watsonx/index.html">에어갭 LLM</a>
-<a href="../../../llm_apply/LLM_slide.html">엔터프라이즈 LLM</a>
-</div>
-<div class="foot-col">
-<h4>사이트</h4>
-<a href="../about.html">소개</a>
-<a href="../contact.html">연락하다</a>
-<a href="../privacy.html">개인정보</a>
-<a href="../terms.html">이용약관</a>
-</div>
-</div>
-</div>
-<div class="foot-bottom">
-<div class="foot-brand">
-<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</div>
-<span class="copyright">© 2026 AI Edu Archive · 한국형 AI 교육 공개</span>
-</div>
-</div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>누구나 볼 수 있는 실용적인 AI 교육 자료입니다.</h2>
+        <p>현장에서 쓸 수 있는 AI 시스템을 위한 강의, 글, 실전 기록을 모았습니다.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>둘러보기</h4>
+          <a href="../../../index.html#courses">강의</a>
+          <a href="../index.html">글</a>
+          <a href="../learning-paths.html">학습 경로</a>
+          <a href="../search.html">검색</a>
+          <a href="../portfolio.html">포트폴리오</a>
+        </div>
+        <div class="foot-col">
+          <h4>사이트</h4>
+          <a href="../about.html">소개</a>
+          <a href="../contact.html">연락처</a>
+          <a href="../privacy.html">개인정보 처리방침</a>
+          <a href="../terms.html">이용약관</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · 한국어와 영어로 제공하는 AI 교육</span>
+    </div>
+  </div>
 </footer>
 <script>
 (function(){
@@ -373,5 +384,6 @@ hits = store.<span class="tok-fn">similarity_search</span>(<span class="tok-str"
   });
 })();
 </script>
+<script src="../../assets/theme.js"></script>
 </body>
 </html>

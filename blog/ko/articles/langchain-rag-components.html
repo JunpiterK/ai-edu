@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
  ="SEO =" 
@@ -8,14 +9,14 @@
 <meta content="LangChain RAG stack을 구성요소별로 설명합니다: DocumentLoader, TextSplitter, embedding, VectorStore, Retriever, LCEL 조립을 local document Q&amp;A 기준으로 구현하는 방법." name="description"/>
 <meta content="AI Edu Archive" name="author"/>
 <meta content="#FAF9F5" name="theme-color"/>
-<link href="https://ai-edu-archive.example.com/blog/ko/articles/langchain-rag-components.html" rel="canonical"/><link href="https://ai-edu-archive.example.com/blog/articles/langchain-rag-components.html" hreflang="en" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/ko/articles/langchain-rag-components.html" hreflang="ko" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/articles/langchain-rag-components.html" hreflang="x-default" rel="alternate"/>
+<link href="https://ai-edu-archive.pages.dev/blog/ko/articles/langchain-rag-components.html" rel="canonical"/>
 <meta content="index,follow" name="robots"/>
- 오픈 그래프 
+ <!-- 오픈 그래프 -->
 <meta content="article" property="og:type"/>
 <meta content="RAG stack 구성요소별 설명 - AI Edu Archive 한국어" property="og:title"/>
 <meta content="LangChain RAG stack을 구성요소별로 설명합니다: DocumentLoader, TextSplitter, embedding, VectorStore, Retriever, LCEL 조립을 local document Q&amp;A 기준으로 구현하는 방법." property="og:description"/>
 <meta content="AI Edu Archive" property="og:site_name"/>
-<meta content="https://ai-edu-archive.example.com/blog/ko/articles/langchain-rag-components.html" property="og:url"/>
+<meta content="https://ai-edu-archive.pages.dev/blog/ko/articles/langchain-rag-components.html" property="og:url"/>
 <meta content="ko_KR" property="og:locale"/>
 <meta content="en_US" property="og:locale:alternate"/>
 <meta content="2026-07-04" property="article:published_time"/>
@@ -24,57 +25,63 @@
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="RAG stack 구성요소별 설명 - AI Edu Archive 한국어" name="twitter:title"/>
 <meta content="LangChain RAG stack을 구성요소별로 설명합니다: DocumentLoader, TextSplitter, embedding, VectorStore, Retriever, LCEL 조립을 local document Q&amp;A 기준으로 구현하는 방법." name="twitter:description"/>
- JSON-LD: 기사 스키마 
+ <!-- JSON-LD: 기사 스키마 -->
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "RAG stack 구성요소별 설명",
   "description": "LangChain RAG stack을 구성요소별로 설명합니다: DocumentLoader, TextSplitter, embedding, VectorStore, Retriever, LCEL 조립을 local document Q&A 기준으로 구현하는 방법.",
   "inLanguage": "ko",
-  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "image": "https://ai-edu-archive.pages.dev/blog/assets/visuals/article-visual-template.svg",
   "datePublished": "2026-07-04",
   "dateModified": "2026-07-04",
   "author": {
     "@type": "Person",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html",
     "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
   },
   "publisher": {
     "@type": "Organization",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html"
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ai-edu-archive.example.com/blog/ko/articles/langchain-rag-components.html"
+    "@id": "https://ai-edu-archive.pages.dev/blog/ko/articles/langchain-rag-components.html"
   },
   "name": "RAG stack 구성요소별 설명",
-  "url": "https://ai-edu-archive.example.com/blog/ko/articles/langchain-rag-components.html"
+  "url": "https://ai-edu-archive.pages.dev/blog/ko/articles/langchain-rag-components.html"
 }</script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link href="../../assets/blog.css" rel="stylesheet"/>
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/langchain-rag-components.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/langchain-rag-components.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/langchain-rag-components.html">
 </head>
 <body>
 <a class="skip-link" href="#main">본문으로 건너뛰기</a>
 <header class="nav" id="nav">
-<div class="wrap">
-<a aria-label="AI Edu Archive 홈" class="brand" href="../../../index.html">
-<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</a>
-<nav aria-label="주요 메뉴" class="nav-links">
-<a href="../../../index.html#courses">강의</a>
-<a href="../index.html">글</a>
-<a href="../about.html">소개</a>
-<div aria-label="언어 선택" class="language-switch"><a href="../../articles/langchain-rag-components.html" lang="en" title="English">🇺🇸 EN</a><a aria-current="true" href="langchain-rag-components.html" lang="ko" title="한국어">🇰🇷 KO</a><a href="../../articles/langchain-rag-components.html" lang="en" title="English shown for now">🇪🇸 ES</a><a href="../../articles/langchain-rag-components.html" lang="en" title="English shown for now">🇨🇳 ZH</a><a href="../../articles/langchain-rag-components.html" lang="en" title="English shown for now">🇯🇵 JA</a><a href="../../articles/langchain-rag-components.html" lang="en" title="English shown for now">🇩🇪 DE</a><a href="../../articles/langchain-rag-components.html" lang="en" title="English shown for now">🇫🇷 FR</a></div>
-</nav>
-</div>
+  <div class="wrap">
+    <a class="brand" href="../../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="주요 메뉴">
+      <a href="../../../index.html#courses">강의</a>
+      <a href="../index.html" aria-current="page">글</a>
+      <a href="../learning-paths.html">학습 경로</a>
+      <a href="../search.html">검색</a>
+      <a href="../portfolio.html">포트폴리오</a>
+      <a href="../about.html">소개</a>
+      <div class="language-switch" aria-label="언어 선택">
+        <a href="../../articles/langchain-rag-components.html" lang="en" title="English">EN</a>
+        <a href="langchain-rag-components.html" lang="ko" aria-current="true" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
 </header>
 <main id="main">
 <article itemscope="" itemtype="https://schema.org/Article">
@@ -116,11 +123,18 @@
 </ol>
 </nav>
 <div class="article-body" itemprop="articleBody">
-<p>RAG는 기능 하나가 아닙니다. private document를 model이 답하기 전에 useful context로 바꾸는 작은 pipeline입니다. 구성요소 하나가 약하면 전체 system이 불안정하게 느껴집니다.</p>
-<p>역할을 나누면 stack이 쉬워집니다. loader는 source material을 읽습니다. splitter는 chunk를 만듭니다. embedding model은 chunk를 vector로 바꿉니다. vector store는 그것을 index합니다. retriever는 질문에 맞는 chunk를 고릅니다. LCEL은 context, prompt, model, parser를 연결합니다.</p>
+    <div class="field-story">
+      <span class="note-k">검색 결과에서 원문으로 거슬러 올라가기</span>
+      <p><strong>설명을 위해 단순화한 가상 사례입니다.</strong> 펌프 교체 후 체결 토크를 묻는 질문에 RAG가 숫자는 맞췄지만 경고 조건을 빠뜨렸다고 가정해 보겠습니다. 입력 PDF의 표는 두 단으로 추출됐고, 검색된 top-k에는 토크 행만 있고 바로 아래의 “신품 가스켓 사용 시” 조건은 없었습니다. 모델 문제로 판단하기 전에 추출 text와 chunk 경계를 확인하자 loader와 splitter 사이에서 의미가 갈라진 것이 보였습니다. 표 제목과 주의 문구를 같은 chunk로 묶고 문서 개정 metadata를 추가했습니다. 다만 스캔 품질이 낮은 도면과 손글씨는 OCR 자체를 별도로 평가해야 합니다.</p>
+    </div>
+
+    <p class="takeaway-note reader-shortcut"><strong>기술 권고:</strong> 원문 추출, 청크 경계, 상위 검색 결과, 프롬프트 맥락, 최종 답변 순으로 한 건씩 저장합니다. 필요한 문장이 검색 결과에 없다면 모델을 바꿔도 같은 근거 부족이 반복됩니다. 이는 특정 현장의 성능 결과가 아니라 검색 오답을 분류하기 위한 일반 절차입니다.</p>
+
+<p>RAG는 내부 문서를 모델이 답변 근거로 사용할 수 있는 context로 바꾸는 파이프라인입니다. 답이 틀렸다는 최종 현상은 같아도 원인은 원문 추출, 분할, embedding, 색인, 검색, prompt 중 어느 곳에나 있을 수 있습니다.</p>
+<p>Loader는 원본을 Document로 읽고, splitter는 검색 단위로 나눕니다. embedding model과 vector store는 의미 기반 검색을 준비하며, retriever는 질문에 맞는 chunk를 고릅니다. LCEL은 선택된 context를 prompt와 모델, parser로 전달합니다. 이 역할 구분은 설명용 목록이 아니라 디버깅 순서입니다.</p>
 <h2 id="loader">1. DocumentLoader: 문서를 가져오기</h2>
-<p>무엇을 하는가. Loader는 PDF, HTML, CSV, Markdown, text, database export 같은 source file을 읽고 page_content와 metadata가 있는 LangChain Document object를 반환합니다.</p>
-<p>언제 쓰는가. source material이 Python string 밖에 있으면 loader를 씁니다. 실제 RAG에서 metadata는 선택이 아닙니다. source path, page, section, equipment, document version, permission scope가 나중에 중요해집니다.</p>
+<p>Loader는 PDF, HTML, CSV, Markdown, text, database export를 읽어 <code>page_content</code>와 metadata가 담긴 LangChain Document를 반환합니다. 이때 페이지 순서, 표, 머리말이 어떻게 추출되는지 샘플 몇 건을 먼저 확인해야 합니다.</p>
+<p>원본이 Python 문자열 밖에 있으면 loader를 사용합니다. 운영 RAG에서는 source path, page, section, equipment, document version, permission scope를 metadata에 남기세요. 답변 인용뿐 아니라 폐기 문서 제외와 접근 권한 필터에 쓰입니다.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -146,10 +160,10 @@ loader = <span class="tok-fn">DirectoryLoader</span>(
 <span class="tok-kw">for</span> doc <span class="tok-kw">in</span> loader.<span class="tok-fn">lazy_load</span>():        <span class="tok-com"># stream, don't load all at once</span>
     <span class="tok-fn">print</span>(doc.metadata[<span class="tok-str">"source"</span>], doc.metadata.<span class="tok-fn">get</span>(<span class="tok-str">"page"</span>))</code></pre>
 </figure>
-<p>구현 note. PDF부터 시작하지 말고 plain text나 Markdown으로 먼저 시작하세요. PDF extraction 품질은 편차가 크고, extraction이 나쁘면 retrieval 문제가 model 문제처럼 보입니다.</p>
+<p>첫 연결 시험은 plain text나 Markdown으로 하는 편이 좋습니다. 그 상태에서 질문과 검색 흐름을 확인한 뒤 PDF를 넣으면, 새 오답이 추출 문제인지 검색 설정 문제인지 구분할 수 있습니다.</p>
 <h2 id="splitter">2. TextSplitter: chunk로 자르기</h2>
-<p>무엇을 하는가. Splitter는 긴 document를 retrieve 가능하고 prompt에 넣을 수 있는 chunk로 나눕니다. 단순히 글자 수를 세는 것이 아니라 의미를 보존해야 합니다.</p>
-<p>언제 쓰는가. 거의 모든 RAG system에서 splitter를 씁니다. manual 전체는 너무 크고, 너무 작은 fragment는 context를 잃습니다. 좋은 splitter는 heading, procedure step, table을 설명 text 가까이에 둡니다.</p>
+<p>Splitter는 긴 문서를 검색과 prompt 주입에 적합한 chunk로 나눕니다. 크기 제한은 필요하지만 글자 수만 맞추면 절차 단계와 조건문, 표 제목과 값이 떨어질 수 있습니다.</p>
+<p>매뉴얼 전체는 context window에 넣기 어렵고, 지나치게 작은 조각은 적용 조건을 잃습니다. 제목과 절차 단계, 표와 설명 문구가 함께 검색되도록 문서 구조를 우선 보존하세요. chunk 크기는 고정된 정답이 아니라 평가 질문에서 필요한 근거가 함께 들어오는지 보고 정합니다.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -172,14 +186,14 @@ chunks = splitter.<span class="tok-fn">split_documents</span>(docs)   <span clas
 <span class="tok-fn">print</span>(<span class="tok-fn">len</span>(docs), <span class="tok-str">"docs -&gt;"</span>, <span class="tok-fn">len</span>(chunks), <span class="tok-str">"chunks"</span>)</code></pre>
 </figure>
 <blockquote>
-        청킹은 검색 품질을 가장 많이 변경하는 하나의 손잡이입니다. 너무 크고
-        블러 삽입; 너무 작으면 단계가 주변 레시피를 잃습니다.
-        <cite>— 블로그 기본값이 아닌 자신의 매뉴얼에 맞춰 Chunk_size를 조정하세요.</cite>
+        청킹은 검색 품질을 크게 바꾸는 손잡이입니다. chunk가 너무 크면
+        검색 결과가 흐려지고, 너무 작으면 절차 단계가 주변 경고와 레시피 맥락을 잃습니다.
+        <cite>— 블로그 기본값이 아니라 자신의 매뉴얼에 맞춰 chunk_size를 조정하세요.</cite>
 </blockquote>
-<p>구현 note. RecursiveCharacterTextSplitter가 안전한 기본값입니다. 기술 문서에서는 실제 retrieved chunk를 본 뒤 chunk_size와 overlap을 조정하세요.</p>
+<p><code>RecursiveCharacterTextSplitter</code>는 시작점으로 쓸 수 있습니다. 기술 문서에서는 숫자만 조정하지 말고, 실패 질문의 retrieved chunk를 열어 경고 문구와 단위가 함께 남는지 확인하세요.</p>
 <h2 id="embeddings">3. Embeddings: text를 vector로 바꾸기</h2>
-<p>무엇을 하는가. Embedding model은 text를 vector로 mapping해 semantic similarity를 검색할 수 있게 합니다. 의미가 비슷한 query와 chunk는 vector space에서 가까워야 합니다.</p>
-<p>언제 쓰는가. keyword search가 너무 brittle할 때 embedding을 씁니다. paraphrase, synonym, 한국어/영어가 섞인 기술 표현에 강합니다. 하지만 exact fact, part number, relationship을 보장하지는 않습니다.</p>
+<p>Embedding model은 text를 vector로 바꿔 의미가 비슷한 query와 chunk를 가까운 위치에 놓습니다. “배기 불량”과 “exhaust pressure low”처럼 표현이 달라도 관련 문서를 찾는 데 유용합니다.</p>
+<p>반면 정확한 part number, 레시피 개정, 권한 조건은 semantic similarity만으로 보장되지 않습니다. 이런 필드는 keyword 검색이나 metadata filter와 결합하고, 한국어·영어 혼용 질문을 평가셋에 포함해야 합니다.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -204,10 +218,10 @@ embed = <span class="tok-fn">HuggingFaceEmbeddings</span>(
 vec = embed.<span class="tok-fn">embed_query</span>(<span class="tok-str">"chamber pressure drift after PM"</span>)
 <span class="tok-fn">print</span>(<span class="tok-fn">len</span>(vec))   <span class="tok-com"># e.g. 1024 dimensions</span></code></pre>
 </figure>
-<p>구현 note. 가정용 PC에서는 local embedding model부터 쓰세요. chunking을 평가하는 동안 embedding model을 고정해야 어떤 변화가 효과가 있었는지 알 수 있습니다.</p>
+<p>폐쇄망이나 개인 PC에서는 local embedding model로 시작할 수 있습니다. chunking을 비교하는 동안 모델과 평가 질문을 고정해야 어느 변경이 검색 결과를 바꿨는지 판단할 수 있습니다.</p>
 <h2 id="store">4. VectorStore: vector 저장하기</h2>
-<p>무엇을 하는가. Vector store는 embedding과 metadata를 저장하고 similarity search를 수행합니다. Chroma는 prototype에 쉽고, 여러 app이 같은 index를 공유하면 Qdrant, Postgres/pgvector 같은 server-backed store가 더 적합합니다.</p>
-<p>언제 쓰는가. document를 반복해서 검색해야 하면 vector store를 씁니다. one-off summary라면 필요 없을 수도 있지만 knowledge base라면 필요합니다.</p>
+<p>Vector store는 embedding과 metadata를 저장하고 similarity search를 수행합니다. Chroma는 prototype에 쉽고, 여러 app이 같은 index를 공유해야 한다면 Qdrant, Postgres/pgvector 같은 server-backed store가 더 적합합니다.</p>
+<p>같은 문서 집합을 반복 검색한다면 vector store가 필요합니다. 한 번의 요약처럼 문서 전체를 바로 넣을 수 있는 작업에는 색인을 만드는 비용이 더 클 수 있습니다.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -235,10 +249,10 @@ store = <span class="tok-fn">Chroma</span>(
     collection_name=<span class="tok-str">"fab_sops"</span>,
 )</code></pre>
 </figure>
-<p>구현 note. index를 persist하고 collection name을 versioning하세요. source corpus가 바뀌었는데 index name이 그대로면 debugging이 괴로워집니다.</p>
+<p>색인은 지속 저장하고 collection name에 corpus version을 붙이세요. 원문은 바뀌었는데 같은 이름의 이전 색인을 조회하면 오답 재현 기록까지 뒤섞입니다.</p>
 <h2 id="retriever">5. Retriever: 맞는 chunk 가져오기</h2>
-<p>무엇을 하는가. Retriever는 application이 보는 search interface입니다. 나머지 chain은 retriever.invoke(question)을 호출해 Document를 받을 뿐 backend가 Chroma인지 Qdrant인지 BM25인지 hybrid search인지 몰라도 됩니다.</p>
-<p>언제 쓰는가. model이 답하기 전에 evidence가 필요하면 retriever를 씁니다. 특정 tool, date range, product, document type, permission scope를 묻는 경우 metadata filter를 추가하세요.</p>
+<p>Retriever는 application이 보는 search interface입니다. 나머지 chain은 <code>retriever.invoke(question)</code>을 호출해 Document를 받을 뿐 backend가 Chroma인지 Qdrant인지 BM25인지 hybrid search인지 몰라도 됩니다.</p>
+<p>모델이 답하기 전에 근거 문서를 골라야 할 때 retriever를 사용합니다. 특정 장비, 기간, 제품, 문서 유형, 권한 범위가 질문에 포함되면 metadata filter로 검색 대상을 먼저 좁히세요.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -258,7 +272,7 @@ hits = retriever.<span class="tok-fn">invoke</span>(<span class="tok-str">"how t
 <span class="tok-kw">for</span> h <span class="tok-kw">in</span> hits:
     <span class="tok-fn">print</span>(h.metadata[<span class="tok-str">"source"</span>], <span class="tok-str">"—"</span>, h.page_content[:<span class="tok-num">80</span>])</code></pre>
 </figure>
-<p>구현 note. retrieved chunk를 항상 직접 확인하세요. 많은 RAG 실패는 fluent answer를 입은 retrieval failure입니다.</p>
+<p>평가할 때는 답변과 함께 retrieved chunk도 보관하세요. 근거가 없는 유창한 답은 생성 실패로만 기록할 것이 아니라 retrieval failure로 분류해야 다음 조치가 맞아집니다.</p>
 <h2 id="assemble">LCEL로 조립하기</h2>
 <p>최종 chain은 평범한 LCEL입니다. context를 retrieve하고, question을 보존하고, prompt를 formatting하고, local model을 호출하고, answer를 parse합니다. model은 context에서만 답하고 가능하면 source를 cite해야 합니다.</p>
 <figure class="code-figure">
@@ -297,7 +311,16 @@ rag = (
 
 <span class="tok-fn">print</span>(rag.<span class="tok-fn">invoke</span>(<span class="tok-str">"How do I recover chamber pressure after a PM?"</span>))</code></pre>
 </figure>
-<p>핵심 습관은 RAG를 component by component로 debug하는 것입니다. 답이 나쁘면 LLM을 탓하기 전에 loading, splitting, embedding, indexing, retrieval, prompting 중 어디가 실패했는지 확인하세요.</p>
+<p>RAG 오답은 구성요소별로 분류해야 합니다. 원문 누락, 의미가 끊긴 chunk, 잘못된 top-k, 오래된 index, 조건이 빠진 prompt를 구분하면 수정 뒤 같은 평가 질문으로 회귀를 확인할 수 있습니다. 모델 교체는 그 기록에서 생성 단계의 결함이 남았을 때 검토해도 늦지 않습니다.</p>
+<h3>검색 오답 한 건 판독하기</h3>
+<p><strong>특정 회사의 실제 수치가 아닌 작은 실습입니다.</strong> 원문에 “신품 가스켓 사용 시 체결 토크 24 N·m, 재사용 금지”가 있고 질문은 “교체 후 토크는?”이라고 가정합니다. 검색 결과를 아래 순서로 열어 판정하세요.</p>
+<ol>
+<li>추출 text에 <code>24 N·m</code>와 <code>재사용 금지</code>가 모두 있는지 봅니다. 하나라도 없으면 loader/OCR 단계에서 중단합니다.</li>
+<li>두 문구가 같은 chunk 또는 서로 연결된 구조 안에 있는지 확인합니다. 갈라졌다면 splitter 실패로 기록합니다.</li>
+<li>top-k 안에 조건을 포함한 chunk가 있는지 확인합니다. 없다면 embedding·metadata filter·질문 표현을 비교합니다.</li>
+<li>context에는 조건이 있는데 답에서 빠졌다면 그때 prompt 또는 생성 단계 실패로 분류합니다.</li>
+</ol>
+<p>완료 결과는 “정답/오답” 한 칸이 아니라 <code>failure_stage</code>, 빠진 근거, 검색된 문서 revision, 수정 전후 결과로 남깁니다. 이 실습은 텍스트형 SOP를 전제로 하며 병합 셀 표, 도면 기호, 흐린 스캔에는 별도의 구조 추출·OCR 평가가 필요합니다.</p>
 <figure>
 <div aria-label="RAG 파이프라인 구성요소 다이어그램" class="diagram">
 <svg aria-label="Six-stage RAG pipeline: DocumentLoader, TextSplitter, Embeddings, VectorStore, Retriever, LLM, all inside the air-gapped network" role="img" viewbox="0 0 700 300" width="100%">
@@ -355,12 +378,11 @@ rag = (
 <text fill="#8A857C" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="350" y="270">load → split → embed → store → retrieve → generate  ·  assembled with the LCEL pipe |</text>
 </svg>
 </div>
-<figcaption>그림 1. 두 단계로 구성된 RAG 스택: 인덱스를 한 번 빌드한 다음(맨 위 행), 검색 및 생성을 통해 각 질문에 답합니다(맨 아래 행). 인싱은 한 번, Q의 것은 매우 큽니다. 모든 것은 에어 갭 내부에 유지됩니다.</figcaption>
+<figcaption>그림 1. RAG는 크게 두 흐름입니다. 위쪽에서는 문서를 읽고 나눠 인덱스를 만들고, 아래쪽에서는 질문이 들어올 때마다 관련 근거를 검색해 답을 생성합니다. 현장에서는 이 둘을 분리해 봐야 장애가 인덱싱 문제인지 검색·생성 문제인지 빨리 좁힐 수 있습니다. 모든 처리는 폐쇄망 안에서 끝납니다.</figcaption>
 </figure>
 <hr/>
-<p>이 글은 현장 노트입니다. 인터랙티브 deck은 local RAG design을 diagram과 구현 예제로 slide by slide 설명합니다.</p>
+<p>오답의 실패 단계를 나눴다면 다음에는 ‘의미를 찢지 않고 기술 문서 chunking하기’에서 splitter 경계를 더 깊게 다루세요. 검색 근거가 안정된 뒤 ‘폐쇄망 내부 문서 위에 RAG 구축하기’로 넘어가면 배포·개정 관리까지 같은 기록을 이어갈 수 있습니다. 연결된 인터랙티브 deck에서는 local RAG design을 diagram과 구현 예제로 단계별로 설명합니다.</p>
 </div>
- 심층적인 데크 링크 
 <aside class="deck-link">
 <div class="dl-text">
 <span class="eyebrow">더 깊게 보기</span>
@@ -369,24 +391,24 @@ rag = (
 </div>
 <a class="btn btn-primary" href="../../../watsonx/index.html">데크를 열어보세요 <span aria-hidden="true" class="arw">→</span></a>
 </aside>
- 공유 
+ <!-- 공유 -->
 <div class="share">
 <span class="lbl">공유</span>
 <button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">공유/링크 복사</button>
-<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">엑스 / 트위터</a>
-<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">링크드인</a>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Fko%2Farticles%2Flangchain-rag-components.html" rel="noopener" target="_blank">엑스 / 트위터</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Fko%2Farticles%2Flangchain-rag-components.html" rel="noopener" target="_blank">링크드인</a>
 </div>
- 저자 바이오 카드(E-E-A-T) 
+ <!-- 저자 바이오 카드(E-E-A-T) -->
 <aside class="author-card">
 <span aria-hidden="true" class="avatar">AE</span>
 <div class="a-body">
 <div class="k">저자 소개</div>
 <h3>AI Edu Archive</h3>
-<p>강의와 저널의 모든 콘텐츠는 회원가입 없이 무료로 읽을 수 있습니다.</p>
+<p>폐쇄망 제조 환경에서 LLM, RAG, 에이전트 시스템을 설계하고 검증하는 과정을 기록합니다.</p>
 <a href="../about.html">저자에 대해 더 알아보기 →</a>
 </div>
 </aside>
- 관련된 
+ <!-- 관련된 -->
 <section aria-label="관련 기사" class="related">
 <span class="eyebrow">계속 읽기</span>
 <h2>저널의 관련 글</h2>
@@ -404,45 +426,35 @@ rag = (
 </article>
 </main>
 <footer class="site-foot">
-<div class="wrap">
-<div class="foot-top">
-<div class="foot-lead">
-<h2>무료로 깊게, 열린 방식으로</h2>
-<p>아래 관련 글은 sealed document RAG와 technical chunking strategy로 이어집니다.</p>
-</div>
-<div class="foot-nav-cols">
-<div class="foot-col">
-<h4>탐구하다</h4>
-<a href="../../index.html">허브 홈</a>
-<a href="../../../index.html#courses">모든 강좌</a>
-<a href="../index.html">저널</a>
-</div>
-<div class="foot-col">
-<h4>학습</h4>
-<a href="../../../overview/index.html">팹 AI</a>
-<a href="../../../watsonx/index.html">에어갭 LLM</a>
-<a href="../../../llm_apply/LLM_slide.html">엔터프라이즈 LLM</a>
-</div>
-<div class="foot-col">
-<h4>사이트</h4>
-<a href="../about.html">소개</a>
-<a href="../contact.html">연락하다</a>
-<a href="../privacy.html">개인정보</a>
-<a href="../terms.html">이용약관</a>
-</div>
-</div>
-</div>
-<div class="foot-bottom">
-<div class="foot-brand">
-<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</div>
-<span class="copyright">© 2026 AI Edu Archive · 열린 한국어 AI 교육</span>
-</div>
-</div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>누구나 볼 수 있는 실용적인 AI 교육 자료입니다.</h2>
+        <p>현장에서 쓸 수 있는 AI 시스템을 위한 강의, 글, 실전 기록을 모았습니다.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>둘러보기</h4>
+          <a href="../../../index.html#courses">강의</a>
+          <a href="../index.html">글</a>
+          <a href="../learning-paths.html">학습 경로</a>
+          <a href="../search.html">검색</a>
+          <a href="../portfolio.html">포트폴리오</a>
+        </div>
+        <div class="foot-col">
+          <h4>사이트</h4>
+          <a href="../about.html">소개</a>
+          <a href="../contact.html">연락처</a>
+          <a href="../privacy.html">개인정보 처리방침</a>
+          <a href="../terms.html">이용약관</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · 한국어와 영어로 제공하는 AI 교육</span>
+    </div>
+  </div>
 </footer>
 <script>
 (function(){
@@ -468,5 +480,6 @@ rag = (
   });
 })();
 </script>
+<script src="../../assets/theme.js"></script>
 </body>
 </html>

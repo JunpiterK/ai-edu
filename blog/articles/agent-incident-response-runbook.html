@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>An incident response runbook for manufacturing AI agents - AI Edu Archive Journal</title>
+<meta name="description" content="A practical incident response runbook for plant AI agents: classify, contain, preserve traces, roll back tools, notify owners, and prevent repeat failures.">
+<meta name="author" content="AI Edu Archive">
+<meta name="theme-color" content="#FAF9F5">
+<link rel="canonical" href="https://ai-edu-archive.pages.dev/blog/articles/agent-incident-response-runbook.html">
+
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="An incident response runbook for manufacturing AI agents - AI Edu Archive Journal">
+<meta property="og:description" content="A practical incident response runbook for plant AI agents: classify, contain, preserve traces, roll back tools, notify owners, and prevent repeat failures.">
+<meta property="og:site_name" content="AI Edu Archive">
+<meta property="og:url" content="https://ai-edu-archive.pages.dev/blog/articles/agent-incident-response-runbook.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="article:published_time" content="2026-07-11">
+<meta property="article:author" content="AI Edu Archive">
+<meta property="article:section" content="Agents & MCP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="An incident response runbook for manufacturing AI agents - AI Edu Archive Journal">
+<meta name="twitter:description" content="A practical incident response runbook for plant AI agents: classify, contain, preserve traces, roll back tools, notify owners, and prevent repeat failures.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"An incident response runbook for manufacturing AI agents","description":"A practical incident response runbook for plant AI agents: classify, contain, preserve traces, roll back tools, notify owners, and prevent repeat failures.","inLanguage":"en","datePublished":"2026-07-11","dateModified":"2026-07-11","author":{"@type":"Person","name":"AI Edu Archive"},"publisher":{"@type":"Organization","name":"AI Edu Archive"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ai-edu-archive.pages.dev/blog/articles/agent-incident-response-runbook.html"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/blog.css">
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/agent-incident-response-runbook.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/agent-incident-response-runbook.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/agent-incident-response-runbook.html">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="agent-incident-response-runbook.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/agent-incident-response-runbook.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<article data-cat="agents mfg onprem" itemscope itemtype="https://schema.org/Article">
+  <div class="article-hero"><div class="wrap">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span class="sep" aria-hidden="true">/</span><a href="../index.html">Journal</a><span class="sep" aria-hidden="true">/</span><span aria-current="page">Agent incident response</span></nav>
+    <div class="post-meta"><span class="cat-tag">Agents & MCP</span><span class="post-dot"></span><time datetime="2026-07-11" itemprop="datePublished">Jul 11, 2026</time><span class="post-dot"></span><span class="rt">9 min read</span></div>
+    <h1 itemprop="headline">An incident response runbook for manufacturing AI agents</h1>
+    <div class="byline"><span class="avatar" aria-hidden="true">AE</span><span class="who"><b itemprop="author">AI Edu Archive</b><span>Applied AI, robotics, manufacturing systems</span></span></div>
+  </div></div>
+  <nav class="toc" aria-label="Table of contents"><div class="toc-title">On this page</div><ol><li><a href="#scope">Scope and roles</a></li><li><a href="#what">Classification</a></li><li><a href="#first">Response procedure</a></li><li><a href="#trace">Evidence preservation</a></li><li><a href="#closure">Recovery and closure</a></li></ol></nav>
+  <div class="article-body" itemprop="articleBody">
+    <figure class="visual-figure media-figure media-figure--diagram">
+      <img src="../assets/visuals/incident-response-flow.svg" alt="Agent incident response loop" loading="lazy" decoding="async">
+      <figcaption><span class="figure-label">Figure.</span> Incident response is easiest to follow as a loop: detect the event, classify severity, contain the tool action, preserve traces, roll back safely, and feed the lesson back into controls.</figcaption>
+    </figure>
+
+    <div class="field-story">
+      <span class="note-k">Procedure status</span>
+      <p>This is a reference runbook for tabletop exercises and site adaptation. The severity labels, response times, incident ID, and system names below are illustrative, not records of a tested plant incident. The site incident commander and system owners must replace them with approved thresholds and contacts.</p>
+    </div>
+
+<p><span class="lead-in">The first incident artifact is a six-line card:</span> observed behavior, affected route, current plant state, provisional scope, containment owner, and evidence location. Open it before changing prompts, indexes, credentials, or tool policy. This runbook covers detection through closure; approved plant emergency, safety, cybersecurity, privacy, and quality procedures take precedence when their triggers apply.</p>
+    <h2 id="scope">Scope and roles</h2>
+    <p>Scope includes model responses, retrieval, tool calls, approval workflows, and downstream records created by the agent. It excludes ordinary model-quality defects that are caught in an isolated test environment and cannot reach users or plant systems; record those in the evaluation backlog instead.</p>
+    <div class="tbl-wrap"><table class="tbl"><caption>Minimum incident roles. Map these to named people and an on-call path before release.</caption><thead><tr><th>Role</th><th>Decision authority</th><th>Required record</th></tr></thead><tbody><tr><td class="name">Incident commander</td><td>Declares severity, coordinates containment, and records readiness for recovery; does not replace domain approval.</td><td>Timeline and decision log.</td></tr><tr><td class="name">AI platform owner</td><td>Disables the affected agent, tool route, model, prompt, or index version and verifies the digital boundary.</td><td>Configuration snapshot and change record.</td></tr><tr><td class="name">Process or production owner</td><td>Assesses line impact, staffing, queues, and the feasible production plan.</td><td>Affected lots, VINs, equipment, queues, or work orders.</td></tr><tr><td class="name">Quality owner</td><td>Authorizes product hold, inspection scope, containment, disposition, and regulatory escalation.</td><td>Quality case and affected-product rationale.</td></tr><tr><td class="name">Controls, maintenance, or safety owner</td><td>Authorizes equipment state, approved manual mode, isolation, and restart under site procedures.</td><td>Equipment condition, permits, interlock status, and restart checklist.</td></tr><tr><td class="name">IT/security</td><td>Handles identity, data exposure, network, and credential events.</td><td>Identity, ACL, and network evidence.</td></tr><tr><td class="name">Scribe</td><td>Preserves timestamps, commands, approvals, and evidence locations.</td><td>Immutable incident index.</td></tr></tbody></table></div>
+    <h2 id="what">What counts as an incident</h2>
+    <p>Report unauthorized retrieval, wrong tool execution, missing approval, stale-source recommendations, fabricated citations, repeated refusal failure, privacy exposure, and user action based on a materially wrong output. Near misses remain reportable even when no plant state changed.</p>
+    <div class="tbl-wrap"><table class="tbl"><caption>Illustrative severity scheme; replace with the site's approved incident taxonomy.</caption><thead><tr><th>Level</th><th>Illustrative trigger</th><th>Initial authority</th></tr></thead><tbody><tr><td class="name">SEV-3</td><td>Incorrect answer or draft was contained before use.</td><td>Platform owner records and triages.</td></tr><tr><td class="name">SEV-2</td><td>Wrong ticket, workflow, or recommendation reached an operational queue.</td><td>Incident commander disables the affected route and notifies the process owner.</td></tr><tr><td class="name">SEV-1</td><td>State change, data exposure, safety implication, or confirmed production impact.</td><td>Site emergency, security, quality, or production escalation applies immediately.</td></tr></tbody></table></div>
+    <h2 id="first">Response procedure</h2>
+    <ol><li><b>Open and classify:</b> create the incident record, note who detected it, record the observed behavior, and assign a provisional severity.</li><li><b>Contain the AI route:</b> the AI platform owner revokes the affected tool route, identity, model deployment, or index. If the boundary is uncertain, stop the agent service rather than assuming read-only mode is sufficient.</li><li><b>Protect product and plant state:</b> production assesses line impact; quality authorizes product hold, inspection, and disposition; the site-authorized controls, maintenance, or safety owner decides equipment isolation, approved manual operation, and restart. Follow emergency and permit procedures without waiting for the AI incident workflow.</li><li><b>Preserve evidence:</b> snapshot logs and versions before prompt, policy, index, or code changes. Record hashes and access controls for copied artifacts.</li><li><b>Determine exposure:</b> identify affected users, records, lots, VINs, equipment, and time window. Mark assumptions separately from confirmed scope.</li><li><b>Communicate:</b> issue one owner-approved instruction describing what to stop using, what to verify manually, and where updates will be posted.</li></ol>
+    <p>Do not tune prompts, rebuild the index, rotate logs, or replay a state-changing request until the original evidence has been preserved. Credential rotation or emergency containment may proceed when the incident commander records why delay would increase risk.</p>
+    <h2 id="trace">Evidence preservation</h2>
+    <p>Agent traces need to be designed before incidents happen. A useful trace includes the user role snapshot, policy version, prompt version, model version, retrieved source IDs, tool schema, tool arguments, approval ID, result, and final response. That record turns recollection into a versioned sequence reviewers can challenge.</p>
+    <p><b>Illustrative incident record, not terminal output or evidence from an observed event:</b></p>
+    <figure class="code-figure"><div class="code-bar"><span class="code-file"><span class="code-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">json</span> incident_trace.json</span><button class="copy-btn" data-copy type="button">Copy</button></div><pre><code>{
+  "incident_id": "AI-SEV2-2026-07-11-004",
+  "agent": "maintenance_triage_agent",
+  "mode": "state_changing",
+  "user_role": "contractor",
+  "policy_version": "tool-policy-2026-07-01",
+  "prompt_version": "agent-triage-v12",
+  "model_version": "local-llm-2026q2",
+  "retrieved_sources": ["sop://etch/E-17/rev-07"],
+  "tool_call": {"name": "create_maintenance_ticket", "approval_id": null},
+  "containment": "tool route disabled"
+}</code></pre></figure>
+    <h2 id="closure">Recovery and closure</h2>
+    <p>Recovery requires an owner-approved change, a rollback or compensating-action plan, and a test that reproduces the failure before the fix and passes after it. Candidate actions include excluding superseded sources from active retrieval, correcting permission synchronization, separating read and write tools, or adding approval and idempotency checks. A user confirmation may support review, but it is not sufficient as the corrective control.</p>
+    <div class="field-note">
+      <span class="note-k">Illustrative scenario: one ticket, two control failures</span>
+      <p>A maintenance ticket reaches the wrong module owner after an agent builds it from an illustrative revision 07 SOP. The stale source explains part of the failure, but the trace also has no approval ID; replacing the document alone would leave the write path open. No physical action is assumed. The exercise team disables the route, preserves the trace, excludes revision 07 from active retrieval, adds source-owner and approval tests, and verifies the ticket tool rejects a missing approval. These details are constructed for the runbook exercise.</p>
+    </div>
+    <div class="reader-shortcut"><span class="note-k">Tabletop acceptance checklist</span><p>Replay the illustrative trace against the candidate fix. <b>Pass:</b> the stale source is absent from active results, the write call without approval is rejected, the evidence bundle is complete, and the incident commander plus process, quality, and security owners accept the recorded scope. <b>Stop:</b> keep containment in place when the failure cannot be reproduced, affected records remain unknown, or rollback monitoring has no owner. <b>Limit:</b> a tabletop validates the runbook path under test; it does not demonstrate emergency response, product disposition, or safety-system performance.</p></div>
+    <p>Close only when the incident commander confirms that containment remains effective; impact and evidence are documented; affected records or product have an owner-approved disposition; corrective tests pass; residual risk and exceptions have named owners and expiry dates; communications are complete; and the recovery change has a monitored rollback window. Reopen the incident if a closure assumption is disproved. Then return to <a class="link" href="takt-aware-ai-agents-assembly-lines.html">the takt-aware agent design</a> and feed the tested containment, fallback, and approval requirements back into its manifest.</p>
+  </div>
+<aside class="article-endcap" aria-label="Article information">
+  <p>Reference procedure for site adaptation; illustrative incident data is not evidence of a plant event.</p>
+  <div class="article-endcap-actions">
+    <a href="../index.html">Back to Journal</a>
+    <a href="../ai-categories.html">Browse AI categories</a>
+  </div>
+</aside>
+</article>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
+</footer>
+<script src="../assets/theme.js"></script>
+</body>
+</html>

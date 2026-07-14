@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fab AI glossary for beginners: RAG, agents, tools, evaluation, and controls - AI Edu Archive Journal</title>
+<meta name="description" content="A fab AI glossary organized by term, definition, illustrative example, misconception, and control.">
+<meta name="author" content="AI Edu Archive">
+<meta name="theme-color" content="#FAF9F5">
+<link rel="canonical" href="https://ai-edu-archive.pages.dev/blog/articles/fab-ai-beginner-glossary.html">
+
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fab AI glossary for beginners: RAG, agents, tools, evaluation, and controls - AI Edu Archive Journal">
+<meta property="og:description" content="A beginner-friendly glossary for fab AI: RAG, embeddings, chunking, agents, MCP, evaluation harnesses, guardrails, and controls explained with manufacturing analogies.">
+<meta property="og:site_name" content="AI Edu Archive">
+<meta property="og:url" content="https://ai-edu-archive.pages.dev/blog/articles/fab-ai-beginner-glossary.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="article:published_time" content="2026-07-11">
+<meta property="article:author" content="AI Edu Archive">
+<meta property="article:section" content="Manufacturing AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fab AI glossary for beginners: RAG, agents, tools, evaluation, and controls - AI Edu Archive Journal">
+<meta name="twitter:description" content="A beginner-friendly glossary for fab AI: RAG, embeddings, chunking, agents, MCP, evaluation harnesses, guardrails, and controls explained with manufacturing analogies.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Fab AI glossary for beginners: RAG, agents, tools, evaluation, and controls","description":"A fab AI glossary organized by term, definition, illustrative example, misconception, and control.","inLanguage":"en","datePublished":"2026-07-11","dateModified":"2026-07-11","author":{"@type":"Person","name":"AI Edu Archive"},"publisher":{"@type":"Organization","name":"AI Edu Archive"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ai-edu-archive.pages.dev/blog/articles/fab-ai-beginner-glossary.html"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/blog.css">
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/fab-ai-beginner-glossary.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/fab-ai-beginner-glossary.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/fab-ai-beginner-glossary.html">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="fab-ai-beginner-glossary.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/fab-ai-beginner-glossary.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<article data-cat="mfg rag agents" itemscope itemtype="https://schema.org/Article">
+  <div class="article-hero"><div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span class="sep" aria-hidden="true">/</span><a href="../index.html">Journal</a><span class="sep" aria-hidden="true">/</span><span aria-current="page">Fab AI glossary</span></nav><div class="post-meta"><span class="cat-tag">Manufacturing AI</span><span class="post-dot"></span><time datetime="2026-07-11" itemprop="datePublished">Jul 11, 2026</time><span class="post-dot"></span><span class="rt">8 min read</span></div><h1 itemprop="headline">Fab AI glossary for beginners: RAG, agents, tools, evaluation, and controls</h1><div class="byline"><span class="avatar" aria-hidden="true">AE</span><span class="who"><b itemprop="author">AI Edu Archive</b><span>Applied AI, robotics, manufacturing systems</span></span></div></div></div>
+  <nav class="toc" aria-label="Table of contents"><div class="toc-title">On this page</div><ol><li><a href="#rag">RAG and retrieval</a></li><li><a href="#agents">Agents and tools</a></li><li><a href="#eval">Evaluation and controls</a></li><li><a href="#worked-cases">Two worked cases</a></li><li><a href="#mental-model">Release term card</a></li><li><a href="#sources">Primary sources</a></li></ol></nav>
+  <div class="article-body" itemprop="articleBody">
+    <figure class="visual-figure media-figure media-figure--diagram">
+      <img src="../assets/visuals/fab-glossary-map.svg" alt="FAB AI vocabulary map" loading="lazy" decoding="async">
+      <figcaption><span class="figure-label">Figure.</span> The beginner vocabulary becomes easier when every term is tied to a physical object, a data trail, or an engineering action.</figcaption>
+    </figure>
+
+<p><span class="lead-in">Here is the translation card I wish every project kickoff had:</span> for each AI term, write down the plant artifact it touches, the observable result it should produce, the way it can fail, and the person who owns the next decision. If a term cannot survive that translation, it is still sales language, not an engineering requirement.</p>
+    <div class="field-story"><span class="note-k">Illustrative scenario: the revision in the citation</span><p>A test question returns a polished answer from a superseded work instruction. The cited revision is the useful clue: the team had treated <em>RAG</em> as shorthand for "the model knows our procedures," but retrieval alone does not establish currency. The corrected design filters on approval status and effective date, then withholds the answer when no active source remains. This is a constructed teaching case, not a reported plant event.</p></div>
+    <p>The fab examples below are also illustrative. They connect software terms to manufacturing records and decisions; none of these components replaces process controls, access controls, or safety interlocks.</p>
+    <figure class="visual-figure media-figure media-figure--diagram">
+      <img src="../assets/visuals/fab-ai-term-decision-path.svg" alt="A manufacturing AI request moving through source records, retrieval, generation, and a bounded tool, with evaluation, authorization, human approval, and audit evidence below" loading="lazy" decoding="async">
+      <figcaption><span class="figure-label">Figure 2.</span> The upper lane moves a request; the lower lane decides whether that movement is acceptable and preserves evidence. No active source or accountable owner should produce no action.</figcaption>
+    </figure>
+    <h2 id="rag">RAG and retrieval</h2>
+    <div class="tbl-wrap"><table class="tbl"><caption>Retrieval terms, examples, failure assumptions, and controls.</caption><thead><tr><th>Term</th><th>Definition</th><th>Illustrative fab example</th><th>Common misconception</th><th>Control</th></tr></thead><tbody><tr><td class="name">RAG</td><td>A generation workflow that supplies retrieved sources to a model at request time.</td><td>A question about an alarm retrieves the current troubleshooting procedure and cites its revision.</td><td>Retrieval makes the answer correct.</td><td>Require citations, access filtering, source revision checks, and an answer-withheld path.</td></tr><tr><td class="name">Embedding</td><td>A vector representation used to rank text by learned similarity.</td><td>A Korean query ranks an English maintenance paragraph near the top.</td><td>An embedding is a unique document fingerprint or exact lookup key.</td><td>Evaluate recall on site vocabulary and keep keyword search for identifiers.</td></tr><tr><td class="name">Chunking</td><td>Splitting a source into units that can be indexed and retrieved.</td><td>A procedure step remains attached to its warning and document metadata.</td><td>One fixed character count works for every document.</td><td>Test boundary rules and retain source, section, revision, and page metadata.</td></tr><tr><td class="name">Freshness</td><td>The relationship between a retrieved record and the currently effective source.</td><td>A superseded troubleshooting copy is excluded from active guidance.</td><td>The newest timestamp always identifies the approved revision.</td><td>Ingest from the system of record and filter by approval status and effective date.</td></tr></tbody></table></div>
+    <h2 id="agents">Agents and tools</h2>
+    <div class="tbl-wrap"><table class="tbl"><caption>Agent and tool terms.</caption><thead><tr><th>Term</th><th>Definition</th><th>Illustrative fab example</th><th>Common misconception</th><th>Control</th></tr></thead><tbody><tr><td class="name">Agent</td><td>A workflow in which a model can select steps or tools and use their results.</td><td>An assistant reads alarm history, retrieves a procedure, and drafts a maintenance ticket.</td><td>An agent is autonomous judgment or an accountable owner.</td><td>Bound the task, limit iterations, validate tool arguments, and assign a human owner.</td></tr><tr><td class="name">Tool</td><td>A typed function or API exposed to the agent.</td><td>A read tool queries alarm records; a separate write tool proposes a ticket.</td><td>A read endpoint is harmless because it cannot change plant state.</td><td>Authorize reads by user and purpose, minimize returned fields, and separate read from write credentials.</td></tr><tr><td class="name">MCP</td><td>A protocol for exposing context and tools through a standard interface.</td><td>An on-prem server presents approved document-search and asset-history tools.</td><td>The protocol makes the connected tools trustworthy.</td><td>Review each server, schema, credential scope, network route, and tool allowlist.</td></tr><tr><td class="name">Human approval</td><td>A named decision required before a defined action continues.</td><td>An equipment owner reviews a proposed work order before submission.</td><td>A generic confirmation button provides meaningful oversight.</td><td>Show the exact payload, evidence, consequence, approver identity, and expiry.</td></tr></tbody></table></div>
+    <h2 id="eval">Evaluation and controls</h2>
+    <div class="tbl-wrap"><table class="tbl"><caption>Evaluation and control terms.</caption><thead><tr><th>Term</th><th>Definition</th><th>Illustrative fab example</th><th>Common misconception</th><th>Control</th></tr></thead><tbody><tr><td class="name">Evaluation harness</td><td>A repeatable set of inputs, expected evidence, metrics, and pass conditions.</td><td>Held-out alarm questions must retrieve the approved source section within top five results.</td><td>A few convincing demonstrations establish readiness.</td><td>Version the dataset, slice failure modes, and rerun after model, prompt, index, or source changes.</td></tr><tr><td class="name">Guardrail</td><td>A validation or policy check that constrains input, output, or action.</td><td>A policy rejects a recipe-write tool call outside an approved parameter range.</td><td>One guardrail guarantees safe behavior.</td><td>Layer deterministic validation, authorization, approval, monitoring, and a fail-closed path.</td></tr><tr><td class="name">Audit log</td><td>A record of a request, system version, retrieved evidence, tool payload, decision, and principal.</td><td>A review links a proposed hold to the approver and the exact payload shown.</td><td>An application log is automatically complete or immutable.</td><td>Send structured events to access-controlled, retention-managed, tamper-evident storage.</td></tr><tr><td class="name">Control</td><td>A technical or procedural measure that reduces a named risk.</td><td>Role-based retrieval prevents a user from receiving a restricted document.</td><td>A control proves the system works correctly.</td><td>Map each control to a threat, owner, test, evidence record, and residual risk.</td></tr></tbody></table></div>
+    <p>NIST's AI RMF treats risk management as continuing work across Govern, Map, Measure, and Manage. In practical terms, a retrieval score does not prove tool authorization, and a permission check does not prove retrieval quality. A production review needs both kinds of evidence.</p>
+
+    <h2 id="worked-cases">Two worked cases with numbers</h2>
+    <h3>Case A: the retriever finds a procedure, but not the active one</h3>
+    <p>Suppose a held-out set contains 40 alarm questions, each mapped to an approved expected document. The retriever places that document in its first five results for 34 questions, so <code>Recall@5 = 34 / 40 = 85%</code>. That single number looks serviceable until the six misses are sliced: four of eight safety-related questions failed. The aggregate score concealed the exact subset that should have had the strictest gate.</p>
+    <div class="tbl-wrap"><table class="tbl"><caption>Illustrative retrieval report. These figures are synthetic and teach the method.</caption><thead><tr><th>Slice</th><th>Questions</th><th>Top-five hits</th><th>Result</th><th>Example decision</th></tr></thead><tbody><tr><td>All questions</td><td>40</td><td>34</td><td>85%</td><td>Below 90% target</td></tr><tr><td>Safety-related</td><td>8</td><td>4</td><td>50%</td><td>Stop and diagnose</td></tr><tr><td>Exact alarm code present</td><td>18</td><td>17</td><td>94%</td><td>Keep hybrid keyword path</td></tr><tr><td>Symptom phrasing only</td><td>22</td><td>17</td><td>77%</td><td>Improve aliases and chunks</td></tr></tbody></table></div>
+    <div class="field-story"><span class="note-k">The misleading first hypothesis</span><p>The team first blames model hallucination. Citation inspection shows that generation followed the retrieved text: the index had admitted a superseded revision and ranked it well. The correction is upstream. Filter on approval status and effective date before ranking, preserve revision metadata on every chunk, and withhold the answer when no active source survives. The remaining limitation is blunt but important: if the system of record carries the wrong status, RAG faithfully inherits the wrong status.</p></div>
+
+    <h3>Case B: a read-only tool still exposes too much</h3>
+    <p>An alarm-history tool returns 30 days of raw records, including operator identifiers and free-text notes that the answer does not need. Because the endpoint cannot write, the team initially labels it low risk. Least privilege applies to reads too. A tighter schema accepts one authorized asset and a maximum 24-hour window, then returns seven approved fields. Twenty negative tests request unauthorized assets; every test must return zero records and a structured denial code.</p>
+    <div class="reader-shortcut"><span class="note-k">Pass, stop, and limit</span><p><b>Pass:</b> twenty authorized tests return only the seven named fields, and twenty unauthorized tests return no plant data. <b>Stop:</b> one foreign asset record or unnecessary identity field suspends the pilot. <b>Limit:</b> this verifies access scope, not answer accuracy, prompt-injection resistance, or correctness of the underlying database permissions.</p></div>
+
+    <h2 id="mental-model">A seven-column release term card</h2>
+    <p>Take one use case and fill the card before comparing models or hardware. Empty cells are more informative than polished architecture slides because they reveal which operating decisions have not been made.</p>
+    <div class="tbl-wrap"><table class="tbl"><caption>Example card for a maintenance-ticket drafting assistant.</caption><thead><tr><th>Cell</th><th>Concrete entry</th><th>Failure when omitted</th></tr></thead><tbody><tr><td>Source</td><td>Alarm DB, approved SOP, work history</td><td>No defensible evidence boundary</td></tr><tr><td>Retrieval</td><td>Asset filter plus keyword/vector hybrid</td><td>Wrong asset or revision enters context</td></tr><tr><td>Output</td><td>Draft with cited paragraph and revision</td><td>Plausible but unverifiable prose</td></tr><tr><td>Action</td><td>Save to temporary queue only</td><td>Read and state change blur together</td></tr><tr><td>Owner</td><td>Maintenance owner</td><td>No one can reject or stop</td></tr><tr><td>Gate</td><td>Overall Recall@5 at least 90%; safety slice 100%</td><td>Demo reactions replace evaluation</td></tr><tr><td>Stop</td><td>No active source, authorization failure, no owner</td><td>The system acts when it should abstain</td></tr></tbody></table></div>
+    <div class="fab-voice"><span class="note-k">Field-engineering habit</span><p>When three or more cells still say “TBD,” I would shrink the pilot to read-only retrieval. That is not timidity. It is a way to learn about document quality and query language without quietly turning unresolved ownership into software authority.</p></div>
+
+    <h2 id="sources">Primary sources behind the controls</h2>
+    <p>These documents do not define a site procedure. They support the evaluation, least-privilege, consent, and evidence principles used in this glossary.</p>
+    <ul><li><a class="link" href="https://airc.nist.gov/airmf-resources/airmf/5-sec-core/" target="_blank" rel="noopener noreferrer">NIST AI RMF Core</a> covers documented test sets and metrics, deployment-relevant evaluation, monitoring, and safe failure.</li><li><a class="link" href="https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final" target="_blank" rel="noopener noreferrer">NIST SP 800-53 Rev. 5.1</a> is the basis for the least-privilege and audit-record framing.</li><li><a class="link" href="https://modelcontextprotocol.io/specification/2025-06-18" target="_blank" rel="noopener noreferrer">Model Context Protocol specification</a> states that tools require caution, consent, authorization, access control, and data protection; a protocol connection is not a trust decision.</li></ul>
+    <p>With the vocabulary pinned to artifacts, the natural next read is <a class="link" href="fab-equipment-data-101.html">FAB equipment data 101</a>, where the same discipline becomes a source manifest and a reproducible join.</p>
+  </div>
+<aside class="article-endcap" aria-label="Article information">
+  <p>Instructional glossary. Manufacturing examples are illustrative and must be checked against site systems, policy, and ownership.</p>
+  <div class="article-endcap-actions">
+    <a href="../index.html">Back to Journal</a>
+    <a href="../ai-categories.html">Browse AI categories</a>
+  </div>
+</aside>
+</article>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
+</footer>
+<script src="../assets/theme.js"></script>
+</body>
+</html>

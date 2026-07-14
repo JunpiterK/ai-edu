@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 
 <html lang="en">
 <head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- ══ SEO ══════════════════════════════════ -->
@@ -10,16 +10,15 @@
 <meta content="A practical guide to the LangChain RAG stack: DocumentLoader, TextSplitter, embeddings, VectorStore, Retriever, and LCEL assembly for local document Q&amp;A." name="description"/>
 <meta content="AI Edu Archive" name="author"/>
 <meta content="#FAF9F5" name="theme-color"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/langchain-rag-components.html" rel="canonical"/>
-<link href="https://ai-edu-archive.example.com/blog/ko/articles/langchain-rag-components.html" hreflang="ko" rel="alternate"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/langchain-rag-components.html" hreflang="x-default" rel="alternate"/>
+<link href="https://ai-edu-archive.pages.dev/blog/articles/langchain-rag-components.html" rel="canonical"/>
+
 <meta content="index,follow" name="robots"/>
 <!-- Open Graph -->
 <meta content="article" property="og:type"/>
 <meta content="The RAG stack, component by component - AI Edu Archive Journal" property="og:title"/>
 <meta content="A practical guide to the LangChain RAG stack: DocumentLoader, TextSplitter, embeddings, VectorStore, Retriever, and LCEL assembly for local document Q&amp;A." property="og:description"/>
 <meta content="AI Edu Archive" property="og:site_name"/>
-<meta content="https://ai-edu-archive.example.com/blog/articles/langchain-rag-components.html" property="og:url"/>
+<meta content="https://ai-edu-archive.pages.dev/blog/articles/langchain-rag-components.html" property="og:url"/>
 <meta content="en_US" property="og:locale"/>
 <meta content="ko_KR" property="og:locale:alternate"/>
 <meta content="2026-07-04" property="article:published_time"/>
@@ -35,58 +34,56 @@
   "headline": "The RAG stack, component by component",
   "description": "A practical guide to the LangChain RAG stack: DocumentLoader, TextSplitter, embeddings, VectorStore, Retriever, and LCEL assembly for local document Q&A.",
   "inLanguage": "en",
-  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "image": "https://ai-edu-archive.pages.dev/blog/assets/visuals/article-visual-template.svg",
   "datePublished": "2026-07-04",
   "dateModified": "2026-07-04",
   "author": {
     "@type": "Person",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html",
     "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
   },
   "publisher": {
     "@type": "Organization",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html"
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ai-edu-archive.example.com/blog/articles/langchain-rag-components.html"
+    "@id": "https://ai-edu-archive.pages.dev/blog/articles/langchain-rag-components.html"
   },
   "name": "The RAG stack, component by component",
-  "url": "https://ai-edu-archive.example.com/blog/articles/langchain-rag-components.html"
+  "url": "https://ai-edu-archive.pages.dev/blog/articles/langchain-rag-components.html"
 }</script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link href="../assets/blog.css" rel="stylesheet"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/langchain-rag-components.html" hreflang="en" rel="alternate"/></head>
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/langchain-rag-components.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/langchain-rag-components.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/langchain-rag-components.html">
+</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="nav" id="nav">
-<div class="wrap">
-<a aria-label="AI Edu Archive home" class="brand" href="../../index.html">
-<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</a>
-<nav aria-label="Primary" class="nav-links">
-<a href="../../index.html#courses">Courses</a>
-<a href="../index.html">Articles</a>
-<a href="../about.html">About</a>
-<div aria-label="Language selector" class="language-switch">
-<a aria-current="true" href="langchain-rag-components.html" lang="en" title="English">🇺🇸 EN</a>
-<a href="../ko/articles/langchain-rag-components.html" lang="ko" title="한국어">🇰🇷 KO</a>
-<a href="langchain-rag-components.html" lang="en" title="English shown for now">🇪🇸 ES</a>
-<a href="langchain-rag-components.html" lang="en" title="English shown for now">🇨🇳 ZH</a>
-<a href="langchain-rag-components.html" lang="en" title="English shown for now">🇯🇵 JA</a>
-<a href="langchain-rag-components.html" lang="en" title="English shown for now">🇩🇪 DE</a>
-<a href="langchain-rag-components.html" lang="en" title="English shown for now">🇫🇷 FR</a>
-</div>
-</nav>
-</div>
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="langchain-rag-components.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/langchain-rag-components.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
 </header>
 <main id="main">
 <article itemscope="" itemtype="https://schema.org/Article">
@@ -119,6 +116,7 @@
 <nav aria-label="Table of contents" class="toc">
 <div class="toc-title">On this page</div>
 <ol>
+<li><a href="#qualify">SOP ingestion qualification</a></li>
 <li><a href="#loader">1. DocumentLoader: get the paper in</a></li>
 <li><a href="#splitter">2. TextSplitter: cut it into chunks</a></li>
 <li><a href="#embeddings">3. Embeddings: turn text into vectors</a></li>
@@ -128,11 +126,30 @@
 </ol>
 </nav>
 <div class="article-body" itemprop="articleBody">
-<p>RAG is not one feature. It is a small pipeline of components that turn private documents into useful context before the model answers. If one component is weak, the whole system feels unreliable.</p>
-<p>The stack is easier to understand when you separate the jobs. A loader reads source material. A splitter creates chunks. An embedding model converts chunks into vectors. A vector store indexes them. A retriever chooses the chunks for a question. LCEL then connects context, prompt, model, and parser.</p>
+    <div class="field-story">
+      <span class="note-k">SOP intake</span>
+      <p>A document owner submits SOP-CVD-07 revision 12 for indexing. The intake package must show the approved file, effective date, superseded revision, permission group, extraction result, and acceptance tests. Ingestion does not begin with the embedding model; it begins with qualification of that package.</p>
+    </div>
+
+<div class="field-story"><span class="note-k">Illustrative extraction clue</span><p>The missing purge instruction looks like an embedding miss until a page-level extraction check shows the heading but not the table row that contains the duration. Re-embedding cannot recover text the loader never produced, so the candidate document goes back to extraction instead of moving downstream.</p></div>
+<p>Think of this RAG stack as an ingestion traveler for a controlled document. Each station leaves an artifact: extracted text, inspected chunks, model identity, collection manifest, and retrieval results. A failed station quarantines the candidate with a reason. A pass means the declared ingestion checks passed; it does not approve the SOP or make every generated answer reliable.</p>
+<div class="reader-shortcut"><span class="note-k">Triage shortcut</span><p>When retrieval misses, inspect in pipeline order: source status, extracted text, chunk boundary, metadata, embedding, then search configuration. Do not tune the last knob first.</p></div>
+<h2 id="qualify">SOP ingestion qualification</h2>
+<p>Define the test protocol before running the loader. The document control owner approves source status. IT/security approves the permission mapping. The RAG owner runs extraction and retrieval tests. Keep the following artifacts with the index release:</p>
+<table>
+<thead><tr><th>Artifact</th><th>Pass test</th><th>Fail action</th></tr></thead>
+<tbody>
+<tr><td>Source manifest</td><td>Document ID, revision, effective date, owner, checksum, and ACL are present; status is approved for the intended audience.</td><td>Quarantine the file and ask the document owner to resolve status or metadata.</td></tr>
+<tr><td>Extraction report</td><td>Page count matches; required headings, procedure steps, warnings, and sampled tables are present in extracted text.</td><td>Change parser/OCR settings or reject the format. Do not index partial extraction.</td></tr>
+<tr><td>Chunk inspection</td><td>Step labels remain with their instructions; chunk metadata retains document ID, revision, section, page, and permission scope.</td><td>Revise splitting rules and regenerate the full candidate index.</td></tr>
+<tr><td>Retrieval evaluation</td><td>The approved question set returns the expected revision and source section within the declared top-k criterion.</td><td>Hold release, diagnose loader/splitter/embedding/retriever, and rerun the fixed set.</td></tr>
+<tr><td>Release manifest</td><td>Corpus checksum, model ID, chunking config, index ID, test results, rejected files, and rollback target are recorded.</td><td>Do not promote the index.</td></tr>
+</tbody>
+</table>
+<p>Thresholds must be set by the site for the selected corpus and task. Example values in code are starting configurations, not acceptance recommendations.</p>
 <h2 id="loader">1. DocumentLoader: get the paper in</h2>
-<p>What it does. A loader reads a source file, PDF, HTML, CSV, Markdown, text, or a database export, and returns LangChain Document objects with page_content and metadata.</p>
-<p>When to use it. Use loaders whenever your source material lives outside Python strings. Metadata is not optional in real RAG: source path, page, section, equipment, document version, and permission scope become essential later.</p>
+<p><strong>Artifact:</strong> extracted <code>Document</code> objects plus an extraction report. The loader reads PDF, HTML, CSV, Markdown, text, or a database export into <code>page_content</code> and metadata.</p>
+<p><strong>Pass/fail:</strong> reconcile file and page counts, sample required procedure elements, and verify document ID, revision, page, section, and permission metadata. Parser success alone is not a pass.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -158,10 +175,10 @@ loader = <span class="tok-fn">DirectoryLoader</span>(
 <span class="tok-kw">for</span> doc <span class="tok-kw">in</span> loader.<span class="tok-fn">lazy_load</span>():        <span class="tok-com"># stream, don't load all at once</span>
     <span class="tok-fn">print</span>(doc.metadata[<span class="tok-str">"source"</span>], doc.metadata.<span class="tok-fn">get</span>(<span class="tok-str">"page"</span>))</code></pre>
 </figure>
-<p>Implementation note. Start with plain text or Markdown before adding PDF. PDF extraction quality varies wildly, and bad extraction looks like a bad model even when retrieval is the real problem.</p>
+<p>Store the extraction report and source checksum. If required text or tables are missing, quarantine the document and change the parser or OCR route before proceeding.</p>
 <h2 id="splitter">2. TextSplitter: cut it into chunks</h2>
-<p>What it does. A splitter turns long documents into chunks small enough to retrieve and fit into the prompt. It should preserve meaning, not merely count characters.</p>
-<p>When to use it. Use splitters for almost every RAG system. Whole manuals are too large; tiny fragments lose context. A good splitter keeps headings, procedure steps, and tables close to the text they explain.</p>
+<p><strong>Artifact:</strong> a versioned chunk set and chunking configuration. Splitting creates retrieval units small enough for the selected model context while attempting to preserve procedure structure.</p>
+<p><strong>Pass/fail:</strong> inspect boundary samples around headings, numbered steps, warnings, and tables. Fail when a step loses its condition, warning, unit, or document metadata.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -188,10 +205,10 @@ chunks = splitter.<span class="tok-fn">split_documents</span>(docs)   <span clas
         embedding blurs; too small and a step loses its surrounding recipe.
         <cite>— tune chunk_size against your own manuals, not a blog default</cite>
 </blockquote>
-<p>Implementation note. RecursiveCharacterTextSplitter is the safe default. For technical documents, tune chunk_size and overlap after looking at actual retrieved chunks, not before.</p>
+<p><code>RecursiveCharacterTextSplitter</code> is a starting implementation, not a qualified default for every SOP. Tune size and overlap against inspected chunks and the fixed retrieval set.</p>
 <h2 id="embeddings">3. Embeddings: turn text into vectors</h2>
-<p>What it does. An embedding model maps text into vectors so semantic similarity can be searched. A query and a chunk that mean similar things should land near each other in vector space.</p>
-<p>When to use it. Use embeddings when keyword search is too brittle. They help with paraphrases, synonyms, and Korean/English mixed technical wording. They do not guarantee exact facts, part numbers, or relationships.</p>
+<p><strong>Artifact:</strong> the embedding model ID, model-file checksum, runtime configuration, and vectors associated with the candidate chunk set. Embeddings support similarity search; they do not establish exact facts, identifiers, or relationships.</p>
+<p><strong>Pass/fail:</strong> run the fixed retrieval questions, including exact part numbers, abbreviations, negation, and mixed Korean/English terms where relevant. Fail or add a complementary search method when required cases miss the expected source.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -216,10 +233,10 @@ embed = <span class="tok-fn">HuggingFaceEmbeddings</span>(
 vec = embed.<span class="tok-fn">embed_query</span>(<span class="tok-str">"chamber pressure drift after PM"</span>)
 <span class="tok-fn">print</span>(<span class="tok-fn">len</span>(vec))   <span class="tok-com"># e.g. 1024 dimensions</span></code></pre>
 </figure>
-<p>Implementation note. For a home PC, use a local embedding model first. Keep the model fixed while evaluating chunking, or you will not know which change helped.</p>
+<p>Change one qualified variable at a time. Keep the embedding model fixed while comparing chunking configurations, and retain results with the release manifest.</p>
 <h2 id="store">4. VectorStore: keep the vectors</h2>
-<p>What it does. A vector store saves embeddings and metadata, then performs similarity search. Chroma is easy for prototypes. Qdrant, Postgres/pgvector, or another server-backed store is better when several apps share the same index.</p>
-<p>When to use it. Use a vector store when documents need to be searched repeatedly. For one-off summaries, you may not need one. For a knowledge base, you do.</p>
+<p><strong>Artifact:</strong> an immutable candidate collection, collection manifest, backup or rebuild instructions, and access configuration. A vector store saves embeddings and metadata and executes similarity search.</p>
+<p><strong>Pass/fail:</strong> verify chunk counts and metadata, deny out-of-scope principals in an ACL test, reopen the collection, and reproduce a sample query set. Fail on count mismatch, missing metadata, unauthorized results, or an unreproducible build.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -247,10 +264,10 @@ store = <span class="tok-fn">Chroma</span>(
     collection_name=<span class="tok-str">"fab_sops"</span>,
 )</code></pre>
 </figure>
-<p>Implementation note. Persist the index and version your collection names. If the source corpus changes but the index name stays the same, debugging becomes painful.</p>
+<p>Use a new collection or release identifier when the corpus, model, or chunking configuration changes. Keep the prior qualified collection as the rollback target until the release owner closes the change.</p>
 <h2 id="retriever">5. Retriever: fetch the right ones</h2>
-<p>What it does. A retriever is the application-facing search interface. The rest of the chain calls retriever.invoke(question) and receives Documents, without caring whether the backend is Chroma, Qdrant, BM25, or hybrid search.</p>
-<p>When to use it. Use retrievers whenever the model needs evidence before answering. Add metadata filters when users ask about a specific tool, date range, product, document type, or permission scope.</p>
+<p><strong>Artifact:</strong> retriever configuration, fixed question set, expected sources, scored results, and failure analysis. The retriever returns <code>Document</code> objects without requiring the caller to know the search backend.</p>
+<p><strong>Pass/fail:</strong> evaluate expected-source recall and wrong-revision retrieval under the declared <code>k</code>, filters, and corpus. Permission filtering must occur in an enforced query path, not only in prompt text.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -270,9 +287,9 @@ hits = retriever.<span class="tok-fn">invoke</span>(<span class="tok-str">"how t
 <span class="tok-kw">for</span> h <span class="tok-kw">in</span> hits:
     <span class="tok-fn">print</span>(h.metadata[<span class="tok-str">"source"</span>], <span class="tok-str">"—"</span>, h.page_content[:<span class="tok-num">80</span>])</code></pre>
 </figure>
-<p>Implementation note. Always inspect retrieved chunks. Many RAG failures are retrieval failures wearing a fluent answer.</p>
+<p>Inspect both passing and failing chunks. A fluent generated answer cannot compensate for retrieval of the wrong revision or an unauthorized source.</p>
 <h2 id="assemble">Assemble it with LCEL</h2>
-<p>The final chain is ordinary LCEL: retrieve context, preserve the question, format a prompt, call the local model, and parse the answer. The model should answer only from context and cite sources when possible.</p>
+<p><strong>Artifact:</strong> a versioned chain configuration and end-to-end evaluation report. LCEL retrieves context, preserves the question, formats the prompt, calls the selected local model, and parses text. Prompt instructions to use context or cite sources require evaluation; they are not enforcement.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -287,7 +304,7 @@ hits = retriever.<span class="tok-fn">invoke</span>(<span class="tok-str">"how t
 <span class="tok-kw">from</span> langchain_core.runnables <span class="tok-kw">import</span> RunnablePassthrough
 <span class="tok-kw">from</span> langchain_core.output_parsers <span class="tok-kw">import</span> StrOutputParser
 
-llm = <span class="tok-fn">ChatOllama</span>(model=<span class="tok-str">"qwen2.5:14b"</span>, temperature=<span class="tok-num">0</span>)   <span class="tok-com"># local, no egress</span>
+llm = <span class="tok-fn">ChatOllama</span>(model=<span class="tok-str">"qwen2.5:14b"</span>, temperature=<span class="tok-num">0</span>)   <span class="tok-com"># local endpoint; verify network controls</span>
 
 prompt = ChatPromptTemplate.<span class="tok-fn">from_template</span>(
     <span class="tok-str">"Answer only from the context. Cite the source path.\n\n"</span>
@@ -309,14 +326,21 @@ rag = (
 
 <span class="tok-fn">print</span>(rag.<span class="tok-fn">invoke</span>(<span class="tok-str">"How do I recover chamber pressure after a PM?"</span>))</code></pre>
 </figure>
-<p>This is the key habit: debug RAG component by component. If the answer is bad, ask whether loading, splitting, embedding, indexing, retrieval, or prompting failed before blaming the LLM.</p>
+<p><strong>Pass/fail:</strong> confirm that answers cite the expected document ID and revision, abstain under the agreed no-evidence cases, and do not expose sources outside the test principal's scope. Diagnose failures at the retained loader, chunk, embedding, index, retrieval, prompt, or model artifact.</p>
+<h3>Run one document through the traveler</h3>
+<p><strong>Simplified exercise.</strong> Pick one approved training document, not a live operating instruction. Ask one exact step question, one abbreviation question, one superseded-revision trap, and one question with no supporting text. Retain the source checksum, extracted passage, winning chunks, and answer.</p>
+<ul>
+<li><strong>Pass:</strong> expected text survives extraction, step and unit stay together, the current revision is retrieved for the first two questions, the superseded revision is absent, and the no-evidence case abstains.</li>
+<li><strong>Stop:</strong> a required table cell disappears, ACL metadata is missing, an old revision wins, or an out-of-scope source appears. Quarantine the candidate collection rather than patching the final prompt.</li>
+<li><strong>Limit:</strong> four questions are a wiring check, not a release evaluation. Corpus coverage, multilingual queries, permission combinations, and answer quality need a larger owner-approved set.</li>
+</ul>
 <figure>
 <div aria-label="RAG pipeline component diagram" class="diagram">
 <svg aria-label="Six-stage RAG pipeline: DocumentLoader, TextSplitter, Embeddings, VectorStore, Retriever, LLM, all inside the air-gapped network" role="img" viewbox="0 0 700 300" width="100%">
 <rect fill="#FCFBF8" height="298" rx="12" stroke="#E8E4DB" width="698" x="1" y="1"></rect>
 <!-- air-gap boundary -->
 <rect fill="#F6F3EC" height="180" rx="10" stroke="#D97757" stroke-dasharray="5 4" width="652" x="24" y="60"></rect>
-<text fill="#D97757" font-family="JetBrains Mono, monospace" font-size="13" x="40" y="82">air-gapped network · 폐쇄망</text>
+<text fill="#D97757" font-family="JetBrains Mono, monospace" font-size="13" x="40" y="82">air-gapped network</text>
 <!-- indexing row (build once) -->
 <text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" font-weight="600" x="40" y="118">Index (build once)</text>
 <g fill="#33312E" font-family="Inter, sans-serif" font-size="13">
@@ -343,7 +367,7 @@ rag = (
 <text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" font-weight="600" x="40" y="200">Query (each question)</text>
 <g fill="#33312E" font-family="Inter, sans-serif" font-size="13">
 <rect fill="#FCFBF8" height="22" rx="6" stroke="#DBD5C8" width="150" x="40" y="208"></rect>
-<text font-size="13" text-anchor="middle" x="115" y="224">question 질문</text>
+<text font-size="13" text-anchor="middle" x="115" y="224">question</text>
 <rect fill="#F4E8E2" height="30" rx="8" stroke="#D97757" width="118" x="336" y="204"></rect>
 <text fill="#B4471F" font-weight="600" text-anchor="middle" x="395" y="223">Retriever</text>
 <rect fill="#FCFBF8" height="30" rx="8" stroke="#DBD5C8" width="152" x="484" y="204"></rect>
@@ -367,17 +391,17 @@ rag = (
 <text fill="#8A857C" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" x="350" y="270">load → split → embed → store → retrieve → generate  ·  assembled with the LCEL pipe |</text>
 </svg>
 </div>
-<figcaption>Figure 1. The RAG stack as two passes: build the index once (top row), then answer each question by retrieving and generating (bottom row). 인덱싱은 한 번, 질의는 매번. Everything stays inside the air-gap.</figcaption>
+<figcaption>Figure 1. The RAG stack as two passes: qualify and build a versioned index (top row), then retrieve and generate for each question (bottom row). Verify network and access controls separately for the deployed environment.</figcaption>
 </figure>
 <hr/>
-<p>This article is a field note. The interactive deck walks local RAG design slide by slide, with diagrams and implementation examples.</p>
+<p>The release owner should promote only the candidate index whose manifest and required tests pass, with a named rollback target. Once the ingestion traveler is working, the sealed-documents article is the natural next read because it expands from component checks to corpus access, citation, and release design. This procedure does not validate the underlying SOP content or make generated instructions suitable for unsupervised plant action.</p>
 </div>
 <!-- deep-dive deck link -->
 <aside class="deck-link">
 <div class="dl-text">
 <span class="eyebrow">Go deeper</span>
 <h3>Take the full course on this topic</h3>
-<p>PhD in physics (IGZO / graphene semiconductor properties) and a semiconductor process engineer working on deposition. Builds air-gapped LLM, RAG, and agent systems for the fab.</p>
+<p>The interactive deck walks local RAG components with diagrams and implementation examples.</p>
 </div>
 <a class="btn btn-primary" href="../../watsonx/index.html">Open the deck <span aria-hidden="true" class="arw">→</span></a>
 </aside>
@@ -385,8 +409,8 @@ rag = (
 <div class="share">
 <span class="lbl">Share</span>
 <button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
-<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
-<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Flangchain-rag-components.html" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Flangchain-rag-components.html" rel="noopener" target="_blank">LinkedIn</a>
 </div>
 <!-- author bio card (E-E-A-T) -->
 <aside class="author-card">
@@ -405,7 +429,7 @@ rag = (
 <div class="related-grid">
 <a class="rel-card" href="langchain-core-explained.html">
 <span class="cat-tag" data-cat="python rag">Python Stack</span>
-<h3>Building RAG over sealed internal documents</h3>
+<h3>LangChain core, explained: LLMs, prompts, and LCEL pipelines</h3>
 </a>
 <a class="rel-card" href="chunking-technical-docs.html">
 <span class="cat-tag" data-cat="rag">RAG</span>
@@ -416,45 +440,35 @@ rag = (
 </article>
 </main>
 <footer class="site-foot">
-<div class="wrap">
-<div class="foot-top">
-<div class="foot-lead">
-<h2>Free, in-depth, and open.</h2>
-<p>Related articles below continue into sealed document RAG and technical chunking strategy.</p>
-</div>
-<div class="foot-nav-cols">
-<div class="foot-col">
-<h4>Explore</h4>
-<a href="../../index.html">Hub home</a>
-<a href="../../index.html#courses">All courses</a>
-<a href="../index.html">Journal</a>
-</div>
-<div class="foot-col">
-<h4>Courses</h4>
-<a href="../../overview/index.html">Fab AI</a>
-<a href="../../watsonx/index.html">Air-gapped LLM</a>
-<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
-</div>
-<div class="foot-col">
-<h4>Site</h4>
-<a href="../about.html">About</a>
-<a href="../contact.html">Contact</a>
-<a href="../privacy.html">Privacy</a>
-<a href="../terms.html">Terms</a>
-</div>
-</div>
-</div>
-<div class="foot-bottom">
-<div class="foot-brand">
-<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</div>
-<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
-</div>
-</div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
 </footer>
 <script>
 (function(){
@@ -480,5 +494,6 @@ rag = (
   });
 })();
 </script>
+<script src="../assets/theme.js"></script>
 </body>
 </html>

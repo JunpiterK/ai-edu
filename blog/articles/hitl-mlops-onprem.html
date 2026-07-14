@@ -1,24 +1,23 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 
 <html lang="en">
 <head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Human-in-the-loop and MLOps for on-prem agents - AI Edu Archive Journal</title>
 <meta content="Why an air-gapped agent must pause for human approval before state-changing actions: approval gates, audit logs, drift watch, and durable state with LangGraph interrupt() and PostgresSaver." name="description"/>
 <meta content="AI Edu Archive" name="author"/>
 <meta content="#FAF9F5" name="theme-color"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/hitl-mlops-onprem.html" rel="canonical"/>
-<link href="https://ai-edu-archive.example.com/blog/ko/articles/hitl-mlops-onprem.html" hreflang="ko" rel="alternate"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/hitl-mlops-onprem.html" hreflang="x-default" rel="alternate"/>
+<link href="https://ai-edu-archive.pages.dev/blog/articles/hitl-mlops-onprem.html" rel="canonical"/>
+
 <meta content="index,follow" name="robots"/>
 <!-- Open Graph -->
 <meta content="article" property="og:type"/>
 <meta content="Human-in-the-loop and MLOps for on-prem agents - AI Edu Archive Journal" property="og:title"/>
 <meta content="Why an air-gapped agent must pause for human approval before state-changing actions: approval gates, audit logs, drift watch, and durable state with LangGraph interrupt() and PostgresSaver." property="og:description"/>
 <meta content="AI Edu Archive" property="og:site_name"/>
-<meta content="https://ai-edu-archive.example.com/blog/articles/hitl-mlops-onprem.html" property="og:url"/>
+<meta content="https://ai-edu-archive.pages.dev/blog/articles/hitl-mlops-onprem.html" property="og:url"/>
 <meta content="en_US" property="og:locale"/>
 <meta content="ko_KR" property="og:locale:alternate"/>
 <meta content="2026-07-04" property="article:published_time"/>
@@ -34,58 +33,56 @@
   "headline": "Human-in-the-loop and MLOps for on-prem agents",
   "description": "Why an air-gapped agent must pause for human approval before state-changing actions: approval gates, audit logs, drift watch, and durable state with LangGraph interrupt() and PostgresSaver.",
   "inLanguage": "en",
-  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "image": "https://ai-edu-archive.pages.dev/blog/assets/visuals/article-visual-template.svg",
   "datePublished": "2026-07-04",
   "dateModified": "2026-07-04",
   "author": {
     "@type": "Person",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html",
     "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
   },
   "publisher": {
     "@type": "Organization",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html"
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ai-edu-archive.example.com/blog/articles/hitl-mlops-onprem.html"
+    "@id": "https://ai-edu-archive.pages.dev/blog/articles/hitl-mlops-onprem.html"
   },
   "name": "Human-in-the-loop and MLOps for on-prem agents",
-  "url": "https://ai-edu-archive.example.com/blog/articles/hitl-mlops-onprem.html"
+  "url": "https://ai-edu-archive.pages.dev/blog/articles/hitl-mlops-onprem.html"
 }</script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link href="../assets/blog.css" rel="stylesheet"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/hitl-mlops-onprem.html" hreflang="en" rel="alternate"/></head>
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/hitl-mlops-onprem.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/hitl-mlops-onprem.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/hitl-mlops-onprem.html">
+</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="nav" id="nav">
-<div class="wrap">
-<a aria-label="AI Edu Archive home" class="brand" href="../../index.html">
-<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</a>
-<nav aria-label="Primary" class="nav-links">
-<a href="../../index.html#courses">Courses</a>
-<a href="../index.html">Articles</a>
-<a href="../about.html">About</a>
-<div aria-label="Language selector" class="language-switch">
-<a aria-current="true" href="hitl-mlops-onprem.html" lang="en" title="English">🇺🇸 EN</a>
-<a href="../ko/articles/hitl-mlops-onprem.html" lang="ko" title="한국어">🇰🇷 KO</a>
-<a href="hitl-mlops-onprem.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a>
-<a href="hitl-mlops-onprem.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a>
-<a href="hitl-mlops-onprem.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a>
-<a href="hitl-mlops-onprem.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a>
-<a href="hitl-mlops-onprem.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a>
-</div>
-</nav>
-</div>
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="hitl-mlops-onprem.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/hitl-mlops-onprem.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
 </header>
 <main id="main">
 <article itemscope="" itemtype="https://schema.org/Article">
@@ -126,15 +123,19 @@
 </ol>
 </nav>
 <div class="article-body" itemprop="articleBody">
-<p>An agent that can call tools can change the plant. In a fab, a tool call is not an abstraction: it can write a recipe parameter, file an MES lot hold, or open a maintenance ticket on a deposition chamber. The moment an LLM can trigger those actions on its own, the question stops being whether the answer is good and becomes who signed off before it happened. This article defends one operating rule: an on-prem agent must pause for human approval before any state-changing action, and that pause has to survive a process restart.</p>
+<div class="field-story"><span class="note-k">Approval packet</span><p>The reviewer should receive one inspectable object: exact tool name and arguments, payload hash, requester, source revisions, expected effect, expiry, recovery path, and approval policy. A button without that packet is only a pause in the UI.</p></div>
+<div class="field-story"><span class="note-k">Illustrative approval replay</span><p>A confirmation dialog after the model proposes a recipe-record change appears to provide the required human gate. During a tabletop replay, however, the proposal changes between display and execution because the approval is not bound to a payload hash. That evidence moves identity and payload verification into a trusted approval service, which rejects changed or expired proposals.</p></div>
+<p><span class="lead-in">Human review is one control in an agent workflow, not a safety guarantee.</span> A state-changing tool call can alter a recipe record, propose an MES lot hold, or open a maintenance ticket. Before enabling it, name the threat, authorization boundary, approval principal, durable state, audit evidence, recovery path, and owner.</p>
+<div class="reader-shortcut"><span class="note-k">Approval shortcut</span><p>Ask the reviewer to approve a hashable action packet, not a sentence generated for the screen. Execution should reject any mismatch in payload, principal, policy, or expiry.</p></div>
+<div class="tbl-wrap"><table class="tbl"><caption>Threat and control matrix for an illustrative on-prem agent.</caption><thead><tr><th>Threat</th><th>Control</th><th>Evidence/test</th><th>Owner</th><th>Residual limitation</th></tr></thead><tbody><tr><td class="name">Unauthorized data read</td><td>Authenticate the requester; enforce source ACLs, purpose, row/field scope, and response filtering</td><td>Denied-access tests and ACL snapshot linked to the request</td><td>Data owner and IT/security</td><td>A permitted read may still expose excessive context</td></tr><tr><td class="name">Prompt or tool-argument injection</td><td>Typed schemas, allowlisted operations, deterministic validation, and untrusted-content separation</td><td>Adversarial test cases and rejected payload log</td><td>Application/security owner</td><td>Novel inputs may bypass incomplete validators</td></tr><tr><td class="name">Unauthorized state change</td><td>Least-privilege write identity plus named approval over the exact payload</td><td>Approval principal, payload hash, policy result, and execution receipt</td><td>System and process owner</td><td>An authorized reviewer can still make a wrong decision</td></tr><tr><td class="name">Duplicate execution after retry</td><td>Idempotency key, transaction boundary, and downstream status reconciliation</td><td>Restart and replay test with one resulting action</td><td>Application and target-system owner</td><td>External systems may not support atomic idempotency</td></tr><tr><td class="name">Lost or altered evidence</td><td>Separate append-only event pipeline with restricted writers, retention, integrity checks, and clock controls</td><td>Retention configuration and tamper-detection test</td><td>IT/security and compliance</td><td>Checkpointing alone is not immutable audit storage</td></tr><tr><td class="name">Unsafe physical consequence</td><td>Keep safety functions in independently engineered and validated plant controls</td><td>Site hazard analysis and safety-system validation</td><td>Equipment and safety owners</td><td>HITL, an LLM, or this code does not provide functional safety</td></tr></tbody></table></div>
 <h2 id="why-approval">Why a human gate before the agent acts</h2>
-<p>On the open internet, a bad agent action is usually a wasted API call. Inside a sealed fab network, the blast radius is physical. An LLM can hallucinate a plausible but wrong setpoint, misread an ambiguous SOP, or chain two correct steps into a dangerous third. Accuracy metrics do not catch that. An engineer who knows the chamber does. The design goal is therefore not only a smarter model; it is a reliable point of control where a person reviews the proposed action, with full context, before it commits.</p>
-<p>Concretely, split the agent's tools into two classes:</p>
+<p>An LLM can propose an unsupported setpoint, misread an ambiguous procedure, or combine valid steps incorrectly. A reviewer may catch those errors, but reviewer presence does not replace authorization, deterministic limits, target-system controls, or safety engineering. The approval screen must show the exact action, arguments, source evidence, expected consequence, expiry, and rollback or recovery path before the reviewer decides.</p>
+<p>Split tools by capability, then authorize every call. Read tools require authentication, source ACL enforcement, purpose and field limits, and an auditable requester identity. Write tools also require deterministic payload validation, a least-privilege execution identity, and named approval before execution.</p>
 <ul>
-<li>Read tools — query MES, read a recipe, pull an equipment log. These run freely because they cannot change the line.</li>
-<li>Write tools — set a parameter, place a hold, dispatch a work order. Each one passes through an approval gate and cannot execute until a named human resumes it.</li>
+<li><b>Read tools:</b> query MES, read a recipe, or pull an equipment log. They do not change plant state, but they can disclose restricted data and therefore do not run freely.</li>
+<li><b>Write tools:</b> set a parameter, place a hold, or dispatch a work order. They pass through validation and an approval gate before a named principal can resume execution.</li>
 </ul>
-<blockquote>A read agent needs to be right. A write agent needs to be stoppable, and every stop needs a name attached to it.</blockquote>
+<blockquote>Authorize every read. For every write, also require a validated payload, named approval, idempotent execution, and a recorded outcome.</blockquote>
 <h2 id="gate">The approval gate with <code>interrupt()</code></h2>
 <p>LangGraph gives us the exact primitive for this pattern. Inside a node, call interrupt(payload): the runtime persists the whole graph state, surfaces the payload to the caller, and halts. Nothing downstream runs. The graph stays paused across minutes, or across a server restart, until someone resumes it with Command(resume=...). The resume value becomes the return value of interrupt(), so the human decision flows straight back into the node logic.</p>
 <p>One behavior matters in production: when you resume, LangGraph reruns the node from the top. It does not continue from the line after interrupt(). Keep every real side effect, especially the actual write, after the interrupt returns. Everything above the interrupt must be safe to execute more than once.</p>
@@ -148,11 +149,17 @@
 <span class="tok-kw">from</span> typing <span class="tok-kw">import</span> TypedDict
 <span class="tok-kw">from</span> langgraph.graph <span class="tok-kw">import</span> StateGraph, START, END
 <span class="tok-kw">from</span> langgraph.types <span class="tok-kw">import</span> interrupt, Command
+<span class="tok-kw">from</span> approval_service <span class="tok-kw">import</span> verify_signed_approval
 
 
 <span class="tok-kw">class</span> <span class="tok-fn">AgentState</span>(TypedDict):
     action: dict        <span class="tok-com"># proposed write, e.g. {"tool": "set_recipe", "param": ...}</span>
+    thread_id: str      <span class="tok-com"># server-created workflow identifier</span>
+    requester_id: str   <span class="tok-com"># authenticated principal that requested the action</span>
+    resource_id: str    <span class="tok-com"># lot, recipe, or other governed target</span>
     approved_by: str
+    approval_id: str
+    idempotency_key: str
     result: str
 
 
@@ -162,18 +169,35 @@
     decision = <span class="tok-fn">interrupt</span>({
         <span class="tok-str">"review"</span>: <span class="tok-str">"Approve this write to the line?"</span>,
         <span class="tok-str">"action"</span>: state[<span class="tok-str">"action"</span>],
+        <span class="tok-str">"thread_id"</span>: state[<span class="tok-str">"thread_id"</span>],
+        <span class="tok-str">"requester_id"</span>: state[<span class="tok-str">"requester_id"</span>],
+        <span class="tok-str">"resource_id"</span>: state[<span class="tok-str">"resource_id"</span>],
     })
-    <span class="tok-kw">if</span> <span class="tok-kw">not</span> decision[<span class="tok-str">"approve"</span>]:
+    <span class="tok-com"># Consume a short-lived token only for this action and workflow context.</span>
+    approval = <span class="tok-fn">verify_signed_approval</span>(
+        decision,
+        expected_action=state[<span class="tok-str">"action"</span>],
+        expected_thread_id=state[<span class="tok-str">"thread_id"</span>],
+        expected_requester_id=state[<span class="tok-str">"requester_id"</span>],
+        expected_resource_id=state[<span class="tok-str">"resource_id"</span>],
+    )
+    <span class="tok-kw">if</span> <span class="tok-kw">not</span> approval.approved:
         <span class="tok-kw">return</span> <span class="tok-fn">Command</span>(goto=END, update={<span class="tok-str">"result"</span>: <span class="tok-str">"rejected"</span>})
     <span class="tok-kw">return</span> <span class="tok-fn">Command</span>(
         goto=<span class="tok-str">"execute"</span>,
-        update={<span class="tok-str">"approved_by"</span>: decision[<span class="tok-str">"by"</span>]},  <span class="tok-com"># who signed off</span>
+        update={
+            <span class="tok-str">"approved_by"</span>: approval.principal_id,
+            <span class="tok-str">"approval_id"</span>: approval.id,
+            <span class="tok-str">"idempotency_key"</span>: approval.id,
+        },
     )
 
 
 <span class="tok-kw">def</span> <span class="tok-fn">execute</span>(state: AgentState) -&gt; dict:
     <span class="tok-com"># The real side effect runs ONLY after approval.</span>
-    out = <span class="tok-fn">run_write_tool</span>(state[<span class="tok-str">"action"</span>])       <span class="tok-com"># MES / recipe API</span>
+    out = <span class="tok-fn">run_write_tool</span>(
+        state[<span class="tok-str">"action"</span>], idempotency_key=state[<span class="tok-str">"idempotency_key"</span>]
+    )
     <span class="tok-kw">return</span> {<span class="tok-str">"result"</span>: out}
 
 
@@ -183,7 +207,8 @@ builder.<span class="tok-fn">add_node</span>(<span class="tok-str">"execute"</sp
 builder.<span class="tok-fn">add_edge</span>(START, <span class="tok-str">"human_gate"</span>)
 builder.<span class="tok-fn">add_edge</span>(<span class="tok-str">"execute"</span>, END)</code></pre>
 </figure>
-<p>Compiling the graph requires a checkpointer. Without one, interrupt() has nowhere to persist the paused state. That checkpointer is the whole reliability story, and it is where the on-prem decision matters most.</p>
+<p>This is a control sketch, not a production approval service. The approval service must derive the reviewer identity from trusted server-side authentication, authorize that principal for the named resource, and bind the decision to the exact action hash, thread ID, pending interrupt ID, requester, resource, expiry, and one-time approval ID. The resume handler below verifies that complete context before it addresses the interrupt. Do not expose direct graph-resume access to a browser or let client-supplied identity or thread fields establish trust.</p>
+<p>Compiling the graph requires a checkpointer. Without one, interrupt() has nowhere to persist the paused state. The checkpointer supports recovery; the interrupt-specific resume map, signed context, required audit receipt, and idempotency key protect separate authorization, evidence, and replay boundaries.</p>
 <h2 id="state">Durable state: why PostgresSaver, not MemorySaver</h2>
 <p>Many tutorials reach for InMemorySaver, formerly MemorySaver. It stores checkpoints in a Python dictionary, which is perfect for a notebook demo and wrong for production. If the process restarts while an approval is pending, the paused graph disappears. The engineer's half-reviewed hold vanishes, and you have no record that it ever existed. In a fab that runs 24/7 and redeploys services behind the scenes, in-memory state is a data-loss bug waiting to happen.</p>
 <p>Use PostgresSaver against an on-prem Postgres database. The paused state becomes a row in a database that lives on your network. It survives restarts, it is backed up with the rest of your operational data, and a pending approval from Tuesday is still there on Wednesday morning. Run .setup() once to create the checkpoint tables. Resume is keyed by thread_id, so the same conversation reloads exactly where it paused.</p>
@@ -201,11 +226,14 @@ DB_URI = <span class="tok-str">"postgresql://agent:pw@postgres.fab.local:5432/ag
     checkpointer.<span class="tok-fn">setup</span>()                       <span class="tok-com"># once: create checkpoint tables</span>
     graph = builder.<span class="tok-fn">compile</span>(checkpointer=checkpointer)
 
-    config = {<span class="tok-str">"configurable"</span>: {<span class="tok-str">"thread_id"</span>: <span class="tok-str">"lot-A17-hold"</span>}}
+    thread_id = <span class="tok-str">"lot-A17-hold"</span>              <span class="tok-com"># created by the trusted application</span>
+    config = {<span class="tok-str">"configurable"</span>: {<span class="tok-str">"thread_id"</span>: thread_id}}
 
     <span class="tok-com"># 1) Run until the gate. It pauses and persists to Postgres.</span>
     <span class="tok-kw">for</span> chunk <span class="tok-kw">in</span> graph.<span class="tok-fn">stream</span>(
-        {<span class="tok-str">"action"</span>: {<span class="tok-str">"tool"</span>: <span class="tok-str">"place_hold"</span>, <span class="tok-str">"lot"</span>: <span class="tok-str">"A17"</span>}},
+        {<span class="tok-str">"action"</span>: {<span class="tok-str">"tool"</span>: <span class="tok-str">"place_hold"</span>, <span class="tok-str">"lot"</span>: <span class="tok-str">"A17"</span>},
+         <span class="tok-str">"thread_id"</span>: thread_id, <span class="tok-str">"requester_id"</span>: requester.subject,
+         <span class="tok-str">"resource_id"</span>: <span class="tok-str">"lot:A17"</span>},
         config,
         stream_mode=<span class="tok-str">"values"</span>,
     ):
@@ -214,39 +242,63 @@ DB_URI = <span class="tok-str">"postgresql://agent:pw@postgres.fab.local:5432/ag
     <span class="tok-com"># 2) Later — even after a restart — inspect what is pending.</span>
     snapshot = graph.<span class="tok-fn">get_state</span>(config)
     <span class="tok-fn">print</span>(snapshot.next)               <span class="tok-com"># ('human_gate',) -&gt; awaiting approval</span>
+    pending = [i <span class="tok-kw">for</span> task <span class="tok-kw">in</span> snapshot.tasks <span class="tok-kw">for</span> i <span class="tok-kw">in</span> task.interrupts]
+    <span class="tok-kw">if</span> <span class="tok-fn">len</span>(pending) != <span class="tok-num">1</span>:
+        <span class="tok-kw">raise</span> <span class="tok-fn">RuntimeError</span>(<span class="tok-str">"expected exactly one pending approval"</span>)
 
-    <span class="tok-com"># 3) A named engineer approves; the write runs only now.</span>
-    graph.<span class="tok-fn">invoke</span>(
-        <span class="tok-fn">Command</span>(resume={<span class="tok-str">"approve"</span>: <span class="tok-kw">True</span>, <span class="tok-str">"by"</span>: <span class="tok-str">"kim.eng"</span>}),
-        config,
-    )</code></pre>
+    <span class="tok-com"># 3) The approval service signs the complete server-verified context.</span>
+    signed_token = approval_service.<span class="tok-fn">issue</span>(
+        principal=current_principal, action=snapshot.values[<span class="tok-str">"action"</span>],
+        thread_id=thread_id, interrupt_id=pending[<span class="tok-num">0</span>].id,
+        requester_id=snapshot.values[<span class="tok-str">"requester_id"</span>],
+        resource_id=snapshot.values[<span class="tok-str">"resource_id"</span>],
+    )
+    <span class="tok-fn">resume_with_audit</span>(graph, config, signed_token, current_principal)</code></pre>
 </figure>
 <h2 id="audit">Audit logs and the approval trail</h2>
-<p>Because every pause is a durable checkpoint, you can build an audit trail without adding a separate control plane. The checkpoint records the proposed action and state; the resume payload records who decided and what they decided. Write both to an append-only log at the moment of resume, before the write tool fires. For a regulated line, each record should include the proposed tool call, reviewer ID, approve or reject, timestamp, and thread_id that ties it back to the full agent transcript.</p>
+<p>A durable checkpoint supports workflow recovery; it is not an immutable audit trail. Checkpoint rows may be updated, deleted, or accessed by application administrators. Append a separate structured decision event to required durable audit storage before resume; if that append has no receipt, do not address the interrupt or fire the write tool. The record should include the proposed tool call and payload hash, requester and reviewer identities, policy result, approve or reject decision, trusted timestamp, model/workflow version, source references, thread and interrupt IDs, and later execution receipt.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> audit_log.py</span>
 <button class="copy-btn" data-copy="" type="button">Copy</button>
 </div>
-<pre><code><span class="tok-com"># Append-only audit record, written at the moment of decision.</span>
-<span class="tok-kw">import</span> json, time, logging
+<pre><code><span class="tok-com"># Required durable audit record, written before the graph can resume.</span>
+<span class="tok-kw">import</span> time
+<span class="tok-kw">from</span> langgraph.types <span class="tok-kw">import</span> Command
 
-audit = logging.<span class="tok-fn">getLogger</span>(<span class="tok-str">"agent.audit"</span>)   <span class="tok-com"># ships to on-prem log store</span>
 
-
-<span class="tok-kw">def</span> <span class="tok-fn">resume_with_audit</span>(graph, config, decision: dict) -&gt; dict:
+<span class="tok-kw">def</span> <span class="tok-fn">resume_with_audit</span>(graph, config, signed_token: str, principal) -&gt; dict:
+    thread_id = config[<span class="tok-str">"configurable"</span>][<span class="tok-str">"thread_id"</span>]
     snapshot = graph.<span class="tok-fn">get_state</span>(config)
     proposed = snapshot.values[<span class="tok-str">"action"</span>]
-    audit.<span class="tok-fn">info</span>(json.<span class="tok-fn">dumps</span>({
-        <span class="tok-str">"thread_id"</span>: config[<span class="tok-str">"configurable"</span>][<span class="tok-str">"thread_id"</span>],
+    pending = [i <span class="tok-kw">for</span> task <span class="tok-kw">in</span> snapshot.tasks <span class="tok-kw">for</span> i <span class="tok-kw">in</span> task.interrupts]
+    <span class="tok-kw">if</span> <span class="tok-fn">len</span>(pending) != <span class="tok-num">1</span>:
+        <span class="tok-kw">raise</span> <span class="tok-fn">RuntimeError</span>(<span class="tok-str">"expected exactly one pending approval"</span>)
+    approval = approval_service.<span class="tok-fn">inspect</span>(
+        signed_token, expected_principal_id=principal.subject,
+        expected_action=proposed, expected_thread_id=thread_id,
+        expected_interrupt_id=pending[<span class="tok-num">0</span>].id,
+        expected_requester_id=snapshot.values[<span class="tok-str">"requester_id"</span>],
+        expected_resource_id=snapshot.values[<span class="tok-str">"resource_id"</span>],
+    )
+    event = {
+        <span class="tok-str">"thread_id"</span>: thread_id,
+        <span class="tok-str">"interrupt_id"</span>: pending[<span class="tok-num">0</span>].id,
         <span class="tok-str">"action"</span>: proposed,
-        <span class="tok-str">"decision"</span>: <span class="tok-str">"approve"</span> <span class="tok-kw">if</span> decision[<span class="tok-str">"approve"</span>] <span class="tok-kw">else</span> <span class="tok-str">"reject"</span>,
-        <span class="tok-str">"by"</span>: decision[<span class="tok-str">"by"</span>],
+        <span class="tok-str">"approval_id"</span>: approval.id,
+        <span class="tok-str">"action_hash"</span>: approval.action_hash,
+        <span class="tok-str">"decision"</span>: <span class="tok-str">"approve"</span> <span class="tok-kw">if</span> approval.approved <span class="tok-kw">else</span> <span class="tok-str">"reject"</span>,
+        <span class="tok-str">"by"</span>: approval.principal_id,
         <span class="tok-str">"ts"</span>: time.<span class="tok-fn">time</span>(),
-    }))
-    <span class="tok-kw">return</span> graph.<span class="tok-fn">invoke</span>(<span class="tok-fn">Command</span>(resume=decision), config)</code></pre>
+    }
+    receipt = durable_audit.<span class="tok-fn">append_required</span>(event)  <span class="tok-com"># durable or raises</span>
+    <span class="tok-kw">if</span> <span class="tok-kw">not</span> receipt:
+        <span class="tok-kw">raise</span> <span class="tok-fn">RuntimeError</span>(<span class="tok-str">"audit receipt required before resume"</span>)
+    <span class="tok-kw">return</span> graph.<span class="tok-fn">invoke</span>(
+        <span class="tok-fn">Command</span>(resume={pending[<span class="tok-num">0</span>].id: signed_token}), config
+    )</code></pre>
 </figure>
-<p>Now every write on the line has a name and a timestamp behind it, stored on the same network as the action itself. That is the record an auditor, or a post-mortem after a bad lot, actually needs.</p>
+<p>The sketch requires <code>append_required()</code> to return only after durable storage and to raise on timeout, rejection, or uncertain delivery. That contract makes decision-audit failure close the resume path; production deployment still needs restricted writers, retention policy, integrity or tamper-evidence controls, synchronized time, access review, and reconciliation between the audit receipt and target-system execution receipt.</p>
 <figure>
 <div aria-label="Human-in-the-loop approval flow diagram" class="diagram">
 <svg aria-label="Agent proposes a write, the graph interrupts and persists to Postgres, a human approves or rejects, then the write executes and is logged." role="img" viewbox="0 0 640 260" width="100%">
@@ -280,23 +332,30 @@ audit = logging.<span class="tok-fn">getLogger</span>(<span class="tok-str">"age
 <line marker-end="url(#ah)" stroke="#8A8578" stroke-width="1.6" x1="306" x2="350" y1="130" y2="130"></line>
 <line marker-end="url(#ah)" stroke="#8A8578" stroke-width="1.6" x1="474" x2="518" y1="130" y2="130"></line>
 <line marker-end="url(#ah)" stroke="#8A8578" stroke-width="1.6" x1="246" x2="246" y1="156" y2="192"></line>
-<text fill="#3A382F" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="320" y="34">Read tools run free · every write passes the gate</text>
+<text fill="#3A382F" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="320" y="34">Authorize reads · validate and review proposed writes</text>
 </svg>
 </div>
 <figcaption>Figure 1. The write path: propose → interrupt, persist state to Postgres, human approves, then execute and log.</figcaption>
 </figure>
 <h2 id="drift">Retraining, drift watch, and the MLOps loop</h2>
-<p>The approval gate is also your best data source. Every rejection is a labeled example of the model being wrong in a way a human caught. Track the reject rate over time, sliced by tool and shift. A rising reject rate is often the earliest signal that the agent has drifted away from how the line actually runs: a new recipe family, a changed SOP, or a retooled chamber.</p>
-<p>Because the fab is air-gapped, the MLOps loop stays entirely on-prem. No telemetry leaves the network, and no managed retraining service is required. A practical loop looks like this:</p>
+<p>Approval outcomes are review data, not automatically ground-truth labels. A rejection can reflect model error, stale evidence, ambiguous policy, reviewer disagreement, or a changed operating condition. Track outcome rates by tool, workflow version, source revision, and reviewer context, then sample cases for adjudication before using them for retraining.</p>
+<p>For an air-gapped design, the MLOps loop is intended to stay on-prem. Verify that claim against model endpoints, dependency update paths, DNS, proxies, telemetry, and log sinks; topology alone is not evidence of containment. A practical loop looks like this:</p>
 <ul>
-<li>Watch — dashboard the reject rate and read-tool retrieval quality; alert when either crosses a threshold.</li>
-<li>Collect — mine the audit log for rejected actions and the corrected decision the engineer made instead.</li>
-<li>Refresh — re-index the RAG corpus first, because it is cheap and fixes most drift; fine-tune the local model only when retrieval alone cannot close the gap.</li>
+<li>Watch: dashboard approval outcomes, read-tool authorization denials, retrieval quality, execution failures, and reconciliation gaps; investigate thresholds set by the relevant owners.</li>
+<li>Collect: sample approval records for adjudication and separate model error from policy, data, interface, and reviewer causes.</li>
+<li>Refresh: test whether a corpus or index update addresses the adjudicated failures before considering model tuning. Retrieval changes are usually easier to inspect, but they will not correct every failure class.</li>
 <li>Release gate — treat a new model version as a state-changing action: shadow it, compare its would-be decisions against approved history, and require sign-off before it serves the line.</li>
 </ul>
-<p>None of this needs a cloud MLOps platform. It needs a durable checkpoint store, an honest audit log, and a metric, reject rate, that a human on the floor already understands.</p>
+<p>This loop can run on-prem, but it still needs explicit owners for identity, data access, application behavior, target-system writes, audit retention, and model release. No single outcome rate is sufficient to describe reliability.</p>
 <hr/>
-<p>The pattern is small, and it is the point: read freely, write behind a gate, persist the pause to Postgres, and log who decided. An agent built this way is not just accurate. It is accountable, restart-safe, and safe enough to bring near a running line. The deep-dive deck below walks the full agent-and-MCP build slide by slide, including the tool wiring this article assumes.</p>
+<h3>Approval tabletop with a hard stop</h3>
+<p><strong>Simplified exercise.</strong> Use a non-production stub action. Pause it for approval, restart the workflow service, resume with an authorized principal, then replay the same approval ID and alter one payload field.</p>
+<ul>
+<li><strong>Pass:</strong> the restart preserves the pending packet, the valid resume executes once, the replay is rejected or reconciled to the existing receipt, and the changed payload fails hash verification.</li>
+<li><strong>Stop:</strong> the browser supplies reviewer identity, an expired approval resumes, audit delivery failure still permits execution, or the target result cannot be reconciled.</li>
+<li><strong>Limit:</strong> a stub proves workflow behavior only. It does not qualify a plant write, establish functional safety, settle retention requirements, or replace owner approval.</li>
+</ul>
+<p>The implementable pattern is to authorize reads, validate and approve writes, persist workflow state, execute idempotently, and reconcile a separate audit record with the target system. The LangGraph workflow article is the useful companion read when you need to inspect the pause, resume, rejection, and duplicate-transition mechanics in code.</p>
 </div>
 <!-- deep-dive deck link -->
 <aside class="deck-link">
@@ -311,8 +370,8 @@ audit = logging.<span class="tok-fn">getLogger</span>(<span class="tok-str">"age
 <div class="share">
 <span class="lbl">Share</span>
 <button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
-<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
-<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Fhitl-mlops-onprem.html" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Fhitl-mlops-onprem.html" rel="noopener" target="_blank">LinkedIn</a>
 </div>
 <!-- author bio card (E-E-A-T) -->
 <aside class="author-card">
@@ -320,7 +379,7 @@ audit = logging.<span class="tok-fn">getLogger</span>(<span class="tok-str">"age
 <div class="a-body">
 <div class="k">About the author</div>
 <h3>AI Edu Archive</h3>
-<p>PhD in physics (IGZO / graphene semiconductor properties) and a semiconductor process engineer working on deposition. Builds air-gapped LLM, RAG, and agent systems, plus reinforcement-learning and anomaly-detection tooling, for the fab. Writes here about turning process know-how into an on-prem knowledge asset that never leaves the network.</p>
+<p>Science PhD with manufacturing process-improvement experience. Writes implementation notes about local AI and manufacturing data systems, with a focus on testable boundaries and on-prem deployment constraints.</p>
 <a href="../about.html">More about the author</a>
 </div>
 </aside>
@@ -342,45 +401,35 @@ audit = logging.<span class="tok-fn">getLogger</span>(<span class="tok-str">"age
 </article>
 </main>
 <footer class="site-foot">
-<div class="wrap">
-<div class="foot-top">
-<div class="foot-lead">
-<h2>Free, in-depth, and open.</h2>
-<p>Everything here, courses and journal alike, is free to read with no signup.</p>
-</div>
-<div class="foot-nav-cols">
-<div class="foot-col">
-<h4>Explore</h4>
-<a href="../../index.html">Hub home</a>
-<a href="../../index.html#courses">All courses</a>
-<a href="../index.html">Journal</a>
-</div>
-<div class="foot-col">
-<h4>Courses</h4>
-<a href="../../overview/index.html">Fab AI</a>
-<a href="../../watsonx/index.html">Air-gapped LLM</a>
-<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
-</div>
-<div class="foot-col">
-<h4>Site</h4>
-<a href="../about.html">About</a>
-<a href="../contact.html">Contact</a>
-<a href="../privacy.html">Privacy</a>
-<a href="../terms.html">Terms</a>
-</div>
-</div>
-</div>
-<div class="foot-bottom">
-<div class="foot-brand">
-<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</div>
-<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
-</div>
-</div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
 </footer>
 <script>
 (function(){
@@ -405,5 +454,6 @@ audit = logging.<span class="tok-fn">getLogger</span>(<span class="tok-str">"age
   });
 })();
 </script>
+<script src="../assets/theme.js"></script>
 </body>
 </html>

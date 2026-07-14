@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Testing AI agent controls without a GPU - AI Edu Archive Journal</title>
+<meta name="description" content="A dependency-free Python lab for testing retrieval filters, tool contracts, bound approvals, audit failures, and bounded agent loops on a low-spec PC.">
+<meta name="author" content="AI Edu Archive">
+<meta name="theme-color" content="#FAF9F5">
+<link rel="canonical" href="https://ai-edu-archive.pages.dev/blog/articles/mock-ai-validation-low-spec-pc.html">
+
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Testing AI agent controls without a GPU - AI Edu Archive Journal">
+<meta property="og:description" content="A dependency-free Python lab for testing retrieval filters, tool contracts, bound approvals, audit failures, and bounded agent loops on a low-spec PC.">
+<meta property="og:site_name" content="AI Edu Archive">
+<meta property="og:url" content="https://ai-edu-archive.pages.dev/blog/articles/mock-ai-validation-low-spec-pc.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="og:image" content="https://ai-edu-archive.pages.dev/blog/assets/visuals/mock-ai-validation-loop.svg">
+<meta property="article:published_time" content="2026-07-14">
+<meta property="article:author" content="AI Edu Archive">
+<meta property="article:section" content="Generative AI at Work">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Testing AI agent controls without a GPU - AI Edu Archive Journal">
+<meta name="twitter:description" content="A dependency-free Python lab for testing retrieval filters, tool contracts, bound approvals, audit failures, and bounded agent loops on a low-spec PC.">
+<meta name="twitter:image" content="https://ai-edu-archive.pages.dev/blog/assets/visuals/mock-ai-validation-loop.svg">
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Testing AI agent controls without a GPU",
+  "description": "A dependency-free Python lab for testing retrieval filters, tool contracts, bound approvals, audit failures, and bounded agent loops on a low-spec PC.",
+  "inLanguage": "en",
+  "image": "https://ai-edu-archive.pages.dev/blog/assets/visuals/mock-ai-validation-loop.svg",
+  "datePublished": "2026-07-14",
+  "dateModified": "2026-07-14",
+  "author": {
+    "@type": "Person",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Edu Archive",
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ai-edu-archive.pages.dev/blog/articles/mock-ai-validation-low-spec-pc.html"
+  }
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/blog.css">
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/mock-ai-validation-low-spec-pc.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/mock-ai-validation-low-spec-pc.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/mock-ai-validation-low-spec-pc.html">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="mock-ai-validation-low-spec-pc.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/mock-ai-validation-low-spec-pc.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<article itemscope itemtype="https://schema.org/Article">
+  <div class="article-hero">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../../index.html">Home</a>
+        <span class="sep" aria-hidden="true">/</span>
+        <a href="../index.html">Articles</a>
+        <span class="sep" aria-hidden="true">/</span>
+        <span aria-current="page">Testing AI agent controls without a GPU</span>
+      </nav>
+      <div class="post-meta">
+        <span class="cat-tag">Generative AI at Work</span>
+        <span class="post-dot"></span>
+        <time datetime="2026-07-14" itemprop="datePublished">2026-07-14</time>
+        <span class="post-dot"></span>
+        <span class="rt">Read time: 12 min</span>
+      </div>
+      <h1 itemprop="headline">Testing AI agent controls without a GPU</h1>
+      <div class="byline">
+        <span class="avatar" aria-hidden="true">AE</span>
+        <span class="who">
+          <b itemprop="author">AI Edu Archive</b>
+          <span>Applied AI, robotics, manufacturing systems</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <nav class="toc" aria-label="Table of contents"><div class="toc-title">On this page</div><ol><li><a href="#boundary">What the lab proves</a></li><li><a href="#layout">Folder and run steps</a></li><li><a href="#tests">Eight control tests</a></li><li><a href="#result">Reading the result</a></li><li><a href="#handoff">Replacing the mock</a></li></ol></nav>
+  <div class="article-body" itemprop="articleBody">
+    <p><span class="lead-in">A weak PC changes the test order, not the need for testing.</span> LangChain and LangGraph can be wired without a GPU, but a local model service still needs model files, memory, and runtime packages. This lab removes that dependency and asks a narrower question first: when evidence is stale, approval is wrong, the audit sink is down, or the loop refuses to end, does the application stop in the right place?</p>
+    <div class="field-story"><span class="note-k">Illustrative scenario: the hardware conclusion was too broad</span><p>A team sees that its PC cannot serve the planned model and puts every agent test on hold. The useful correction is to split two claims that had been bundled together. The machine cannot measure production answer quality, but it can still verify deterministic state transitions, permissions, payload binding, rejection paths, and escalation. The scenario is constructed; the test output below comes from the repository lab.</p></div>
+    <figure class="visual-figure media-figure media-figure--diagram">
+      <img src="../assets/visuals/mock-ai-validation-loop.svg" alt="Dependency-free mock AI validation flow with evidence, tool, approval, audit, and escalation gates" loading="lazy" decoding="async">
+      <figcaption><span class="figure-label">Figure.</span> The scripted model supplies repeatable decisions. Every operational boundary remains visible, and a failed gate ends in stop or escalation rather than a plausible-looking answer.</figcaption>
+    </figure>
+
+    <h2 id="boundary">What this lab proves, and what it cannot</h2>
+    <p>The mock is closer to an interlock checkout than a process-capability run. In a fab, engineers can verify valve sequencing, permissives, and abort behavior before processing a product wafer. That does not prove film quality. Here, the deterministic model verifies application controls without claiming anything about language quality.</p>
+    <div class="tbl-wrap"><table class="tbl"><caption>Keep control verification separate from model evaluation.</caption><thead><tr><th>Can verify on this PC</th><th>Still needs a real model or target hardware</th></tr></thead><tbody><tr><td>Current-revision and role filters</td><td>Semantic retrieval recall and embedding quality</td></tr><tr><td>Exact tool names and arguments</td><td>Whether the model chooses the correct tool</td></tr><tr><td>Approval scope, expiry, and replay rejection</td><td>Hallucination and instruction-following rates</td></tr><tr><td>Audit outage and bounded-loop behavior</td><td>Latency, throughput, VRAM, context, and concurrency</td></tr></tbody></table></div>
+    <p>This boundary matters. A passing mock test means the application behaved as specified for the fixture. It does not turn a small scripted object into evidence that an LLM is accurate, safe, or useful.</p>
+
+    <h2 id="layout">Folder, requirements, and first run</h2>
+    <p>The implementation lives in <code>labs/mock-ai-validation/</code>. It uses Python 3.10 or newer and only the standard library. There is no virtual environment requirement, network request, model download, or <code>pip install</code>.</p>
+    <figure class="code-figure"><div class="code-bar"><span class="code-file"><span class="code-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">text</span>folder tree</span><button class="copy-btn" data-copy type="button">Copy</button></div><pre><code>labs/mock-ai-validation/
+|-- mock_ai_lab/
+|   |-- __init__.py
+|   `-- core.py
+|-- tests/
+|   `-- test_controls.py
+|-- artifacts/
+|   `-- latest_run.json
+|-- README.md
+`-- run_demo.py</code></pre></figure>
+    <p>Start with the tests. A demo is useful only after the rejection cases are green.</p>
+    <figure class="code-figure"><div class="code-bar"><span class="code-file"><span class="code-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">PowerShell</span>run-lab.ps1</span><button class="copy-btn" data-copy type="button">Copy</button></div><pre><code>Set-Location .\labs\mock-ai-validation
+python --version
+python -m unittest discover -s tests -v
+python run_demo.py</code></pre></figure>
+    <div class="reader-shortcut"><span class="note-k">Clean-start checkpoint</span><p><b>Pass:</b> Python is 3.10+, all eight tests report <code>ok</code>, the demo ends with <code>status: escalated</code>, and <code>artifacts/latest_run.json</code> is created. <b>Stop:</b> do not reinterpret a failed rejection test as a harmless mock limitation. Fix the control or the fixture first.</p></div>
+    <p>The published source files are available as <a class="link" href="../../labs/mock-ai-validation/README.md">the lab README</a>, <a class="link" href="../../labs/mock-ai-validation/run_demo.py">the demo runner</a>, and <a class="link" href="../../labs/mock-ai-validation/tests/test_controls.py">the test suite</a>.</p>
+
+    <h2 id="tests">The eight tests are an operating contract</h2>
+    <div class="tbl-wrap"><table class="tbl"><caption>Actual test cases implemented in <code>tests/test_controls.py</code>.</caption><thead><tr><th>Test</th><th>Observable pass condition</th><th>Failure it prevents</th></tr></thead><tbody><tr><td class="name">Current + authorized retrieval</td><td>Only revision 8 reaches the engineer fixture</td><td>Superseded or role-restricted evidence entering context</td></tr><tr><td class="name">Withhold on no source</td><td>An unauthorized-only match returns an empty list</td><td>Filling an evidence gap with convenient text</td></tr><tr><td class="name">Exact tool contract</td><td>An undeclared <code>sql</code> argument raises an error</td><td>Turning a narrow lookup into an open query surface</td></tr><tr><td class="name">Thread binding</td><td>A token issued for thread 17 fails on thread 99</td><td>Moving approval to another pending action</td></tr><tr><td class="name">Audit fail-closed</td><td>The write handler is never called</td><td>Executing while the durable record is unavailable</td></tr><tr><td class="name">One-time approval</td><td>The second use is rejected; action count remains one</td><td>Duplicate state changes</td></tr><tr><td class="name">Step limit</td><td>Result is <code>escalated</code> with no answer field</td><td>Printing the last tool output as a final answer</td></tr><tr><td class="name">Approved success</td><td>One action and one audit receipt are retained</td><td>A happy path that bypasses the same controls</td></tr></tbody></table></div>
+
+    <h3>Approval binds the whole pending action</h3>
+    <p>The token is not merely “permission to create a ticket.” Its signed context includes the workflow thread, interrupt, requester, target resource, exact action, payload hash, reviewer, and expiry. The service then consumes the token once.</p>
+    <figure class="code-figure"><div class="code-bar"><span class="code-file"><span class="code-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Python</span>approval context</span><button class="copy-btn" data-copy type="button">Copy</button></div><pre><code>context = ApprovalContext(
+    thread_id="thread-17",
+    interrupt_id="interrupt-3",
+    requester="engineer-42",
+    resource="ticket-system/module-a",
+    action="create_ticket",
+    payload_sha256=payload_hash(arguments),
+    reviewer="shift-lead-7",
+    expires_at=NOW + 300,
+)</code></pre></figure>
+    <p>If any field changes, verification fails. If the audit sink cannot produce a receipt, execution stops before the state-changing handler. If the same token is replayed, the action count remains one.</p>
+
+    <h2 id="result">Why the demo deliberately ends in escalation</h2>
+    <p>The demo repeats a harmless <code>read_alarm</code> request. After three steps, it does not print the final observation as though the agent had solved the problem. The retained artifact is explicit:</p>
+    <figure class="code-figure"><div class="code-bar"><span class="code-file"><span class="code-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">JSON</span>artifacts/latest_run.json</span><button class="copy-btn" data-copy type="button">Copy</button></div><pre><code>{
+  "status": "escalated",
+  "steps": 3,
+  "reason": "step_limit_reached",
+  "observations": [
+    {"tool": "read_alarm", "result": {"alarm_id": "E-1420", "state": "active"}},
+    {"tool": "read_alarm", "result": {"alarm_id": "E-1420", "state": "active"}},
+    {"tool": "read_alarm", "result": {"alarm_id": "E-1420", "state": "active"}}
+  ]
+}</code></pre></figure>
+    <p>That result is less impressive than a fluent paragraph, and much more useful for debugging. The repeated observation, step count, and stop reason tell an engineer exactly which boundary fired.</p>
+
+    <h2 id="handoff">Replacing the mock with a real model later</h2>
+    <ol><li>Keep the retriever fixture, tool registry, approval service, audit behavior, and assertions unchanged.</li><li>Replace only <code>ScriptedModel.next()</code> with an adapter for Ollama, vLLM, or an approved remote endpoint.</li><li>Run the deterministic suite first. Then add a separate evaluation set for tool selection, grounded answers, refusal behavior, latency, and resource use.</li><li>Record model ID, artifact hash, runtime, prompt version, hardware, context, and concurrency with the result.</li></ol>
+    <p><b>Pass to live-model testing</b> when all deterministic controls still pass and the target environment has a named owner and rollback path. <b>Stop</b> when connecting the model requires weakening a schema, bypassing an approval, skipping an audit receipt, or hiding an unresolved step-limit event. <b>Limit:</b> even a live-model pass is evidence for that model and configuration, not every future release.</p>
+    <p>Continue with <a class="link" href="consumer-gpu-onprem-llm-agent-lab.html">the consumer-GPU lab</a> when hardware becomes available, and use <a class="link" href="hitl-mlops-onprem.html">the HITL control design</a> before exposing a state-changing tool.</p>
+  </div>
+  <div class="share"><span>Share</span><a class="sbtn" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Fmock-ai-validation-low-spec-pc.html" rel="noopener" target="_blank">X / Twitter</a><a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Fmock-ai-validation-low-spec-pc.html" rel="noopener" target="_blank">LinkedIn</a></div>
+<aside class="article-endcap" aria-label="Article information">
+  <p>Written from practical engineering experience and reviewed for clarity and technical accuracy.</p>
+  <div class="article-endcap-actions">
+    <a href="../index.html">Back to Journal</a>
+    <a href="../ai-categories.html">Browse AI categories</a>
+  </div>
+</aside>
+</article>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
+</footer>
+<script src="../assets/theme.js"></script>
+</body>
+</html>

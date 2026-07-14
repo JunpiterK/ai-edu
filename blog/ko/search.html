@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="응용 AI, 로보틱스 AI, 제조 AI, 온프레미스 LLM, RAG, MCP, 에이전트 관련 AI Edu Archive 글과 강의 페이지를 검색합니다.">
+<meta name="author" content="AI Edu Archive">
+<meta name="theme-color" content="#FAF9F5">
+<link rel="canonical" href="https://ai-edu-archive.pages.dev/blog/ko/search.html">
+
+<title>검색 - AI Edu Archive</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="검색 - AI Edu Archive">
+<meta property="og:description" content="AI Edu Archive의 글, 강의, 프로젝트 자료를 검색합니다.">
+<meta property="og:site_name" content="AI Edu Archive">
+<meta property="og:url" content="https://ai-edu-archive.pages.dev/blog/ko/search.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary">
+<link rel="search" type="application/opensearchdescription+xml" title="AI Edu Archive" href="../../opensearch.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/blog.css">
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/search.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/search.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/search.html">
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="주요 메뉴">
+      <a href="../../index.html#courses">강의</a>
+      <a href="index.html">글</a>
+      <a href="learning-paths.html">학습 경로</a>
+      <a href="search.html" aria-current="page">검색</a>
+      <a href="portfolio.html">포트폴리오</a>
+      <a href="about.html">소개</a>
+      <div class="language-switch" aria-label="언어 선택">
+        <a href="../search.html" lang="en" title="English">EN</a>
+        <a href="search.html" lang="ko" aria-current="true" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <section class="page-head search-head"><div class="wrap">
+    <span class="eyebrow">아카이브 검색</span>
+    <h1>지금 필요한 시스템 조각을 찾아보세요.</h1>
+    <p class="lede">온프레미스 LLM, RAG, MCP 에이전트, 로보틱스 AI, 제조 AI 관련 글과 강의, 프로젝트 노트를 검색합니다.</p>
+    <form class="search-box" id="searchForm" role="search">
+      <label class="visually-hidden" for="q">검색어</label>
+      <input id="q" name="q" type="search" autocomplete="off" placeholder="RAG, MCP, GPU 용량 산정, LangGraph 검색..." autofocus>
+      <button class="btn btn-primary" type="submit">검색</button>
+    </form>
+    <div class="filters search-filters" role="group" aria-label="검색 필터">
+      <button class="chip" type="button" data-lang="all" aria-pressed="false"><span class="cdot"></span>전체 언어</button>
+      <button class="chip" type="button" data-lang="en" aria-pressed="false">영어</button>
+      <button class="chip" type="button" data-lang="ko" aria-pressed="true">한국어</button>
+      <button class="chip" type="button" data-type="article" aria-pressed="false">글</button>
+      <button class="chip" type="button" data-type="page" aria-pressed="false">페이지</button>
+    </div>
+  </div></section>
+  <section class="section search-section"><div class="wrap">
+    <div class="search-status" id="status">검색 색인을 불러오는 중입니다...</div>
+    <ol class="search-results" id="results" aria-live="polite"></ol>
+  </div></section>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>누구나 볼 수 있는 실용적인 AI 교육 자료입니다.</h2>
+        <p>현장에서 쓸 수 있는 AI 시스템을 위한 강의, 글, 실전 기록을 모았습니다.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>둘러보기</h4>
+          <a href="../../index.html#courses">강의</a>
+          <a href="index.html">글</a>
+          <a href="learning-paths.html">학습 경로</a>
+          <a href="search.html">검색</a>
+          <a href="portfolio.html">포트폴리오</a>
+        </div>
+        <div class="foot-col">
+          <h4>사이트</h4>
+          <a href="about.html">소개</a>
+          <a href="contact.html">연락처</a>
+          <a href="privacy.html">개인정보 처리방침</a>
+          <a href="terms.html">이용약관</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · 한국어와 영어로 제공하는 AI 교육</span>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+  var form=document.getElementById('searchForm');
+  var input=document.getElementById('q');
+  var results=document.getElementById('results');
+  var status=document.getElementById('status');
+  var chips=document.querySelectorAll('.search-filters .chip');
+  var docs=[];
+  var params=new URLSearchParams(window.location.search);
+  var activeLang=params.get('lang') || 'ko';
+  var activeType=params.get('type') || 'all';
+  var typeLabels={article:'글',page:'페이지'};
+  function safeUrl(value){try{return new URL(value || '',window.location.href).href}catch(error){return '#'}}
+  function tokenize(value){return value.toLowerCase().trim().split(/\s+/).filter(Boolean)}
+  function buildFallbackIndex(){
+    var categoryPages=['automotive-ai-robotics','fab-ai-foundations','rag-knowledge-systems','agents-mcp-controls','onprem-llm-operations','python-langchain-langgraph','generative-ai-field-work'];
+    var sources=['../../index.html'].concat(categoryPages.map(function(name){return '../categories/'+name+'.html'}),categoryPages.map(function(name){return 'categories/'+name+'.html'}));
+    var seen={};
+    return Promise.all(sources.map(function(source){
+      return fetch(source).then(function(res){if(!res.ok)throw new Error('source');return res.text()}).then(function(html){
+        var parsed=new DOMParser().parseFromString(html,'text/html');
+        return Array.prototype.map.call(parsed.querySelectorAll('a[href]'),function(link){
+          var url=new URL(link.getAttribute('href'),new URL(source,window.location.href));
+          if(url.origin!==window.location.origin||!/\.html$/.test(url.pathname))return null;
+          if(!(/\/blog\/(ko\/)?articles\//.test(url.pathname)||/\/(overview|watsonx|llm_apply)\//.test(url.pathname)))return null;
+          if(seen[url.href])return null;
+          seen[url.href]=true;
+          var container=link.closest('article, .post-card, .course-card, .card, li')||link.parentElement;
+          var heading=container&&container.querySelector('h1,h2,h3');
+          var summary=container&&container.querySelector('p');
+          return{title:(heading&&heading.textContent.trim())||link.textContent.trim()||'제목 없음',description:(summary&&summary.textContent.trim())||'',text:(container&&container.textContent.trim())||link.textContent.trim(),url:url.href,language:/\/blog\/ko\//.test(url.pathname)?'ko':'en',type:/\/articles\//.test(url.pathname)?'article':'page',section:/\/articles\//.test(url.pathname)?'저널':'강의'};
+        }).filter(Boolean);
+      }).catch(function(){return []});
+    })).then(function(groups){return groups.reduce(function(all,group){return all.concat(group)},[])});
+  }
+  function score(doc,terms){
+    if(!terms.length) return doc.type==='article'?2:1;
+    var title=(doc.title||'').toLowerCase();
+    var desc=(doc.description||'').toLowerCase();
+    var text=(doc.text||'').toLowerCase();
+    var total=0;
+    terms.forEach(function(term){if(title.indexOf(term)!==-1)total+=8;if(desc.indexOf(term)!==-1)total+=4;if(text.indexOf(term)!==-1)total+=1});
+    return total;
+  }
+  function syncUrl(){
+    var next=new URLSearchParams();
+    if(input.value.trim())next.set('q',input.value.trim());
+    if(activeLang!=='ko')next.set('lang',activeLang);
+    if(activeType!=='all')next.set('type',activeType);
+    history.replaceState(null,'',window.location.pathname+(next.toString()?'?'+next.toString():''));
+  }
+  function render(){
+    var terms=tokenize(input.value);
+    var ranked=docs.map(function(doc){return{doc:doc,score:score(doc,terms)}}).filter(function(item){
+      if(activeLang!=='all'&&item.doc.language!==activeLang)return false;
+      if(activeType!=='all'&&item.doc.type!==activeType)return false;
+      return item.score>0;
+    }).sort(function(a,b){return b.score-a.score||(b.doc.published||'').localeCompare(a.doc.published||'')}).slice(0,30);
+    results.textContent='';
+    ranked.forEach(function(item){
+      var doc=item.doc,li=document.createElement('li'),link=document.createElement('a');
+      link.className='search-result';link.href=safeUrl(doc.url);
+      var meta=document.createElement('div');meta.className='post-meta';
+      var tag=document.createElement('span');tag.className='cat-tag';tag.textContent=(doc.language==='ko'?'한국어':'영어')+' · '+(typeLabels[doc.type]||'페이지');meta.appendChild(tag);
+      if(doc.section){var dot=document.createElement('span');dot.className='post-dot';dot.setAttribute('aria-hidden','true');var section=document.createElement('span');section.className='rt';section.textContent=doc.section;meta.appendChild(dot);meta.appendChild(section)}
+      var title=document.createElement('h2');title.textContent=doc.title||'제목 없음';
+      var excerpt=document.createElement('p');excerpt.className='excerpt';excerpt.textContent=doc.description||doc.text||'';
+      link.appendChild(meta);link.appendChild(title);link.appendChild(excerpt);li.appendChild(link);results.appendChild(li);
+    });
+    status.textContent=ranked.length?ranked.length+'개의 결과':'검색 결과가 없습니다.';
+    syncUrl();
+  }
+  function syncChips(){
+    document.querySelectorAll('[data-lang]').forEach(function(c){c.setAttribute('aria-pressed',c.getAttribute('data-lang')===activeLang?'true':'false')});
+    document.querySelectorAll('[data-type]').forEach(function(c){c.setAttribute('aria-pressed',c.getAttribute('data-type')===activeType?'true':'false')});
+  }
+  chips.forEach(function(chip){chip.addEventListener('click',function(){
+    if(chip.hasAttribute('data-lang'))activeLang=chip.getAttribute('data-lang');
+    if(chip.hasAttribute('data-type'))activeType=activeType===chip.getAttribute('data-type')?'all':chip.getAttribute('data-type');
+    syncChips();render();
+  })});
+  form.addEventListener('submit',function(event){event.preventDefault();render()});
+  input.addEventListener('input',render);
+  input.value=params.get('q')||'';
+  syncChips();
+  fetch('../../search.json').then(function(res){if(!res.ok)throw new Error('index');return res.json()}).then(function(data){docs=data.documents||[];render()}).catch(function(){
+    status.textContent='검색 자료를 구성하는 중입니다...';
+    return buildFallbackIndex().then(function(fallbackDocs){docs=fallbackDocs;if(!docs.length)throw new Error('fallback');render()});
+  }).catch(function(){status.textContent='검색 색인을 불러오지 못했습니다.'});
+})();
+</script>
+<script src="../assets/theme.js"></script>
+</body>
+</html>

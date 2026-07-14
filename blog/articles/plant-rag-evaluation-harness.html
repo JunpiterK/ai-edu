@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A plant RAG evaluation harness that survives real operations - AI Edu Archive Journal</title>
+<meta name="description" content="A practical evaluation harness for plant RAG systems: fixed question sets, source-grounded grading, regression checks, freshness tests, and release gates.">
+<meta name="author" content="AI Edu Archive">
+<meta name="theme-color" content="#FAF9F5">
+<link rel="canonical" href="https://ai-edu-archive.pages.dev/blog/articles/plant-rag-evaluation-harness.html">
+
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A plant RAG evaluation harness that survives real operations - AI Edu Archive Journal">
+<meta property="og:description" content="A practical evaluation harness for plant RAG systems: fixed question sets, source-grounded grading, regression checks, freshness tests, and release gates.">
+<meta property="og:site_name" content="AI Edu Archive">
+<meta property="og:url" content="https://ai-edu-archive.pages.dev/blog/articles/plant-rag-evaluation-harness.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="article:published_time" content="2026-07-11">
+<meta property="article:author" content="AI Edu Archive">
+<meta property="article:section" content="RAG">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="A plant RAG evaluation harness that survives real operations - AI Edu Archive Journal">
+<meta name="twitter:description" content="A practical evaluation harness for plant RAG systems: fixed question sets, source-grounded grading, regression checks, freshness tests, and release gates.">
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "A plant RAG evaluation harness that survives real operations",
+  "description": "A practical evaluation harness for plant RAG systems: fixed question sets, source-grounded grading, regression checks, freshness tests, and release gates.",
+  "inLanguage": "en",
+  "datePublished": "2026-07-11",
+  "dateModified": "2026-07-11",
+  "author": {"@type": "Person", "name": "AI Edu Archive"},
+  "publisher": {"@type": "Organization", "name": "AI Edu Archive"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ai-edu-archive.pages.dev/blog/articles/plant-rag-evaluation-harness.html"}
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/blog.css">
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/plant-rag-evaluation-harness.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/plant-rag-evaluation-harness.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/plant-rag-evaluation-harness.html">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="plant-rag-evaluation-harness.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/plant-rag-evaluation-harness.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<article data-cat="rag mfg" itemscope itemtype="https://schema.org/Article">
+  <div class="article-hero">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../../index.html">Home</a>
+        <span class="sep" aria-hidden="true">/</span>
+        <a href="../index.html">Journal</a>
+        <span class="sep" aria-hidden="true">/</span>
+        <span aria-current="page">RAG evaluation harness</span>
+      </nav>
+      <div class="post-meta">
+        <span class="cat-tag">RAG</span>
+        <span class="post-dot"></span>
+        <time datetime="2026-07-11" itemprop="datePublished">Jul 11, 2026</time>
+        <span class="post-dot"></span>
+        <span class="rt">12 min read</span>
+      </div>
+      <h1 itemprop="headline">A plant RAG evaluation harness that survives real operations</h1>
+      <div class="byline">
+        <span class="avatar" aria-hidden="true">AE</span>
+        <span class="who">
+          <b itemprop="author">AI Edu Archive</b>
+          <span>Applied AI, robotics, manufacturing systems</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <nav class="toc" aria-label="Table of contents">
+    <div class="toc-title">On this page</div>
+    <ol>
+      <li><a href="#why">Why demos fail in production</a></li>
+      <li><a href="#set">The fixed evaluation set</a></li>
+      <li><a href="#scores">Five scores that matter</a></li>
+      <li><a href="#release">Release gates</a></li>
+    </ol>
+  </nav>
+  <div class="article-body" itemprop="articleBody">
+    <figure class="visual-figure media-figure media-figure--diagram">
+      <img src="../assets/visuals/rag-eval-scorecard.svg" alt="Plant RAG evaluation scorecard" loading="lazy" decoding="async">
+      <figcaption><span class="figure-label">Figure.</span> A plant RAG release gate should score more than answer quality. Retrieval, citation, refusal, freshness, safety, and regression all need a seat at the table.</figcaption>
+    </figure>
+
+<div class="field-story"><span class="note-k">Opening artifact: release diff</span><p><code>candidate=rag-2026.07.14-rc2</code>, <code>retrieval_cases_changed=7</code>, <code>permission_failures=0</code>, <code>stale_current_failures=1</code>. The last field keeps the candidate on hold even if its average answer score improved. A release review needs the failed case IDs, not just the headline percentage.</p></div>
+<p><span class="lead-in">A release candidate arrives with four inputs:</span> an immutable corpus manifest, a versioned evaluation set, a build manifest, and the previous released report. The harness compares those artifacts before any user-facing promotion. A polished answer outside that record is a demonstration, not release evidence.</p>
+<div class="field-note"><span class="note-k">Reference procedure</span><p>The RAG platform owner runs the harness. Document owners approve expected sources and revision status. Domain owners grade operational completeness. IT/security owns permission cases. The service owner records the decision, limitations, and rollback target. Keep the build on hold until every required owner has signed the report.</p></div>
+    <div class="beginner-example">
+      <span class="note-k">Beginner picture</span>
+      <p>An evaluation harness is like the golden wafer, monitor lot, or gauge check you use before trusting a process trend. You do not declare a metrology tool healthy because it gave one nice number. You run the same checks repeatedly and watch whether it drifts. RAG needs the same discipline: fixed questions, fixed expectations, and a clear pass/fail gate.</p>
+    </div>
+
+    <h2 id="why">Why demos fail in production</h2>
+    <p>Most RAG demos are optimized for the happy path: clean documents, clear questions, obvious answers, and a friendly presenter. Plant operations are different. A technician asks with local shorthand. An engineer asks about a fault that happens only after a wet clean. A manager asks for a summary across several tools where one SOP was superseded but still exists in the archive. If the system answers confidently from the wrong revision, the demo has become a liability.</p>
+    <p>The evaluation harness turns this problem into routine engineering. It keeps a frozen set of realistic questions, the expected source documents, the grading rules, and the threshold for release. Every change to chunking, embedding, reranking, prompt wording, model version, permissions, or ingestion must pass the harness before it reaches users.</p>
+    <div class="reader-shortcut"><span class="note-k">Constructed release diagnosis</span><p>The timing made a prompt change look responsible for worse procedure answers. The case diff moved the investigation upstream: the required rev-08 chunk had already fallen out of top-k after an index rebuild, so generation never received it. The action was to hold the build and investigate retrieval first. This constructed snag is a reminder to grade stages separately, not evidence about a deployed system.</p></div>
+
+    <blockquote>For plant RAG, evaluation is not a research afterthought. It is the control loop that lets the system earn operational trust.</blockquote>
+
+    <h2 id="set">The fixed evaluation set</h2>
+    <p>An initial set might contain 80 to 150 questions, but that range is an illustrative starting point rather than a release standard. Size and stratify the set by use-case severity, source families, roles, revisions, and known failure modes. Each question should come from an approved work pattern. Split the set into five buckets:</p>
+    <ul>
+      <li><b>Lookup questions:</b> direct facts from one current document.</li>
+      <li><b>Procedure questions:</b> ordered steps where missing one step matters.</li>
+      <li><b>Comparison questions:</b> differences between two revisions, recipes, tools, or constraints.</li>
+      <li><b>Exception questions:</b> what to do when the normal path is blocked.</li>
+      <li><b>Refusal questions:</b> questions the system should not answer because the user lacks permission or the source is absent.</li>
+    </ul>
+    <p>For each question, store the expected source IDs, the minimum answer criteria, forbidden claims, and the user role. That last field matters. A correct answer for a process owner may be an access-control failure for a contractor.</p>
+    <div class="fab-voice">
+      <span class="note-k">Fab engineer voice</span>
+      <p>A domain reviewer checks four questions: Which source supports the answer? Which revision is current? What changed? Which action or claim is prohibited? Missing support or an unresolved prohibition keeps that case on hold even when the prose is fluent.</p>
+    </div>
+
+    <figure class="code-figure">
+      <div class="code-bar">
+        <span class="code-file"><span class="code-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">yaml</span> eval_set.yaml</span>
+        <button class="copy-btn" data-copy type="button">Copy</button>
+      </div>
+<pre><code>- id: etch_042_revision_check
+  role: process_engineer
+  question: "For Tool E-17, what changed between the current chamber clean SOP and the previous revision?"
+  expected_sources:
+    - sop://etch/E-17/chamber-clean/rev-08
+    - sop://etch/E-17/chamber-clean/rev-07
+  answer_must_include:
+    - "new endpoint verification step"
+    - "post-clean particle scan before release"
+    - "rev-08 supersedes rev-07"
+  forbidden_claims:
+    - "skip particle scan"
+    - "rev-07 is current"
+  score_bucket: comparison</code></pre>
+    </figure>
+
+    <h2 id="scores">Five scores that matter</h2>
+    <p>Do not reduce RAG quality to one number. A single aggregate score hides the failure modes that matter on the floor. Track at least these five:</p>
+    <ul>
+      <li><b>Retrieval hit rate:</b> did the top-k results contain the required source?</li>
+      <li><b>Grounded answer rate:</b> did the answer make only claims supported by retrieved sources?</li>
+      <li><b>Completeness:</b> did the answer include the minimum required points?</li>
+      <li><b>Freshness:</b> did the system prefer the current revision over stale or superseded material?</li>
+      <li><b>Permission correctness:</b> did the answer respect the user's role and document access?</li>
+    </ul>
+    <p>The important part is not perfect automation. Let the machine grade what it can, then sample borderline cases with domain experts. In a plant, a small number of expert-reviewed questions is worth more than a large number of synthetic scores nobody trusts.</p>
+    <div class="field-note">
+      <span class="note-k">Worked example</span>
+      <p>Take the question "What changed in the E-17 chamber clean SOP?" A weak answer says, "The clean procedure was updated." A usable answer says, "Rev-08 adds endpoint verification and requires a post-clean particle scan before release; rev-07 is superseded." The first answer is fluent but not operational. The second answer is grounded, complete, fresh, and testable.</p>
+    </div>
+
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <caption>Worked release sample: the expected disposition is part of the test data.</caption>
+        <thead><tr><th>Test case</th><th>Expected evidence and behavior</th><th>Release disposition</th></tr></thead>
+        <tbody>
+          <tr><td class="name">Current procedure</td><td>Retrieve rev-08, cite the endpoint check and post-clean particle scan.</td><td>Pass only when both required steps are present.</td></tr>
+          <tr><td class="name">Superseded revision</td><td>Identify rev-07 as obsolete and direct the user to rev-08.</td><td>Block if rev-07 is presented as current.</td></tr>
+          <tr><td class="name">Contractor role</td><td>Exclude the controlled recipe source from retrieval.</td><td>Any protected chunk in context is a permission failure.</td></tr>
+          <tr><td class="name">No approved source</td><td>State that the answer cannot be verified; do not invent a setpoint.</td><td>Pass on a clear refusal, block on a guessed value.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <section class="interactive-lab" data-rag-eval-sim data-pass-text="Release gate passes" data-fail-text="Release remains blocked" data-pass-reason="All five safety and quality gates meet their minimum." >
+      <div class="interactive-lab-head"><div><span class="sim-badge">Release simulation</span><h3>Would you ship this RAG build?</h3><p>Adjust the measured results. One unsafe dimension can block an otherwise fluent system.</p></div></div>
+      <div class="sim-control"><label for="rag-retrieval-en">Required source retrieved <output data-rag-value="retrieval"></output></label><input id="rag-retrieval-en" data-rag-metric="retrieval" data-label="Retrieval" type="range" min="60" max="100" value="92"></div>
+      <div class="sim-control"><label for="rag-grounded-en">Claims grounded in sources <output data-rag-value="grounded"></output></label><input id="rag-grounded-en" data-rag-metric="grounded" data-label="Grounding" type="range" min="60" max="100" value="96"></div>
+      <div class="sim-control"><label for="rag-permission-en">Permission-correct answers <output data-rag-value="permission"></output></label><input id="rag-permission-en" data-rag-metric="permission" data-label="Permission" type="range" min="80" max="100" value="100"></div>
+      <div class="sim-control"><label for="rag-freshness-en">Current revision selected <output data-rag-value="freshness"></output></label><input id="rag-freshness-en" data-rag-metric="freshness" data-label="Freshness" type="range" min="70" max="100" value="97"></div>
+      <div class="sim-control"><label for="rag-refusal-en">Unsafe questions refused <output data-rag-value="refusal"></output></label><input id="rag-refusal-en" data-rag-metric="refusal" data-label="Refusal" type="range" min="70" max="100" value="96"></div>
+      <div class="sim-results"><div><span>Decision</span><strong data-rag-result></strong></div><div class="sim-result-wide"><span>Gate detail</span><strong data-rag-reasons></strong></div></div>
+      <p class="sim-note">Illustrative thresholds: retrieval 85%, grounding 90%, permission 100%, freshness 95%, and safe refusal 95%. A real plant must set these from use-case severity and an approved evaluation set.</p>
+    </section>
+
+    <figure class="code-figure">
+      <div class="code-bar">
+        <span class="code-file"><span class="code-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">python</span> rag_gate.py</span>
+        <button class="copy-btn" data-copy type="button">Copy</button>
+      </div>
+<pre><code>def release_gate(report):
+    return all([
+        report.retrieval_hit_rate >= 0.92,
+        report.grounded_answer_rate >= 0.95,
+        report.completeness >= 0.88,
+        report.freshness_failures == 0,
+        report.permission_failures == 0,
+        report.regressions_against_last_release <= 2,
+    ])
+
+if not release_gate(eval_report):
+    block_release(eval_report.failed_cases)</code></pre>
+</figure>
+    <p>The Python sketch above encodes a different illustrative gate from the sliders: retrieval at least 92%, grounding at least 95%, completeness at least 88%, zero freshness failures, zero permission failures, and no more than two regressions. Keep one approved gate configuration in a real harness; do not let a dashboard and release job drift into separate policies.</p>
+
+    <h2 id="release">Release gates</h2>
+    <p>A new embedding model, chunking rule, prompt, permission snapshot, or corpus revision can change behavior. The candidate remains on hold while the automated suite runs and owners review all high-severity failures plus the approved sample of passes.</p>
+    <p><b>Release:</b> the service owner promotes the named build only after thresholds and owner approvals pass. Release notes record corpus version, ingestion time, model version, prompt version, index build ID, exceptions, and known limitations. <b>Rollback:</b> on a permission leak, stale-current error, unsupported hazardous instruction, or agreed regression trigger, the platform owner removes the candidate from routing and restores the previous named index, prompt, and model bundle.</p>
+    <p><b>Limitations:</b> a frozen set covers only represented questions, roles, languages, and source states. Automated graders can share a model's blind spots. The harness does not prove that every future query is safe or correct, so production monitoring, challenge review, and periodic set refresh remain necessary.</p>
+    <div class="tbl-wrap"><table class="tbl"><caption>Release-review decision record for one failed case.</caption><thead><tr><th>Question</th><th>Pass</th><th>Stop</th></tr></thead><tbody><tr><td class="name">Stage isolation</td><td>Retrieved chunks, generated claims, citations, role, and source revisions are stored separately.</td><td>The reviewer cannot tell whether retrieval or generation caused the miss.</td></tr><tr><td class="name">Disposition</td><td>An owner records fix, accepted exception, or rollback with case IDs and evidence.</td><td>A severe failure is hidden inside an aggregate score.</td></tr><tr><td class="name">Regression</td><td>The candidate is compared with the previous named release on the same frozen cases.</td><td>Test data or grading rules changed without a versioned review.</td></tr><tr><td class="name">Limit</td><td>The report names uncovered roles, languages, source states, and query types.</td><td>Do not treat a pass as coverage for unrepresented conditions.</td></tr></tbody></table></div>
+    <p>After the gate is repeatable, the next useful layer is <a href="rag-ingestion-pipeline-manufacturing.html">the ingestion pipeline</a>: release evidence is only as dependable as the corpus manifest, ACL snapshot, and rollback bundle underneath it.</p>
+  </div>
+<aside class="article-endcap" aria-label="Article information">
+  <p>Procedure and example thresholds should be adapted to the approved plant use case.</p>
+  <div class="article-endcap-actions">
+    <a href="../index.html">Back to Journal</a>
+    <a href="../ai-categories.html">Browse AI categories</a>
+  </div>
+</aside>
+</article>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
+</footer>
+<script src="../assets/theme.js"></script>
+<script src="../assets/interactive-labs.js"></script>
+</body>
+</html>

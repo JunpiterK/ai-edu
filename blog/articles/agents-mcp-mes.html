@@ -2,6 +2,7 @@
 
 <html lang="en">
 <head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- ══ SEO ══════════════════════════════════ -->
@@ -9,16 +10,15 @@
 <meta content="How the Model Context Protocol (MCP) exposes on-prem MES and equipment APIs as agent tools, with typed schemas, permissions, guardrails, and audit inside an air-gapped fab." name="description"/>
 <meta content="AI Edu Archive" name="author"/>
 <meta content="#FAF9F5" name="theme-color"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/agents-mcp-mes.html" rel="canonical"/>
-<link href="https://ai-edu-archive.example.com/blog/ko/articles/agents-mcp-mes.html" hreflang="ko" rel="alternate"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/agents-mcp-mes.html" hreflang="x-default" rel="alternate"/>
+<link href="https://ai-edu-archive.pages.dev/blog/articles/agents-mcp-mes.html" rel="canonical"/>
+
 <meta content="index,follow" name="robots"/>
 <!-- Open Graph -->
 <meta content="article" property="og:type"/>
 <meta content="Wiring an agent to internal systems with MCP: MES, equipment APIs, permissions, and audit - AI Edu Archive Journal" property="og:title"/>
 <meta content="How the Model Context Protocol (MCP) exposes on-prem MES and equipment APIs as agent tools, with typed schemas, permissions, guardrails, and audit inside an air-gapped fab." property="og:description"/>
 <meta content="AI Edu Archive" property="og:site_name"/>
-<meta content="https://ai-edu-archive.example.com/blog/articles/agents-mcp-mes.html" property="og:url"/>
+<meta content="https://ai-edu-archive.pages.dev/blog/articles/agents-mcp-mes.html" property="og:url"/>
 <meta content="en_US" property="og:locale"/>
 <meta content="ko_KR" property="og:locale:alternate"/>
 <meta content="2026-07-04" property="article:published_time"/>
@@ -34,58 +34,56 @@
   "headline": "Wiring an agent to internal systems with MCP: MES, equipment APIs, permissions, and audit",
   "description": "How the Model Context Protocol (MCP) exposes on-prem MES and equipment APIs as agent tools, with typed schemas, permissions, guardrails, and audit inside an air-gapped fab.",
   "inLanguage": "en",
-  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "image": "https://ai-edu-archive.pages.dev/blog/assets/visuals/article-visual-template.svg",
   "datePublished": "2026-07-04",
   "dateModified": "2026-07-04",
   "author": {
     "@type": "Person",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html",
     "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
   },
   "publisher": {
     "@type": "Organization",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html"
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ai-edu-archive.example.com/blog/articles/agents-mcp-mes.html"
+    "@id": "https://ai-edu-archive.pages.dev/blog/articles/agents-mcp-mes.html"
   },
   "name": "Wiring an agent to internal systems with MCP: MES, equipment APIs, permissions, and audit",
-  "url": "https://ai-edu-archive.example.com/blog/articles/agents-mcp-mes.html"
+  "url": "https://ai-edu-archive.pages.dev/blog/articles/agents-mcp-mes.html"
 }</script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link href="../assets/blog.css" rel="stylesheet"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/agents-mcp-mes.html" hreflang="en" rel="alternate"/></head>
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/agents-mcp-mes.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/agents-mcp-mes.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/agents-mcp-mes.html">
+</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="nav" id="nav">
-<div class="wrap">
-<a aria-label="AI Edu Archive — home" class="brand" href="../../index.html">
-<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</a>
-<nav aria-label="Primary" class="nav-links">
-<a href="../../index.html#courses">Courses</a>
-<a href="../index.html">Articles</a>
-<a href="../about.html">About</a>
-<div aria-label="Language selector" class="language-switch">
-<a aria-current="true" href="agents-mcp-mes.html" lang="en" title="English">🇺🇸 EN</a>
-<a href="../ko/articles/agents-mcp-mes.html" lang="ko" title="한국어">🇰🇷 KO</a>
-<a href="agents-mcp-mes.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a>
-<a href="agents-mcp-mes.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a>
-<a href="agents-mcp-mes.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a>
-<a href="agents-mcp-mes.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a>
-<a href="agents-mcp-mes.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a>
-</div>
-</nav>
-</div>
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="agents-mcp-mes.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/agents-mcp-mes.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
 </header>
 <main id="main">
 <article data-cat="agents" itemscope="" itemtype="https://schema.org/Article">
@@ -110,7 +108,7 @@
 <span aria-hidden="true" class="avatar">AE</span>
 <span class="who">
 <b itemprop="author">AI Edu Archive</b>
-<span>Semiconductor process engineer · Air-gapped LLM / RAG / Agents</span>
+<span>Manufacturing AI and on-prem systems</span>
 </span>
 </div>
 </div>
@@ -127,20 +125,32 @@
 </ol>
 </nav>
 <div class="article-body" itemprop="articleBody">
-<p>An agent is only as useful as the systems it can touch. A model that can reason about a yield excursion but cannot read the MES lot history, query the last chamber-clean timestamp, or open a hold is a very expensive autocomplete. The hard part of an agent project is rarely the model. It is the wiring: how the model calls internal systems safely, with a schema it understands and a boundary it cannot cross. The Model Context Protocol (MCP) is a standard for exactly that wiring. This article shows how to expose an on-prem MES or equipment API as an MCP server, connect it to an agent, and put permissions and audit around every call inside an air-gapped fab.</p>
+    <div class="field-story">
+      <span class="note-k">Lab reference architecture</span>
+      <p>This article shows tool discovery and call flow. The sketch omits mTLS, a server-authenticated principal, server-side authorization, idempotency, durable protected audit, human approval, and tested rollback or compensation. Keep it in a lab until the relevant system, process, and IT/security owners define and test the controls required for the intended MES use.</p>
+    </div>
+
+    <div class="field-story"><span class="note-k">Illustrative catalog review</span><p>A single general <code>mes_query</code> tool appears to reduce integration work. Its draft schema soon accumulates optional SQL-like filters, area names, and output modes that no reviewer can reason about consistently. That review finding leads to a catalog of narrow lookups with separate owners and permission rules. MCP made discovery reusable; it did not remove the need for a small operational contract.</p></div>
+
+    <div class="reader-shortcut">
+      <span class="note-k">Tool catalog gate</span>
+      <p>Before writing a server, classify each tool as read-only, draft-producing, or state-changing. Record its owner, authenticated principal, authorization rule, approval path, timeout behavior, idempotency key, audit destination, and rollback procedure. An incomplete entry stays out of the MES catalog.</p>
+    </div>
+
+<p>Yield questions may require current MES lot history, chamber-clean timestamps, or hold state. Rather than giving a model database credentials, an integration layer can expose a limited set of typed tools. MCP standardizes the tool contract and discovery flow; it does not provide the plant authentication, authorization, approval, audit durability, or rollback controls by itself.</p>
 <h2 id="why">Why an agent needs a protocol, not more glue</h2>
 <p>Without a protocol, every integration is bespoke. You write a Python function that wraps the MES REST call, another for the equipment historian, and a third for the recipe management system. Then you hand-write the JSON schema each one exposes to the model, keep it in sync with the real API, and repeat the whole thing for the next agent framework you try. It works once. It rots fast.</p>
-<p>MCP replaces that with a client-server contract. Your internal systems sit behind MCP servers that describe their capabilities in a standard way. Any MCP client, including an agent, IDE, or chat app, can discover those capabilities and call them without knowing the system underneath. The value in a fab is decoupling: the team that owns the MES publishes one MCP server, and every agent in the plant can reuse it.</p>
+<p>MCP provides a client-server contract. An internal system can sit behind a server that describes approved capabilities, and compatible clients can discover their names, descriptions, and schemas. Reuse also concentrates risk: the server owner must manage schema versions, allowed clients, certificates, rate limits, failure isolation, and the emergency disable path.</p>
 <blockquote>
-        MCP is to agents what a device driver is to an OS. The equipment team writes the
-        driver once; every application above it just calls the standard interface.
-        <cite>— the mental model to keep</cite>
+        An MCP server can centralize a reusable tool contract. Reuse of that contract and
+        authorization to the underlying system are separate review decisions.
+        <cite>Design review boundary</cite>
 </blockquote>
 <h2 id="what">What MCP is: server, tools, schema</h2>
 <p>An MCP server exposes three kinds of primitive. Tools are functions the agent can call, such as query_lot_status or place_hold. Resources are read-only data the agent can pull in as context, such as an SOP file or spec table. Prompts are reusable templates the server offers. For system integration, tools do the heavy lifting.</p>
-<p>Each tool carries a typed schema: a name, a description, and typed parameters. The agent reads that schema to decide when and how to call the tool, so the schema is the contract and it has to be honest. A tool named place_hold described as “puts an engineering hold on a lot” with a typed lot_id parameter tells the model precisely what it can do and what it must supply. Get the description right and the model uses the tool correctly; get it vague and it guesses.</p>
+<p>Each tool carries a name, description, and typed parameter schema. For <code>place_hold</code>, the description should identify the target lot ID, reason constraints, state change, and approval requirement. Schema validation can reduce malformed calls, but it is not a security boundary; the server must validate values, current state, and the authenticated caller's authorization.</p>
 <h2 id="server">Exposing an MES / equipment API as an MCP server</h2>
-<p>The lowest-boilerplate way to build a server in Python is FastMCP, part of the official MCP SDK. Install it with pip install "mcp[cli]". You decorate plain functions with @mcp.tool(); the type hints and docstring become the schema the agent sees. Here the tools wrap an internal MES API that already lives on the plant network.</p>
+<p>The following FastMCP sketch wraps two read methods. Type hints and docstrings provide discoverable schemas. The HTTP endpoint, 10-second timeout, and <code>0.0.0.0</code> bind are illustrative values, not tested plant settings; the sketch omits authentication, mTLS, input policy, response masking, retries, and durable audit.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -154,7 +164,9 @@
 <span class="tok-kw">import</span> httpx
 <span class="tok-kw">from</span> mcp.server.fastmcp <span class="tok-kw">import</span> FastMCP
 
-mcp = <span class="tok-fn">FastMCP</span>(<span class="tok-str">"fab-mes"</span>)                 <span class="tok-com"># server name shown to clients</span>
+mcp = <span class="tok-fn">FastMCP</span>(
+    <span class="tok-str">"fab-mes"</span>, host=<span class="tok-str">"0.0.0.0"</span>, port=<span class="tok-num">8931</span>
+)                                                   <span class="tok-com"># illustrative bind settings</span>
 MES = <span class="tok-str">"http://mes.internal:8080/api"</span>       <span class="tok-com"># stays inside the fab LAN</span>
 
 <span class="tok-dec">@mcp.tool()</span>
@@ -173,12 +185,11 @@ MES = <span class="tok-str">"http://mes.internal:8080/api"</span>       <span cl
     <span class="tok-kw">return</span> r.<span class="tok-fn">json</span>()
 
 <span class="tok-kw">if</span> __name__ == <span class="tok-str">"__main__"</span>:
-    <span class="tok-com"># streamable-http is the modern transport; bind to the LAN only</span>
-    mcp.<span class="tok-fn">run</span>(transport=<span class="tok-str">"streamable-http"</span>, host=<span class="tok-str">"0.0.0.0"</span>, port=<span class="tok-num">8931</span>)</code></pre>
+    mcp.<span class="tok-fn">run</span>(transport=<span class="tok-str">"streamable-http"</span>)</code></pre>
 </figure>
-<p>Two functions and their docstrings are a complete, discoverable server. Notice that query_lot_status and last_chamber_clean are read-only, which is a good starting posture. Any tool that changes plant state deserves more care, which is the next section.</p>
+<p>The two functions demonstrate discovery and invocation only. Even read access requires identity, lot-level authorization, TLS, input validation, timeouts, response filtering, and audit. Bind only approved interfaces and test against MES load and failure modes before connecting operational data.</p>
 <h2 id="connect">Connecting the agent with langchain-mcp-adapters</h2>
-<p>On the agent side, langchain-mcp-adapters turns an MCP server’s tools into LangChain tools. MultiServerMCPClient connects to one or more servers, get_tools() pulls their schemas, and the modern create_agent binds them to an on-prem model. The whole file below uses current LangChain 1.x / LangGraph APIs, with no deprecated imports.</p>
+<p>The client sketch uses <code>langchain-mcp-adapters</code> to discover schemas and bind them to a local model. Package APIs and transport configuration can change, so verify the installed version and lock file. The code omits mTLS trust configuration, authenticated identity propagation, connection limits, and circuit breaking.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -213,7 +224,7 @@ MES = <span class="tok-str">"http://mes.internal:8080/api"</span>       <span cl
 
 asyncio.<span class="tok-fn">run</span>(<span class="tok-fn">main</span>())</code></pre>
 </figure>
-<p>The agent now reasons over two tools it never had to be hand-coded against. Ask it a two-part question and it calls query_lot_status and last_chamber_clean in turn, then composes an answer. Point the client at a second server, such as a recipe system or defect database, and those tools appear automatically. Add a server and the tool surface expands.</p>
+<p>The client can discover the two illustrative tool schemas and may request calls for the two-part question. Call order and answer composition are model behavior, not guaranteed output. Publish only reviewed tools to an allowlisted client, cap tool calls, and define timeout and partial-answer behavior.</p>
 <figure>
 <div aria-label="MCP wiring diagram" class="diagram">
 <svg aria-label="Agent connects through an MCP client to MCP servers wrapping internal MES and equipment APIs, with a guardrail layer in between" role="img" viewbox="0 0 640 300" width="100%">
@@ -246,16 +257,16 @@ asyncio.<span class="tok-fn">run</span>(<span class="tok-fn">main</span>())</cod
 <polygon fill="#B7B1A4" points="434,205 429,197 425,204"></polygon>
 </svg>
 </div>
-<figcaption>Figure 1. Every tool call from the agent passes through a guardrail layer before reaching an MCP server that wraps an internal API, and nothing leaves the fab network.</figcaption>
+<figcaption>Figure 1. Lab reference architecture. The intended call path includes authentication, authorization, approval, and audit before an internal API. Network placement alone does not prove that egress is blocked; verify it with firewall evidence and network traces.</figcaption>
 </figure>
 <h2 id="guardrails">Permissions, audit, and guardrails</h2>
-<p>Read-only tools are low risk. The moment a tool can change plant state, such as placing a hold, dispatching a lot, or editing a recipe, the schema alone is not enough. You need three controls around it.</p>
+<p>Read-only tools can still expose restricted production data. State-changing tools add replay, duplicate execution, partial failure, and rollback risk. The server must enforce controls independently of model instructions.</p>
 <ul>
 <li>Permission checks (authz). The MCP server, not the model, decides who may call what. Enforce it inside the tool against the caller’s role; a model prompt is never a security boundary.</li>
 <li>Audit. Every call is logged with caller, arguments, result, and timestamp, so an action taken by the agent is as traceable as one taken by a person.</li>
 <li>Human-in-the-loop. State-changing tools return a confirmation step instead of acting immediately, so an engineer approves before anything happens on the floor.</li>
 </ul>
-<p>Below, a state-changing place_hold tool enforces the caller’s role, writes an audit record, and refuses rather than guessing when the caller is not permitted. The guardrail lives in the server, where it cannot be prompt-injected away.</p>
+<p>The following <code>place_hold</code> function is security-boundary pseudocode. It assumes authentication middleware validates a token or mTLS identity and injects a server-created principal out of band. The client must not supply <code>role</code> as a tool argument or trusted header. This function does not apply a hold and is not a complete approval workflow.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -266,30 +277,42 @@ asyncio.<span class="tok-fn">run</span>(<span class="tok-fn">main</span>())</cod
 <button class="copy-btn" data-copy="" type="button">Copy</button>
 </div>
 <pre><code><span class="tok-kw">import</span> logging
-<span class="tok-kw">from</span> mcp.server.fastmcp <span class="tok-kw">import</span> FastMCP, Context
+<span class="tok-kw">from</span> dataclasses <span class="tok-kw">import</span> dataclass
 
-mcp = <span class="tok-fn">FastMCP</span>(<span class="tok-str">"fab-mes"</span>)
 audit = logging.<span class="tok-fn">getLogger</span>(<span class="tok-str">"mcp.audit"</span>)
 
-<span class="tok-dec">@mcp.tool()</span>
-<span class="tok-kw">def</span> <span class="tok-fn">place_hold</span>(lot_id: <span class="tok-kw">str</span>, reason: <span class="tok-kw">str</span>, ctx: Context) -&gt; <span class="tok-kw">dict</span>:
+<span class="tok-dec">@dataclass</span>(frozen=<span class="tok-kw">True</span>)
+<span class="tok-kw">class</span> <span class="tok-fn">VerifiedPrincipal</span>:
+    subject: <span class="tok-kw">str</span>
+    roles: frozenset[<span class="tok-kw">str</span>]
+
+<span class="tok-com"># The authenticated server adapter injects principal out of band.</span>
+<span class="tok-kw">def</span> <span class="tok-fn">place_hold</span>(
+    lot_id: <span class="tok-kw">str</span>, reason: <span class="tok-kw">str</span>, *, principal: VerifiedPrincipal
+) -&gt; <span class="tok-kw">dict</span>:
     <span class="tok-str">"""Place an engineering hold on a lot. Requires the 'process_eng' role.
     Returns a pending action that a human must confirm before it applies."""</span>
-    role = ctx.request_context.<span class="tok-fn">get</span>(<span class="tok-str">"role"</span>)   <span class="tok-com"># set by the transport, not the model</span>
-    <span class="tok-kw">if</span> role != <span class="tok-str">"process_eng"</span>:
-        audit.<span class="tok-fn">warning</span>(<span class="tok-str">"denied place_hold lot=%s role=%s"</span>, lot_id, role)
+    <span class="tok-kw">if</span> <span class="tok-str">"process_eng"</span> <span class="tok-kw">not in</span> principal.roles:
+        audit.<span class="tok-fn">warning</span>(<span class="tok-str">"denied place_hold lot=%s subject=%s"</span>, lot_id, principal.subject)
         <span class="tok-kw">raise</span> <span class="tok-fn">PermissionError</span>(<span class="tok-str">"role 'process_eng' required to place a hold"</span>)
 
-    audit.<span class="tok-fn">info</span>(<span class="tok-str">"place_hold lot=%s reason=%s role=%s"</span>, lot_id, reason, role)
+    audit.<span class="tok-fn">info</span>(<span class="tok-str">"place_hold lot=%s reason=%s subject=%s"</span>, lot_id, reason, principal.subject)
     <span class="tok-kw">return</span> {<span class="tok-str">"status"</span>: <span class="tok-str">"pending_confirmation"</span>,    <span class="tok-com"># human approves before it applies</span>
             <span class="tok-str">"lot_id"</span>: lot_id, <span class="tok-str">"reason"</span>: reason}</code></pre>
 </figure>
-<p>Because the role comes from the transport layer and the audit line is written before any state change, no clever prompt can talk the tool into acting outside its lane. The model can ask; the server decides. That separation is what makes an agent safe to point at real MES actions.</p>
+<p>A production implementation must derive authorization from the server-authenticated principal, then add mTLS, one-time approval tokens, idempotency keys, status reconciliation after timeout, durable tamper-evident audit, approval cancellation, and MES rollback or compensation. Prompt-injection tests are insufficient; test duplicate requests, approval-service failure, and partial MES failure before enabling writes.</p>
 <h2 id="onprem">Keeping the whole loop on-prem</h2>
-<p>The reason MCP fits a fab so well is that nothing in this design assumes the cloud. The MCP servers run on plant hosts and bind to internal addresses. The transport is HTTP over the LAN. The model is served locally through Ollama or vLLM. The agent, the client, the guardrails, and every internal API live inside the same air-gap boundary. No token, tool call, or lot ID crosses it.</p>
-<p>Start small and read-only: one MCP server, two or three lookup tools, and an audit log you actually watch. Prove the agent answers real floor questions correctly before you hand it a single tool that can change state. When you do, wrap that tool in role checks and human confirmation. The protocol gives you a clean interface; operational discipline still matters.</p>
+<p>MCP servers, local models, clients, and internal APIs can be deployed inside a sealed network. That topology does not prove containment. Audit package-update paths, DNS, proxies, telemetry, and log sinks, then retain firewall and network-trace evidence that model requests and tool arguments stay inside the approved boundary.</p>
+<p>Limit the lab to one server and a few lookup tools. Test denied identities, invalid IDs, timeouts, MES unavailability, and audit replay. Keep state-changing MES access out of this lab; the site's owners must define and pass a separate release gate for identity, authorization, idempotency, protected audit, human approval, and recovery.</p>
 <hr/>
-<p>MCP turns “connect the agent to our systems” from a pile of bespoke glue into a small number of reusable, typed, audited servers. Once one team publishes a good MES server, every agent in the plant can inherit it. The deep-dive course below walks the full agent stack: planning, tools, memory, and guardrails.</p>
+<h3>Tool-catalog decision record</h3>
+<p><strong>Simplified exercise.</strong> Draft one row for a read-only <code>get_lot_status</code> tool: owner, schema version, authenticated principal, allowed lot scope, freshness field, timeout result, audit destination, and disable owner. Then submit an unknown lot, a denied principal, and a simulated timeout.</p>
+<ul>
+<li><strong>Pass:</strong> discovery exposes only the intended schema; all three tests return typed, non-sensitive outcomes; and server, connector, and audit records reconcile by request ID.</li>
+<li><strong>Stop:</strong> authorization depends on prompt text, the client supplies trusted identity, timeout can trigger an untracked retry, or the disable path has no named owner.</li>
+<li><strong>Limit:</strong> this record covers one read path. It does not qualify state-changing tools, prove network containment, or validate MES behavior under production load.</li>
+</ul>
+<p>MCP can package internal capabilities as reusable typed contracts. Continue with the HITL/MLOps article before considering write tools; it adds payload-bound approval, durable workflow state, execution receipts, and release monitoring to the discussion.</p>
 </div>
 <!-- deep-dive deck link -->
 <aside class="deck-link">
@@ -304,8 +327,8 @@ audit = logging.<span class="tok-fn">getLogger</span>(<span class="tok-str">"mcp
 <div class="share">
 <span class="lbl">Share</span>
 <button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
-<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
-<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Fagents-mcp-mes.html" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Fagents-mcp-mes.html" rel="noopener" target="_blank">LinkedIn</a>
 </div>
 <!-- author bio card (E-E-A-T) -->
 <aside class="author-card">
@@ -313,7 +336,7 @@ audit = logging.<span class="tok-fn">getLogger</span>(<span class="tok-str">"mcp
 <div class="a-body">
 <div class="k">About the author</div>
 <h3>AI Edu Archive</h3>
-<p>PhD in physics (IGZO / graphene semiconductor properties) and a semiconductor process engineer working on deposition. Builds air-gapped LLM, RAG, and agent systems, plus reinforcement-learning and anomaly-detection tooling, for the fab. Writes here about turning process know-how into on-prem knowledge assets without letting it leave the network.</p>
+<p>Science PhD with manufacturing process-improvement experience. Writes about testable on-prem LLM, RAG, and agent architectures while separating verified experience from instructional examples.</p>
 <a href="../about.html">More about the author →</a>
 </div>
 </aside>
@@ -335,45 +358,35 @@ audit = logging.<span class="tok-fn">getLogger</span>(<span class="tok-str">"mcp
 </article>
 </main>
 <footer class="site-foot">
-<div class="wrap">
-<div class="foot-top">
-<div class="foot-lead">
-<h2>Free, in-depth, and open.</h2>
-<p>Everything here, courses and journal alike, is free to read with no signup.</p>
-</div>
-<div class="foot-nav-cols">
-<div class="foot-col">
-<h4>Explore</h4>
-<a href="../../index.html">Hub home</a>
-<a href="../../index.html#courses">All courses</a>
-<a href="../index.html">Journal</a>
-</div>
-<div class="foot-col">
-<h4>Courses</h4>
-<a href="../../overview/index.html">Fab AI</a>
-<a href="../../watsonx/index.html">Air-gapped LLM</a>
-<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
-</div>
-<div class="foot-col">
-<h4>Site</h4>
-<a href="../about.html">About</a>
-<a href="../contact.html">Contact</a>
-<a href="../privacy.html">Privacy</a>
-<a href="../terms.html">Terms</a>
-</div>
-</div>
-</div>
-<div class="foot-bottom">
-<div class="foot-brand">
-<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</div>
-<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
-</div>
-</div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
 </footer>
 <script>
 (function(){
@@ -398,5 +411,6 @@ audit = logging.<span class="tok-fn">getLogger</span>(<span class="tok-str">"mcp
   });
 })();
 </script>
+<script src="../assets/theme.js"></script>
 </body>
 </html>

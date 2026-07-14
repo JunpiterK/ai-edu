@@ -2,6 +2,7 @@
 
 <html lang="en">
 <head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- ══ SEO ══════════════════════════════════ -->
@@ -9,16 +10,15 @@
 <meta content="How to chunk SOPs, manuals, and spec sheets for on-prem RAG: recursive splitting, structure-aware splitting, chunk size, overlap, tables, code, and metadata." name="description"/>
 <meta content="AI Edu Archive" name="author"/>
 <meta content="#FAF9F5" name="theme-color"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/chunking-technical-docs.html" rel="canonical"/>
-<link href="https://ai-edu-archive.example.com/blog/ko/articles/chunking-technical-docs.html" hreflang="ko" rel="alternate"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/chunking-technical-docs.html" hreflang="x-default" rel="alternate"/>
+<link href="https://ai-edu-archive.pages.dev/blog/articles/chunking-technical-docs.html" rel="canonical"/>
+
 <meta content="index,follow" name="robots"/>
 <!-- Open Graph -->
 <meta content="article" property="og:type"/>
 <meta content="Chunking technical documents for RAG - AI Edu Archive Journal" property="og:title"/>
 <meta content="How to chunk SOPs, manuals, and spec sheets for on-prem RAG: recursive splitting, structure-aware splitting, chunk size, overlap, tables, code, and metadata." property="og:description"/>
 <meta content="AI Edu Archive" property="og:site_name"/>
-<meta content="https://ai-edu-archive.example.com/blog/articles/chunking-technical-docs.html" property="og:url"/>
+<meta content="https://ai-edu-archive.pages.dev/blog/articles/chunking-technical-docs.html" property="og:url"/>
 <meta content="en_US" property="og:locale"/>
 <meta content="ko_KR" property="og:locale:alternate"/>
 <meta content="2026-07-04" property="article:published_time"/>
@@ -34,58 +34,56 @@
   "headline": "Chunking technical documents for RAG",
   "description": "How to chunk SOPs, manuals, and spec sheets for on-prem RAG: recursive splitting, structure-aware splitting, chunk size, overlap, tables, code, and metadata.",
   "inLanguage": "en",
-  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "image": "https://ai-edu-archive.pages.dev/blog/assets/visuals/article-visual-template.svg",
   "datePublished": "2026-07-04",
   "dateModified": "2026-07-04",
   "author": {
     "@type": "Person",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html",
     "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
   },
   "publisher": {
     "@type": "Organization",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html"
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ai-edu-archive.example.com/blog/articles/chunking-technical-docs.html"
+    "@id": "https://ai-edu-archive.pages.dev/blog/articles/chunking-technical-docs.html"
   },
   "name": "Chunking technical documents for RAG",
-  "url": "https://ai-edu-archive.example.com/blog/articles/chunking-technical-docs.html"
+  "url": "https://ai-edu-archive.pages.dev/blog/articles/chunking-technical-docs.html"
 }</script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link href="../assets/blog.css" rel="stylesheet"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/chunking-technical-docs.html" hreflang="en" rel="alternate"/></head>
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/chunking-technical-docs.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/chunking-technical-docs.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/chunking-technical-docs.html">
+</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="nav" id="nav">
-<div class="wrap">
-<a aria-label="AI Edu Archive — home" class="brand" href="../../index.html">
-<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</a>
-<nav aria-label="Primary" class="nav-links">
-<a href="../../index.html#courses">Courses</a>
-<a href="../index.html">Articles</a>
-<a href="../about.html">About</a>
-<div aria-label="Language selector" class="language-switch">
-<a aria-current="true" href="chunking-technical-docs.html" lang="en" title="English">🇺🇸 EN</a>
-<a href="../ko/articles/chunking-technical-docs.html" lang="ko" title="한국어">🇰🇷 KO</a>
-<a href="chunking-technical-docs.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a>
-<a href="chunking-technical-docs.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a>
-<a href="chunking-technical-docs.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a>
-<a href="chunking-technical-docs.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a>
-<a href="chunking-technical-docs.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a>
-</div>
-</nav>
-</div>
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="chunking-technical-docs.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/chunking-technical-docs.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
 </header>
 <main id="main">
 <article itemscope="" itemtype="https://schema.org/Article">
@@ -110,7 +108,7 @@
 <span aria-hidden="true" class="avatar">AE</span>
 <span class="who">
 <b itemprop="author">AI Edu Archive</b>
-<span>Semiconductor process engineer · Air-gapped LLM / RAG / Agents</span>
+<span>Manufacturing AI and on-prem systems</span>
 </span>
 </div>
 </div>
@@ -119,6 +117,7 @@
 <div class="toc-title">On this page</div>
 <ol>
 <li>Why chunking decides your RAG quality</li>
+<li>Reproducible fixture and acceptance test</li>
 <li>The recursive splitter as a baseline</li>
 <li>Splitting on document structure</li>
 <li>Size and overlap trade-offs</li>
@@ -127,13 +126,61 @@
 </ol>
 </nav>
 <div class="article-body" itemprop="articleBody">
-<p>Retrieval is only as good as the chunk it returns. In an air-gapped fab, the corpus is not blog posts. It is SOPs, tool manuals, and spec sheets with numbered steps, tables, formulas, and tolerances that a naive splitter can shred. This article focuses on one overlooked step: cutting those documents so each chunk still means something on its own.</p>
+    <div class="field-story">
+      <span class="note-k">Opening artifact: failed fixture</span>
+      <p><code>expected_revision=C</code>, <code>retrieved_revision=B</code>, and the required phrase <code>stop and notify facilities</code> is missing. That three-line test result tells us more than an index count ever will: the parser ran, the chunks were stored, and the useful clause still did not survive retrieval.</p>
+    </div>
+
+    <div class="reader-shortcut">
+      <span class="note-k">Working rule</span>
+      <p>Do not approve a splitter by looking at average chunk length. Approve it when named questions retrieve the required clause together with its source, revision, heading, and operating condition.</p>
+    </div>
+
+<p>Plant documents are full of dependencies that ordinary prose does not have. A warning belongs to a step; a unit belongs to a value; a table row belongs to its header. Chunking is where those dependencies either become retrievable evidence or turn into plausible fragments.</p>
+<div class="field-note"><span class="note-k">Constructed boundary trace</span><p>The embedding model initially took the blame for missing the pressure question. The retrieval trace pointed elsewhere: revision B ranked first because the heading-only split had detached revision C's warning from "Chamber clean." Keeping the revision, step label, and warning in one section fixed the fixture. This does not show that the same rule will work across the full corpus; it shows which boundary failed in this constructed case.</p></div>
 <h2 id="why">Why chunking decides your RAG quality</h2>
 <p>A RAG system embeds each chunk into a vector and, at query time, returns the chunks nearest to the question. If a chunk separates a warning from the step it warns about, or separates a torque value from the fastener it applies to, the retriever can return the right neighborhood while still giving the model an incomplete or unsafe fragment. The failure is quiet: the answer sounds fluent, but the engineer who knows the procedure spots the missing clause.</p>
 <p>Technical documents are harder than prose because meaning lives in structure: a step number, a table row, a sub-clause under a heading. Good chunking preserves that structure instead of cutting across it.</p>
 <blockquote>A chunk should be the smallest span a person can read in isolation and still act on correctly.</blockquote>
+<h2 id="fixture">Reproducible fixture and acceptance test</h2>
+<p>The following single-file fixture uses constructed maintenance text and a deterministic lexical scorer so the chunk boundary can be tested without a model, embedding service, or network. It checks that the current revision and its exception remain together and rank first. This is a pipeline smoke test, not evidence of semantic-retrieval quality.</p>
+<figure class="code-figure">
+<div class="code-bar"><span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">Python</span> test_chunk_retrieval.py</span><button class="copy-btn" data-copy="" type="button">Copy</button></div>
+<pre><code><span class="tok-kw">import</span> re
+<span class="tok-kw">from</span> langchain_text_splitters <span class="tok-kw">import</span> MarkdownHeaderTextSplitter
+
+FIXTURE = <span class="tok-str">"""# SOP-CLEAN-014
+## Revision C | effective
+### Step 5 | Chamber clean
+Set purge flow to 18 slm for 120 seconds.
+WARNING: If exhaust pressure exceeds 42 kPa, stop and notify facilities.
+
+## Revision B | superseded
+### Step 5 | Chamber clean
+Set purge flow to 15 slm for 90 seconds.
+"""</span>
+QUERY = <span class="tok-str">"When must the chamber clean stop because of exhaust pressure?"</span>
+
+sections = MarkdownHeaderTextSplitter(
+    [(<span class="tok-str">"#"</span>, <span class="tok-str">"document"</span>), (<span class="tok-str">"##"</span>, <span class="tok-str">"revision"</span>), (<span class="tok-str">"###"</span>, <span class="tok-str">"step"</span>)],
+    strip_headers=<span class="tok-kw">False</span>,
+).<span class="tok-fn">split_text</span>(FIXTURE)
+
+<span class="tok-kw">def</span> <span class="tok-fn">terms</span>(text: <span class="tok-kw">str</span>) -&gt; <span class="tok-fn">set</span>[<span class="tok-kw">str</span>]:
+    <span class="tok-kw">return</span> <span class="tok-fn">set</span>(re.<span class="tok-fn">findall</span>(<span class="tok-str">r"[a-z0-9]+"</span>, text.<span class="tok-fn">lower</span>()))
+
+ranked = <span class="tok-fn">sorted</span>(sections, key=<span class="tok-kw">lambda</span> d: <span class="tok-fn">len</span>(terms(QUERY) &amp; terms(d.page_content)), reverse=<span class="tok-kw">True</span>)
+top = ranked[<span class="tok-num">0</span>]
+
+<span class="tok-kw">assert</span> top.metadata[<span class="tok-str">"revision"</span>] == <span class="tok-str">"Revision C | effective"</span>
+<span class="tok-kw">assert</span> top.metadata[<span class="tok-str">"step"</span>] == <span class="tok-str">"Step 5 | Chamber clean"</span>
+<span class="tok-kw">assert</span> <span class="tok-str">"42 kPa"</span> <span class="tok-kw">in</span> top.page_content
+<span class="tok-kw">assert</span> <span class="tok-str">"stop and notify facilities"</span> <span class="tok-kw">in</span> top.page_content
+<span class="tok-kw">assert</span> <span class="tok-str">"Revision B"</span> <span class="tok-kw">not in</span> top.page_content</code></pre>
+</figure>
+<p>Run this test in the same locked environment as the splitter. For a real retrieval acceptance test, replace the lexical scorer with the deployed embedder and index, pin artifact hashes, and record at least query ID, expected source and revision, required clause, top-k, retrieved chunk IDs, and pass/fail. A site reviewer should approve the fixture before it becomes a release gate.</p>
 <h2 id="recursive">The recursive splitter as a baseline</h2>
-<p>The default worth reaching for first is RecursiveCharacterTextSplitter. It tries a prioritized list of separators, such as paragraphs, lines, sentences, and words, and only falls to a finer boundary when a piece still exceeds the target size. That ordering is useful for manuals because it keeps whole paragraphs intact until it has no better option.</p>
+<p><code>RecursiveCharacterTextSplitter</code> is a useful baseline. It tries a prioritized list of separators, such as paragraphs, lines, sentences, and words, and falls to a finer boundary when a piece still exceeds the target size. The example values below are initial lab settings, not measured recommendations.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -169,7 +216,7 @@ splitter = <span class="tok-fn">RecursiveCharacterTextSplitter</span>(
 <button class="copy-btn" data-copy="" type="button">Copy</button>
 </div>
 <pre><code><span class="tok-kw">from</span> langchain_text_splitters <span class="tok-kw">import</span> RecursiveCharacterTextSplitter
-<span class="tok-kw">from</span> transformers <span class="tok-kw">import</span> AutoTokenizer   <span class="tok-com"># local weights, no egress</span>
+<span class="tok-kw">from</span> transformers <span class="tok-kw">import</span> AutoTokenizer   <span class="tok-com"># local weights; verify runtime network behavior</span>
 
 tok = AutoTokenizer.<span class="tok-fn">from_pretrained</span>(<span class="tok-str">"/opt/models/bge-m3"</span>)
 
@@ -233,7 +280,7 @@ code_chunks = code_splitter.<span class="tok-fn">split_text</span>(recipe_script
 <h2 id="size">Size and overlap trade-offs</h2>
 <p>There is no universal chunk size. You tune it to your corpus and embedder. Small chunks embed tightly and retrieve precisely, but they can lose surrounding context. Large chunks keep context together, but the embedding becomes an average of too many ideas and the exact value you need may sink into noise.</p>
 <ul>
-<li>Overlap is insurance against cutting a fact in half. A 10-20% overlap lets a value near a boundary appear whole in a neighboring chunk, at the cost of storage and duplicate hits.</li>
+<li>Overlap can reduce boundary loss. The illustrative 10-20% range is a starting experiment, not a universal target; measure duplicate hits and retrieval recall on the fixture.</li>
 <li>Match size to the embedder. A model trained on short passages will not reward 2,000-token chunks. Keep chunks near the length the embedder was tuned for.</li>
 <li>Evaluate instead of guessing. Use real fab questions and measure whether the correct clause appears in top-k. Chunk size is a knob you tune, not a default you copy.</li>
 </ul>
@@ -319,8 +366,9 @@ docs: <span class="tok-fn">list</span>[Document] = splitter.<span class="tok-fn"
     <span class="tok-com"># start_index added by the splitter; source/revision from our dict</span>
     <span class="tok-fn">print</span>(d.metadata[<span class="tok-str">"source"</span>], d.metadata[<span class="tok-str">"start_index"</span>])</code></pre>
 </figure>
+<div class="tbl-wrap"><table class="tbl"><caption>Ten-minute chunk review using one approved excerpt.</caption><thead><tr><th>Check</th><th>Pass</th><th>Stop and revise</th></tr></thead><tbody><tr><td class="name">Operational unit</td><td>The step, condition, value, unit, and warning can be read together.</td><td>Any qualifier or exception sits in another chunk.</td></tr><tr><td class="name">Identity</td><td>Source ID, revision, section, page or offset, and effective status are present.</td><td>The chunk cannot be traced back to the controlled source.</td></tr><tr><td class="name">Retrieval</td><td>The agreed test question returns the required chunk inside the chosen top-k.</td><td>A stale revision wins or the required clause is absent.</td></tr><tr><td class="name">Limit</td><td>Record that this result covers one excerpt, parser version, and query set.</td><td>Do not generalize the result to tables, OCR pages, or other document families without new fixtures.</td></tr></tbody></table></div>
 <hr/>
-<p>Chunking is not glamorous, but it is one of the highest-return levers in a RAG build. Start with a recursive splitter, split on real structure before sizing, protect tables and formulas as atomic units, and attach metadata to every chunk. Get those four right and the rest of the pipeline, including embedding, retrieval, and generation, has something worth working with.</p>
+<p>Choose chunking from retrieval evidence. Preserve structure, protect tables and formulas, attach source metadata, and rerun the versioned fixture after every parser, splitter, embedder, or index change. Passing covers only the cases represented in that fixture. Once the boundaries are stable, continue with <a href="embeddings-korean-technical.html">the embedding-model evaluation</a>; otherwise model comparisons will be measuring broken chunks.</p>
 </div>
 <!-- deep-dive deck link -->
 <aside class="deck-link">
@@ -335,8 +383,8 @@ docs: <span class="tok-fn">list</span>[Document] = splitter.<span class="tok-fn"
 <div class="share">
 <span class="lbl">Share</span>
 <button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
-<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
-<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Fchunking-technical-docs.html" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Fchunking-technical-docs.html" rel="noopener" target="_blank">LinkedIn</a>
 </div>
 <!-- author bio card (E-E-A-T) -->
 <aside class="author-card">
@@ -344,7 +392,7 @@ docs: <span class="tok-fn">list</span>[Document] = splitter.<span class="tok-fn"
 <div class="a-body">
 <div class="k">About the author</div>
 <h3>AI Edu Archive</h3>
-<p>PhD in physics (IGZO / graphene semiconductor properties) and a semiconductor process engineer working on deposition. Builds air-gapped LLM, RAG, and agent systems, plus reinforcement-learning and anomaly-detection tooling, for the fab. Writes here about turning process know-how into on-prem knowledge assets without letting it leave the network.</p>
+<p>Science PhD with manufacturing process-improvement experience. Writes about testable on-prem LLM, RAG, and agent architectures while separating verified experience from instructional examples.</p>
 <a href="../about.html">More about the author →</a>
 </div>
 </aside>
@@ -366,45 +414,35 @@ docs: <span class="tok-fn">list</span>[Document] = splitter.<span class="tok-fn"
 </article>
 </main>
 <footer class="site-foot">
-<div class="wrap">
-<div class="foot-top">
-<div class="foot-lead">
-<h2>Free, in-depth, and open.</h2>
-<p>Everything here, courses and journal alike, is free to read with no signup.</p>
-</div>
-<div class="foot-nav-cols">
-<div class="foot-col">
-<h4>Explore</h4>
-<a href="../../index.html">Hub home</a>
-<a href="../../index.html#courses">All courses</a>
-<a href="../index.html">Journal</a>
-</div>
-<div class="foot-col">
-<h4>Courses</h4>
-<a href="../../overview/index.html">Fab AI</a>
-<a href="../../watsonx/index.html">Air-gapped LLM</a>
-<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
-</div>
-<div class="foot-col">
-<h4>Site</h4>
-<a href="../about.html">About</a>
-<a href="../contact.html">Contact</a>
-<a href="../privacy.html">Privacy</a>
-<a href="../terms.html">Terms</a>
-</div>
-</div>
-</div>
-<div class="foot-bottom">
-<div class="foot-brand">
-<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</div>
-<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
-</div>
-</div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
 </footer>
 <script>
 (function(){
@@ -429,5 +467,6 @@ docs: <span class="tok-fn">list</span>[Document] = splitter.<span class="tok-fn"
   });
 })();
 </script>
+<script src="../assets/theme.js"></script>
 </body>
 </html>

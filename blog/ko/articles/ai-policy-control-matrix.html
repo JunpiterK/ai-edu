@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 정책을 현장 통제로 바꾸는 매트릭스 - AI Edu Archive Journal</title>
+<meta name="description" content="온프레미스 LLM, RAG, agent 시스템을 운영하는 제조 조직을 위한 AI 정책-통제 매트릭스와 운영 증거 설계.">
+<meta name="author" content="AI Edu Archive">
+<meta name="theme-color" content="#FAF9F5">
+<link rel="canonical" href="https://ai-edu-archive.pages.dev/blog/ko/articles/ai-policy-control-matrix.html">
+
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI 정책을 현장 통제로 바꾸는 매트릭스 - AI Edu Archive Journal">
+<meta property="og:description" content="온프레미스 LLM, RAG, agent 시스템을 운영하는 제조 조직을 위한 AI 정책-통제 매트릭스와 운영 증거 설계.">
+<meta property="og:site_name" content="AI Edu Archive">
+<meta property="og:url" content="https://ai-edu-archive.pages.dev/blog/ko/articles/ai-policy-control-matrix.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="article:published_time" content="2026-07-11">
+<meta property="article:author" content="AI Edu Archive">
+<meta property="article:section" content="Agents & MCP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI 정책을 현장 통제로 바꾸는 매트릭스 - AI Edu Archive Journal">
+<meta name="twitter:description" content="온프레미스 LLM, RAG, agent 시스템을 운영하는 제조 조직을 위한 AI 정책-통제 매트릭스와 운영 증거 설계.">
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI 정책을 현장 통제로 바꾸는 매트릭스",
+  "description": "온프레미스 LLM, RAG, agent 시스템을 운영하는 제조 조직을 위한 AI 정책-통제 매트릭스와 운영 증거 설계.",
+  "inLanguage": "ko",
+  "datePublished": "2026-07-11",
+  "dateModified": "2026-07-11",
+  "author": {"@type": "Person", "name": "AI Edu Archive"},
+  "publisher": {"@type": "Organization", "name": "AI Edu Archive"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ai-edu-archive.pages.dev/blog/ko/articles/ai-policy-control-matrix.html"}
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/blog.css">
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/ai-policy-control-matrix.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/ai-policy-control-matrix.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/ai-policy-control-matrix.html">
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="../../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="주요 메뉴">
+      <a href="../../../index.html#courses">강의</a>
+      <a href="../index.html" aria-current="page">글</a>
+      <a href="../learning-paths.html">학습 경로</a>
+      <a href="../search.html">검색</a>
+      <a href="../portfolio.html">포트폴리오</a>
+      <a href="../about.html">소개</a>
+      <div class="language-switch" aria-label="언어 선택">
+        <a href="../../articles/ai-policy-control-matrix.html" lang="en" title="English">EN</a>
+        <a href="ai-policy-control-matrix.html" lang="ko" aria-current="true" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<article data-cat="agents mfg onprem" itemscope itemtype="https://schema.org/Article">
+  <div class="article-hero">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../../../index.html">Home</a>
+        <span class="sep" aria-hidden="true">/</span>
+        <a href="../index.html">Journal</a>
+        <span class="sep" aria-hidden="true">/</span>
+        <span aria-current="page">AI 정책 통제</span>
+      </nav>
+      <div class="post-meta">
+        <span class="cat-tag">Agents & MCP</span>
+        <span class="post-dot"></span>
+        <time datetime="2026-07-11" itemprop="datePublished">2026.07.11</time>
+        <span class="post-dot"></span>
+        <span class="rt">10분</span>
+      </div>
+      <h1 itemprop="headline">AI 정책을 현장 통제로 바꾸는 매트릭스</h1>
+      <div class="byline">
+        <span class="avatar" aria-hidden="true">AE</span>
+        <span class="who">
+          <b itemprop="author">AI Edu Archive</b>
+          <span>Applied AI, robotics, manufacturing systems</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <nav class="toc" aria-label="Table of contents">
+    <div class="toc-title">On this page</div>
+    <ol>
+      <li><a href="#gap">정책과 통제 사이의 간격</a></li>
+      <li><a href="#matrix">매트릭스</a></li>
+      <li><a href="#agents">agent가 위험도를 올리는 지점</a></li>
+      <li><a href="#routine">거버넌스를 일상화하기</a></li>
+    </ol>
+  </nav>
+  <div class="article-body" itemprop="articleBody">
+    <figure class="visual-figure media-figure media-figure--diagram">
+      <img src="../../assets/visuals/policy-control-matrix.svg" alt="AI policy to plant controls" loading="lazy" decoding="async">
+      <figcaption><span class="figure-label">그림.</span> Policy 문장을 risk, control, 담당 owner, evidence, review cadence로 나누면 실제 점검 항목과 누락된 책임을 확인할 수 있습니다.</figcaption>
+    </figure>
+
+        <div class="field-story">
+      <span class="note-k">합성 사례: 정책 검토 회의</span>
+      <p><strong>특정 회사의 실제 사건이 아닌 합성 사례입니다.</strong> 회의실 화면에는 “AI 사용 시 human oversight를 보장한다”는 정책 문장이 한 줄로 표시돼 있습니다. 플랫폼 담당자는 승인 버튼을 가리키고, 보안 담당자는 audit log를 말하지만, 승인자가 자리를 비웠을 때 누가 중지하는지와 실패 증거를 어디서 볼지는 적혀 있지 않습니다.</p>
+      <p>회의 참석자들이 같은 문장에 동의해도 떠올린 통제는 서로 다를 수 있습니다. “기밀 데이터를 보호한다”는 요구에서도 플랫폼 팀은 egress 차단을, 문서 owner는 열람 권한을, 보안 팀은 로그 보존을 먼저 봅니다. 담당자와 증거가 비어 있으면 배포 점검 때 정책을 다시 해석하게 됩니다.</p>
+      <p>여기서 필요한 기술 권고는 문장을 더 길게 쓰는 것이 아니라 risk, control, evidence, owner, review cadence로 나누는 것입니다. 매트릭스는 합의를 증명하지 않으며, 빈칸과 실패 test를 드러내 배포 여부를 판정할 재료를 만듭니다.</p>
+    </div>
+
+    <div class="reader-shortcut">
+      <span class="note-k">바로 적용할 기준</span>
+      <p>정책 문장 하나를 control, evidence, owner 세 칸으로 나누세요. 빈칸은 문구로 덮지 말고 미결 항목으로 남깁니다. Agent tool에는 승인자, 입력 source, 실행 결과, rollback 결과가 같은 trace로 연결돼야 합니다.</p>
+    </div>
+
+<p><span class="lead-in">정책 문서에서 "human oversight"를 찾았는데 승인 주체와 중지 조건이 없다면 현장 통제로는 아직 부족합니다.</span> 운영 팀에는 어떤 실패를 어느 control이 막는지, 누가 점검하며 무엇을 증거로 남기는지가 필요합니다. 시스템이 답변을 거부하거나 tool 실행을 멈춰야 할 조건도 같은 표에서 확인돼야 합니다.</p>
+    <div class="beginner-example">
+      <span class="note-k">초심자용 그림</span>
+      <p>"AI를 안전하게 사용한다"를 그대로 점검표에 옮길 수는 없습니다. 대신 허용 role, 조회 가능한 source, 승인이 필요한 action, 보존할 audit field, 실패 test를 적습니다. 각 항목에 pass/fail 판정이 있어야 release gate로 쓸 수 있습니다.</p>
+    </div>
+
+    <h2 id="gap">정책과 통제 사이의 간격</h2>
+    <p>"기밀 데이터를 보호한다"는 요구는 network segmentation, role-based retrieval, document permission sync, redaction, incident response로 나뉩니다. Prompt logging은 조사에 유용하지만 민감정보를 다시 저장할 수 있으므로 마스킹과 보존 기간까지 정해야 합니다. "human oversight", "accuracy", "safety"도 실행 조건과 검증 증거가 없으면 통과 여부를 판정할 수 없습니다.</p>
+    <p>정책-통제 매트릭스는 높은 수준의 의도를 온프레미스 LLM, RAG, agent 플랫폼의 검사 항목에 연결합니다. 모든 위험을 한 번에 담기보다 실제 사용 사례와 데이터 등급을 기준으로 행을 추가하고, owner가 증거를 검토할 주기를 정하는 방식이 관리하기 쉽습니다.</p>
+    <div class="fab-voice">
+      <span class="note-k">FAB 엔지니어 시점</span>
+      <p>Recipe 변경 통제는 수정 권한, 승인자, 비교 항목, released version 확인, 변경 log로 판정합니다. AI도 prompt의 금지 문구만 보지 않고 permission-filtered retrieval, egress 정책, audit trail이 실제 요청을 차단했는지 시험해야 합니다. 다만 audit log가 있다는 사실만으로 권한 설정이 올바르다고 증명되지는 않습니다.</p>
+    </div>
+
+    <h2 id="matrix">매트릭스</h2>
+    <p>먼저 현재 사용 사례에서 확인할 failure mode를 고릅니다. 아래 표는 데이터 유출, 오래된 지시, 근거 없는 claim, 권한 없는 tool action, 재현 불가능한 답변을 control, evidence, owner로 연결한 시작 템플릿입니다. 조직의 데이터 분류, 규제, OT 경계, 기존 변경관리 절차에 맞춰 행과 owner를 조정해야 합니다.</p>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <caption>조직의 데이터 등급, OT 경계, 승인 체계에 맞춰 조정하는 온프레미스 AI 정책-통제 템플릿.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Risk</th>
+            <th scope="col">Control</th>
+            <th scope="col">Evidence</th>
+            <th scope="col">Owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="name">데이터가 외부로 나감</td>
+            <td>Air-gapped runtime, egress 차단, local model weights, local embedding store.</td>
+            <td>Firewall rule export, dependency allowlist, network audit, build manifest.</td>
+            <td>IT / Security</td>
+          </tr>
+          <tr>
+            <td class="name">잘못되거나 오래된 문서 사용</td>
+            <td>Source versioning, current-document flag, stale-source filter, freshness tests.</td>
+            <td>Index build report, superseded-source test, document retirement log.</td>
+            <td>Document owner</td>
+          </tr>
+          <tr>
+            <td class="name">답변에 근거가 없음</td>
+            <td>Citation requirement, answer abstention rule, evaluation harness, expert review sample.</td>
+            <td>Eval report, failed-case log, citation coverage score.</td>
+            <td>AI platform owner</td>
+          </tr>
+          <tr>
+            <td class="name">agent가 위험한 action 수행</td>
+            <td>Tool allowlist, read/write separation, state-changing action에 human approval.</td>
+            <td>Tool registry, approval logs, dry-run records.</td>
+            <td>Process owner</td>
+          </tr>
+          <tr>
+            <td class="name">답변 재현 불가</td>
+            <td>Trace ID, prompt version, model version, retrieved source IDs, user role snapshot.</td>
+            <td>Audit log and replay record.</td>
+            <td>Platform / QA</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="agents">agent가 위험도를 올리는 지점</h2>
+    <p>RAG assistant의 출력은 답변에서 끝나는 경우가 많지만 agent는 ticket을 읽고 tool을 호출해 workflow 상태를 바꿀 수 있습니다. 따라서 평가 범위도 답변 정확도에서 허용된 action, 승인 상태, 실행 결과, rollback 가능성으로 넓어집니다.</p>
+    <p>Read-only와 state-changing tool을 별도 lane으로 관리합니다. 문서 검색, log 요약, revision 비교, equipment history 조회도 개인정보와 생산정보 권한을 그대로 따라야 하므로 무조건 넓게 열 수는 없습니다. State-changing tool은 draft 생성, 승인 요청, human confirmation이 있는 ticket 작성부터 시작합니다. Setpoint 변경, hold release, recipe 수정, corrective action 종료는 첫 release의 허용 목록에서 제외하고, 별도 위험평가와 검증 뒤에 판단합니다.</p>
+    <div class="field-note">
+      <span class="note-k">구체적 예시</span>
+      <p>첫 agent가 alarm history를 읽고 maintenance ticket 초안을 만든다면 사람은 source와 대상 owner를 확인한 뒤 승인할 수 있습니다. 반대로 승인 없이 ticket을 닫거나 dispatch owner를 바꾸면 잘못된 판단이 즉시 운영 상태가 됩니다. 초기 범위는 "draft and ask"로 두고, 승인 누락·중복 호출·timeout 뒤 재시도·rollback 실패를 test case에 넣습니다.</p>
+    </div>
+
+    <figure class="code-figure">
+      <div class="code-bar">
+        <span class="code-file"><span class="code-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">json</span> tool_policy.json</span>
+        <button class="copy-btn" data-copy type="button">Copy</button>
+      </div>
+<pre><code>{
+  "tool": "create_maintenance_ticket",
+  "mode": "state_changing",
+  "allowed_roles": ["process_engineer", "maintenance_lead"],
+  "requires_human_approval": true,
+  "dry_run_required": true,
+  "blocked_fields": ["recipe_id", "setpoint", "release_hold"],
+  "audit_fields": ["user", "role", "prompt_version", "source_ids", "approval_id"]
+}</code></pre>
+    </figure>
+    <p>이 JSON은 human-in-the-loop 정책을 설명하기 위한 참조 예시이며 그대로 운영 설정으로 사용할 수 없습니다. 운영 전에는 사용자와 서비스 인증, 전송 구간 TLS, timeout과 retry 경계, idempotency key, 변조 방지 audit, 승인 취소와 rollback을 실제 연동 시스템에서 검증해야 합니다.</p>
+
+    <h2 id="routine">거버넌스를 일상화하기</h2>
+    <p>검토 주기는 기존 운영 회의에 붙이는 편이 지속하기 쉽습니다. 예를 들어 주간 quality review에서는 실패 답변과 미응답을, 월간 access review에서는 role과 tool 권한을 확인합니다. Index 변경에는 release note를 남기고, 잘못된 답변이 gate를 통과하면 incident review를 엽니다. Tabletop exercise에서는 승인자 부재, audit 누락, rollback 실패까지 실행해 봅니다.</p>
+    <p>관리되는 매트릭스에서는 질문마다 증거 위치가 정해집니다. 오래된 SOP 차단은 index build report에서, 외부 전송 차단은 network audit에서, 승인 필요 action은 tool policy와 approval log에서 확인합니다. 증거가 오래됐거나 owner가 검토하지 않았다면 해당 control은 미확인 상태로 표시해야 합니다.</p>
+    <div class="callout"><p><strong>작은 실습: 한 행만 완성하기</strong></p><p>현재 검토 중인 사용 사례에서 “권한 없는 tool action” 한 행을 고르세요. 차단할 role, dry-run 결과, 승인 ID, idempotency key, rollback 확인자를 적고, 승인자가 없거나 audit field 하나가 누락되면 release 실패로 표시합니다. Tabletop에서 중복 호출과 timeout 재시도를 재현하지 못한다면 이 행은 완료가 아닙니다. 이 매트릭스는 조직 정책을 대신하지 않고, 통제의 존재가 실제 효과까지 보장하지도 않습니다.</p></div>
+    <p>통제 행을 만들었다면 다음 글에서는 그 행이 사고 순간에도 작동하는지 시험합니다. <a href="agent-incident-response-runbook.html">AI agent 사고 대응 runbook</a>으로 이어가 승인 누락, 중복 실행, rollback 실패를 tabletop 절차로 바꿔 보세요.</p>
+  </div>
+<aside class="article-endcap" aria-label="글 안내">
+  <p>운영 통제 관점에서 작성한 조정용 템플릿이며, 실제 조직의 정책과 승인 체계에 맞춰 검토해야 합니다.</p>
+  <div class="article-endcap-actions">
+    <a href="../index.html">글 목록으로 돌아가기</a>
+    <a href="../ai-categories.html">AI 카테고리 보기</a>
+  </div>
+</aside>
+</article>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>누구나 볼 수 있는 실용적인 AI 교육 자료입니다.</h2>
+        <p>현장에서 쓸 수 있는 AI 시스템을 위한 강의, 글, 실전 기록을 모았습니다.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>둘러보기</h4>
+          <a href="../../../index.html#courses">강의</a>
+          <a href="../index.html">글</a>
+          <a href="../learning-paths.html">학습 경로</a>
+          <a href="../search.html">검색</a>
+          <a href="../portfolio.html">포트폴리오</a>
+        </div>
+        <div class="foot-col">
+          <h4>사이트</h4>
+          <a href="../about.html">소개</a>
+          <a href="../contact.html">연락처</a>
+          <a href="../privacy.html">개인정보 처리방침</a>
+          <a href="../terms.html">이용약관</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · 한국어와 영어로 제공하는 AI 교육</span>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/theme.js"></script>
+</body>
+</html>

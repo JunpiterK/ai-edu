@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="takt-agent-flow-title takt-agent-flow-desc" viewBox="0 0 1200 675">
+  <title id="takt-agent-flow-title">Takt-aware agent escalation</title>
+  <desc id="takt-agent-flow-desc">Assembly-line agents must respect cadence, Andon, approval, containment, and rework paths.</desc>
+  <style>
+    svg { color-scheme: light dark; }
+    .bg { fill: #FAF9F5; }
+    .panel { fill: #FFFFFF; stroke: #DBD5C8; stroke-width: 1.5; }
+    .lane { fill: #F3F0E8; }
+    .card { fill: #FCFBF8; stroke: #C85F42; stroke-width: 2.2; }
+    .stage-chip { fill: #F6EAE1; stroke: #E5B69F; stroke-width: 1.2; }
+    .arrow { fill: none; stroke: #5F5B55; stroke-width: 3.2; stroke-linecap: round; marker-end: url(#arrowhead); }
+    .arrow-gap { fill: #F3F0E8; }
+    .title { fill: #1F1E1C; font: 700 37px Inter, Arial, sans-serif; }
+    .subtitle { fill: #5F5B55; font: 500 19px Inter, Arial, sans-serif; }
+    .eyebrow { fill: #B45436; font: 800 13px Inter, Arial, sans-serif; letter-spacing: 2.6px; }
+    .stage { fill: #A64B30; font: 800 13px Inter, Arial, sans-serif; text-anchor: middle; letter-spacing: 1.1px; }
+    .node-title { fill: #161514; font: 800 20px Inter, Arial, sans-serif; }
+    .node-detail { fill: #4F4C47; font: 650 15px Inter, Arial, sans-serif; }
+    .readline { fill: #4F4C47; font: 700 15px Inter, Arial, sans-serif; }
+    .chip { fill: #F6EAE1; stroke: #E5B69F; }
+    .chip-text { fill: #A64B30; font: 800 13px Inter, Arial, sans-serif; text-anchor: middle; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #07111F; }
+      .panel { fill: #101D31; stroke: #344A68; }
+      .lane { fill: #0A1627; }
+      .card { fill: #0F1D31; stroke: #FFAA87; }
+      .stage-chip { fill: #392335; stroke: #73515F; }
+      .arrow { stroke: #C7D4E7; }
+      .arrow-gap { fill: #0A1627; }
+      .title { fill: #F2F7FF; }
+      .subtitle { fill: #D8E3F4; }
+      .eyebrow { fill: #FFBE9B; }
+      .stage { fill: #FFBE9B; }
+      .node-title { fill: #F2F7FF; }
+      .node-detail { fill: #D8E3F4; }
+      .readline { fill: #D8E3F4; }
+      .chip { fill: #1B2A42; stroke: #344A68; }
+      .chip-text { fill: #FFBE9B; }
+    }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M1,1 L11,6 L1,11 Z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1200" height="675"/>
+  <rect class="panel" x="42" y="42" width="1116" height="591" rx="32"/>
+  <text class="eyebrow" x="82" y="96">AI EDU ARCHIVE VISUAL FIELD NOTE</text>
+  <text class="title" x="82" y="137">Takt-aware agent escalation</text>
+  <text class="subtitle" x="82" y="174">Assembly agents must respect takt: station event, line observation, owner approval, then containment or rework.</text>
+  <rect class="lane" x="76" y="202" width="1048" height="300" rx="28"/>
+  <rect class="stage-chip" x="136" y="214" width="136" height="30" rx="15"/>
+  <text class="stage" x="204" y="235">CAUSE</text>
+  <rect class="card" x="108" y="246" width="192" height="178" rx="20"/>
+  <text class="node-title" x="204" y="298" text-anchor="middle"><tspan x="204" dy="0">Station</tspan><tspan x="204" dy="25">event</tspan></text>
+  <text class="node-detail" x="204" y="366" text-anchor="middle"><tspan x="204" dy="0">Torque miss, fault,</tspan><tspan x="204" dy="21">quality signal</tspan></text>
+  <rect class="stage-chip" x="400" y="214" width="136" height="30" rx="15"/>
+  <text class="stage" x="468" y="235">OBSERVATION</text>
+  <rect class="card" x="372" y="246" width="192" height="178" rx="20"/>
+  <text class="node-title" x="468" y="298" text-anchor="middle"><tspan x="468" dy="0">Takt +</tspan><tspan x="468" dy="25">Andon</tspan></text>
+  <text class="node-detail" x="468" y="366" text-anchor="middle"><tspan x="468" dy="0">Cadence, stop,</tspan><tspan x="468" dy="21">buffer state</tspan></text>
+  <rect class="stage-chip" x="664" y="214" width="136" height="30" rx="15"/>
+  <text class="stage" x="732" y="235">JUDGMENT</text>
+  <rect class="card" x="636" y="246" width="192" height="178" rx="20"/>
+  <text class="node-title" x="732" y="298" text-anchor="middle"><tspan x="732" dy="0">Owner</tspan><tspan x="732" dy="25">approval</tspan></text>
+  <text class="node-detail" x="732" y="366" text-anchor="middle"><tspan x="732" dy="0">Line, quality,</tspan><tspan x="732" dy="21">safety owner</tspan></text>
+  <rect class="stage-chip" x="928" y="214" width="136" height="30" rx="15"/>
+  <text class="stage" x="996" y="235">ACTION</text>
+  <rect class="card" x="900" y="246" width="192" height="178" rx="20"/>
+  <text class="node-title" x="996" y="298" text-anchor="middle"><tspan x="996" dy="0">Contain</tspan><tspan x="996" dy="25">+ rework</tspan></text>
+  <text class="node-detail" x="996" y="366" text-anchor="middle"><tspan x="996" dy="0">Hold VIN, reroute,</tspan><tspan x="996" dy="21">or repair</tspan></text>
+  <path class="arrow" d="M320 335 H352"/>
+  <path class="arrow" d="M584 335 H616"/>
+  <path class="arrow" d="M848 335 H880"/>
+  <text class="readline" x="82" y="546">Read left to right: cause -&gt; observation -&gt; judgment -&gt; approved action.</text>
+  <rect class="chip" x="82" y="578" width="206" height="36" rx="18"/>
+  <text class="chip-text" x="185" y="601">schematic, not photo</text>
+</svg>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 
 <html lang="en">
 <head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- ══ SEO ══════════════════════════════════════════════════════════ -->
@@ -10,16 +10,15 @@
 <meta content="A staged roadmap for turning undocumented plant know-how into an on-prem LLM/RAG knowledge asset: PoC, Pilot, Scale, Embed, with deliverables, exit gates, and risks." name="description"/>
 <meta content="AI Edu Archive" name="author"/>
 <meta content="#FAF9F5" name="theme-color"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/knowledge-asset-roadmap.html" rel="canonical"/>
-<link href="https://ai-edu-archive.example.com/blog/ko/articles/knowledge-asset-roadmap.html" hreflang="ko" rel="alternate"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/knowledge-asset-roadmap.html" hreflang="x-default" rel="alternate"/>
+<link href="https://ai-edu-archive.pages.dev/blog/articles/knowledge-asset-roadmap.html" rel="canonical"/>
+
 <meta content="index,follow" name="robots"/>
 <!-- Open Graph -->
 <meta content="article" property="og:type"/>
 <meta content="From tribal knowledge to a plant knowledge asset - AI Edu Archive Journal" property="og:title"/>
 <meta content="A staged roadmap for turning undocumented plant know-how into an on-prem LLM/RAG knowledge asset: PoC, Pilot, Scale, Embed, with deliverables, exit gates, and risks." property="og:description"/>
 <meta content="AI Edu Archive" property="og:site_name"/>
-<meta content="https://ai-edu-archive.example.com/blog/articles/knowledge-asset-roadmap.html" property="og:url"/>
+<meta content="https://ai-edu-archive.pages.dev/blog/articles/knowledge-asset-roadmap.html" property="og:url"/>
 <meta content="en_US" property="og:locale"/>
 <meta content="ko_KR" property="og:locale:alternate"/>
 <meta content="2026-07-04" property="article:published_time"/>
@@ -35,33 +34,33 @@
   "headline": "From tribal knowledge to a plant knowledge asset",
   "description": "A staged roadmap for turning undocumented plant know-how into an on-prem LLM/RAG knowledge asset: PoC, Pilot, Scale, Embed, with deliverables, exit gates, and risks.",
   "inLanguage": "en",
-  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "image": "https://ai-edu-archive.pages.dev/blog/assets/visuals/article-visual-template.svg",
   "datePublished": "2026-07-04",
   "dateModified": "2026-07-04",
   "author": {
     "@type": "Person",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html",
     "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
   },
   "publisher": {
     "@type": "Organization",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html"
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ai-edu-archive.example.com/blog/articles/knowledge-asset-roadmap.html"
+    "@id": "https://ai-edu-archive.pages.dev/blog/articles/knowledge-asset-roadmap.html"
   },
   "name": "From tribal knowledge to a plant knowledge asset",
-  "url": "https://ai-edu-archive.example.com/blog/articles/knowledge-asset-roadmap.html"
+  "url": "https://ai-edu-archive.pages.dev/blog/articles/knowledge-asset-roadmap.html"
 }</script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link href="../assets/blog.css" rel="stylesheet"/>
 <style>
-  .tbl-wrap{max-width:var(--readw);margin:26px auto;overflow-x:auto;
+  .tbl-wrap{max-width:var(--widew);width:100%;margin:26px auto;overflow-x:auto;
     border:1px solid var(--line);border-radius:12px;background:var(--card-2);
     box-shadow:var(--shadow-sm)}
   table.tbl{border-collapse:collapse;width:100%;min-width:560px;
@@ -85,33 +84,31 @@
     table.tbl th,table.tbl td{padding:9px 11px}
   }
 </style>
-<link href="https://ai-edu-archive.example.com/blog/articles/knowledge-asset-roadmap.html" hreflang="en" rel="alternate"/></head>
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/knowledge-asset-roadmap.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/knowledge-asset-roadmap.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/knowledge-asset-roadmap.html">
+</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="nav" id="nav">
-<div class="wrap">
-<a aria-label="AI Edu Archive home" class="brand" href="../../index.html">
-<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</a>
-<nav aria-label="Primary" class="nav-links">
-<a href="../../index.html#courses">Courses</a>
-<a href="../index.html">Articles</a>
-<a href="../about.html">About</a>
-<div aria-label="Language selector" class="language-switch">
-<a aria-current="true" href="knowledge-asset-roadmap.html" lang="en" title="English">🇺🇸 EN</a>
-<a href="../ko/articles/knowledge-asset-roadmap.html" lang="ko" title="한국어">🇰🇷 KO</a>
-<a href="knowledge-asset-roadmap.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a>
-<a href="knowledge-asset-roadmap.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a>
-<a href="knowledge-asset-roadmap.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a>
-<a href="knowledge-asset-roadmap.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a>
-<a href="knowledge-asset-roadmap.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a>
-</div>
-</nav>
-</div>
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="knowledge-asset-roadmap.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/knowledge-asset-roadmap.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
 </header>
 <main id="main">
 <article data-cat="mfg onprem" itemscope="" itemtype="https://schema.org/Article">
@@ -145,19 +142,25 @@
 <div class="toc-title">On this page</div>
 <ol>
 <li><a href="#moat">The undocumented moat</a></li>
-<li><a href="#roadmap">A four-stage roadmap</a></li>
-<li><a href="#stages">Deliverables, gates, and risks</a></li>
+<li><a href="#roadmap">A four-gate review</a></li>
+<li><a href="#stages">Owners, metrics, and stop conditions</a></li>
 <li><a href="#embed">Making it stick</a></li>
 </ol>
 </nav>
 <div class="article-body" itemprop="articleBody">
-<p>The most valuable thing in your plant is not written down anywhere. It lives in the operator who hears a pump about to fail, the process engineer who knows which recipe drifts on humid days, and the technician who remembers the fix from three years ago. This is tribal knowledge. When those people retire, transfer, or take a day off, the plant becomes measurably worse at its job. This article lays out a staged, low-risk roadmap for turning that know-how into a durable, on-prem knowledge asset using a closed LLM and retrieval-augmented generation, without letting the data leave your network.</p>
+    <div class="field-story">
+      <span class="note-k">Illustrative scenario: more documents made retrieval worse</span>
+      <p>A review packet asks to add a second maintenance domain after the first corpus clears its gate. Broader coverage sounds like an easy win, until the fixed questions retrieve a superseded instruction from the new domain. Expansion stops while the source owner resolves revision metadata and retirement rules. This is a constructed gate review, not a reported rollout.</p>
+    </div>
+    <div class="reader-shortcut"><span class="note-k">Packet rule</span><p>Every gate packet needs a source register, fixed evaluation set, permission snapshot, failure log, named owner, and disable path. More documents and users are scope changes, not routine content updates.</p></div>
+
+<p><span class="lead-in">The opening artifact is a gate packet, not a knowledge slogan.</span> Plant know-how appears in approved procedures, shift logs, ticket comments, and conversations that may never become records. Some is useful; some is obsolete, local, or disputed. Each gate therefore requires an owner, a metric collected under stated conditions, and a stop condition. Keeping models and data on-premises may address an egress requirement, but it does not establish source quality, authorization, or fitness for plant decisions.</p>
 <h2 id="moat">The undocumented moat</h2>
-<p>Two plants can buy the same tools, run the same materials, and follow the same published specs, yet still hit different yields. The gap is know-how: accumulated judgment about what actually works on your line. That gap is a genuine competitive moat, but it is fragile because it lives in people instead of systems. Documentation helps, but the richest knowledge is conditional, scattered, and busy. It hides in shift logs, ticket comments, chat threads, and the half-sentence someone adds while closing a maintenance action.</p>
-<p>An on-prem LLM changes the economics of capture. Instead of asking people to author polished procedures, you let them keep working the way they already do: logging, annotating, closing tickets, and discussing exceptions. Then you build a retrieval layer that reads what already exists and answers questions over it. The know-how is captured in place. The hard part is not the model; it is sequencing the rollout so a manufacturing organization can absorb it without betting the line on an unproven system.</p>
-<blockquote>Tribal knowledge is a moat you cannot see on the balance sheet, and one you lose the day the person carrying it walks out the door.</blockquote>
-<h2 id="roadmap">A four-stage roadmap</h2>
-<p>Treat this as a capability that matures, not a project that ships once. Each stage earns the right to the next by clearing an explicit exit gate, a measurable bar that decides whether you proceed, iterate, or stop. Nothing touches the external internet at any stage: models, embeddings, indexes, logs, and evaluations all stay inside the air gap.</p>
+<p>Two plants with similar equipment can still develop different operating knowledge. Before indexing it, classify each source: controlled procedure, system-of-record export, operator note, or unverified recollection. Record the revision, effective date, owner, and permission scope. Retrieval should preserve those distinctions instead of presenting every passage with equal authority.</p>
+<p>An on-prem LLM can lower the effort needed to search existing records. It does not convert an informal note into an approved instruction. The implementation starts with source inventory and evaluation, then adds users and domains only when governance and operations can support them.</p>
+<blockquote>At every review, inspect the source record, evaluation result, access decision, and rollback or disable path.</blockquote>
+<h2 id="roadmap">A four-gate review</h2>
+<p>The four gates are evidence reviews, not calendar promises. Example durations in the figure are planning assumptions and must be replaced with site estimates. An air-gapped design remains a requirement only where the site owner specifies it; network controls must be verified separately.</p>
 <figure>
 <div aria-label="Four-stage roadmap diagram" class="diagram">
 <svg aria-label="A horizontal roadmap of four stages — PoC, Pilot, Scale, Embed — with an exit gate between each stage and a widening scope arrow beneath." role="img" viewbox="0 0 640 250" width="100%">
@@ -202,53 +205,54 @@
 </div>
 <figcaption>Figure 1. Scope widens and stakes rise from left to right; each arrow is an exit gate you must clear to proceed.</figcaption>
 </figure>
-<h2 id="stages">Deliverables, gates, and risks</h2>
-<p>The point of stages is to spend the least effort needed to learn whether the next, larger commitment is justified. Below is the same roadmap as a working table: what you build, the bar you must clear to advance, and the risk that most often kills that stage.</p>
+<h2 id="stages">Owners, metrics, and stop conditions</h2>
+<p>Use the table as a review record. Metric values come from the approved test set and current baseline; they are not universal thresholds. A failed stop condition sends the work back for correction or closes it.</p>
 <div class="tbl-wrap">
 <table class="tbl">
 <caption>Table 1. Stage-by-stage roadmap for an on-prem knowledge asset.</caption>
 <thead>
 <tr>
-<th scope="col">Stage</th>
-<th scope="col">Deliverable</th>
-<th scope="col">Exit gate</th>
-<th scope="col">Top risk</th>
+<th scope="col">Gate</th>
+<th scope="col">Owner</th>
+<th scope="col">Review artifact</th>
+<th scope="col">Metric</th>
+<th scope="col">Stop condition</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="name">1 · PoC
-Concept proof</td>
-<td>A retrieval demo over one narrow corpus, such as one tool's maintenance logs and SOPs, answering about 20 real questions with cited sources.</td>
-<td>On a fixed question set, answers are useful and grounded more often than keyword search, judged by two domain experts.</td>
-<td>Chasing a flashy demo instead of a representative one; choosing a domain with no clean source documents.</td>
+<td class="name">1 · Evidence feasibility</td>
+<td>Knowledge-domain owner with an IT/RAG engineer</td>
+<td>Source register, fixed evaluation set, keyword baseline, cited retrieval results, and failure log for one narrow corpus.</td>
+<td>Grounded-answer and retrieval-hit rates against the baseline, with grader agreement reported.</td>
+<td>Stop if source ownership cannot be established, permissions cannot be represented, or the candidate does not beat the agreed baseline.</td>
 </tr>
 <tr>
-<td class="name">2 · Pilot
-Line trial</td>
-<td>A hardened tool for one line or team: access control, source freshness, a feedback button, and an answer-quality log reviewed weekly.</td>
-<td>Real users return unprompted; measured lift in time-to-answer or first-time-right; near-zero unsafe answers.</td>
-<td>No owner on the plant side; stale documents poisoning retrieval; a pilot that never ends.</td>
+<td class="name">2 · Controlled pilot</td>
+<td>Process or equipment owner, with IT/security</td>
+<td>Named user group, ACL test report, freshness report, feedback queue, and disable procedure.</td>
+<td>Task completion, time-to-answer, citation correctness, stale-source rate, and access-control test pass rate.</td>
+<td>Stop on unauthorized retrieval, an unresolved critical source error, missing operational ownership, or no measurable benefit under the test protocol.</td>
 </tr>
 <tr>
-<td class="name">3 · Scale
-Plant rollout</td>
-<td>Plant-wide coverage: multiple domains indexed, ingestion pipelines from MES, logs, and wikis, monitoring, and document governance.</td>
-<td>Adoption across teams, an SLA the plant relies on, and a cost/accuracy profile that survives scrutiny.</td>
-<td>Retrieval quality decays as the corpus grows; governance and permissions cannot keep up; infra becomes a bottleneck.</td>
+<td class="name">3 · Domain expansion</td>
+<td>Platform owner with each source-system owner</td>
+<td>Versioned ingestion manifests, load and recovery tests, permission mappings, per-domain evaluations, and capacity measurements.</td>
+<td>Per-domain retrieval quality, queue age, refresh completion, error budget, and compute cost under documented load.</td>
+<td>Stop adding domains when quality falls below its accepted baseline, permission mappings are incomplete, or recovery and capacity tests fail.</td>
 </tr>
 <tr>
-<td class="name">4 · Embed
-Routine ownership</td>
-<td>Capture becomes part of daily work, ownership sits with a named team, and refresh plus evaluation run on a schedule.</td>
-<td>The system improves without heroics: new know-how flows in and quality is tracked as a standing metric.</td>
-<td>Treating it as done; letting evaluation lapse; creating single-person dependency.</td>
+<td class="name">4 · Operational ownership</td>
+<td>Service owner and knowledge-domain owner</td>
+<td>Runbook, support roster, scheduled evaluation, source-retirement workflow, incident log, and quarterly scope review.</td>
+<td>Evaluation trend, source age, incident closure time, ownership coverage, and successful restore tests.</td>
+<td>Disable affected domains or return to pilot if evaluation lapses, the named owner is absent, restore tests fail, or stale sources exceed the approved limit.</td>
 </tr>
 </tbody>
 </table>
 </div>
 <h3 id="poc-detail">Why the PoC stays deliberately small</h3>
-<p>A tempting mistake is to index everything at once. Resist it. The PoC exists to answer one question as cheaply as possible: does retrieval over our messy real documents beat what people do today? Keep the corpus to a single domain you understand, write the evaluation questions before you build, and have experts grade the output. If it fails here, you have spent weeks, not quarters. The scaffolding is small:</p>
+<p>The first gate answers a bounded question: does retrieval over the selected records outperform the current search method on the fixed test set? Keep the corpus to one owned domain, write evaluation questions before building, and record expert grading criteria. The code below is a simplified evaluation sketch, not a deployment result:</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> poc_eval.py</span>
@@ -261,20 +265,21 @@ questions = <span class="tok-fn">load_expert_questions</span>(<span class="tok-s
 wins = <span class="tok-num">0</span>
 <span class="tok-kw">for</span> q <span class="tok-kw">in</span> questions:
     hits   = index.<span class="tok-fn">similarity_search</span>(q.text, k=<span class="tok-num">4</span>)   <span class="tok-com"># on-prem vector store</span>
-    answer = llm.<span class="tok-fn">invoke</span>(<span class="tok-fn">prompt</span>(q.text, hits))       <span class="tok-com"># on-prem LLM, no egress</span>
+    answer = llm.<span class="tok-fn">invoke</span>(<span class="tok-fn">prompt</span>(q.text, hits))       <span class="tok-com"># local endpoint; verify network controls</span>
     <span class="tok-kw">if</span> <span class="tok-fn">expert_grade</span>(answer, q, cite=hits) == <span class="tok-str">"grounded_and_useful"</span>:
         wins += <span class="tok-num">1</span>
 
 <span class="tok-com"># Advance only if experts prefer it to keyword search on the fixed set.</span>
 <span class="tok-kw">assert</span> wins / <span class="tok-fn">len</span>(questions) &gt; baseline_keyword_score</code></pre>
 </figure>
-<h3 id="pilot-detail">The Pilot is where trust is won or lost</h3>
-<p>Moving from a demo to a tool a shift actually leans on is a step change. The model is the easy part; the work is operational. You need access control so a contractor cannot query proprietary recipes, source freshness so a superseded SOP does not resurface as an answer, and a feedback loop so wrong answers get logged and fixed instead of eroding trust in silence. The single biggest predictor of pilot survival is a named owner on the plant floor, not only in IT, who treats answer quality as their responsibility.</p>
-<h3 id="scale-detail">Scale surfaces the quiet failure modes</h3>
-<p>What works over one tool's logs can degrade badly over the whole plant. As the corpus grows, retrieval pulls in near-duplicate and contradictory documents, and the model confidently blends them. This is why document governance, clear ownership, versioning, and retirement of stale content, stops being optional at scale. A knowledge asset is only as trustworthy as the sources beneath it. Budget as much effort for keeping sources clean as for the retrieval stack itself.</p>
+<h3 id="pilot-detail">Gate 2 tests use under controlled conditions</h3>
+<p>The pilot adds identity, permission, freshness, feedback, and disable-path tests. The process or equipment owner decides whether retrieved material is suitable for the pilot task; IT/security owns identity and access controls. Keep the tool advisory and read-only unless a separately governed change process authorizes more.</p>
+<div class="beginner-example"><span class="note-k">Gate 2 review exercise</span><p><b>Start with this checklist:</b></p><ol><li>Register one current procedure and one superseded revision with document ID, revision, effective date, owner, and expected retirement state.</li><li>Create two test users with intentionally different source permissions and capture the permission snapshot used for the run.</li><li>Ask the same revision-sensitive question as each user, retaining retrieved source IDs, ranks, citations, and access decisions.</li><li>Verify that each user sees only authorized current material and that every accepted citation identifies its revision and owner.</li><li>Disable the pilot domain, repeat the baseline-service check, restore it from the documented procedure, and record the result.</li><li><b>Pass</b> only when retrieval, citation, permissions, disablement, and restore evidence all match expectations. <b>Stop</b> on unauthorized text, a superseded top result, a missing owner, an unexplained permission difference, or an unrehearsed disable path.</li></ol><p>Limit: this small fixture does not measure broad task coverage; it tests revision, access, and disable-path handling.</p></div>
+<h3 id="scale-detail">Gate 3 tests each added domain</h3>
+<p>A larger corpus introduces duplicates, conflicting revisions, and permission joins. Do not average those failures into one plant-wide score. Report quality, freshness, and access results by domain, and stop expansion where the source owner cannot resolve them.</p>
 <h2 id="embed">Making it stick</h2>
-<p>The final stage is the one most organizations skip, and it is the one that separates a lasting asset from an abandoned pilot. Embedding means capture is woven into daily work: a technician closing a ticket is, without extra effort, feeding the system. A named team owns refresh, evaluation, and access. Evaluation becomes a standing dashboard metric, not a one-time launch checkpoint, so quiet regressions get caught. An air-gapped knowledge asset that is measured, owned, and fed keeps compounding; one declared done starts decaying the day the launch celebration ends.</p>
-<p>None of this requires a moonshot. It requires sequencing: prove value on something small, harden it for real users, widen coverage only as governance can bear it, and then make maintenance boring and routine. Done that way, the know-how that used to leave with your best people becomes something the plant owns, on-prem, behind the air gap, and improving every quarter.</p>
+<p>Gate 4 assigns recurring work: source refresh, evaluation, access review, incident response, restore testing, and source retirement. New notes should enter through a defined review path; routine ticket closure should not silently promote text into approved guidance.</p>
+<p>The review outcome is one of four decisions: proceed, correct and repeat, reduce scope, or stop. Record the owner and evidence with that decision. Retrieval can make recorded knowledge easier to find, but it cannot prove that undocumented judgment has been captured or that retrieved guidance is correct for a new event. The next practical read is <a href="rag-over-sealed-documents.html">RAG over sealed documents</a>, which turns the source register and evaluation set into an ingestion and retrieval test.</p>
 <hr/>
 <p>This is the strategy layer. To see the full picture of AI in the fab, and the air-gapped LLM stack that makes on-prem capture possible, the deck below walks the whole subject slide by slide.</p>
 </div>
@@ -291,8 +296,8 @@ wins = <span class="tok-num">0</span>
 <div class="share">
 <span class="lbl">Share</span>
 <button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
-<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
-<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Fknowledge-asset-roadmap.html" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Fknowledge-asset-roadmap.html" rel="noopener" target="_blank">LinkedIn</a>
 </div>
 <!-- author bio card (E-E-A-T) -->
 <aside class="author-card">
@@ -300,7 +305,7 @@ wins = <span class="tok-num">0</span>
 <div class="a-body">
 <div class="k">About the author</div>
 <h3>AI Edu Archive</h3>
-<p>PhD in physics (IGZO / graphene semiconductor properties) and a semiconductor process engineer working on deposition. Builds air-gapped LLM, RAG, and agent systems, plus reinforcement-learning and anomaly-detection tooling, for the fab. Writes here about turning process know-how into an on-prem knowledge asset that never leaves the network.</p>
+<p>PhD in physics (IGZO / graphene semiconductor properties) and semiconductor process-improvement experience. Writes implementation notes about local LLM, RAG, and manufacturing knowledge systems.</p>
 <a href="../about.html">More about the author</a>
 </div>
 </aside>
@@ -322,45 +327,35 @@ wins = <span class="tok-num">0</span>
 </article>
 </main>
 <footer class="site-foot">
-<div class="wrap">
-<div class="foot-top">
-<div class="foot-lead">
-<h2>Free, in-depth, and open.</h2>
-<p>Everything here, courses and journal alike, is free to read with no signup.</p>
-</div>
-<div class="foot-nav-cols">
-<div class="foot-col">
-<h4>Explore</h4>
-<a href="../../index.html">Hub home</a>
-<a href="../../index.html#courses">All courses</a>
-<a href="../index.html">Journal</a>
-</div>
-<div class="foot-col">
-<h4>Courses</h4>
-<a href="../../overview/index.html">Fab AI</a>
-<a href="../../watsonx/index.html">Air-gapped LLM</a>
-<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
-</div>
-<div class="foot-col">
-<h4>Site</h4>
-<a href="../about.html">About</a>
-<a href="../contact.html">Contact</a>
-<a href="../privacy.html">Privacy</a>
-<a href="../terms.html">Terms</a>
-</div>
-</div>
-</div>
-<div class="foot-bottom">
-<div class="foot-brand">
-<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</div>
-<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
-</div>
-</div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
 </footer>
 <script>
 (function(){
@@ -386,5 +381,6 @@ wins = <span class="tok-num">0</span>
   });
 })();
 </script>
+<script src="../assets/theme.js"></script>
 </body>
 </html>

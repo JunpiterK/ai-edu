@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 
 <html lang="en">
 <head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- ══ SEO ══════════════════════════════════ -->
@@ -10,16 +10,15 @@
 <meta content="A function-by-function guide to LangChain core: ChatModel calls, ChatPromptTemplate, output parsers, LCEL pipes, RunnableParallel, and RunnablePassthrough for local LLM/RAG apps." name="description"/>
 <meta content="AI Edu Archive" name="author"/>
 <meta content="#FAF9F5" name="theme-color"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/langchain-core-explained.html" rel="canonical"/>
-<link href="https://ai-edu-archive.example.com/blog/ko/articles/langchain-core-explained.html" hreflang="ko" rel="alternate"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/langchain-core-explained.html" hreflang="x-default" rel="alternate"/>
+<link href="https://ai-edu-archive.pages.dev/blog/articles/langchain-core-explained.html" rel="canonical"/>
+
 <meta content="index,follow" name="robots"/>
 <!-- Open Graph -->
 <meta content="article" property="og:type"/>
 <meta content="LangChain core, explained: LLMs, prompts, and LCEL pipelines - AI Edu Archive Journal" property="og:title"/>
 <meta content="A function-by-function guide to LangChain core: ChatModel calls, ChatPromptTemplate, output parsers, LCEL pipes, RunnableParallel, and RunnablePassthrough for local LLM/RAG apps." property="og:description"/>
 <meta content="AI Edu Archive" property="og:site_name"/>
-<meta content="https://ai-edu-archive.example.com/blog/articles/langchain-core-explained.html" property="og:url"/>
+<meta content="https://ai-edu-archive.pages.dev/blog/articles/langchain-core-explained.html" property="og:url"/>
 <meta content="en_US" property="og:locale"/>
 <meta content="ko_KR" property="og:locale:alternate"/>
 <meta content="2026-07-04" property="article:published_time"/>
@@ -35,58 +34,56 @@
   "headline": "LangChain core, explained: LLMs, prompts, and LCEL pipelines",
   "description": "A function-by-function guide to LangChain core: ChatModel calls, ChatPromptTemplate, output parsers, LCEL pipes, RunnableParallel, and RunnablePassthrough for local LLM/RAG apps.",
   "inLanguage": "en",
-  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "image": "https://ai-edu-archive.pages.dev/blog/assets/visuals/article-visual-template.svg",
   "datePublished": "2026-07-04",
   "dateModified": "2026-07-04",
   "author": {
     "@type": "Person",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html",
     "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
   },
   "publisher": {
     "@type": "Organization",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html"
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ai-edu-archive.example.com/blog/articles/langchain-core-explained.html"
+    "@id": "https://ai-edu-archive.pages.dev/blog/articles/langchain-core-explained.html"
   },
   "name": "LangChain core, explained: LLMs, prompts, and LCEL pipelines",
-  "url": "https://ai-edu-archive.example.com/blog/articles/langchain-core-explained.html"
+  "url": "https://ai-edu-archive.pages.dev/blog/articles/langchain-core-explained.html"
 }</script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link href="../assets/blog.css" rel="stylesheet"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/langchain-core-explained.html" hreflang="en" rel="alternate"/></head>
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/langchain-core-explained.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/langchain-core-explained.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/langchain-core-explained.html">
+</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="nav" id="nav">
-<div class="wrap">
-<a aria-label="AI Edu Archive home" class="brand" href="../../index.html">
-<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</a>
-<nav aria-label="Primary" class="nav-links">
-<a href="../../index.html#courses">Courses</a>
-<a href="../index.html">Articles</a>
-<a href="../about.html">About</a>
-<div aria-label="Language selector" class="language-switch">
-<a aria-current="true" href="langchain-core-explained.html" lang="en" title="English">🇺🇸 EN</a>
-<a href="../ko/articles/langchain-core-explained.html" lang="ko" title="한국어">🇰🇷 KO</a>
-<a href="langchain-core-explained.html" lang="en" title="English shown for now">🇪🇸 ES</a>
-<a href="langchain-core-explained.html" lang="en" title="English shown for now">🇨🇳 ZH</a>
-<a href="langchain-core-explained.html" lang="en" title="English shown for now">🇯🇵 JA</a>
-<a href="langchain-core-explained.html" lang="en" title="English shown for now">🇩🇪 DE</a>
-<a href="langchain-core-explained.html" lang="en" title="English shown for now">🇫🇷 FR</a>
-</div>
-</nav>
-</div>
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="langchain-core-explained.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/langchain-core-explained.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
 </header>
 <main id="main">
 <article itemscope="" itemtype="https://schema.org/Article">
@@ -129,20 +126,24 @@
 </ol>
 </nav>
 <div class="article-body" itemprop="articleBody">
-<p>LangChain core is not magic around an LLM. It is a small set of interfaces that make prompts, models, parsers, retrievers, and tools compose in the same way. Once you understand those interfaces, a local LLM app stops looking like a pile of callbacks and starts looking like a data pipeline.</p>
+    <div class="field-story">
+      <span class="note-k">Contract check</span>
+      <p>A chain receives a dictionary and returns an object. Before reading the pipe operator, write down the type at each boundary: input variables, prompt messages, model message, parser result, and failure. That ledger is the working model for this guide.</p>
+    </div>
+
+<div class="field-story"><span class="note-k">Illustrative boundary trace</span><p>A malformed final answer initially puts the local model under suspicion. The captured prompt messages are correct, however, and the parser receives an <code>AIMessage</code> where a downstream function expects a string. That boundary artifact clears the model and points straight to the missing parser.</p></div>
+<p>LangChain core gives prompts, chat models, parsers, and other Runnables a shared way to connect. The pipe is compact; the values crossing it still deserve ordinary interface discipline. For each component below, ask four questions: what enters, what leaves, what can vary, and how does failure reach the caller?</p>
+<div class="reader-shortcut"><span class="note-k">Debug shortcut</span><p>Capture the value and Python type on both sides of the failing pipe before changing the prompt or model. Most wiring faults become pleasantly boring once the boundary is visible.</p></div>
 <h2 id="why">What LangChain actually solves</h2>
-<p>The practical problem LangChain solves is replacement. You want to swap a local Ollama model for another provider, change a prompt without touching retrieval, replace a string parser with a JSON parser, or stream a chain without rewriting the chain. Core abstractions make those pieces interchangeable.</p>
-<p>For on-prem work, that matters because the stack changes often. A prototype may start with a 7B model on a gaming GPU, move to a larger quantized model, and later run behind an internal API. The application code should not collapse every time the model endpoint changes.</p>
+<p>The practical problem is controlled substitution. A model, parser, or retriever can be replaced when the new component satisfies the same input and output contract. Provider-specific configuration, message support, streaming behavior, token limits, and exceptions can still differ, so substitution needs contract tests.</p>
+<p>For a local stack, record the package version, model identifier, endpoint, prompt revision, parser schema, timeout, and representative test cases. Those artifacts make a component change reviewable.</p>
 <blockquote>
-        LangChain's value is not any one class. It is that the prompt, the model, the
-        parser, and the retriever all speak the same interface — so you compose them
-        like Unix pipes.
-        <cite>— the whole point of LCEL</cite>
+        For every pipe boundary, specify the accepted value, returned value, timeout,
+        and error behavior. Shared Runnable methods do not make component semantics identical.
 </blockquote>
 <h2 id="chatmodel">The ChatModel: connecting an on-prem model with ChatOllama</h2>
-<p>The ChatModel is the model-facing abstraction. In a local lab, ChatOllama is usually the simplest starting point: it talks to an Ollama server and returns chat messages. You configure model name, temperature, and sometimes context length, then call invoke, stream, or batch through the same Runnable interface.</p>
-<p>The important mental model is that the model receives messages, not raw strings. System messages carry policy and role. Human messages carry the user's task. AI messages are prior responses. LangChain keeps that structure explicit instead of forcing you to hand-build JSON payloads for every provider.</p>
-<p>A prompt template turns variables into messages. ChatPromptTemplate.from_messages is the workhorse because it lets you write a system instruction once and inject user-specific fields at runtime. The result is a reusable Runnable: pass a dictionary in, get a prompt value out.</p>
+<p><strong>Contract.</strong> A chat model accepts a supported prompt or message sequence and returns an AI message. <code>ChatOllama</code> adapts that contract to an Ollama endpoint. Verify timeout, context limit, tool-call support, and response metadata for the selected model and package version.</p>
+<p><code>invoke</code>, <code>stream</code>, and <code>batch</code> share a Runnable vocabulary, but they have different operational behavior. Test partial-stream failures, batch concurrency, cancellation, and retry policy at the adapter boundary.</p>
 <ul>
 <li><code>invoke(x)</code> — one input, one full answer. Blocks until done.</li>
 <li><code>stream(x)</code> — yields tokens as they are produced, for live UIs.</li>
@@ -163,8 +164,8 @@
 
 llm = <span class="tok-fn">ChatOllama</span>(
     model=<span class="tok-str">"llama3.1"</span>,                       <span class="tok-com"># local weights, pulled once</span>
-    base_url=<span class="tok-str">"http://gpu-node.fab.local:11434"</span>,  <span class="tok-com"># on-prem, no egress</span>
-    temperature=<span class="tok-num">0</span>,                            <span class="tok-com"># deterministic for process work</span>
+    base_url=<span class="tok-str">"http://gpu-node.fab.local:11434"</span>,  <span class="tok-com"># local endpoint; verify network policy</span>
+    temperature=<span class="tok-num">0</span>,                            <span class="tok-com"># lower sampling variance; test repeatability</span>
     num_predict=<span class="tok-num">512</span>,                          <span class="tok-com"># cap generated tokens</span>
 )
 
@@ -180,10 +181,10 @@ msg = llm.<span class="tok-fn">invoke</span>(<span class="tok-str">"Summarize th
 logs = [<span class="tok-str">"PM idle 12min"</span>, <span class="tok-str">"RF reflected power spike"</span>, <span class="tok-str">"chamber vent OK"</span>]
 answers = llm.<span class="tok-fn">batch</span>(logs)</code></pre>
 </figure>
-<p>Keep prompts boring and testable. Put stable behavior in the system message, user content in human messages, and retrieved context in a clearly named field. That makes it easier to see whether a wrong answer came from the model, the prompt, or the retrieved evidence.</p>
+<p><strong>Test boundary.</strong> Assert the returned type, empty-response handling, maximum latency under the stated host load, and behavior when the endpoint is unavailable. Content-quality evaluation is separate; an AI message can satisfy the type contract and still be wrong.</p>
 <h2 id="prompt">Prompts: ChatPromptTemplate.from_messages</h2>
-<p>Models return messages. Applications often need strings, JSON, Pydantic objects, lists, or routing labels. Output parsers turn loose model output into the shape the rest of your program expects. StrOutputParser is the simplest case; structured parsers are the next step when format matters.</p>
-<p>For a blog workflow, a parser might return title, summary, slug, and tags. For a fab workflow, it might return risk_level, reason, and required_approval. The point is the same: downstream code should depend on a contract, not on a paragraph that merely looks right.</p>
+<p><strong>Contract.</strong> <code>ChatPromptTemplate</code> accepts a mapping containing every required variable and returns a prompt value containing messages. Missing variables should fail before the model call. Separate system instructions, retrieved context, and user text so tests can inspect their positions.</p>
+<p>Prompt text is instruction, not an authorization control. Fields such as <code>required_approval</code> may describe a proposed route, but application code must enforce identity and policy outside the prompt.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -208,10 +209,10 @@ messages = prompt.<span class="tok-fn">invoke</span>({
     <span class="tok-str">"question"</span>: <span class="tok-str">"How long is the purge?"</span>,
 })</code></pre>
 </figure>
-<p>LCEL, the LangChain Expression Language, is the pipe syntax: prompt | model | parser. Each piece is a Runnable. That gives the whole chain a shared interface: invoke for one input, batch for many inputs, stream for partial output, and composition for larger systems.</p>
+<p><strong>Test boundary.</strong> Invoke the template with a complete mapping and assert message roles and variable placement. Then test missing variables, braces in untrusted text, oversized context, and a context field containing instruction-like content.</p>
 <h2 id="parser">Output parsers: from loose text to typed objects</h2>
-<p>This is why the syntax is worth learning. It is not just prettier function composition. It makes chains inspectable, swappable, and testable. When one piece changes, the surrounding pipeline usually stays the same.</p>
-<p>RunnableParallel and RunnablePassthrough are the bridge from simple chains to RAG-style chains. RunnablePassthrough keeps the user's question available. RunnableParallel lets you compute several fields at once, such as question and context. Then the prompt receives a tidy dictionary.</p>
+<p><strong>Contract.</strong> An output parser accepts a model result and returns the application type. <code>StrOutputParser</code> returns text. <code>with_structured_output()</code> is a model wrapper, not a standalone parser: it asks the provider or tool-calling adapter for the declared shape and returns a schema instance only when generation and validation succeed. Callers must handle validation errors, missing fields, invalid enum values, and provider behavior that does not support the requested schema.</p>
+<p>Typed output constrains shape, not factual accuracy. Validate domain values and authorization separately before downstream use.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -238,9 +239,9 @@ result = triage_llm.<span class="tok-fn">invoke</span>(<span class="tok-str">"RF
 
 <span class="tok-fn">print</span>(result.severity, result.subsystem, result.action)  <span class="tok-com"># validated fields</span></code></pre>
 </figure>
-<p>A typical RAG chain looks like this: take the question, retrieve documents into context, keep the original question, format both into a prompt, call the model, parse the answer. No special RAG magic is required; it is the same Runnable composition with one branch doing retrieval.</p>
+<p><strong>Test boundary.</strong> Test <code>StrOutputParser</code> directly with fixed model-result fixtures. Test <code>triage_llm</code> through a stub chat model or recorded provider responses that exercise valid output, malformed output, and schema-validation failure; it does not expose a separate parser to call directly. Assert the returned Python type and exact exception path before adding a live-model integration test.</p>
 <h2 id="lcel">LCEL and Runnable: the pipe that ties it together</h2>
-<p>The common mistake is hiding too much inside one function. If a function retrieves, formats, prompts, calls the model, parses, and logs, you cannot easily test the pieces. LCEL encourages small named steps.</p>
+<p><strong>Contract.</strong> LCEL composes Runnables when the upstream output is accepted by the downstream input. The composed chain exposes Runnable methods, but timeout, retry, streaming, and concurrency behavior still depend on its components and configuration.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file">
@@ -253,18 +254,24 @@ result = triage_llm.<span class="tok-fn">invoke</span>(<span class="tok-str">"RF
 <pre><code><span class="tok-com"># prompt -&gt; model -&gt; parser, composed with the pipe (LCEL)</span>
 chain = prompt | llm | <span class="tok-fn">StrOutputParser</span>()
 
-<span class="tok-com"># The whole chain is itself a Runnable — same three methods:</span>
+<span class="tok-com"># The whole chain is itself a Runnable with the same method family:</span>
 chain.<span class="tok-fn">invoke</span>({<span class="tok-str">"language"</span>: <span class="tok-str">"Korean"</span>,
              <span class="tok-str">"context"</span>: sop_text,
              <span class="tok-str">"question"</span>: <span class="tok-str">"How long is the purge?"</span>})
 
-<span class="tok-kw">for</span> tok <span class="tok-kw">in</span> chain.<span class="tok-fn">stream</span>({...}):   <span class="tok-com"># streaming, for free</span>
+<span class="tok-kw">for</span> tok <span class="tok-kw">in</span> chain.<span class="tok-fn">stream</span>({...}):   <span class="tok-com"># verify component streaming support</span>
     <span class="tok-fn">print</span>(tok, end=<span class="tok-str">""</span>)
 
-chain.<span class="tok-fn">batch</span>([{...}, {...}])       <span class="tok-com"># batching, for free</span>
-<span class="tok-kw">await</span> chain.<span class="tok-fn">ainvoke</span>({...})        <span class="tok-com"># async, for free</span></code></pre>
+chain.<span class="tok-fn">batch</span>([{...}, {...}])       <span class="tok-com"># set and test concurrency limits</span>
+
+<span class="tok-kw">import</span> asyncio
+
+<span class="tok-kw">async def</span> <span class="tok-fn">run_async</span>():
+    <span class="tok-kw">return await</span> chain.<span class="tok-fn">ainvoke</span>({...})  <span class="tok-com"># test cancellation and timeout</span>
+
+asyncio.<span class="tok-fn">run</span>(<span class="tok-fn">run_async</span>())</code></pre>
 </figure>
-<p>Once a chain needs conditional routing, retries, human approval, or durable state, it is time to move from LangChain core to LangGraph. Core gives you composable steps. LangGraph gives you a state machine for deciding which step happens next.</p>
+<p><strong>Test boundary.</strong> Stub each Runnable and assert the values crossing every edge. Add integration tests for endpoint timeout, parser failure, and batch limits. Conditional routing, human review, and durable state introduce workflow contracts beyond this straight-line chain.</p>
 <figure>
 <div aria-label="LCEL pipeline flow diagram" class="diagram">
 <svg aria-label="LCEL pipeline: input dict flows through prompt, model, and parser to a typed result, with streaming, batch, and async available across the whole pipe" role="img" viewbox="0 0 720 250" width="100%">
@@ -300,16 +307,15 @@ chain.<span class="tok-fn">batch</span>([{...}, {...}])       <span class="tok-c
 <!-- capabilities band -->
 <text fill="#3A362F" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="360" y="46">one Runnable interface across the whole pipe</text>
 <text fill="#8A6D3B" font-family="JetBrains Mono, monospace" font-size="14" text-anchor="middle" x="360" y="206">.invoke( )   .stream( )   .batch( )   .ainvoke( )</text>
-<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="360" y="228">streaming · batching · async — inherited for free</text>
+<text fill="#6B6862" font-family="Inter, sans-serif" font-size="13" text-anchor="middle" x="360" y="228">streaming · batching · async — verify each contract</text>
 </svg>
 </div>
 <figcaption>Figure 1. The LCEL pipe. Input flows left to right through
         <code>prompt | model | parser</code>; because each stage is a Runnable, the
-        composed chain exposes invoke / stream / batch / async with no extra code.
-        LCEL 파이프 흐름도 — 각 단계가 Runnable이라 스트리밍·배치·비동기가 그대로 따라옵니다.</figcaption>
+        composed chain exposes the Runnable method family. Each method still requires tests against the selected components and runtime.</figcaption>
 </figure>
 <h2 id="rag">Injecting context with RunnableParallel and RunnablePassthrough</h2>
-<p>The clean progression is: plain chat chain, structured output, tiny RAG, one safe tool, router graph, approval workflow. Each layer adds a reasoned capability instead of piling complexity onto a single prompt.</p>
+<p><strong>Contract.</strong> <code>RunnableParallel</code> returns a mapping of branch outputs. <code>RunnablePassthrough</code> forwards its input. In this RAG shape, the prompt must accept both <code>context</code> and <code>question</code>, and the formatter must accept the retriever's document list.</p>
 <ul>
 <li><code>RunnableParallel</code> — runs several Runnables on the same input
         concurrently and returns a dict of their outputs. A Y-fork in the chain.</li>
@@ -342,11 +348,18 @@ rag_chain = setup | prompt | llm | <span class="tok-fn">StrOutputParser</span>()
 
 rag_chain.<span class="tok-fn">invoke</span>(<span class="tok-str">"What purge time does SOP-CVD-07 require before vent?"</span>)</code></pre>
 </figure>
-<p>For local/on-prem portfolios, this article is the foundation. If you can explain ChatModel, PromptTemplate, Parser, Runnable, and LCEL clearly, then RAG, tools, MCP, and agents become straightforward extensions.</p>
+<h3>Worked boundary ledger</h3>
+<p><strong>Simplified exercise.</strong> Run the purge-time question with a stub retriever that returns one known <code>Document</code>. Record four rows: input dictionary, rendered message roles, model-response type, and parser-return type.</p>
+<ul>
+<li><strong>Pass:</strong> every required variable is present, context remains separate from the question, the model adapter returns an AI message, and the parser returns the type expected by the caller.</li>
+<li><strong>Stop:</strong> a missing variable reaches the model, instruction-like context changes message roles, an endpoint error becomes empty text, or the parser failure is swallowed.</li>
+<li><strong>Limit:</strong> a clean type ledger proves composition, not factual accuracy, source authority, latency under load, or permission to act.</li>
+</ul>
+<p>With those straight-line contracts pinned down, the natural next step is the RAG component guide, where the same ledger expands to document revision, chunk metadata, and retrieval evidence.</p>
 <hr/>
 <h2 id="next">Next: from chains to agents</h2>
 <p>This article is a field note. The interactive deck walks the local LLM and RAG stack slide by slide, with diagrams and implementation examples.</p>
-<p>PhD in physics (IGZO / graphene semiconductor properties) and a semiconductor process engineer working on deposition. Builds air-gapped LLM, RAG, and agent systems, plus reinforcement-learning and anomaly-detection tooling, for the fab. Writes here about turning process know-how into an on-prem knowledge asset that never leaves the network.</p>
+<p>PhD in physics (IGZO / graphene semiconductor properties) and semiconductor process-improvement experience. Writes implementation notes about local AI and manufacturing data systems.</p>
 </div>
 <!-- deep-dive deck link -->
 <aside class="deck-link">
@@ -361,8 +374,8 @@ rag_chain.<span class="tok-fn">invoke</span>(<span class="tok-str">"What purge t
 <div class="share">
 <span class="lbl">Share</span>
 <button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
-<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
-<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Flangchain-core-explained.html" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Flangchain-core-explained.html" rel="noopener" target="_blank">LinkedIn</a>
 </div>
 <!-- author bio card (E-E-A-T) -->
 <aside class="author-card">
@@ -380,57 +393,47 @@ rag_chain.<span class="tok-fn">invoke</span>(<span class="tok-str">"What purge t
 <h2>Related from the Journal</h2>
 <div class="related-grid">
 <a class="rel-card" href="rag-over-sealed-documents.html">
-<span class="cat-tag">Python Stack</span>
-<h3>Lang modules implementation guide</h3>
+<span class="cat-tag">RAG</span>
+<h3>RAG over sealed documents: SOPs, spec sheets, and equipment logs</h3>
 </a>
 <a class="rel-card" href="agents-mcp-mes.html">
-<span class="cat-tag">Python Stack</span>
-<h3>LangGraph: stateful, resumable agent workflows</h3>
+<span class="cat-tag">Agents &amp; MCP</span>
+<h3>Wiring an agent to internal systems with MCP</h3>
 </a>
 </div>
 </section>
 </article>
 </main>
 <footer class="site-foot">
-<div class="wrap">
-<div class="foot-top">
-<div class="foot-lead">
-<h2>Free, in-depth, and open.</h2>
-<p>A good rule: start with the smallest runnable chain that proves the behavior, then add retrieval, tools, and graph state only when the problem actually demands them.</p>
-</div>
-<div class="foot-nav-cols">
-<div class="foot-col">
-<h4>Explore</h4>
-<a href="../../index.html">Hub home</a>
-<a href="../../index.html#courses">All courses</a>
-<a href="../index.html">Journal</a>
-</div>
-<div class="foot-col">
-<h4>Courses</h4>
-<a href="../../overview/index.html">Fab AI</a>
-<a href="../../watsonx/index.html">Air-gapped LLM</a>
-<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
-</div>
-<div class="foot-col">
-<h4>Site</h4>
-<a href="../about.html">About</a>
-<a href="../contact.html">Contact</a>
-<a href="../privacy.html">Privacy</a>
-<a href="../terms.html">Terms</a>
-</div>
-</div>
-</div>
-<div class="foot-bottom">
-<div class="foot-brand">
-<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</div>
-<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
-</div>
-</div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
 </footer>
 <script>
 (function(){
@@ -456,5 +459,6 @@ rag_chain.<span class="tok-fn">invoke</span>(<span class="tok-str">"What purge t
   });
 })();
 </script>
+<script src="../assets/theme.js"></script>
 </body>
 </html>

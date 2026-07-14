@@ -21,12 +21,31 @@ if ([string]::IsNullOrWhiteSpace($SupportEmail)) {
 $env:SITE_URL = $SiteUrl
 $env:SUPPORT_EMAIL = $SupportEmail
 
+function Invoke-Checked {
+  param(
+    [Parameter(Mandatory = $true)]
+    [string]$Command,
+    [Parameter(ValueFromRemainingArguments = $true)]
+    [string[]]$Arguments
+  )
+
+  & $Command @Arguments
+  if ($LASTEXITCODE -ne 0) {
+    throw "Command failed with exit code ${LASTEXITCODE}: $Command $($Arguments -join ' ')"
+  }
+}
+
 Write-Host "Building AI_EDU static site"
 Write-Host "  SITE_URL=$env:SITE_URL"
 Write-Host "  SUPPORT_EMAIL=$env:SUPPORT_EMAIL"
 
-python build_site.py
-python tools/validate_dist.py
+Invoke-Checked python tools/site_contract.py --check
+Invoke-Checked python tools/audit_editorial_voice.py --lang en --strict
+Invoke-Checked python tools/audit_editorial_voice.py --lang ko --strict
+Invoke-Checked python tools/audit_content_depth.py --lang en --strict
+Invoke-Checked python tools/audit_content_depth.py --lang ko --strict
+Invoke-Checked python build_site.py
+Invoke-Checked python tools/validate_dist.py
 
 Write-Host ""
 Write-Host "Deploy-ready dist folder created."

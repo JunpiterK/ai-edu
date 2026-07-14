@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The manufacturing RAG ingestion pipeline: from messy documents to trusted retrieval - AI Edu Archive Journal</title>
+<meta name="description" content="A field-ready ingestion pipeline for manufacturing RAG: source inventory, permission sync, parsing, chunking, freshness, index builds, and rollback.">
+<meta name="author" content="AI Edu Archive">
+<meta name="theme-color" content="#FAF9F5">
+<link rel="canonical" href="https://ai-edu-archive.pages.dev/blog/articles/rag-ingestion-pipeline-manufacturing.html">
+
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The manufacturing RAG ingestion pipeline: from messy documents to trusted retrieval - AI Edu Archive Journal">
+<meta property="og:description" content="A field-ready ingestion pipeline for manufacturing RAG: source inventory, permission sync, parsing, chunking, freshness, index builds, and rollback.">
+<meta property="og:site_name" content="AI Edu Archive">
+<meta property="og:url" content="https://ai-edu-archive.pages.dev/blog/articles/rag-ingestion-pipeline-manufacturing.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="article:published_time" content="2026-07-11">
+<meta property="article:author" content="AI Edu Archive">
+<meta property="article:section" content="RAG">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The manufacturing RAG ingestion pipeline: from messy documents to trusted retrieval - AI Edu Archive Journal">
+<meta name="twitter:description" content="A field-ready ingestion pipeline for manufacturing RAG: source inventory, permission sync, parsing, chunking, freshness, index builds, and rollback.">
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "The manufacturing RAG ingestion pipeline: from messy documents to trusted retrieval",
+  "description": "A field-ready ingestion pipeline for manufacturing RAG: source inventory, permission sync, parsing, chunking, freshness, index builds, and rollback.",
+  "inLanguage": "en",
+  "datePublished": "2026-07-11",
+  "dateModified": "2026-07-11",
+  "author": {"@type": "Person", "name": "AI Edu Archive"},
+  "publisher": {"@type": "Organization", "name": "AI Edu Archive"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ai-edu-archive.pages.dev/blog/articles/rag-ingestion-pipeline-manufacturing.html"}
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/blog.css">
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/rag-ingestion-pipeline-manufacturing.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/rag-ingestion-pipeline-manufacturing.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/rag-ingestion-pipeline-manufacturing.html">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="rag-ingestion-pipeline-manufacturing.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/rag-ingestion-pipeline-manufacturing.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<article data-cat="rag mfg onprem" itemscope itemtype="https://schema.org/Article">
+  <div class="article-hero">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../../index.html">Home</a>
+        <span class="sep" aria-hidden="true">/</span>
+        <a href="../index.html">Journal</a>
+        <span class="sep" aria-hidden="true">/</span>
+        <span aria-current="page">RAG ingestion pipeline</span>
+      </nav>
+      <div class="post-meta">
+        <span class="cat-tag">RAG</span>
+        <span class="post-dot"></span>
+        <time datetime="2026-07-11" itemprop="datePublished">Jul 11, 2026</time>
+        <span class="post-dot"></span>
+        <span class="rt">11 min read</span>
+      </div>
+      <h1 itemprop="headline">The manufacturing RAG ingestion pipeline: from messy documents to trusted retrieval</h1>
+      <div class="byline">
+        <span class="avatar" aria-hidden="true">AE</span>
+        <span class="who"><b itemprop="author">AI Edu Archive</b><span>Applied AI, robotics, manufacturing systems</span></span>
+      </div>
+    </div>
+  </div>
+  <nav class="toc" aria-label="Table of contents">
+    <div class="toc-title">On this page</div>
+    <ol>
+      <li><a href="#inventory">Inventory before indexing</a></li>
+      <li><a href="#stages">The ingestion stages</a></li>
+      <li><a href="#freshness">Freshness and permissions</a></li>
+      <li><a href="#rollback">Rollback is a feature</a></li>
+    </ol>
+  </nav>
+  <div class="article-body" itemprop="articleBody">
+    <figure class="visual-figure media-figure media-figure--diagram">
+      <img src="../assets/visuals/rag-ingestion-flow.svg" alt="Manufacturing RAG ingestion flow" loading="lazy" decoding="async">
+      <figcaption><span class="figure-label">Figure.</span> RAG ingestion is the document supply chain: source inventory, permission sync, parsing, chunking, indexing, and rollback must be designed before launch.</figcaption>
+    </figure>
+
+<div class="field-story"><span class="note-k">Opening artifact: batch traveler</span><p><code>build_id=rag-index-2026-07-11-01</code> has an owner, source fingerprint, ACL snapshot, parser version, rejected-page count, and rollback target. If one of those fields is blank, the index is not ready material. Put the build on hold before spending time on embeddings.</p></div>
+<p><span class="lead-in">Treat each index build as a controlled batch.</span> Its inputs are a source export, owner approvals, revision and retirement metadata, an ACL snapshot, parser and chunker versions, and acceptance questions. Its outputs are a named index artifact and a reconciliation report that another engineer can inspect.</p>
+    <p>This article connects sealed-document RAG, chunking, and evaluation. The ingestion pipeline is where document authority, parse quality, access scope, and rollback become concrete records rather than assumptions.</p>
+    <div class="beginner-example">
+      <span class="note-k">Beginner picture</span>
+      <p>Think of ingestion like incoming material inspection before a wafer lot enters the line. You do not throw unknown chemicals, unverified wafers, or unlabeled parts directly into a process chamber. You check label, lot, expiry, spec, owner, and route. RAG ingestion is the same habit applied to documents: before a SOP, alarm log, or maintenance note reaches the model, it needs identity, revision, permission, and quality checks.</p>
+    </div>
+
+    <h2 id="inventory">Inventory before indexing</h2>
+    <p>Do not begin with embeddings. Begin with a source inventory. For every source family, record owner, system of record, confidentiality level, update cadence, permission model, document type, and retirement rule. This is dull work, and it is exactly why the system becomes reliable later.</p>
+    <div class="fab-voice reader-shortcut">
+      <span class="note-k">Fab engineer voice</span>
+      <p><span class="note-k">Constructed revision check</span> Rev-07 kept winning, which first pointed to the vector index favoring its wording. The source inventory exposed the earlier snag: the rev-08 export had no effective-status field, so both revisions entered the current partition. The document owner identifies the released revision, the pipeline quarantines the ambiguous batch, and the manifest preserves the disposition. This is a constructed workflow, not a plant incident.</p>
+    </div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <caption>Source inventory fields for plant RAG.</caption>
+        <thead><tr><th>Field</th><th>Why it matters</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td class="name">Owner</td><td>Someone must approve inclusion, updates, and retirement.</td><td>Etch process owner</td></tr>
+          <tr><td class="name">Cadence</td><td>Freshness tests depend on how often a source changes.</td><td>Weekly, per ECO, per shift</td></tr>
+          <tr><td class="name">Permission model</td><td>Retrieval must not bypass source access rules.</td><td>Role, line, tool group</td></tr>
+          <tr><td class="name">Retirement rule</td><td>Superseded documents must not answer as current.</td><td>Latest approved revision only</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="stages">The ingestion stages</h2>
+    <p>A practical pipeline has seven stages. Each stage produces an artifact that can be checked, diffed, and rolled back.</p>
+    <ol>
+      <li><b>Discover:</b> enumerate documents and capture metadata from the system of record.</li>
+      <li><b>Authorize:</b> snapshot permissions and decide whether the source is eligible.</li>
+      <li><b>Parse:</b> extract text, tables, headings, warnings, revision notes, and attachments.</li>
+      <li><b>Normalize:</b> convert local shorthand, units, revision labels, and document IDs into stable fields.</li>
+      <li><b>Chunk:</b> split content while keeping warnings, tables, and step dependencies attached.</li>
+      <li><b>Index:</b> build vector and keyword indexes with build IDs and source fingerprints.</li>
+      <li><b>Validate:</b> run freshness, permission, and retrieval smoke tests before promotion.</li>
+    </ol>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <caption>Inspection artifact and hold condition at each ingestion stage.</caption>
+        <thead><tr><th>Stage</th><th>Evidence retained</th><th>Hold the build when</th></tr></thead>
+        <tbody>
+          <tr><td class="name">Discover / Authorize</td><td>Source ID, owner, revision, classification, ACL snapshot.</td><td>The owner is unknown, approval is missing, or the ACL cannot be reproduced.</td></tr>
+          <tr><td class="name">Parse / Normalize</td><td>Parse report, rejected pages, table and warning counts, normalized IDs.</td><td>A safety warning, unit, revision mark, or table relationship is lost.</td></tr>
+          <tr><td class="name">Chunk / Index</td><td>Chunk lineage, source fingerprint, index build ID, model versions.</td><td>A chunk cannot be traced to its page and revision, or a protected chunk lands in the wrong partition.</td></tr>
+          <tr><td class="name">Validate / Promote</td><td>Freshness, permission, retrieval tests and previous known-good build.</td><td>Any permission test fails, stale content wins, or rollback has not been exercised.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="field-note">
+      <span class="note-k">Concrete example</span>
+      <p>Suppose a dry etch chamber clean SOP has a table that says "Do not open the chamber until pressure is below X" and the next page lists the exception flow. A naive chunker may split the warning, the pressure condition, and the exception into three unrelated pieces. A step-aware chunker keeps them together because, to an engineer, they are one operational unit. If those pieces separate, the answer may sound correct while quietly losing the safety condition.</p>
+    </div>
+
+    <figure class="code-figure">
+      <div class="code-bar">
+        <span class="code-file"><span class="code-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">json</span> ingestion_manifest.json</span>
+        <button class="copy-btn" data-copy type="button">Copy</button>
+      </div>
+<pre><code>{
+  "build_id": "rag-index-2026-07-11-01",
+  "source": "sop://etch/chamber-clean",
+  "current_revision": "rev-08",
+  "permission_snapshot": "acl-2026-07-11T00:00Z",
+  "parser_version": "docparse-1.4.2",
+  "chunker_version": "plant-step-aware-0.9",
+  "embedding_model": "local-embedding-v3",
+  "fingerprint": "sha256:..."
+}</code></pre>
+    </figure>
+
+    <h2 id="freshness">Freshness and permissions</h2>
+    <p>Two failures deserve special treatment: stale answers and unauthorized answers. Stale answers happen when the old source remains easier to retrieve than the new source. Unauthorized answers happen when a document permission model is copied imperfectly into the RAG layer. Both failures look like successful retrieval unless the pipeline tests them directly.</p>
+    <p>For freshness, keep adversarial tests: ask about a superseded revision and require the system to identify it as old. For permissions, run the same question under several roles and verify that the retrieved set changes. Apply access filters before context assembly; answer-layer prompting is not a repair for a retrieval permission failure.</p>
+    <div class="beginner-example">
+      <span class="note-k">Easy analogy</span>
+      <p>Freshness is like checking whether the recipe loaded in the tool is the released recipe, not the one someone saved during last week's troubleshooting. Permissions are like badge access. If a person cannot enter a bay or open a controlled recipe file, the RAG system should not hand them that content just because the text matches their question.</p>
+    </div>
+
+    <h2 id="rollback">Rollback is a feature</h2>
+    <p><b>Hold:</b> the pipeline owner quarantines a build when reconciliation is incomplete, parsing loses required structures, ACL tests differ from the source system, or revision conflicts lack document-owner disposition. <b>Release:</b> the RAG service owner promotes the named index after document, security, and domain owners approve their checks.</p>
+    <p><b>Rollback:</b> retain the previous index, metadata store, ACL snapshot, and serving alias as one restorable bundle. On a stale-current or permission incident, the platform owner removes the new alias, restores the previous bundle, and records affected queries for review. Rebuilding later is remediation, not the rollback mechanism.</p>
+    <p><b>Limitations:</b> successful ingestion does not prove retrieval quality or answer correctness. OCR can still corrupt symbols, source ACLs can be wrong, and an approved document can contain ambiguous instructions. Evaluation and user-facing citations remain separate controls.</p>
+    <div class="tbl-wrap"><table class="tbl"><caption>One-source-family promotion drill.</caption><thead><tr><th>Record</th><th>Pass / continue</th><th>Stop / owner</th></tr></thead><tbody><tr><td class="name">Reconciliation</td><td>Discovered, accepted, rejected, retired, and duplicate counts balance to the source snapshot.</td><td>Counts do not balance; pipeline owner holds the batch.</td></tr><tr><td class="name">Revision and ACL</td><td>Current status and role access match the system of record for sampled documents.</td><td>Any mismatch; document owner or IT/security resolves it.</td></tr><tr><td class="name">Rollback drill</td><td>The previous named bundle can be restored and its manifest verified before promotion.</td><td>No restorable target; service owner blocks release.</td></tr><tr><td class="name">Limit</td><td>The result covers this source family, export window, and parser version.</td><td>Do not infer coverage for another repository, OCR path, or permission model.</td></tr></tbody></table></div>
+    <p>Once the supply batch can be reconciled and rolled back, move to <a href="plant-rag-evaluation-harness.html">the plant RAG evaluation harness</a>. That is where the named index is challenged on freshness, permissions, retrieval, and refusal before it receives traffic.</p>
+  </div>
+<aside class="article-endcap" aria-label="Article information">
+  <p>Reference implementation: adapt owners and release criteria to the source systems in scope.</p>
+  <div class="article-endcap-actions">
+    <a href="../index.html">Back to Journal</a>
+    <a href="../ai-categories.html">Browse AI categories</a>
+  </div>
+</aside>
+</article>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
+</footer>
+<script src="../assets/theme.js"></script>
+</body>
+</html>

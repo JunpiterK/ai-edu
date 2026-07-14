@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>자동차 조립 라인을 위한 Takt-aware AI Agent - AI Edu Archive Journal</title>
+<meta name="description" content="자동차 조립 라인에서 takt-aware AI Agent를 설계하는 법을 설명합니다. line cadence, Andon, station event, approval gate, containment, MES/QMS tool, 안전한 action 설계를 다룹니다.">
+<meta name="author" content="AI Edu Archive">
+<meta name="theme-color" content="#FAF9F5">
+<link rel="canonical" href="https://ai-edu-archive.pages.dev/blog/ko/articles/takt-aware-ai-agents-assembly-lines.html">
+
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="자동차 조립 라인을 위한 Takt-aware AI Agent - AI Edu Archive Journal">
+<meta property="og:description" content="자동차 조립 라인에서 takt-aware AI Agent를 설계하는 법을 설명합니다. line cadence, Andon, station event, approval gate, containment, MES/QMS tool, 안전한 action 설계를 다룹니다.">
+<meta property="og:site_name" content="AI Edu Archive">
+<meta property="og:url" content="https://ai-edu-archive.pages.dev/blog/ko/articles/takt-aware-ai-agents-assembly-lines.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="article:published_time" content="2026-07-13">
+<meta property="article:author" content="AI Edu Archive">
+<meta property="article:section" content="Automotive AI &amp; Robotics">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"자동차 조립 라인을 위한 Takt-aware AI Agent","description":"자동차 조립 라인에서 takt-aware AI Agent를 설계하는 법을 설명합니다. line cadence, Andon, station event, approval gate, containment, MES/QMS tool, 안전한 action 설계를 다룹니다.","inLanguage":"ko","datePublished":"2026-07-13","dateModified":"2026-07-13","author":{"@type":"Person","name":"AI Edu Archive"},"publisher":{"@type":"Organization","name":"AI Edu Archive"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ai-edu-archive.pages.dev/blog/ko/articles/takt-aware-ai-agents-assembly-lines.html"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/blog.css">
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/takt-aware-ai-agents-assembly-lines.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/takt-aware-ai-agents-assembly-lines.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/takt-aware-ai-agents-assembly-lines.html">
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="../../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="주요 메뉴">
+      <a href="../../../index.html#courses">강의</a>
+      <a href="../index.html" aria-current="page">글</a>
+      <a href="../learning-paths.html">학습 경로</a>
+      <a href="../search.html">검색</a>
+      <a href="../portfolio.html">포트폴리오</a>
+      <a href="../about.html">소개</a>
+      <div class="language-switch" aria-label="언어 선택">
+        <a href="../../articles/takt-aware-ai-agents-assembly-lines.html" lang="en" title="English">EN</a>
+        <a href="takt-aware-ai-agents-assembly-lines.html" lang="ko" aria-current="true" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<article data-cat="auto agents mfg" itemscope itemtype="https://schema.org/Article">
+  <div class="article-hero"><div class="wrap"><nav class="breadcrumb" aria-label="현재 위치"><a href="../../../index.html">홈</a><span class="sep" aria-hidden="true">/</span><a href="../automotive-ai-robotics.html">자동차 AI &amp; 로봇</a><span class="sep" aria-hidden="true">/</span><span aria-current="page">Takt-aware AI Agent</span></nav><div class="post-meta"><span class="cat-tag">자동차 AI &amp; 로봇</span><span class="post-dot"></span><time datetime="2026-07-13" itemprop="datePublished">2026.07.13</time><span class="post-dot"></span><span class="rt">14분</span></div><h1 itemprop="headline">자동차 조립 라인을 위한 Takt-aware AI Agent</h1><div class="byline"><span class="avatar" aria-hidden="true">AE</span><span class="who"><b itemprop="author">AI Edu Archive</b><span>제조 AI · 로봇 · 생산 시스템</span></span></div></div></div>
+  <nav class="toc" aria-label="목차"><div class="toc-title">이 글의 내용</div><ol><li><a href="#meaning">Takt-aware의 의미</a></li><li><a href="#wrong-agent">잘못된 Agent 설계</a></li><li><a href="#tool-lanes">Tool lane</a></li><li><a href="#approval">승인 gate</a></li><li><a href="#manifest">시작 manifest</a></li></ol></nav>
+  <div class="article-body" itemprop="articleBody">
+    
+    <figure class="visual-figure media-figure media-figure--diagram">
+      <img src="../../assets/visuals/takt-agent-flow.svg" alt="Takt-aware agent escalation" loading="lazy" decoding="async">
+      <figcaption><span class="figure-label">그림.</span> Takt-aware agent는 tool이 붙은 LLM이 아닙니다. station cadence, Andon state, approval gate, containment, rework path를 존중해야 합니다.</figcaption>
+    </figure>
+
+    <div class="field-story">
+      <span class="note-k">합성 장면: 답변이 도착했을 때는 다음 차체</span>
+      <p>Torque station의 cycle time이 길어지고 Andon이 켜진 뒤, Agent 요약은 몇 분 후 quality queue에 도착합니다. 내용은 맞지만 화면에는 이미 다음 VIN이 들어와 있고 line leader는 수동 escalation을 끝낸 상태입니다. 처음에는 답변 정확도 문제처럼 보이지만 실제로 빠진 입력은 대응 기한과 현재 line state입니다. 조립 라인에서 가능한 상황을 단순화한 가상 장면이며 특정 공장의 사건이 아닙니다.</p>
+    </div>
+
+    <div class="reader-shortcut">
+      <span class="note-k">설계 시작점</span>
+      <p>각 tool call 옆에 response class를 붙이세요. Immediate, Near-term, Planned stop, Engineering 중 하나를 고르고 owner와 만료 시각을 적습니다. 만료된 답변은 action 제안으로 쓰지 않고 새 line state를 조회하도록 하면 늦게 도착한 정답이 잘못된 행동으로 이어지는 일을 줄일 수 있습니다.</p>
+    </div>
+
+<p><span class="lead-in">자동차 shop-floor Agent에는 시간 압박도 입력값입니다.</span> 조립 라인에서는 다음 차체가 들어오기 전까지 남은 시간, Andon 상태, 승인자를 함께 봅니다. 아래 response class와 권한 구분은 기술 권고를 설명하는 제안 프레임워크입니다. 실제 적용 값은 사업장의 Control Plan, 안전 규정, 노사 절차, MES/QMS 권한, 승인 체계로 바꾸고 담당 부서가 검토합니다.</p>
+    <div class="beginner-example"><span class="note-k">판단 질문</span><p>이벤트가 들어오면 세 가지를 확인합니다. 현재 takt 안에 사람이 확인해야 하는가, 다음 계획 정지까지 미뤄도 되는가, 생산 안정화 뒤 분석 과제로 넘길 수 있는가. 이 구분이 정해져야 Agent의 응답 시간과 권한을 시험할 수 있습니다.</p></div>
+    <h2 id="meaning">Takt-aware의 의미</h2>
+    <p>Takt time은 생산 수요에 맞춰 정한 목표 간격입니다. 아래의 60초 takt와 5분 대응 지연은 설명을 위해 단순화한 초기 예시값입니다. 대응 지연은 모든 이벤트가 아니라 지연 때문에 실제 라인이 멈춘 것으로 귀속된 비율만 손실에 반영합니다. 실제 영향은 buffer, 병렬 station, 고장 위치, 표준작업, 복구 방식에 따라 달라지므로 시뮬레이션 결과를 생산 계획이나 OEE 예측으로 사용하면 안 됩니다.</p>
+    <p>Takt-aware Agent는 모델이 혼자 빠르게 행동한다는 뜻이 아닙니다. action을 제안하기 전에 response time, risk, owner, approval path를 먼저 분류한다는 뜻입니다.</p>
+    <figure class="visual-figure media-figure" id="agv-photo"><div class="diagram"><img src="../../assets/photos/agv-carrying-trolley.jpg" alt="산업 시설 안에서 자재 trolley를 운반하는 AGV" loading="lazy" decoding="async"></div><figcaption><span class="figure-label">사진.</span> Takt 손실은 조립 공구에서만 시작되지 않습니다. AGV 지연, 빈 rack, scan 실패, 막힌 통로 때문에 station controller가 정상이어도 자재 starvation이 생길 수 있습니다. Agent가 설비나 작업자에게 지연 원인을 붙이기 전에 material-flow evidence를 같이 봐야 하는 이유입니다. 사진: MakoGomez90, <a class="link" href="https://commons.wikimedia.org/wiki/File:AGV_con_carro.jpg">Wikimedia Commons</a>, <a class="link" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. 원격 링크 대신 Wikimedia 1,280px preview를 로컬 저장했고 다른 수정은 하지 않았습니다.</figcaption></figure>
+    <figure class="visual-figure media-figure media-figure--diagram" id="four-clocks-figure"><img src="../../assets/visuals/takt-four-clocks.svg" alt="감지, AI 조언, 승인, 복구 시간을 분리한 timeline" loading="lazy" decoding="async"><figcaption><span class="figure-label">그림.</span> 감지, Agent 응답 대기, 사람의 승인, 물리적 복구는 서로 다른 clock과 owner를 가집니다. Agent 귀속 지연을 계산하기 전에 네 구간을 따로 기록해야 합니다.</figcaption></figure>
+    <div class="tbl-wrap"><table class="tbl"><caption>Agent response class.</caption><thead><tr><th>Class</th><th>시간 관점</th><th>대표 action</th><th>Owner</th></tr></thead><tbody><tr><td class="name">Immediate</td><td>현재 takt window</td><td>Andon escalation, evidence 요약, owner 호출.</td><td>Line leader 또는 supervisor.</td></tr><tr><td class="name">Near-term</td><td>현재 shift</td><td>Containment list, station window 비교, handover note 초안.</td><td>Quality와 production.</td></tr><tr><td class="name">Planned stop</td><td>다음 휴식/계획 정지</td><td>Robot-cell inspection 또는 tool check 추천.</td><td>Maintenance와 automation.</td></tr><tr><td class="name">Engineering</td><td>생산 안정화 이후</td><td>Pattern 분석, control plan update, 8D evidence 준비.</td><td>Quality engineering.</td></tr></tbody></table></div>
+    <section class="interactive-lab" data-takt-sim data-minute-text="분">
+      <div class="interactive-lab-head"><div><span class="sim-badge">라인 계산 실습</span><h3>Cycle 손실과 Agent 지연 손실 분리하기</h3><p>조건을 움직여 cycle time 초과 손실과 실제 라인 정지로 귀속된 Agent 대응 지연 손실을 따로 확인해 보세요.</p></div></div>
+      <div class="sim-control"><label for="takt-ko">계획 takt <output data-takt-value="takt"></output></label><input id="takt-ko" data-takt-input="takt" data-unit="초" type="range" min="30" max="120" step="5" value="60"></div>
+      <div class="sim-control"><label for="cycle-ko">실제 cycle time <output data-takt-value="cycle"></output></label><input id="cycle-ko" data-takt-input="cycle" data-unit="초" type="range" min="30" max="150" step="5" value="65"></div>
+      <div class="sim-control"><label for="response-ko">이벤트당 대응 지연 <output data-takt-value="response"></output></label><input id="response-ko" data-takt-input="response" data-unit="초" type="range" min="0" max="600" step="30" value="300"></div>
+      <div class="sim-control"><label for="events-ko">교대당 Agent 대응 이벤트 <output data-takt-value="events"></output></label><input id="events-ko" data-takt-input="events" data-unit="건" type="range" min="0" max="12" value="4"></div>
+      <div class="sim-control"><label for="attribution-ko">라인 정지 귀속 비율 <output data-takt-value="attribution"></output></label><input id="attribution-ko" data-takt-input="attribution" data-unit="%" type="range" min="0" max="100" step="10" value="50"></div>
+      <div class="sim-control"><label for="shift-ko">교대 시간 <output data-takt-value="shift"></output></label><input id="shift-ko" data-takt-input="shift" data-unit="시간" type="range" min="6" max="12" step="0.5" value="8"></div>
+      <div class="sim-results"><div><span>계획 생산량</span><strong data-takt-planned></strong></div><div><span>최종 예상 생산량</span><strong data-takt-actual></strong></div><div><span>Cycle 초과 손실</span><strong data-takt-cycle-lost></strong></div><div><span>Agent 지연 손실</span><strong data-takt-agent-lost></strong></div><div><span>총 손실 수량</span><strong data-takt-lost></strong></div><div><span>귀속 라인 정지 시간</span><strong data-takt-downtime></strong></div></div>
+      <p class="sim-note">설명을 위해 단순화한 가상 계산이며 표시값은 초기 예시값입니다. Agent 지연 시간 중 라인 정지로 귀속된 비율만 차감하고, cycle time이 takt를 넘어서 생긴 손실과 분리해 표시합니다. buffer 회복, 휴식, starvation, 병렬 station은 제외하므로 실제 사업장 수치나 OEE 예측값으로 사용하면 안 됩니다.</p>
+    </section>
+    <h2 id="wrong-agent">잘못된 Agent 설계</h2>
+    <p>잘못된 설계는 broad question에는 답하지만 station state, line cadence, authority를 모르는 Agent입니다. 이런 Agent는 "라인을 멈추고 영향 차량을 검사하세요"라고 말할 수 있습니다. 하지만 그 제안이 control plan에 이미 정의되어 있는지, line leader가 승인했는지, 의심 VIN 범위가 맞는지 모르면 위험합니다.</p>
+    <p>첫 production-safe 버전은 보수적이어야 합니다. 증거를 읽고, 요약하고, severity를 분류하고, owner를 찾고, action 초안을 만드는 역할부터 시작해야 합니다. 실제 write action은 gate 뒤에 둡니다.</p>
+    <div class="fab-voice"><span class="note-k">현장 말투로 말하면</span><p>Agent가 line stop을 누구 승인으로, 어떤 증거 때문에, 어떻게 rollback할 수 있는지 설명하기 전에 line stop을 더 빨리 실행할 수 있다면 설계 순서가 거꾸로 된 겁니다.</p></div>
+    <h2 id="tool-lanes">Tool lane</h2>
+    <p>Tool을 lane으로 나누면 Agent를 유용하게 만들면서도 무모해지지 않게 막을 수 있습니다.</p>
+    <div class="tbl-wrap"><table class="tbl"><caption>Tool permission lane.</caption><thead><tr><th>Lane</th><th>예시</th><th>기본 권한</th></tr></thead><tbody><tr><td class="name">Read-only evidence</td><td>MES station event, Andon history, robot log, torque result, vision result.</td><td>Audit log와 함께 허용.</td></tr><tr><td class="name">Knowledge retrieval</td><td>Work instruction, control plan, FMEA, troubleshooting guide, past 8D.</td><td>출처와 함께 허용.</td></tr><tr><td class="name">Draft action</td><td>Containment list, shift handover, QMS issue draft, maintenance request draft.</td><td>제출 전 초안까지만 허용.</td></tr><tr><td class="name">Write action</td><td>QMS issue 생성, containment 배정, hold 요청, robot inspection 일정.</td><td>승인 필요.</td></tr><tr><td class="name">Physical action</td><td>Robot motion, safety bypass, line stop/restart.</td><td>Human-only 또는 hard-block.</td></tr></tbody></table></div>
+    <h2 id="approval">승인 gate</h2>
+    <p>자동차 Agent에는 막연한 human review가 아니라 이름 붙은 approval gate가 필요합니다. action에 따라 승인 owner가 달라집니다.</p>
+    <ul>
+      <li><b>Line owner:</b> takt, manpower, station blocking, Andon escalation.</li>
+      <li><b>Quality owner:</b> containment, defect disposition, rework rule, customer risk.</li>
+      <li><b>Safety owner:</b> robot zone, interlock, maintenance mode, human entry.</li>
+      <li><b>Maintenance or automation owner:</b> robot program, fixture, tool calibration, PLC/robot recovery.</li>
+      <li><b>Process or manufacturing engineer:</b> recurring pattern, control plan update, long-term corrective action.</li>
+    </ul>
+    <p>Agent는 approval card를 만들어야 합니다. evidence, suspected scope, proposed action, affected VIN range, risk if delayed, rollback path, owner가 들어간 카드입니다. 자신감 있는 긴 문단보다 이런 카드가 현장에서는 훨씬 쓸모 있습니다.</p>
+    <div class="field-note"><span class="note-k">Worked example: 1분 approval card</span><p>설명을 위한 가상 이벤트로 <b>station T-220의 torque 결과 1건이 기준 밖</b>이라고 놓습니다. Agent는 VIN과 원시 torque record를 읽고 response class를 Immediate로 분류하되, action은 "line stop"이 아니라 <b>line leader 호출 + quality owner 확인 요청</b> 초안으로 제한합니다. 카드에는 영향 VIN 1대, 다음 VIN 진입 전 확인할 항목, 지연 시 위험, 요청 취소 방법을 적습니다. 원시 기록이 없거나 station clock이 어긋나면 severity를 확정하지 않고 evidence missing으로 표시합니다. Safety interlock과 robot motion은 이 카드의 승인 범위 밖입니다.</p></div>
+    <h2 id="manifest">시작 manifest</h2>
+    <p>아래 manifest는 station delay와 quality signal이 함께 나타나는 상황을 설명하기 위한 가상 초안입니다. line·station 이름, tool 권한, hard block, 승인 필드는 실제 사업장의 안전 PLC와 작업 표준, 책임자 체계로 교체해야 합니다.</p>
+    <pre><code>takt_aware_agent_manifest:
+  scope:
+    line: "final-assembly-1"
+    stations: ["torque-220", "vision-310"]
+    response_classes: ["immediate", "near_term", "planned_stop", "engineering"]
+  read_tools:
+    - mes_station_events
+    - andon_history
+    - torque_results
+    - vision_results
+    - work_instruction_search
+    - control_plan_search
+  draft_tools:
+    - containment_note_draft
+    - shift_handover_draft
+    - maintenance_request_draft
+  write_tools:
+    - qms_issue_create
+    - containment_assignment
+  hard_blocks:
+    - robot_motion_command
+    - safety_bypass
+    - line_restart
+  approval_fields:
+    - owner
+    - evidence
+    - affected_vin_range
+    - risk_if_delayed
+    - rollback_path</code></pre>
+    <p>첫 번째 좋은 자동차 Agent는 자율성보다 훈련된 범위가 선명합니다. signal, evidence, owner, approved action 사이의 시간을 줄이되 라인의 권한 구조는 건드리지 않습니다. Genealogy가 불완전하면 <a class="link" href="vin-genealogy-vs-wafer-genealogy.html">VIN genealogy 글</a>로 돌아가 영향 범위를 먼저 만들고, 잘못된 tool call을 멈추고 조사하는 절차가 필요하면 <a class="link" href="agent-incident-response-runbook.html">Agent 사고 대응 런북</a>으로 이어가세요.</p>
+  </div>
+<aside class="article-endcap" aria-label="글 안내">
+  <p>제안 프레임워크이며, 실제 사업장의 생산·품질·안전 규칙으로 교체해 검토해야 합니다.</p>
+  <div class="article-endcap-actions">
+    <a href="../index.html">글 목록으로 돌아가기</a>
+    <a href="../ai-categories.html">AI 카테고리 보기</a>
+  </div>
+</aside>
+</article>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>누구나 볼 수 있는 실용적인 AI 교육 자료입니다.</h2>
+        <p>현장에서 쓸 수 있는 AI 시스템을 위한 강의, 글, 실전 기록을 모았습니다.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>둘러보기</h4>
+          <a href="../../../index.html#courses">강의</a>
+          <a href="../index.html">글</a>
+          <a href="../learning-paths.html">학습 경로</a>
+          <a href="../search.html">검색</a>
+          <a href="../portfolio.html">포트폴리오</a>
+        </div>
+        <div class="foot-col">
+          <h4>사이트</h4>
+          <a href="../about.html">소개</a>
+          <a href="../contact.html">연락처</a>
+          <a href="../privacy.html">개인정보 처리방침</a>
+          <a href="../terms.html">이용약관</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · 한국어와 영어로 제공하는 AI 교육</span>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/theme.js"></script>
+<script src="../../assets/interactive-labs.js"></script>
+</body>
+</html>

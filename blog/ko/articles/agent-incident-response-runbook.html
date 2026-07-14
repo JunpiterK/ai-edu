@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>제조 AI agent를 위한 사고 대응 런북 - AI Edu Archive Journal</title>
+<meta name="description" content="현장 AI agent를 위한 실전 사고 대응 런북: 분류, 격리, trace 보존, tool rollback, owner 통지, 재발 방지.">
+<meta name="author" content="AI Edu Archive">
+<meta name="theme-color" content="#FAF9F5">
+<link rel="canonical" href="https://ai-edu-archive.pages.dev/blog/ko/articles/agent-incident-response-runbook.html">
+
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="제조 AI agent를 위한 사고 대응 런북 - AI Edu Archive Journal">
+<meta property="og:description" content="현장 AI agent를 위한 실전 사고 대응 런북: 분류, 격리, trace 보존, tool rollback, owner 통지, 재발 방지.">
+<meta property="og:site_name" content="AI Edu Archive">
+<meta property="og:url" content="https://ai-edu-archive.pages.dev/blog/ko/articles/agent-incident-response-runbook.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="article:published_time" content="2026-07-11">
+<meta property="article:author" content="AI Edu Archive">
+<meta property="article:section" content="Agents & MCP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="제조 AI agent를 위한 사고 대응 런북 - AI Edu Archive Journal">
+<meta name="twitter:description" content="현장 AI agent를 위한 실전 사고 대응 런북: 분류, 격리, trace 보존, tool rollback, owner 통지, 재발 방지.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"제조 AI agent를 위한 사고 대응 런북","description":"현장 AI agent를 위한 실전 사고 대응 런북: 분류, 격리, trace 보존, tool rollback, owner 통지, 재발 방지.","inLanguage":"ko","datePublished":"2026-07-11","dateModified":"2026-07-11","author":{"@type":"Person","name":"AI Edu Archive"},"publisher":{"@type":"Organization","name":"AI Edu Archive"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ai-edu-archive.pages.dev/blog/ko/articles/agent-incident-response-runbook.html"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/blog.css">
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/agent-incident-response-runbook.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/agent-incident-response-runbook.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/agent-incident-response-runbook.html">
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="../../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="주요 메뉴">
+      <a href="../../../index.html#courses">강의</a>
+      <a href="../index.html" aria-current="page">글</a>
+      <a href="../learning-paths.html">학습 경로</a>
+      <a href="../search.html">검색</a>
+      <a href="../portfolio.html">포트폴리오</a>
+      <a href="../about.html">소개</a>
+      <div class="language-switch" aria-label="언어 선택">
+        <a href="../../articles/agent-incident-response-runbook.html" lang="en" title="English">EN</a>
+        <a href="agent-incident-response-runbook.html" lang="ko" aria-current="true" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<article data-cat="agents mfg onprem" itemscope itemtype="https://schema.org/Article">
+  <div class="article-hero"><div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="sep" aria-hidden="true">/</span><a href="../index.html">Journal</a><span class="sep" aria-hidden="true">/</span><span aria-current="page">Agent 사고 대응</span></nav><div class="post-meta"><span class="cat-tag">Agents & MCP</span><span class="post-dot"></span><time datetime="2026-07-11" itemprop="datePublished">2026.07.11</time><span class="post-dot"></span><span class="rt">9분</span></div><h1 itemprop="headline">제조 AI agent를 위한 사고 대응 런북</h1><div class="byline"><span class="avatar" aria-hidden="true">AE</span><span class="who"><b itemprop="author">AI Edu Archive</b><span>Applied AI, robotics, manufacturing systems</span></span></div></div></div>
+  <nav class="toc" aria-label="Table of contents"><div class="toc-title">On this page</div><ol><li><a href="#what">무엇을 incident로 볼 것인가</a></li><li><a href="#first">첫 30분</a></li><li><a href="#trace">Trace 보존</a></li><li><a href="#fix">Corrective action</a></li></ol></nav>
+  <div class="article-body" itemprop="articleBody">
+    <figure class="visual-figure media-figure media-figure--diagram">
+      <img src="../../assets/visuals/incident-response-flow.svg" alt="Agent incident response loop" loading="lazy" decoding="async">
+      <figcaption><span class="figure-label">그림.</span> 이상 징후를 확인한 뒤 심각도를 분류하고, 영향을 받는 tool 경로를 격리합니다. 그 상태에서 trace를 보존해야 rollback과 재발 방지 통제를 같은 증거로 검토할 수 있습니다.</figcaption>
+    </figure>
+
+        <div class="field-story">
+      <span class="note-k">Tabletop 장면: owner가 다른 ticket</span>
+      <p>09:10, maintenance queue에 담당 module이 다른 ticket 한 건이 보입니다. 본문에는 현재 SOP처럼 보이는 절차가 인용됐지만 revision 표시는 없고 approval ID도 비어 있습니다. 답변만 고치면 화면은 깨끗해지지만 잘못된 source, 넓은 permission, 승인 없는 tool call 중 무엇이 원인인지는 사라집니다. 사고 대응 훈련을 위한 합성 장면이며 실제 조직의 사건이나 시각이 아닙니다.</p>
+    </div>
+
+    <div class="reader-shortcut">
+      <span class="note-k">바로 적용할 기준</span>
+      <p>사고 대응 표의 첫 열에 "멈출 것, 보존할 것, 알릴 사람"을 적으세요. Tool route, source revision, approval state, known safe state가 한 화면에 없으면 원인 추정은 보류하고 관련 route부터 read-only로 낮춥니다.</p>
+    </div>
+
+<p><span class="lead-in">AI agent가 tool을 호출하는 순간, 잘못된 답변은 시스템 상태와 작업 순서에 흔적을 남깁니다.</span> 잘못된 draft, 다른 owner에게 전달된 ticket, 과도한 permission, 폐기된 절차를 근거로 한 추천도 대응 대상입니다. 기술적 권고는 prompt 수정 전에 확산을 막고 재현 artifact를 보존하는 것입니다. 다만 이 런북은 조직의 법무·보안·안전 incident 절차를 대신하지 않습니다.</p>
+    <div class="beginner-example">
+      <span class="note-k">초심자용 그림</span>
+      <p>처음에는 prompt를 고치지 않습니다. 관련 tool 경로를 막고, prompt·source·권한·승인 상태를 보존한 뒤 담당 owner에게 알립니다. 원본을 남기지 않은 수정은 원인 비교와 재현을 어렵게 만듭니다.</p>
+    </div>
+    <h2 id="what">무엇을 incident로 볼 것인가</h2>
+    <p>피해가 확인된 경우만 incident로 잡으면 승인 누락이나 오래된 source 추천 같은 near miss가 빠집니다. Unauthorized retrieval, 잘못된 tool 실행, 누락된 승인, 근거 없는 citation, 반복된 refusal 실패, 개인정보 노출, 그리고 잘못된 출력에 따라 사용자가 조치를 시작한 경우를 보고 대상으로 정합니다.</p>
+    <div class="tbl-wrap"><table class="tbl"><caption>조직별 영향도·법적 의무·기존 incident 체계에 맞춰 조정하는 Agent SEV 분류 템플릿.</caption><thead><tr><th>Level</th><th>Definition</th><th>Response</th></tr></thead><tbody><tr><td class="name">SEV-3</td><td>잘못된 답변이나 draft가 있었지만 action은 없음.</td><td>Log, tag, evaluate, prompt/source 수정.</td></tr><tr><td class="name">SEV-2</td><td>잘못된 ticket, workflow, recommendation이 human queue에 도달.</td><td>해당 tool path disable, owner 통지, trace 보존.</td></tr><tr><td class="name">SEV-1</td><td>State-changing action, data exposure, production-impacting recommendation.</td><td>즉시 격리, escalation, formal incident review 시작.</td></tr></tbody></table></div>
+    <h2 id="first">첫 30분</h2>
+    <p>첫 대응에서는 원인 결론보다 영향 확산을 먼저 막습니다. 관련 tool route를 멈추고 trace를 보존하며 영향받은 사용자를 확인합니다. 경계가 불명확하면 agent 전체를 read-only mode로 낮춥니다. 원본 artifact를 복사하기 전에 prompt나 index를 수정하면 변경 전후 비교가 불가능해집니다.</p>
+    <div class="fab-voice">
+      <span class="note-k">FAB 엔지니어 시점</span>
+      <p>Agent에서는 prompt version, policy version, retrieved source, user role, tool route를 한 시점으로 맞춰 봅니다. 여기에 원본 업무 시스템의 변경 이력과 known safe state를 붙여야 합니다. 이 항목이 빠지면 회고에서 서로 다른 실행을 놓고 원인을 추정하게 됩니다.</p>
+    </div>
+    <ol><li><b>Classify:</b> severity와 affected domain을 지정합니다.</li><li><b>Contain:</b> 관련 tool path, role, index build를 비활성화합니다.</li><li><b>Preserve:</b> prompt, source, model version, user role, tool request, approval state, output을 복사합니다.</li><li><b>Notify:</b> process owner와 platform owner를 기본으로 호출합니다. 데이터·권한 영향은 security, 물리 안전 영향은 safety/EHS, 품질 판정 영향은 quality owner, 생산·라인 영향은 operations 또는 line owner에게 즉시 escalation합니다.</li><li><b>Authorize recovery:</b> 재가동은 영향 영역의 책임자가 승인합니다. 안전 기능은 safety/EHS와 설비 안전 절차, 제품 disposition은 quality, 라인 복귀는 operations/line owner의 기존 승인 체계를 따릅니다.</li><li><b>Communicate:</b> 영향 받은 사용자에게 무엇을 무시하고, 다시 하고, 수동 검증해야 하는지 알립니다.</li></ol>
+    <div class="field-note"><span class="note-k">작은 실습: 15분 tabletop</span><p><b>0분:</b> 위 가상 ticket을 발견했다고 읽어줍니다. <b>5분:</b> 참가자는 멈출 route, 보존할 artifact, 통지 owner를 각각 하나씩 고릅니다. <b>10분:</b> "trace 저장소가 비어 있다"는 조건을 추가하고 영향 범위를 어디까지 잠정 표시할지 정합니다. <b>15분:</b> 복구 허용 조건과 회귀 test를 한 줄로 남깁니다. 중지 권한자나 trace 위치를 찾지 못하면 자동화 범위를 넓히지 않고 그 공백을 런북 action item으로 등록합니다.</p></div>
+    <h2 id="trace">Trace 보존</h2>
+    <p>Trace 항목은 사고가 난 뒤 추가할 수 없습니다. User role snapshot, policy·prompt·model version, retrieved source ID, tool schema와 argument, approval ID, 실행 결과, 최종 응답을 한 trace ID로 묶습니다. 민감한 argument는 그대로 적재하지 말고 조직의 보존·마스킹 정책을 적용해야 하며, 로그만으로 외부 시스템의 실제 상태까지 증명된다고 보아서는 안 됩니다.</p>
+    <p>아래 JSON은 특정 회사의 실제 incident가 아니라, 설명을 위해 단순화한 가상 사례의 예시 trace입니다. E-17과 SOP revision, incident ID도 모두 가상 식별자입니다.</p>
+    <figure class="code-figure"><div class="code-bar"><span class="code-file"><span class="code-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">json</span> incident_trace.json</span><button class="copy-btn" data-copy type="button">Copy</button></div><pre><code>{
+  "incident_id": "AI-SEV2-2026-07-11-004",
+  "agent": "maintenance_triage_agent",
+  "mode": "state_changing",
+  "user_role": "contractor",
+  "policy_version": "tool-policy-2026-07-01",
+  "prompt_version": "agent-triage-v12",
+  "model_version": "local-llm-2026q2",
+  "retrieved_sources": ["sop://etch/E-17/rev-07"],
+  "tool_call": {"name": "create_maintenance_ticket", "approval_id": null},
+  "containment": "tool route disabled"
+}</code></pre></figure>
+    <h2 id="fix">Corrective action</h2>
+    <p>"사용자가 검증한다"는 문구만으로 incident를 닫으면 같은 경로가 남습니다. 폐기 문서 차단, tool 승인 조건 추가, refusal test와 evaluation set 보강, permission sync 수정, read-only tool과 state-changing tool 분리를 검토합니다. 최종 리뷰에는 이번 징후를 사용자 도달 전에 검출할 회귀 test를 하나 이상 남기고, 배포 전 그 test가 실제로 실패했다가 수정 후 통과하는지 확인합니다.</p>
+    <div class="field-note">
+      <span class="note-k">단순화한 가상 사례</span>
+      <p>설명을 위해 만든 사례입니다. Maintenance triage agent가 가상의 E-17 설비에 대해 폐기된 rev-07 SOP를 읽고, ticket을 다른 module owner queue로 보냈다고 가정합니다. 물리적 사고는 없지만 잘못된 작업 지시가 queue에 남았습니다. 해당 tool path를 중지하고 trace를 보존한 뒤 rev-07을 superseded로 표시합니다. 이어 E-17 ownership 회귀 질문을 평가셋에 넣고, SOP 기반 ticket 생성에는 human approval을 요구합니다. 이 조치만으로 이미 ticket을 읽은 사용자의 후속 행동까지 확인되지는 않으므로 별도 영향 조사가 필요합니다.</p>
+    </div>
+    <p>런북은 배포 승인 때 확인할 운영 조건이 됩니다. Tool별 중지 방법, trace 보존 위치, 통지 owner, rollback 절차가 실제로 시험된 범위까지만 자동화 권한을 엽니다. Incident가 나기 전 역할별 허용 action을 정리하려면 다음으로 <a class="link" href="ai-policy-control-matrix.html">AI 정책·통제 매트릭스</a>를 읽어 control owner와 증거 항목을 연결하세요.</p>
+  </div>
+<aside class="article-endcap" aria-label="글 안내">
+  <p>가상 운영 시나리오와 기술적 검토를 바탕으로 작성했으며, 실제 조직의 절차에 맞춰 조정해야 합니다.</p>
+  <div class="article-endcap-actions">
+    <a href="../index.html">글 목록으로 돌아가기</a>
+    <a href="../ai-categories.html">AI 카테고리 보기</a>
+  </div>
+</aside>
+</article>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>누구나 볼 수 있는 실용적인 AI 교육 자료입니다.</h2>
+        <p>현장에서 쓸 수 있는 AI 시스템을 위한 강의, 글, 실전 기록을 모았습니다.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>둘러보기</h4>
+          <a href="../../../index.html#courses">강의</a>
+          <a href="../index.html">글</a>
+          <a href="../learning-paths.html">학습 경로</a>
+          <a href="../search.html">검색</a>
+          <a href="../portfolio.html">포트폴리오</a>
+        </div>
+        <div class="foot-col">
+          <h4>사이트</h4>
+          <a href="../about.html">소개</a>
+          <a href="../contact.html">연락처</a>
+          <a href="../privacy.html">개인정보 처리방침</a>
+          <a href="../terms.html">이용약관</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · 한국어와 영어로 제공하는 AI 교육</span>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/theme.js"></script>
+</body>
+</html>

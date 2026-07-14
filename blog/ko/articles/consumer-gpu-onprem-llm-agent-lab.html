@@ -1,13 +1,14 @@
-HTML
+<!DOCTYPE html>
 <html lang="ko">
 <head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>H100 없이 가정용 PC에서 로컬 LLM, MCP, Agent 실험실 만들기 - AI Edu Archive 한국어</title>
 <meta content="일반 게임용 GPU가 달린 가정용 PC에서 온프레미스 LLM, MCP 도구, RAG, 코딩 에이전트, Goose 스타일 로컬 자동화를 단계별로 구축하는 실습 시리즈입니다." name="description"/>
 <meta content="AI Edu Archive" name="author"/>
 <meta content="#FAF9F5" name="theme-color"/>
-<link href="https://ai-edu-archive.example.com/blog/ko/articles/consumer-gpu-onprem-llm-agent-lab.html" rel="canonical"/><link href="https://ai-edu-archive.example.com/blog/articles/consumer-gpu-onprem-llm-agent-lab.html" hreflang="en" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/ko/articles/consumer-gpu-onprem-llm-agent-lab.html" hreflang="ko" rel="alternate"/><link href="https://ai-edu-archive.example.com/blog/articles/consumer-gpu-onprem-llm-agent-lab.html" hreflang="x-default" rel="alternate"/>
+<link href="https://ai-edu-archive.pages.dev/blog/ko/articles/consumer-gpu-onprem-llm-agent-lab.html" rel="canonical"/>
 <meta content="index,follow" name="robots"/>
 <meta content="article" property="og:type"/>
 <meta content="H100 없이 가정용 PC에서 로컬 LLM, MCP, Agent 실험실 만들기 - AI Edu Archive 한국어" property="og:title"/>
@@ -34,10 +35,10 @@ HTML
     "@type": "Organization",
     "name": "AI Edu Archive"
   },
-  "url": "https://ai-edu-archive.example.com/blog/ko/articles/consumer-gpu-onprem-llm-agent-lab.html",
+  "url": "https://ai-edu-archive.pages.dev/blog/ko/articles/consumer-gpu-onprem-llm-agent-lab.html",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ai-edu-archive.example.com/blog/ko/articles/consumer-gpu-onprem-llm-agent-lab.html"
+    "@id": "https://ai-edu-archive.pages.dev/blog/ko/articles/consumer-gpu-onprem-llm-agent-lab.html"
   },
   "name": "H100 없이 가정용 PC에서 로컬 LLM, MCP, Agent 실험실 만들기"
 }</script>
@@ -45,26 +46,32 @@ HTML
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link href="../../assets/blog.css" rel="stylesheet"/>
-<meta content="일반 게임용 GPU가 달린 가정용 PC에서 온프레미스 LLM, MCP 도구, RAG, 코딩 에이전트, Goose 스타일 로컬 자동화를 단계별로 구축하는 실습 시리즈입니다." name="twitter:description"/><meta content="H100 없이 가정용 PC에서 로컬 LLM, MCP, Agent 실험실 만들기 - AI Edu Archive 한국어" name="twitter:title"/><meta content="https://ai-edu-archive.example.com/blog/ko/articles/consumer-gpu-onprem-llm-agent-lab.html" property="og:url"/></head>
+<meta content="일반 게임용 GPU가 달린 가정용 PC에서 온프레미스 LLM, MCP 도구, RAG, 코딩 에이전트, Goose 스타일 로컬 자동화를 단계별로 구축하는 실습 시리즈입니다." name="twitter:description"/><meta content="H100 없이 가정용 PC에서 로컬 LLM, MCP, Agent 실험실 만들기 - AI Edu Archive 한국어" name="twitter:title"/><meta content="https://ai-edu-archive.pages.dev/blog/ko/articles/consumer-gpu-onprem-llm-agent-lab.html" property="og:url"/>
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/consumer-gpu-onprem-llm-agent-lab.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/consumer-gpu-onprem-llm-agent-lab.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/consumer-gpu-onprem-llm-agent-lab.html">
+</head>
 <body>
 <a class="skip-link" href="#main">본문으로 건너뛰기</a>
 <header class="nav" id="nav">
-<div class="wrap">
-<a aria-label="AI Edu Archive 홈" class="brand" href="../../index.html">
-<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</a>
-<nav aria-label="주요 메뉴" class="nav-links">
-<a href="../../../index.html#courses">강의</a>
-<a href="../index.html">글</a>
-<a href="../portfolio.html">포트폴리오</a>
-<a href="../about.html">소개</a>
-<div aria-label="언어 선택" class="language-switch"><a href="../../articles/consumer-gpu-onprem-llm-agent-lab.html" lang="en" title="English">🇺🇸 EN</a><a aria-current="true" href="consumer-gpu-onprem-llm-agent-lab.html" lang="ko" title="한국어">🇰🇷 KO</a><a href="../../articles/consumer-gpu-onprem-llm-agent-lab.html" lang="en" title="스페인어판은 추후 추가 예정이며 현재는 영어로 표시됩니다">🇪🇸 ES</a><a href="../../articles/consumer-gpu-onprem-llm-agent-lab.html" lang="en" title="중국어판은 추후 추가 예정이며 현재는 영어로 표시됩니다">🇨🇳 ZH</a><a href="../../articles/consumer-gpu-onprem-llm-agent-lab.html" lang="en" title="일본어판은 추후 추가 예정이며 현재는 영어로 표시됩니다">🇯🇵 JA</a><a href="../../articles/consumer-gpu-onprem-llm-agent-lab.html" lang="en" title="독일어판은 추후 추가 예정이며 현재는 영어로 표시됩니다">🇩🇪 DE</a><a href="../../articles/consumer-gpu-onprem-llm-agent-lab.html" lang="en" title="프랑스어판은 추후 추가 예정이며 현재는 영어로 표시됩니다">🇫🇷 FR</a></div>
-</nav>
-</div>
+  <div class="wrap">
+    <a class="brand" href="../../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="주요 메뉴">
+      <a href="../../../index.html#courses">강의</a>
+      <a href="../index.html" aria-current="page">글</a>
+      <a href="../learning-paths.html">학습 경로</a>
+      <a href="../search.html">검색</a>
+      <a href="../portfolio.html">포트폴리오</a>
+      <a href="../about.html">소개</a>
+      <div class="language-switch" aria-label="언어 선택">
+        <a href="../../articles/consumer-gpu-onprem-llm-agent-lab.html" lang="en" title="English">EN</a>
+        <a href="consumer-gpu-onprem-llm-agent-lab.html" lang="ko" aria-current="true" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
 </header>
 <main id="main">
 <article itemscope="" itemtype="https://schema.org/TechArticle">
@@ -107,13 +114,30 @@ HTML
 </ol>
 </nav>
 <div class="article-body" itemprop="articleBody">
-<p>온프레미스 LLM 엔지니어링을 배우기 위해 H100이 꼭 필요한 것은 아닙니다. 필요한 것은 평범한 PC, 작은 instruct 모델, 반복 가능한 설치 절차, 그리고 기능을 하나씩 추가하는 인내심입니다. 이 시리즈는 바로 그 순서로 진행합니다.</p>
+    <figure class="visual-figure media-figure media-figure--diagram">
+      <img src="../../assets/visuals/gpu-lab-architecture.svg" alt="One-PC on-prem LLM lab" loading="lazy" decoding="async">
+      <figcaption><span class="figure-label">그림.</span> 한 PC에서 local model server, 실습 문서, RAG index, MCP tool, agent, audit log의 연결을 확인합니다. 이 구성은 학습용 참조 구조이며 공장망의 가용성·보안 통제를 축소 재현하지는 않습니다.</figcaption>
+    </figure>
+
+    <div class="field-story">
+      <span class="note-k">합성 사례: 첫 실행 15분</span>
+      <p><strong>현장에서 자주 보는 장면을 합쳐 예를 들면</strong>, 로컬 모델 명령을 실행한 terminal은 다운로드 완료를 표시하지만 채팅 창에는 답이 나오지 않습니다. 작업 관리자의 GPU 메모리는 거의 변하지 않고, server log의 마지막 줄은 model load가 아니라 port bind 오류에 머물러 있습니다.</p>
+      <p>처음에는 GPU가 작아서 멈춘 것으로 보기 쉽습니다. 하지만 이 장면에서는 같은 port를 쓰는 이전 process가 남아 있다는 단서가 먼저입니다. process와 bind 주소를 확인해 충돌을 해소한 뒤에야 GPU 사용량과 driver·CUDA 조합을 판단할 수 있습니다.</p>
+      <p>그 다음 agent가 실습 폴더 밖의 파일을 열려고 하면 성공 여부와 관계없이 권한 범위를 닫습니다. 이 합성 사례의 결론은 설치를 반복하는 것이 아니라, server·GPU·tool 권한을 한 단계씩 분리해 흔적을 남기는 것입니다. 개인 PC에서 통과한 결과는 기능 검증일 뿐 공장망 반입 승인이나 운영 안정성을 대신하지 않습니다.</p>
+    </div>
+
+    <div class="reader-shortcut">
+      <span class="note-k">바로 적용할 기준</span>
+      <p>설치 명령, 정확한 model tag, package version, port, 예시 출력, 실패 log 위치를 한 장에 적으세요. 각 단계가 재실행될 때까지 RAG나 agent 기능을 더하지 않습니다.</p>
+    </div>
+
+<p>가정용 PC에서도 local model API, 4-bit loading, MCP tool 발견, 제한된 agent 작업을 확인할 수 있습니다. 처리량과 긴 context, 다중 사용자 가용성은 production GPU server와 다르므로 이 글은 학습용 lab의 성공 조건만 다룹니다.</p>
 <div class="callout">
 <p>공개. 이 시리즈의 향후 버전에는 도서나 하드웨어 제휴 링크가 포함될 수 있습니다. 원칙은 단순합니다. 추천은 기술적으로 관련 있어야 하며, 어떤 글도 무언가를 구매하지 않아도 유용해야 합니다.</p>
 </div>
 <h2 id="promise">약속: 평범한 PC 한 대로 시작하기</h2>
-<p>우리는 실제 온프레미스 배포에서 쓰이는 시스템의 축소판을 만듭니다. 로컬 모델 서버, Python 클라이언트, 문서 인덱스, MCP 도구 서버, 가드레일이 있는 에이전트 루프가 순서대로 등장합니다. 목표는 벤치마크 자랑이 아니라 시스템을 손으로 이해하는 것입니다.</p>
-<p>각 단계에는 세 가지 확인점이 있습니다. 무엇을 실행할지, 성공했을 때 어떤 출력이 보일지, 실패하면 무엇을 시도할지입니다. 출력 확인을 건너뛰지 마세요. 로컬 스택이 실제로 살아 있는지 확인하는 방법입니다.</p>
+<p>Local model server, Python client, 문서 index, MCP server, 승인 gate가 있는 agent loop를 순서대로 연결합니다. 한 단계의 입력·출력·log를 확인한 뒤 다음 구성요소를 추가해야 실패 원인을 좁힐 수 있습니다.</p>
+<p>아래 terminal block은 특정 PC에서 측정한 기록이 아니라 설명을 위해 단순화한 예시 출력입니다. Package version, OS, GPU, model revision에 따라 문구·속도·메모리 사용량이 달라집니다.</p>
 <p>실용적인 스택은 다음과 같습니다.</p>
 <ul>
 <li>Ollama: 가장 쉬운 로컬 모델 서버와 OpenAI 호환 API.</li>
@@ -124,7 +148,7 @@ HTML
 <li>Python: 검색, 도구, 로깅, 안전 확인을 이어 붙이는 언어.</li>
 </ul>
 <h2 id="hardware">하드웨어 단계별 기준</h2>
-<p>이 목록은 구매 명령이 아니라 학습용 지도입니다. 모델 계열은 빠르게 바뀌지만 메모리 제약은 쉽게 사라지지 않습니다.</p>
+<p>이 목록은 2026년 7월 작성 시점의 학습용 출발점이며 구매 기준이 아닙니다. 실제 적재 가능 크기는 model architecture, quantization format, runtime overhead, context, KV cache, batch·동시성에 따라 달라집니다.</p>
 <ul>
 <li>CPU only, RAM 32 GB: 1B-3B 소형 모델은 느리지만 API와 프롬프트 학습에는 유용합니다.</li>
 <li>VRAM 8 GB: 3B-7B 양자화 모델, 짧은 컨텍스트, 한 번에 한 사용자.</li>
@@ -133,7 +157,7 @@ HTML
 <li>VRAM 24 GB: 14B급 양자화 모델과 더 매끄러운 다중 도구 워크플로.</li>
 </ul>
 <blockquote>
-        이론적 FLOPS를 구매하기 전에 VRAM을 구매하세요. 홈 온프레미스 LLM 작업의 경우 메모리는 프로젝트가 일반적으로 벽에 부딪히는 부분입니다.
+        후보 GPU에서는 peak VRAM, tokens/s, prompt 길이, 동시 요청 수를 함께 측정합니다. VRAM 용량 하나만으로 체감 성능이나 안정성을 확정하지 않습니다.
       </blockquote>
 <h2 id="series">시리즈 로드맵</h2>
 <ol>
@@ -146,7 +170,7 @@ HTML
 <li>운영. 로그, 평가 질문, GPU 모니터링, 백업, 실행 금지 명령 규칙을 둡니다.</li>
 </ol>
 <h2 id="ollama">1부: Ollama로 로컬 모델 서버 열기</h2>
-<p>먼저 지루하지만 변수가 적은 경로로 시작합니다. Ollama를 설치하고, 작은 모델을 받고, 로컬 OpenAI 호환 엔드포인트를 호출합니다. 대부분의 환경에서 서버는 http://localhost:11434에서 대기합니다.</p>
+<p>Ollama를 설치하고 작은 model을 받은 뒤 local OpenAI-compatible endpoint를 호출합니다. 기본 주소로 <code>http://localhost:11434</code>를 쓰는 구성이 많지만 설치 버전과 설정에서 실제 bind 주소를 확인합니다. 외부 interface에 노출한다면 별도 인증과 firewall 통제를 적용해야 합니다.</p>
 <h3>1단계. 작은 instruct 모델 받기</h3>
 <p>처음에는 3B-7B 모델을 고르세요. 더 큰 모델은 나중에 해도 됩니다. 첫 승리는 내 PC가 모델을 다운로드하고, 로드하고, 로컬에서 답할 수 있음을 확인하는 것입니다.</p>
 <figure class="code-figure">
@@ -160,7 +184,7 @@ ollama pull qwen2.5:7b-instruct
 <span class="tok-com"># Quick smoke test</span>
 ollama run qwen2.5:7b-instruct <span class="tok-str">"Explain RAG in three Korean sentences."</span></code></pre>
 </figure>
-<p>예상 출력. 정확한 답변은 달라질 수 있지만, 모델 다운로드는 success로 끝나야 하고 모델은 프롬프트에 답해야 합니다.</p>
+<p>설명을 위해 단순화한 예시 출력입니다. Digest와 진행 표시, 답변 문장은 설치 시점의 model tag와 runtime에 따라 달라집니다.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">output</span>터미널.txt</span>
@@ -176,9 +200,10 @@ RAG는 검색으로 찾은 문서를 근거로 LLM이 답변하게 만드는 방
 모델이 모든 지식을 외우는 대신, 질문과 관련된 자료를 먼저 찾아 읽습니다.
 그래서 사내 문서나 기술 문서처럼 최신성과 출처가 중요한 경우에 유용합니다.</code></pre>
 </figure>
-<p>성공 체크포인트. 여기서 일관된 답변을 얻었다면 로컬 모델 서버가 살아 있습니다. 느려도 괜찮습니다. 지금은 속도가 아니라 아키텍처를 먼저 확인하는 단계입니다.</p>
+<p>종료 코드, model tag, 응답 생성 여부를 기록합니다. 한 번 답했다고 안정성이 확인되는 것은 아니므로 같은 prompt 반복과 긴 입력에서 OOM·timeout이 없는지도 다음 단계에서 측정합니다.</p>
 <h3>2단계. Python에서 같은 모델 호출하기</h3>
 <p>이제 Python에서 로컬 엔드포인트를 호출합니다. RAG 라이브러리, 에이전트 프레임워크, Goose 스타일 도구는 보통 이런 API 형태를 통해 통합되기 때문에 중요합니다.</p>
+<figure class="code-figure"><div class="code-bar"><span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">shell</span>install-openai-client.sh</span><button class="copy-btn" data-copy="" type="button">복사</button></div><pre><code>python -m pip install openai</code></pre></figure>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span>local_chat.py</span>
@@ -201,7 +226,7 @@ response = client.chat.completions.create(
 
 print(response.choices[0].message.content)</code></pre>
 </figure>
-<p>예상 출력. python local_chat.py를 실행하면 Ollama 터미널 UI가 아니라 Python 스크립트가 출력한 한 문단을 볼 수 있어야 합니다.</p>
+<p>설명을 위해 단순화한 예시 출력입니다. <code>python local_chat.py</code>를 실행했을 때 Python client가 응답 본문을 받는 흐름만 보여줍니다.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">output</span>파이썬-output.txt</span>
@@ -209,12 +234,12 @@ print(response.choices[0].message.content)</code></pre>
 </div>
 <pre><code>온프레미스 LLM은 외부 클라우드 API가 아니라 회사나 개인이 직접 관리하는
 서버 또는 PC 안에서 실행되는 언어 모델입니다. 데이터가 외부로 나가지 않기
-때문에 보안과 비용 통제가 쉽고, 사내 문서 RAG나 로컬 에이전트 실험에 적합합니다.</code></pre>
+때문에 보안과 비용을 통제하기 쉽고, 사내 문서 RAG나 로컬 에이전트 실험에 적합합니다.</code></pre>
 </figure>
 <p>실패하는 경우. 연결 오류가 보이면 Ollama가 실행 중인지 확인하세요. model not found가 보이면 Python 코드의 model 값이 실제로 받은 모델 이름과 정확히 일치하는지 확인하세요.</p>
-<p>여기까지 동작하면 첫 번째 벽돌을 얻은 것입니다. 많은 도구가 이미 호출할 줄 아는 로컬 모델 엔드포인트입니다. 이 단계가 지루해질 때까지 RAG, MCP, 에이전트를 추가하지 마세요.</p>
+<p>여기까지 동작하면 local endpoint와 client의 연결은 확인됐습니다. RAG나 MCP를 붙이기 전에 model not found, server down, timeout을 각각 재현하고 어느 log에서 구분되는지 적습니다.</p>
 <h2 id="hf">2부: Hugging Face 4비트 추론</h2>
-<p>Hugging Face 경로는 더 많은 제어권을 줍니다. 동시에 설정을 잘못할 방법도 많아집니다. 첫 스크립트는 작게 유지하세요. 핵심은 토크나이저의 chat template을 사용하고, device_map="auto"를 쓰며, 일반 로딩을 이해한 뒤 4비트를 시도하는 것입니다.</p>
+<p>Hugging Face 경로에서는 tokenizer, quantization, device placement를 직접 지정합니다. 첫 script는 tokenizer의 chat template과 실제 model revision을 확인하고, 작은 model에서 4-bit load와 생성이 끝나는지만 봅니다. <code>device_map="auto"</code>가 선택한 배치를 그대로 신뢰하지 말고 GPU·CPU memory 배치를 출력해 확인합니다.</p>
 <h3>3단계. 깨끗한 Python 환경 만들기</h3>
 <p>새 가상환경을 사용하세요. 로컬 LLM 작업은 의존성에 민감하므로 깨끗한 환경에서 시작하면 오류를 이해하기 쉽습니다.</p>
 <figure class="code-figure">
@@ -226,7 +251,7 @@ print(response.choices[0].message.content)</code></pre>
 .\.venv\Scripts\activate
 pip install torch transformers accelerate bitsandbytes</code></pre>
 </figure>
-<p>예상 출력. 설치 과정에서 많은 패키지가 다운로드될 수 있습니다. 성공하면 설치된 패키지 목록이 출력되고 활성화된 프롬프트로 돌아옵니다.</p>
+<p>설명을 위해 단순화한 예시 출력입니다. 실제 package 이름과 version, 설치 경로는 OS와 package index에 따라 달라집니다.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">output</span>pip-output.txt</span>
@@ -276,7 +301,7 @@ with torch.no_grad():
 
 print(tokenizer.decode(out[0][inputs.input_ids.shape[-1]:], skip_special_tokens=<span class="tok-kw">True</span>))</code></pre>
 </figure>
-<p>예상 출력. 첫 실행은 모델 다운로드 때문에 느릴 수 있습니다. 로딩이 끝나면 짧은 답변이 출력되어야 합니다.</p>
+<p>설명을 위해 단순화한 예시 출력입니다. Shard 수, 시간, 답변은 model revision, cache, GPU에 따라 달라지며 8초는 성능 기준이 아닙니다.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">output</span>hf-output.txt</span>
@@ -288,9 +313,10 @@ accepts a chat-formatted prompt, generates text, and does not run out of VRAM.</
 </figure>
 <p>실패하는 경우. 많은 가정용 설정이 여기서 처음 막힙니다. CUDA 버전이 맞지 않거나, 모델이 너무 크거나, chat template이 없거나, 컨텍스트 길이를 너무 크게 잡았을 수 있습니다. 한 번에 하나의 변수만 바꾸세요. 패키지 다섯 개를 동시에 바꾸기 전에 더 작은 모델을 먼저 시도하세요.</p>
 <h2 id="mcp">3부: 첫 번째 MCP 도구 만들기</h2>
-<p>로컬 추론이 동작하면 도구를 추가합니다. “에이전트가 내 컴퓨터를 제어하게 하자”로 시작하지 마세요. 읽기 전용이거나 해가 없는 도구부터 시작하세요. MCP는 이런 도구를 표준 형태로 노출할 수 있어서 유용합니다.</p>
-<h3>5단계. 안전한 MCP 서버 실행하기</h3>
-<p>이 서버는 파일을 건드리지 않고, 셸 명령을 실행하지 않으며, 네트워크도 호출하지 않습니다. 안전한 도구 호출 두 개에만 응답합니다. 그래서 첫 MCP 확장으로 적합합니다.</p>
+<p>Local inference를 확인한 뒤 side effect가 없는 tool을 추가합니다. 첫 MCP server에는 계산과 고정된 lab policy 조회만 두고 file·shell·network 권한은 주지 않습니다.</p>
+<h3>5단계. 권한을 제한한 MCP 서버 실행하기</h3>
+<p>이 참조 코드는 file, shell, network를 호출하지 않는 두 함수를 노출합니다. 기능 범위가 작다는 뜻이지 운영 보안이 완성됐다는 뜻은 아닙니다.</p>
+<figure class="code-figure"><div class="code-bar"><span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">shell</span>install-mcp-sdk.sh</span><button class="copy-btn" data-copy="" type="button">복사</button></div><pre><code>python -m pip install <span class="tok-str">"mcp[cli]"</span></code></pre></figure>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span>lab_tools_server.py</span>
@@ -318,7 +344,7 @@ mcp = FastMCP(<span class="tok-str">"home-llm-lab"</span>)
 <span class="tok-kw">if</span> __name__ == <span class="tok-str">"__main__"</span>:
     mcp.run()</code></pre>
 </figure>
-<p>예상 출력. 사용하는 전송 방식에 따라 서버는 조용히 클라이언트를 기다릴 수 있습니다. 조용해도 괜찮습니다. 성공한 MCP 서버는 종료되는 명령이 아니라 계속 실행되는 프로세스처럼 보일 때가 많습니다.</p>
+<p>설명을 위해 단순화한 예시 출력입니다. SDK version과 transport에 따라 이 문구가 표시되지 않을 수 있으며, 실제 상태는 client의 tool discovery와 server log로 확인합니다.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">output</span>mcp-output.txt</span>
@@ -330,8 +356,8 @@ Available tools:
   - lab_policy
 Waiting for client connection...</code></pre>
 </figure>
-<p>성공 체크포인트. 다음 목표는 강력하게 만드는 것이 아닙니다. 클라이언트를 연결하고 두 도구 이름이 발견되는지 확인하는 것입니다.</p>
-<p>이 작은 서버는 화려하지 않습니다. 그래서 좋습니다. 안전한 에이전트는 거대한 권한 하나가 아니라 작고 지루한 기능들의 조합으로 만듭니다.</p>
+<p>Client를 연결해 두 tool 이름과 schema가 발견되고 예상 밖 인자가 거부되는지 확인합니다.</p>
+<p>이 코드는 local lab용 참조 예시입니다. 다른 host나 운영망에 배포하기 전에는 사용자·서비스 인증, TLS, timeout, rate limit, idempotency, 변조 방지 audit, 승인과 rollback을 설계하고 장애 test를 통과해야 합니다.</p>
 <h2 id="goose">4부: Goose를 로컬 코딩 에이전트로 쓰기</h2>
 <p>로컬 추론과 MCP 도구가 동작하면 사람들이 실제로 원하는 것을 만들 수 있습니다. Claude Code나 Codex에 가까운 느낌의 로컬 코딩 도우미입니다. 이 시리즈에서 먼저 다룰 오픈소스 도구는 Goose입니다. Goose는 작은 코드베이스를 읽고, 편집을 제안하고, 테스트를 실행하고, MCP 도구를 호출하는 계층이 됩니다.</p>
 <p>첫 번째 Goose 목표는 의도적으로 작습니다.</p>
@@ -352,20 +378,25 @@ Waiting for client connection...</code></pre>
 
 mkdir home-agent-lab
 cd home-agent-lab
+git init
+git config user.name <span class="tok-str">"Local Lab"</span>
+git config user.email <span class="tok-str">"lab@example.invalid"</span>
 python -m venv .venv
 .\.venv\Scripts\activate
 
 <span class="tok-com"># Tiny repo for the first agent task</span>
-mkdir src tests
+New-Item -ItemType Directory -Force src, tests
 echo <span class="tok-str">"def add(a, b): return a + b"</span> &gt; src\calculator.py
 echo <span class="tok-str">"from src.calculator import add`n`ndef test_add(): assert add(2, 3) == 5"</span> &gt; tests\test_calculator.py
 pip install pytest
 pytest
+git add src tests
+git commit -m <span class="tok-str">"baseline before agent access"</span>
 
 <span class="tok-com"># First Goose prompt idea:</span>
 <span class="tok-com"># \"Read this repo. Explain its structure. Do not edit files yet.\"</span></code></pre>
 </figure>
-<p>예상 출력. Goose가 무엇을 건드리기 전에 기준선 테스트가 통과해야 합니다. 기준선이 실패한다면 에이전트 문제가 아니라 프로젝트 설정 문제입니다.</p>
+<p>설명을 위해 단순화한 예시 출력입니다. Goose 실행 전 기준선 test가 통과한 상태를 기록하며, 시간과 경로는 환경마다 달라집니다.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">output</span>pytest-output.txt</span>
@@ -378,7 +409,7 @@ tests/test_calculator.py .                                           [100%]
 
 ============================== 1 passed in 0.03s ==============================</code></pre>
 </figure>
-<p>이제 Goose에게 프로젝트를 편집하지 말고 검사만 하라고 요청합니다. 좋은 첫 응답은 소스 파일, 테스트 파일, 그리고 프로젝트가 간단한 add 함수를 노출한다는 사실을 언급해야 합니다.</p>
+<p>이제 Goose에 편집 권한을 주지 않고 repository 설명을 요청합니다. 응답에 source, test, <code>add</code> 함수가 포함되는지 확인하되, agent 문장 자체를 권한 준수 증거로 보지 말고 filesystem diff도 확인합니다. 아래 응답은 설명용 예시 출력입니다.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">output</span>goose-response.txt</span>
@@ -392,13 +423,21 @@ tests/test_calculator.py .                                           [100%]
 
 I have not edited any files.</code></pre>
 </figure>
-<p>성공 체크포인트. 이것이 첫 Claude Code / Codex식 순간입니다. 에이전트가 저장소를 읽고 이해한 뒤 아무것도 바꾸지 않고 보고했습니다. 이 절제가 중요합니다. 편집은 검사 뒤에 옵니다.</p>
-<p>두 번째 단계는 Goose를 MCP 서버에 연결하는 것입니다. 여기서 실습이 현실감을 얻기 시작합니다. 코딩 에이전트가 거대한 프롬프트에만 의존하지 않고 프로젝트 파일, 로컬 도구, 구조화된 기능을 사용할 수 있기 때문입니다. 안전 규칙은 그대로입니다. 먼저 읽기 전용, 그다음 작은 편집, 테스트, 더 넓은 도구 순서입니다.</p>
+<figure class="code-figure"><div class="code-bar"><span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">powershell</span>verify-read-only.ps1</span><button class="copy-btn" data-copy="" type="button">복사</button></div><pre><code><span class="tok-com"># Run after the read-only Goose session.</span>
+$changes = git status --porcelain
+<span class="tok-kw">if</span> ($changes) { Write-Error <span class="tok-str">"Repository changed during read-only session"</span>; exit <span class="tok-num">1</span> }
+git diff --exit-code HEAD -- src tests
+<span class="tok-kw">if</span> ($LASTEXITCODE -ne <span class="tok-num">0</span>) { exit $LASTEXITCODE }
+pytest
+<span class="tok-kw">if</span> ($LASTEXITCODE -ne <span class="tok-num">0</span>) { exit $LASTEXITCODE }</code></pre></figure>
+<p>Goose를 시작할 때는 설치한 버전의 권한 설정에서 파일 쓰기와 shell tool을 허용하지 않고, 위 읽기 전용 prompt만 전달합니다. 이후 <code>git status --porcelain</code>이 빈 출력이고 <code>git diff --exit-code</code>와 <code>pytest</code>가 모두 0으로 끝나야 통과합니다. 다음에는 disposable repository에서 작은 편집을 허용하고 diff 검토와 test를 approval gate로 둡니다.</p>
+<p>Goose를 MCP server에 연결할 때도 발견된 tool을 모두 허용하지 않습니다. Tool별 input, side effect, log를 확인하고 read-only에서 작은 편집 순서로 범위를 넓힙니다.</p>
 <div class="callout">
 <p>처음부터 로컬 에이전트에게 전체 컴퓨터를 맡기지 마세요. 일회용 저장소를 사용하고, 백업을 준비하고, 비밀 정보는 폴더 밖에 두세요. 목적은 소중한 것을 맡기기 전에 에이전트 루프를 배우는 것입니다.</p>
 </div>
 <h2>다음 단계</h2>
-<p>다음 글에서는 이 실습을 로컬 RAG로 확장합니다. 문서 폴더 하나, 로컬 임베딩, 벡터 인덱스, 인용이 붙은 답변을 만듭니다. 그다음 MCP 서버에 문서 검색 도구를 붙입니다. 마지막으로 Goose가 그 도구를 호출하고, 코드베이스를 검사하고, 패치를 만들고, 통제된 작업 공간 안에서 테스트를 실행하는 사용자-facing 에이전트가 됩니다.</p>
+<p>다음 단계에서는 별도 실습 문서 폴더를 local embedding과 vector index로 연결하고 citation을 검사합니다. 그 뒤 MCP 검색 tool과 disposable repository를 붙여 조회, patch 초안, 승인, test, rollback 순서를 검증합니다. 이 lab 결과를 운영망에 옮기려면 조직의 반입·인증·감사·복구 절차를 다시 통과해야 합니다.</p>
+<p>한 PC에서 API 호출이 재현됐다면 이제 “돌아간다”를 “몇 명이 써도 버틴다”로 바꿔야 합니다. 같은 모델을 Ollama와 vLLM에 올려 동시 요청, KV cache, OOM 조건을 비교하는 순서는 <a href="onprem-llm-serving.html">온프레미스 LLM 서빙 가이드</a>에서 이어집니다.</p>
 </div>
 <aside class="deck-link">
 <div class="dl-text">
@@ -425,40 +464,35 @@ I have not edited any files.</code></pre>
 </article>
 </main>
 <footer class="site-foot">
-<div class="wrap">
-<div class="foot-top">
-<div class="foot-lead">
-<h2>노하우는 안에 두고, 클라우드는 밖에 두기</h2>
-<p>로컬 LLM, RAG, 에이전트 시스템을 다루는 제조업체와 빌더를 위한 무료 심층 아카이브입니다.</p>
-</div>
-<div class="foot-nav-cols">
-<div class="foot-col">
-<h4>탐구하다</h4>
-<a href="../../index.html">허브 홈</a>
-<a href="../index.html">저널</a>
-<a href="../portfolio.html">포트폴리오</a>
-</div>
-<div class="foot-col">
-<h4>사이트</h4>
-<a href="../about.html">소개</a>
-<a href="../contact.html">연락하다</a>
-<a href="../privacy.html">개인정보</a>
-<a href="../terms.html">이용약관</a>
-<a href="../disclosure.html">공개 고지</a>
-</div>
-</div>
-</div>
-<div class="foot-bottom">
-<div class="foot-brand">
-<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</div>
-<span class="copyright">© 2026 AI Edu Archive · 한국형 AI 교육 공개</span>
-</div>
-</div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>누구나 볼 수 있는 실용적인 AI 교육 자료입니다.</h2>
+        <p>현장에서 쓸 수 있는 AI 시스템을 위한 강의, 글, 실전 기록을 모았습니다.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>둘러보기</h4>
+          <a href="../../../index.html#courses">강의</a>
+          <a href="../index.html">글</a>
+          <a href="../learning-paths.html">학습 경로</a>
+          <a href="../search.html">검색</a>
+          <a href="../portfolio.html">포트폴리오</a>
+        </div>
+        <div class="foot-col">
+          <h4>사이트</h4>
+          <a href="../about.html">소개</a>
+          <a href="../contact.html">연락처</a>
+          <a href="../privacy.html">개인정보 처리방침</a>
+          <a href="../terms.html">이용약관</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · 한국어와 영어로 제공하는 AI 교육</span>
+    </div>
+  </div>
 </footer>
 <script>
 (function(){
@@ -480,5 +514,6 @@ I have not edited any files.</code></pre>
   });
 })();
 </script>
+<script src="../../assets/theme.js"></script>
 </body>
 </html>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">FAB AI term decision path</title>
+  <desc id="desc">A manufacturing AI request flowing from source records through retrieval and generation to a bounded tool call, with evaluation, authorization, approval, and audit controls.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10Z" fill="#56718f"/></marker>
+    <style>
+      .bg{fill:#f5f7f8}.lane{fill:#fff;stroke:#b8c6d2;stroke-width:2}.data{fill:#e7f2ee;stroke:#2e7462}.logic{fill:#e9eff8;stroke:#426b9a}.action{fill:#fff0dc;stroke:#a96824}.control{fill:#f4eaf4;stroke:#815981}.stop{fill:#fff;stroke:#b34d4d;stroke-width:2;stroke-dasharray:8 6}.t{font:600 22px Inter,Arial,sans-serif;fill:#17212b}.s{font:16px Inter,Arial,sans-serif;fill:#354657}.k{font:700 15px Inter,Arial,sans-serif;fill:#647383;text-transform:uppercase}.line{stroke:#56718f;stroke-width:3;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect class="bg" width="1200" height="680" rx="8"/>
+  <text class="k" x="52" y="54">REQUEST PATH</text>
+  <rect class="lane" x="40" y="76" width="1120" height="246" rx="8"/>
+  <rect class="data" x="72" y="120" width="202" height="126" rx="8"/>
+  <text class="t" x="96" y="158">Source records</text><text class="s" x="96" y="190">SOP · alarm · history</text><text class="s" x="96" y="218">revision · access label</text>
+  <path class="line" d="M274 183H348"/>
+  <rect class="logic" x="348" y="120" width="202" height="126" rx="8"/>
+  <text class="t" x="372" y="158">Retrieval</text><text class="s" x="372" y="190">rank evidence</text><text class="s" x="372" y="218">filter active sources</text>
+  <path class="line" d="M550 183H624"/>
+  <rect class="logic" x="624" y="120" width="202" height="126" rx="8"/>
+  <text class="t" x="648" y="158">Generation</text><text class="s" x="648" y="190">answer or draft</text><text class="s" x="648" y="218">cite exact evidence</text>
+  <path class="line" d="M826 183H900"/>
+  <rect class="action" x="900" y="120" width="220" height="126" rx="8"/>
+  <text class="t" x="924" y="158">Bounded tool</text><text class="s" x="924" y="190">read / propose / write</text><text class="s" x="924" y="218">typed payload only</text>
+  <text class="k" x="52" y="374">CONTROL AND EVIDENCE</text>
+  <rect class="lane" x="40" y="396" width="1120" height="222" rx="8"/>
+  <rect class="control" x="72" y="438" width="220" height="114" rx="8"/>
+  <text class="t" x="96" y="476">Evaluation</text><text class="s" x="96" y="508">test set · metric · gate</text><text class="s" x="96" y="536">rerun after change</text>
+  <rect class="control" x="330" y="438" width="220" height="114" rx="8"/>
+  <text class="t" x="354" y="476">Authorization</text><text class="s" x="354" y="508">least privilege</text><text class="s" x="354" y="536">user · purpose · scope</text>
+  <rect class="control" x="588" y="438" width="220" height="114" rx="8"/>
+  <text class="t" x="612" y="476">Human gate</text><text class="s" x="612" y="508">show exact payload</text><text class="s" x="612" y="536">named accountable owner</text>
+  <rect class="control" x="846" y="438" width="274" height="114" rx="8"/>
+  <text class="t" x="870" y="476">Audit evidence</text><text class="s" x="870" y="508">principal · versions · sources</text><text class="s" x="870" y="536">decision · payload · time</text>
+  <rect class="stop" x="424" y="270" width="352" height="82" rx="8"/>
+  <text class="t" x="460" y="304">Fail closed</text><text class="s" x="460" y="332">No active source or owner → no action</text>
+  <path class="line" d="M449 246V270"/><path class="line" d="M725 246V270"/>
+</svg>

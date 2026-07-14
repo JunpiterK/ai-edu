@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>자동차 제조 AI와 로봇 자동화 - AI Edu Archive Journal</title>
+<meta name="description" content="자동차 제조 AI와 로봇 자동화를 위한 실전 허브: 로봇셀, 비전 검사, takt time, VIN 이력, RAG, Agent, 안전, 온프렘 AI.">
+<meta name="author" content="AI Edu Archive">
+<meta name="theme-color" content="#FAF9F5">
+<link rel="canonical" href="https://ai-edu-archive.pages.dev/blog/ko/automotive-ai-robotics.html">
+
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="자동차 제조 AI와 로봇 자동화 - AI Edu Archive Journal">
+<meta property="og:description" content="자동차 제조 AI와 로봇 자동화를 위한 실전 허브: 로봇셀, 비전 검사, takt time, VIN 이력, RAG, Agent, 안전, 온프렘 AI.">
+<meta property="og:site_name" content="AI Edu Archive">
+<meta property="og:url" content="https://ai-edu-archive.pages.dev/blog/ko/automotive-ai-robotics.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/blog.css">
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/automotive-ai-robotics.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/automotive-ai-robotics.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/automotive-ai-robotics.html">
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="주요 메뉴">
+      <a href="../../index.html#courses">강의</a>
+      <a href="index.html">글</a>
+      <a href="learning-paths.html">학습 경로</a>
+      <a href="search.html">검색</a>
+      <a href="portfolio.html">포트폴리오</a>
+      <a href="about.html">소개</a>
+      <div class="language-switch" aria-label="언어 선택">
+        <a href="../automotive-ai-robotics.html" lang="en" title="English">EN</a>
+        <a href="automotive-ai-robotics.html" lang="ko" aria-current="true" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<section class="page-head"><div class="wrap"><span class="eyebrow">Automotive AI & Robotics</span><h1>자동차 공장은 FAB과 다른 AI 문법이 필요합니다.</h1><p class="lede">FAB AI가 chamber, recipe, wafer, trace, yield를 중심으로 생각한다면, 자동차 제조 AI는 VIN, station, takt time, robot cell, torque result, vision image, Andon, safety zone을 중심으로 움직입니다.</p><div class="filters" aria-label="Series topics"><a class="chip" href="articles/automotive-ai-vs-fab-ai.html">비교 글부터 읽기</a><a class="chip" href="articles/vin-genealogy-vs-wafer-genealogy.html">VIN 이력</a><a class="chip" href="articles/takt-aware-ai-agents-assembly-lines.html">Takt-aware Agent</a><a class="chip" href="articles/fdc-from-first-principles.html">FAB 비교축</a></div></div></section>
+    <div class="hub-voice">
+      <span class="note-k">현장 경계선</span>
+      <p>자동차 제조 AI를 별도 시리즈로 둔 이유는 단순 비유가 금방 틀리기 때문입니다. robot cell, takt window, Andon event, VIN history는 wafer와 chamber와 다른 리듬을 만듭니다. FAB AI와 겹치는 부분은 분명 있지만, 경계선을 잡아야 합니다.</p>
+    </div>
+
+
+<section class="section"><div class="wrap"><figure class="feature-photo"><img src="../assets/photos/bmw-leipzig-karosseriebau-robots.jpg" alt="BMW Leipzig 차체 공장에서 산업용 로봇이 자동차 차체를 점용접하는 모습" loading="lazy" decoding="async"><figcaption>자동차 body shop의 로봇셀은 AI 문제가 물리적으로 보이는 현장입니다. motion, fixture, 용접 품질, 안전 구역, takt time, VIN 이력이 한꺼번에 얽힙니다. 사진: BMW Werk Leipzig, <a class="link" href="https://commons.wikimedia.org/wiki/File:BMW_Leipzig_MEDIA_050719_Download_Karosseriebau_max.jpg">Wikimedia Commons</a>, <a class="link" href="https://creativecommons.org/licenses/by-sa/2.0/de/deed.en">CC BY-SA 2.0 DE</a>. 로컬 저장, 시각 편집 없음.</figcaption></figure></div></section>
+<section class="section"><div class="wrap"><div class="learning-grid">
+<article class="learning-card"><div class="case-top"><span class="cat-tag">Path 01</span><span class="num">Data</span></div><h2>자동차 데이터 기초</h2><p>자동차 공장은 VIN 이력, station event, PLC tag, robot controller log, torque result, vision image, EOL test, QMS record, supplier lot, warranty feedback을 증거로 묶어야 합니다.</p><div class="deliverables"><span>VIN genealogy</span><span>Station event</span><span>Traceability</span></div></article>
+<article class="learning-card"><div class="case-top"><span class="cat-tag">Path 02</span><span class="num">Robots</span></div><h2>로봇셀 AI</h2><p>로봇셀은 로봇 경로, 그리퍼, 용접건, 카메라, 지그, PLC, Safety PLC, 라이트커튼, 작업자 모드, 유지보수 모드, cycle time 예산이 함께 움직이는 제어 단위입니다.</p><div class="deliverables"><span>Robot logs</span><span>Vision</span><span>Safety interlocks</span></div></article>
+<article class="learning-card"><div class="case-top"><span class="cat-tag">Path 03</span><span class="num">Agents</span></div><h2>Takt-aware Agent</h2><p>자동차 공장 Agent는 라인 리듬을 존중해야 합니다. 읽기, 요약, 이슈 묶기, 보고서 초안은 가능하지만, 설비나 품질 상태를 바꾸는 action은 승인, rollback, 책임자가 필요합니다.</p><div class="deliverables"><span>Approval gates</span><span>Andon</span><span>Incident runbook</span></div></article>
+<article class="learning-card"><div class="case-top"><span class="cat-tag">Path 04</span><span class="num">Safety</span></div><h2>안전, 품질, 보안</h2><p>자동차 제조 AI는 로봇 안전, 기능안전, IATF 16949, APQP, FMEA, PPAP, Control Plan, OT 보안, audit log, human-in-the-loop 검증 언어를 알아야 합니다.</p><div class="deliverables"><span>IATF</span><span>ISO 10218</span><span>IEC 62443</span></div><aside class="article-endcap" aria-label="글 안내">
+  <p>현장 경험을 바탕으로 작성하고, 명확성과 기술적 정확성을 검토했습니다.</p>
+  <div class="article-endcap-actions">
+    <a href="index.html">글 목록으로 돌아가기</a>
+    <a href="ai-categories.html">AI 카테고리 보기</a>
+  </div>
+</aside>
+</article>
+</div></div></section>
+<section class="section"><div class="wrap"><div class="prose"><h2>첫 클러스터 추천</h2><p>처음에는 도구 설명보다 경계선 정리가 먼저입니다. FAB식 사고와 자동차식 사고가 어떻게 다른지 잡아두면 이후 로봇, 비전, Agent, RAG 글이 훨씬 자연스럽게 이어집니다.</p><ol><li><a class="link" href="articles/automotive-ai-vs-fab-ai.html">자동차 제조 AI vs FAB AI: 같은 공장이라는 말, 다른 물리</a></li><li><a class="link" href="articles/vin-genealogy-vs-wafer-genealogy.html">VIN genealogy vs wafer genealogy</a></li><li><a class="link" href="articles/takt-aware-ai-agents-assembly-lines.html">조립 라인을 위한 takt-aware AI Agent</a></li><li>로봇셀 AI 구조: camera, PLC, robot controller, safety PLC, MES</li><li>자동차 비전 검사 AI: 결함, false alarm, golden sample</li></ol><h2>기존 아카이브와 연결되는 글</h2><p>선수 지식으로는 <a class="link" href="articles/rag-over-sealed-documents.html">폐쇄망 문서 RAG</a>, <a class="link" href="articles/agents-mcp-mes.html">MCP와 MES Agent</a>, <a class="link" href="articles/why-air-gapped-llm-manufacturing.html">제조업 온프렘 LLM</a>, <a class="link" href="articles/fdc-from-first-principles.html">FDC 기초</a>를 연결하면 좋습니다.</p></div></div></section>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>누구나 볼 수 있는 실용적인 AI 교육 자료입니다.</h2>
+        <p>현장에서 쓸 수 있는 AI 시스템을 위한 강의, 글, 실전 기록을 모았습니다.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>둘러보기</h4>
+          <a href="../../index.html#courses">강의</a>
+          <a href="index.html">글</a>
+          <a href="learning-paths.html">학습 경로</a>
+          <a href="search.html">검색</a>
+          <a href="portfolio.html">포트폴리오</a>
+        </div>
+        <div class="foot-col">
+          <h4>사이트</h4>
+          <a href="about.html">소개</a>
+          <a href="contact.html">연락처</a>
+          <a href="privacy.html">개인정보 처리방침</a>
+          <a href="terms.html">이용약관</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · 한국어와 영어로 제공하는 AI 교육</span>
+    </div>
+  </div>
+</footer>
+<script src="../assets/theme.js"></script>
+</body>
+</html>

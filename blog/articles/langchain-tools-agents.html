@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 
 <html lang="en">
 <head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- ══ SEO ══════════════════════════════════ -->
@@ -10,16 +10,15 @@
 <meta content="A practical guide to LangChain tools and agents: define tools with @tool, let models call them with bind_tools, understand the reason-act loop, and use create_agent safely on-prem." name="description"/>
 <meta content="AI Edu Archive" name="author"/>
 <meta content="#FAF9F5" name="theme-color"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/langchain-tools-agents.html" rel="canonical"/>
-<link href="https://ai-edu-archive.example.com/blog/ko/articles/langchain-tools-agents.html" hreflang="ko" rel="alternate"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/langchain-tools-agents.html" hreflang="x-default" rel="alternate"/>
+<link href="https://ai-edu-archive.pages.dev/blog/articles/langchain-tools-agents.html" rel="canonical"/>
+
 <meta content="index,follow" name="robots"/>
 <!-- Open Graph -->
 <meta content="article" property="og:type"/>
 <meta content="Tools and agents in LangChain: @tool, bind_tools, and create_agent - AI Edu Archive Journal" property="og:title"/>
 <meta content="A practical guide to LangChain tools and agents: define tools with @tool, let models call them with bind_tools, understand the reason-act loop, and use create_agent safely on-prem." property="og:description"/>
 <meta content="AI Edu Archive" property="og:site_name"/>
-<meta content="https://ai-edu-archive.example.com/blog/articles/langchain-tools-agents.html" property="og:url"/>
+<meta content="https://ai-edu-archive.pages.dev/blog/articles/langchain-tools-agents.html" property="og:url"/>
 <meta content="en_US" property="og:locale"/>
 <meta content="ko_KR" property="og:locale:alternate"/>
 <meta content="2026-07-04" property="article:published_time"/>
@@ -35,58 +34,56 @@
   "headline": "Tools and agents in LangChain: @tool, bind_tools, and create_agent",
   "description": "A practical guide to LangChain tools and agents: define tools with @tool, let models call them with bind_tools, understand the reason-act loop, and use create_agent safely on-prem.",
   "inLanguage": "en",
-  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "image": "https://ai-edu-archive.pages.dev/blog/assets/visuals/article-visual-template.svg",
   "datePublished": "2026-07-04",
   "dateModified": "2026-07-04",
   "author": {
     "@type": "Person",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html",
     "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
   },
   "publisher": {
     "@type": "Organization",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html"
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ai-edu-archive.example.com/blog/articles/langchain-tools-agents.html"
+    "@id": "https://ai-edu-archive.pages.dev/blog/articles/langchain-tools-agents.html"
   },
   "name": "Tools and agents in LangChain: @tool, bind_tools, and create_agent",
-  "url": "https://ai-edu-archive.example.com/blog/articles/langchain-tools-agents.html"
+  "url": "https://ai-edu-archive.pages.dev/blog/articles/langchain-tools-agents.html"
 }</script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link href="../assets/blog.css" rel="stylesheet"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/langchain-tools-agents.html" hreflang="en" rel="alternate"/></head>
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/langchain-tools-agents.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/langchain-tools-agents.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/langchain-tools-agents.html">
+</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="nav" id="nav">
-<div class="wrap">
-<a aria-label="AI Edu Archive home" class="brand" href="../../index.html">
-<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</a>
-<nav aria-label="Primary" class="nav-links">
-<a href="../../index.html#courses">Courses</a>
-<a href="../index.html">Articles</a>
-<a href="../about.html">About</a>
-<div aria-label="Language selector" class="language-switch">
-<a aria-current="true" href="langchain-tools-agents.html" lang="en" title="English">🇺🇸 EN</a>
-<a href="../ko/articles/langchain-tools-agents.html" lang="ko" title="한국어">🇰🇷 KO</a>
-<a href="langchain-tools-agents.html" lang="en" title="English shown for now">🇪🇸 ES</a>
-<a href="langchain-tools-agents.html" lang="en" title="English shown for now">🇨🇳 ZH</a>
-<a href="langchain-tools-agents.html" lang="en" title="English shown for now">🇯🇵 JA</a>
-<a href="langchain-tools-agents.html" lang="en" title="English shown for now">🇩🇪 DE</a>
-<a href="langchain-tools-agents.html" lang="en" title="English shown for now">🇫🇷 FR</a>
-</div>
-</nav>
-</div>
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="langchain-tools-agents.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/langchain-tools-agents.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
 </header>
 <main id="main">
 <article itemscope="" itemtype="https://schema.org/Article">
@@ -120,6 +117,7 @@
 <div class="toc-title">On this page</div>
 <ol>
 <li><a href="#why">Why a model needs tools</a></li>
+<li><a href="#fmea">Read-only MES tool FMEA</a></li>
 <li><a href="#tool">Defining a tool with @tool</a></li>
 <li><a href="#bind">Letting the model call it: bind_tools</a></li>
 <li><a href="#loop">The reason-act loop, by hand</a></li>
@@ -128,42 +126,45 @@
 </ol>
 </nav>
 <div class="article-body" itemprop="articleBody">
-<p><span class="lead-in">A language model can reason about a spec, but it cannot
-      read the MES.</span> It has no live access to your lot tracker, your recipe
-      database, or the last hour of chamber pressure. A <strong>tool</strong> closes that
-      gap: it is a plain Python function the model is allowed to call, so the model can
-      fetch a real number instead of hallucinating one. An <strong>agent</strong> is the
-      loop that lets the model decide <em>which</em> tool to call, read the result, and
-      decide again. This article builds both from scratch, then replaces the hand-written
-      loop with LangChain's prebuilt <code>create_agent</code>. Every import is verified
-      against the current <strong>LangChain 1.x</strong> line — no deprecated
-      <code>initialize_agent</code>, no <code>LLMChain</code>. 폐쇄망에서 쓰는 도구·에이전트를 최신 API로만.</p>
+    <div class="field-story">
+      <span class="note-k">Pre-use review</span>
+      <p>The proposed tool has one function: read a lot status from an MES replica. Before a model receives its schema, the review team asks what identity reaches the replica, how stale the result may be, what a timeout returns, and which log proves the lookup occurred.</p>
+    </div>
+
+<div class="field-story"><span class="note-k">Illustrative message trace</span><p>No visible lookup result makes it seem that the model refused to call <code>get_lot_status</code>. The saved assistant message tells a different story: it contains a valid tool request, while the application printed <code>content</code> and ignored <code>tool_calls</code>. The snag is in the loop, not the model. Inspecting the whole message changes the next action from prompt tuning to implementing the tool-result turn.</p></div>
+<p><span class="lead-in">A language model does not have an MES session.</span> A LangChain tool exposes a bounded application function that the model may request. The application still owns authentication, authorization, validation, timeout, logging, and error handling. The examples below put the request and response messages on the bench; they are instructional sketches, not a qualified MES connector.</p>
+<div class="reader-shortcut"><span class="note-k">Trace shortcut</span><p>Log the assistant message, validated tool-call payload, connector result, and matching <code>tool_call_id</code> as one trace. If one link is missing, stop before asking the model for a final answer.</p></div>
 <h2 id="why">Why a model needs tools</h2>
-<p>Ask an on-prem model “what is the current status of lot A1234?” and,
-      with no access to your systems, it will invent a plausible-looking answer. That is
-      worse than useless in a fab. <strong>Tool calling</strong> fixes this by inverting
-      control: instead of the model producing the final answer, it produces a
+<p>Ask a model for the current status of lot A1234 without supplying a trusted lookup and it may produce an unsupported answer. <strong>Tool calling</strong> changes the interface: instead of the model producing the final answer, it can produce a
       <strong>structured request</strong> — “call <code>get_lot_status</code> with
       <code>lot_id="A1234"</code>” — and your code runs the real function and hands
       the result back. The model never touches the database directly; it only asks.</p>
-<p>That indirection is exactly what a <strong>closed network</strong> wants. Every
-      tool is code you wrote and audited. The model cannot reach anything you did not
-      hand it, and each call is a discrete, loggable event you can gate, rate-limit, or
-      route to a human. <strong>모델은 도구를 요청만 하고</strong>, 실제 조회는 검증된 코드가 수행합니다 —
-      어떤 데이터도 망 밖으로 나가지 않습니다.</p>
+<p>The model request must pass through an allowlisted tool registry and server-side policy. A tool call is a structured event that can be rejected, rate-limited, logged, or escalated. Network isolation and data-flow restrictions must be verified in the environment; binding a tool does not provide them.</p>
 <blockquote>
-        A tool call is a request, not an action. The model asks; your audited code
-        decides whether — and how — to answer.
-        <cite>— the safety property that makes agents fab-viable</cite>
+        Treat model output as an untrusted request. Application code decides whether
+        the authenticated principal may execute the named read operation.
 </blockquote>
+<h2 id="fmea">Read-only MES tool FMEA</h2>
+<p><strong>Illustrative FMEA.</strong> The severity and acceptance criteria must be set with the MES owner, process owner, and IT/security. Read-only access limits one class of effect; it does not make an incorrect or stale result harmless.</p>
+<table>
+<thead><tr><th>Failure mode</th><th>Effect</th><th>Required control and pass test</th><th>Escalation</th></tr></thead>
+<tbody>
+<tr><td>Identity missing or over-privileged</td><td>A user sees a lot outside their scope, or calls with a shared identity that cannot be attributed.</td><td>Propagate an authenticated principal to server-side authorization; use least-privilege replica credentials. Pass only if allow/deny tests cover role, area, and lot scope.</td><td>Deny the call, alert IT/security, and preserve the request ID.</td></tr>
+<tr><td>Argument or response schema mismatch</td><td>The wrong lot is queried or fields are interpreted incorrectly after an MES change.</td><td>Validate lot ID format and a versioned response schema. Contract tests reject unknown fields, missing timestamps, and incompatible schema versions.</td><td>Return a typed unavailable result; route the schema incident to the connector owner.</td></tr>
+<tr><td>Timeout, retry, or loop exhaustion</td><td>The agent waits, repeats load, or presents an incomplete lookup as current.</td><td>Set connector and workflow deadlines, bounded retries with backoff, and a read request ID. Fault injection must end in an explicit timeout state.</td><td>Stop the tool loop and direct the user to the approved MES client or support queue.</td></tr>
+<tr><td>Stale replica or cache</td><td>A previous step or hold state is reported as current.</td><td>Return <code>observed_at</code>, source replica, and freshness limit with every result. Fail when replica lag or record age exceeds the owner-approved threshold.</td><td>Label the result stale, suppress a current-status answer, and contact the MES operations owner when lag persists.</td></tr>
+<tr><td>Audit event absent or incomplete</td><td>The lookup cannot be reconstructed or investigated.</td><td>Log principal, request ID, tool/version, validated arguments or protected hash, source, timestamps, outcome, and policy decision. Reconcile tool calls to connector events.</td><td>Disable the integration when required logging is unavailable; escalate to the service owner and IT/security.</td></tr>
+<tr><td>User treats read output as action authority</td><td>An operator acts on an advisory answer without checking the system of record or procedure.</td><td>Return source and age, keep the tool read-only, and test UI wording and escalation links. Expose no hold-release, recipe-change, or dispatch command.</td><td>Direct operational decisions to the MES workflow and the responsible process or production owner.</td></tr>
+</tbody>
+</table>
 <h2 id="tool">Defining a tool with @tool</h2>
 <p><strong>What it does.</strong> The <code>@tool</code> decorator turns an ordinary
       function into a <code>BaseTool</code>: a callable the model can discover and invoke.
       LangChain reads three things off your function and ships them to the model as a
       JSON schema — the <strong>name</strong>, the <strong>docstring</strong> (which
       becomes the description the model reasons over), and the <strong>type hints</strong>
-      (which become the argument schema). Write those three well and the model calls the
-      tool correctly; write them vaguely and it will not.</p>
+      (which become the argument schema). Clear names reduce ambiguity, but call selection
+      and argument accuracy still require model-specific tests.</p>
 <p>The decorator lives in <code>langchain_core.tools</code>. Type your arguments,
       and write the docstring as if it were the only instruction the model gets — because
       it is.</p>
@@ -176,7 +177,7 @@
           </span>
 <button class="copy-btn" data-copy="" type="button">Copy</button>
 </div>
-<pre><code><span class="tok-com"># A fab lookup exposed as a tool. Runs on-prem; the model only *requests* it.</span>
+<pre><code><span class="tok-com"># Simplified read-only lookup; deployment controls are omitted.</span>
 <span class="tok-kw">from</span> langchain_core.tools <span class="tok-kw">import</span> tool
 
 <span class="tok-dec">@tool</span>
@@ -187,8 +188,8 @@
         lot_id: The lot identifier, e.g. "A1234".
     Returns a short status string: current step, tool, and hold state.
     """</span>
-    <span class="tok-com"># In production this queries the MES read-replica — never the live DB.</span>
-    row = mes.<span class="tok-fn">query_lot</span>(lot_id)          <span class="tok-com"># your audited connector</span>
+    <span class="tok-com"># Connector must enforce identity, ACL, timeout, freshness, and audit controls.</span>
+    row = mes.<span class="tok-fn">query_lot</span>(lot_id)          <span class="tok-com"># illustrative replica client</span>
     <span class="tok-kw">if</span> row <span class="tok-kw">is</span> <span class="tok-kw">None</span>:
         <span class="tok-kw">return</span> <span class="tok-str">f"No lot found for id {lot_id}."</span>
     <span class="tok-kw">return</span> (<span class="tok-str">f"Lot {lot_id}: step {row.step}, tool {row.tool}, "</span>
@@ -199,18 +200,14 @@
 <span class="tok-fn">print</span>(get_lot_status.description)   <span class="tok-com"># the docstring, verbatim</span>
 <span class="tok-fn">print</span>(get_lot_status.args)          <span class="tok-com"># {'lot_id': {'type': 'string', ...}}</span></code></pre>
 </figure>
-<p><strong>Fab context.</strong> Point the tool at a <strong>read-replica</strong>,
-      not the live MES, and keep the return value a compact string the model can quote.
-      The docstring is your prompt-engineering surface: naming the argument
-      <code>lot_id</code> and giving an example (<code>"A1234"</code>) measurably lowers
-      malformed calls. 도구의 도크스트링이 곧 프롬프트입니다 — 인자 이름과 예시가 정확할수록 호출이 정확해집니다.</p>
+<p><strong>Boundary.</strong> A replica protects the transactional database from this query path, but it introduces lag. A qualified implementation should return a structured status with source, schema version, and <code>observed_at</code>; the compact string above keeps the tool mechanics visible and omits those required controls.</p>
 <h2 id="bind">Letting the model call it: bind_tools</h2>
 <p><strong>What it does.</strong> <code>bind_tools</code> attaches your tool schemas
       to a chat model, so that on each turn the model may respond with normal text
       <em>or</em> with one or more <strong>tool calls</strong>. It does not run anything —
       it only gives the model the option and returns any requests it makes on the
       message's <code>tool_calls</code> field.</p>
-<p>Any tool-calling chat model works. On-prem, that is <code>ChatOllama</code> from
+<p>A compatible tool-calling chat model is required. This example uses <code>ChatOllama</code> from
       the <code>langchain-ollama</code> package, pointed at a local model that supports
       function calling (for example a recent Llama or Qwen build). Note one on-prem
       caveat: some Ollama models ignore <code>tool_choice</code>, so you cannot always
@@ -229,7 +226,7 @@
 
 llm = <span class="tok-fn">ChatOllama</span>(model=<span class="tok-str">"llama3.1"</span>,
                  base_url=<span class="tok-str">"http://gpu-node.fab.local:11434"</span>,
-                 temperature=<span class="tok-num">0</span>)          <span class="tok-com"># on-prem, deterministic</span>
+                 temperature=<span class="tok-num">0</span>)          <span class="tok-com"># test repeatability for this model build</span>
 
 llm_with_tools = llm.<span class="tok-fn">bind_tools</span>([get_lot_status])
 
@@ -243,7 +240,7 @@ msg = llm_with_tools.<span class="tok-fn">invoke</span>(<span class="tok-str">"W
 </figure>
 <p>The response carries <code>tool_calls</code> instead of a finished answer. Your
       code is now responsible for running the requested function and returning the result
-      — which is the loop we build next. <strong>모델은 답을 만들지 않고 도구 호출을 요청</strong>했을 뿐입니다.</p>
+      — which is the loop we build next. <strong>The model has requested a tool call</strong>; it has not produced the answer yet.</p>
 <h2 id="loop">The reason-act loop, by hand</h2>
 <p>Tool calling only becomes useful when you close the loop: run the requested tool,
       append its result as a <code>ToolMessage</code>, and invoke the model again so it
@@ -264,27 +261,30 @@ msg = llm_with_tools.<span class="tok-fn">invoke</span>(<span class="tok-str">"W
 tools = {<span class="tok-str">"get_lot_status"</span>: get_lot_status}
 messages = [<span class="tok-fn">HumanMessage</span>(<span class="tok-str">"What's the status of lot A1234?"</span>)]
 
+final_answer = <span class="tok-kw">None</span>
 <span class="tok-kw">for</span> _ <span class="tok-kw">in</span> <span class="tok-fn">range</span>(<span class="tok-num">5</span>):                       <span class="tok-com"># hard cap: never loop forever</span>
     ai = llm_with_tools.<span class="tok-fn">invoke</span>(messages)
     messages.<span class="tok-fn">append</span>(ai)
     <span class="tok-kw">if</span> <span class="tok-kw">not</span> ai.tool_calls:               <span class="tok-com"># no request -&gt; it's the answer</span>
+        final_answer = ai.content
         <span class="tok-kw">break</span>
     <span class="tok-kw">for</span> call <span class="tok-kw">in</span> ai.tool_calls:          <span class="tok-com"># run each requested tool</span>
         result = tools[call[<span class="tok-str">"name"</span>]].<span class="tok-fn">invoke</span>(call)   <span class="tok-com"># -&gt; ToolMessage</span>
         messages.<span class="tok-fn">append</span>(result)
 
-<span class="tok-fn">print</span>(messages[-<span class="tok-num">1</span>].content)          <span class="tok-com"># final grounded answer</span></code></pre>
+<span class="tok-kw">if</span> final_answer <span class="tok-kw">is</span> <span class="tok-kw">None</span>:
+    <span class="tok-kw">raise</span> <span class="tok-fn">RuntimeError</span>(<span class="tok-str">"tool loop exhausted; escalate without a final answer"</span>)
+
+<span class="tok-fn">print</span>(final_answer)                         <span class="tok-com"># final candidate answer</span></code></pre>
 </figure>
 <p>Passing the whole <code>call</code> dict to <code>tool.invoke()</code> is the
       current idiom: the tool returns a <code>ToolMessage</code> already tagged with the
       matching <code>tool_call_id</code>, so the model can line up each result with its
-      request. The <code>range(5)</code> cap matters in a plant — it bounds cost and
-      stops a confused model from looping. <strong>반복 상한</strong>은 폐쇄망 운영에서 필수입니다.</p>
+      request. The <code>range(5)</code> cap bounds this example's loop. Select the runtime limit from latency and load tests, and return an explicit escalation result when it is reached.</p>
 <h2 id="agent">create_agent: the loop, prebuilt</h2>
-<p>You rarely hand-write that loop in production. LangChain 1.x ships it as
-      <code>create_agent</code> (from <code>langchain.agents</code>), which builds the
-      full reason–act graph on top of LangGraph and gives you streaming, checkpointing,
-      and durable execution for free. It supersedes the older
+<p>LangChain provides <code>create_agent</code> in <code>langchain.agents</code> to assemble the
+      reason-act graph on top of LangGraph. Streaming, checkpointing, and durable execution
+      require explicit configuration and testing. It supersedes the older
       <code>langgraph.prebuilt.create_react_agent</code> — and both replace the
       long-deprecated <code>initialize_agent</code>. Pass a model, a list of tools, and a
       system prompt; you get a runnable graph.</p>
@@ -299,6 +299,7 @@ messages = [<span class="tok-fn">HumanMessage</span>(<span class="tok-str">"What
 </div>
 <pre><code><span class="tok-kw">from</span> langchain.agents <span class="tok-kw">import</span> create_agent
 <span class="tok-kw">from</span> langchain_ollama <span class="tok-kw">import</span> ChatOllama
+<span class="tok-kw">from</span> langgraph.errors <span class="tok-kw">import</span> GraphRecursionError
 <span class="tok-kw">from</span> fab_tools <span class="tok-kw">import</span> get_lot_status
 
 llm = <span class="tok-fn">ChatOllama</span>(model=<span class="tok-str">"llama3.1"</span>,
@@ -312,11 +313,15 @@ agent = <span class="tok-fn">create_agent</span>(
                    <span class="tok-str">"Use tools to fetch live data; never guess a lot's status."</span>),
 )
 
-result = agent.<span class="tok-fn">invoke</span>(
-    {<span class="tok-str">"messages"</span>: [{<span class="tok-str">"role"</span>: <span class="tok-str">"user"</span>,
-                   <span class="tok-str">"content"</span>: <span class="tok-str">"Is lot A1234 on hold?"</span>}]}
-)
-<span class="tok-fn">print</span>(result[<span class="tok-str">"messages"</span>][-<span class="tok-num">1</span>].content)    <span class="tok-com"># grounded final answer</span></code></pre>
+<span class="tok-kw">try</span>:
+    result = agent.<span class="tok-fn">invoke</span>(
+        {<span class="tok-str">"messages"</span>: [{<span class="tok-str">"role"</span>: <span class="tok-str">"user"</span>,
+                       <span class="tok-str">"content"</span>: <span class="tok-str">"Is lot A1234 on hold?"</span>}]},
+        config={<span class="tok-str">"recursion_limit"</span>: <span class="tok-num">10</span>},
+    )
+<span class="tok-kw">except</span> GraphRecursionError <span class="tok-kw">as</span> exc:
+    <span class="tok-kw">raise</span> <span class="tok-fn">RuntimeError</span>(<span class="tok-str">"agent step limit reached; escalate without an answer"</span>) <span class="tok-kw">from</span> exc
+<span class="tok-fn">print</span>(result[<span class="tok-str">"messages"</span>][-<span class="tok-num">1</span>].content)    <span class="tok-com"># candidate answer; verify source and age</span></code></pre>
 </figure>
 <p>The input and output are message lists — the same shape the hand loop used, now
       managed for you. To watch the reasoning as it happens, stream it: each step arrives
@@ -332,11 +337,16 @@ result = agent.<span class="tok-fn">invoke</span>(
 <button class="copy-btn" data-copy="" type="button">Copy</button>
 </div>
 <pre><code><span class="tok-com"># Stream each step for a live operator view.</span>
-<span class="tok-kw">for</span> chunk <span class="tok-kw">in</span> agent.<span class="tok-fn">stream</span>(
-        {<span class="tok-str">"messages"</span>: [{<span class="tok-str">"role"</span>: <span class="tok-str">"user"</span>,
-                       <span class="tok-str">"content"</span>: <span class="tok-str">"Is lot A1234 on hold?"</span>}]},
-        stream_mode=<span class="tok-str">"updates"</span>):
-    <span class="tok-fn">print</span>(chunk)          <span class="tok-com"># model step, then tool step, then answer</span></code></pre>
+<span class="tok-kw">from</span> langgraph.errors <span class="tok-kw">import</span> GraphRecursionError
+
+<span class="tok-kw">try</span>:
+    <span class="tok-kw">for</span> chunk <span class="tok-kw">in</span> agent.<span class="tok-fn">stream</span>(
+            {<span class="tok-str">"messages"</span>: [{<span class="tok-str">"role"</span>: <span class="tok-str">"user"</span>,
+                           <span class="tok-str">"content"</span>: <span class="tok-str">"Is lot A1234 on hold?"</span>}]},
+            config={<span class="tok-str">"recursion_limit"</span>: <span class="tok-num">10</span>}, stream_mode=<span class="tok-str">"updates"</span>):
+        <span class="tok-fn">print</span>(chunk)      <span class="tok-com"># model step, then tool step, then answer</span>
+<span class="tok-kw">except</span> GraphRecursionError <span class="tok-kw">as</span> exc:
+    <span class="tok-kw">raise</span> <span class="tok-fn">RuntimeError</span>(<span class="tok-str">"agent step limit reached; escalate"</span>) <span class="tok-kw">from</span> exc</code></pre>
 </figure>
 <figure>
 <div aria-label="LangChain agent reason-act loop diagram" class="diagram">
@@ -377,40 +387,38 @@ result = agent.<span class="tok-fn">invoke</span>(
 </div>
 <figcaption>Figure 1. The agent loop. The model reasons over the question and
         either calls <code>get_lot_status</code> against the on-prem read-replica and
-        observes the result, or — once it has enough — writes the grounded answer.
-        에이전트 루프 — 모델이 도구를 호출·관찰하며 반복하다가 충분해지면 최종 답을 씁니다.</figcaption>
+        observes the result, or writes a candidate answer.
+        The loop cap and result checks decide when the application stops or escalates.</figcaption>
 </figure>
 <h2 id="onprem">On-prem notes and guardrails</h2>
-<p>The pattern is small; the discipline around it is what makes it safe in a fab.
-      A few rules that hold up in a closed network:</p>
+<p>The loop is small; its operational controls determine whether it is acceptable for the bounded read-only use case. Review these controls with the system owners:</p>
 <ul>
-<li><strong>Tools are read-only until proven otherwise.</strong> Start with lookups
+<li><strong>Keep this integration read-only.</strong> Start with lookups
         (<code>get_lot_status</code>, spec fetches). A tool that <em>writes</em> — releases
         a hold, changes a recipe — should require a human confirmation step, not a model's
-        say-so. 쓰기 도구는 사람 승인 뒤에.</li>
+        say-so. A human click alone is not sufficient; a separate authorized system workflow must enforce any write.</li>
 <li><strong>Cap the loop.</strong> Whether hand-written or via
         <code>create_agent</code>, bound the number of iterations so a confused model
-        cannot spin. The prebuilt agent lets you set a recursion limit.</li>
-<li><strong>Log every tool call.</strong> Each call is a structured event —
-        name, args, result. That trail is your audit record and your debugging surface.</li>
-<li><strong>Everything stays on-prem.</strong> The model is <code>ChatOllama</code>
-        on a local GPU node; the tools hit internal replicas. No prompt, no lot ID, no
-        result ever leaves the network.</li>
+        cannot spin. Pass a tested <code>recursion_limit</code> to the prebuilt agent and convert <code>GraphRecursionError</code> into an explicit unavailable or escalation outcome.</li>
+<li><strong>Reconcile tool and connector logs.</strong> A model-side call record alone is incomplete. Match request ID, principal, policy decision, connector outcome, source, and timestamps.</li>
+<li><strong>Verify data flow.</strong> Test model endpoints, telemetry, dependencies, logs, and error reporting against the approved network and retention design.</li>
 </ul>
 <hr/>
-<p>That is the whole ladder: <code>@tool</code> exposes a function,
-      <code>bind_tools</code> lets the model request it, the reason–act loop closes the
-      circle, and <code>create_agent</code> ships that loop production-ready. Start with
-      one read-only lookup tool and a capped loop, log every call, and you have an agent
-      that answers from live fab data instead of guessing — without a single byte leaving
-      the plant. The deck below walks the agent stack end to end.</p>
+<h3>Replay a four-event tool trace</h3>
+<p><strong>Simplified exercise.</strong> Use a stub MES replica and save four events for lot <code>A1234</code>: user question, assistant tool request, tool result with <code>observed_at</code>, and final assistant answer. Then replay a timeout and a stale result.</p>
+<ul>
+<li><strong>Pass:</strong> the tool name is allowlisted, the lot ID validates, request and result IDs match, source age is visible, and timeout or stale data produces an unavailable answer rather than a current-status claim.</li>
+<li><strong>Stop:</strong> the model can name an unregistered tool, a result lacks source time, retries exceed the declared cap, or connector and agent events cannot be reconciled.</li>
+<li><strong>Limit:</strong> the stub does not establish MES truth, production load behavior, identity propagation, or authorization.</li>
+</ul>
+<p><code>@tool</code> exposes the schema, <code>bind_tools</code> lets the model request it, and the loop returns the result. Once that trace is understandable, continue to the MCP article to see how the same tool contract can be published and governed across clients.</p>
 </div>
 <!-- deep-dive deck link -->
 <aside class="deck-link">
 <div class="dl-text">
 <span class="eyebrow">Go deeper</span>
 <h3>Take the full course on this topic</h3>
-<p>This article is a field note. The interactive deck walks the whole subject slide by slide, with diagrams and worked examples. 심화 자료로 이어집니다.</p>
+<p>This article is a field note. The interactive deck walks the whole subject slide by slide, with diagrams and worked examples.</p>
 </div>
 <a class="btn btn-primary" href="../../llm_apply/LLM_slide.html">Open the deck <span aria-hidden="true" class="arw">→</span></a>
 </aside>
@@ -418,8 +426,8 @@ result = agent.<span class="tok-fn">invoke</span>(
 <div class="share">
 <span class="lbl">Share</span>
 <button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
-<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
-<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Flangchain-tools-agents.html" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Flangchain-tools-agents.html" rel="noopener" target="_blank">LinkedIn</a>
 </div>
 <!-- author bio card (E-E-A-T) -->
 <aside class="author-card">
@@ -427,11 +435,7 @@ result = agent.<span class="tok-fn">invoke</span>(
 <div class="a-body">
 <div class="k">About the author</div>
 <h3>AI Edu Archive</h3>
-<p>PhD in physics (IGZO / graphene semiconductor properties) and a semiconductor
-        process engineer working on deposition. Builds air-gapped LLM, RAG, and agent
-        systems — plus reinforcement-learning and anomaly-detection tooling — for the
-        fab. Writes here about turning process know-how into an on-prem knowledge asset
-        that never leaves the network.</p>
+<p>PhD in physics (IGZO / graphene semiconductor properties) and semiconductor process-improvement experience. Writes implementation notes about local AI and manufacturing data systems.</p>
 <a href="../about.html">More about the author →</a>
 </div>
 </aside>
@@ -442,56 +446,46 @@ result = agent.<span class="tok-fn">invoke</span>(
 <div class="related-grid">
 <a class="rel-card" href="langchain-core-explained.html">
 <span class="cat-tag">Python Stack</span>
-<h3>Lang modules implementation guide</h3>
+<h3>LangChain core, explained: LLMs, prompts, and LCEL pipelines</h3>
 </a>
 <a class="rel-card" href="agents-mcp-mes.html">
 <span class="cat-tag">Agents &amp; MCP</span>
-<h3>LangGraph: stateful, resumable agent workflows</h3>
+<h3>Wiring an agent to internal systems with MCP</h3>
 </a>
 </div>
 </section>
 </article>
 </main>
 <footer class="site-foot">
-<div class="wrap">
-<div class="foot-top">
-<div class="foot-lead">
-<h2>Free, in-depth, and open.</h2>
-<p>Everything here, courses and journal alike, is free to read with no signup.</p>
-</div>
-<div class="foot-nav-cols">
-<div class="foot-col">
-<h4>Explore</h4>
-<a href="../../index.html">Hub home</a>
-<a href="../../index.html#courses">All courses</a>
-<a href="../index.html">Journal</a>
-</div>
-<div class="foot-col">
-<h4>Courses</h4>
-<a href="../../overview/index.html">Fab AI</a>
-<a href="../../watsonx/index.html">Air-gapped LLM</a>
-<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
-</div>
-<div class="foot-col">
-<h4>Site</h4>
-<a href="../about.html">About</a>
-<a href="../contact.html">Contact</a>
-<a href="../privacy.html">Privacy</a>
-<a href="../terms.html">Terms</a>
-</div>
-</div>
-</div>
-<div class="foot-bottom">
-<div class="foot-brand">
-<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</div>
-<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
-</div>
-</div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
 </footer>
 <script>
 (function(){
@@ -517,5 +511,6 @@ result = agent.<span class="tok-fn">invoke</span>(
   });
 })();
 </script>
+<script src="../assets/theme.js"></script>
 </body>
 </html>

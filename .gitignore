@@ -8,10 +8,15 @@
 !/index.html
 !/build_site.py
 !/tools/
+!/labs/
 !/overview/
 !/watsonX/
 !/LLM_apply/
 !/blog/
+
+# labs: only runnable examples linked from published articles
+/labs/*
+!/labs/mock-ai-validation/
 
 # overview: published lessons only
 /overview/*

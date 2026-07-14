@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="automotive-robot-cell-title automotive-robot-cell-desc" viewBox="0 0 1200 675">
+  <title id="automotive-robot-cell-title">Automotive robot cell evidence chain</title>
+  <desc id="automotive-robot-cell-desc">A schematic robot cell showing a station event, vision PLC safety observations, quality judgment, owner approval, and controlled rework evidence.</desc>
+  <style>
+    svg { color-scheme: light dark; }
+    .bg { fill: #FAF9F5; }
+    .panel { fill: #FFFFFF; stroke: #DBD5C8; stroke-width: 1.5; }
+    .floor { fill: #F0EEE6; }
+    .zone { fill: #F6EAE1; stroke: #E5B69F; stroke-width: 2; stroke-dasharray: 10 10; }
+    .cell { fill: #FCFBF8; stroke: #C85F42; stroke-width: 2.4; }
+    .body { fill: #243B53; }
+    .window { fill: #A7C7E7; }
+    .robot { fill: none; stroke: #C15F3C; stroke-width: 17; stroke-linecap: round; stroke-linejoin: round; }
+    .joint { fill: #FFFFFF; stroke: #C15F3C; stroke-width: 5; }
+    .card { fill: #FCFBF8; stroke: #5B7DA5; stroke-width: 2; }
+    .stage-chip { fill: #E9F0FA; stroke: #A9BED9; stroke-width: 1.2; }
+    .line { fill: none; stroke: #5F5B55; stroke-width: 3; stroke-linecap: round; marker-end: url(#arrowhead); }
+    .signal { fill: none; stroke: #5B7DA5; stroke-width: 3; stroke-dasharray: 8 8; }
+    .title { fill: #1F1E1C; font: 700 37px Inter, Arial, sans-serif; }
+    .subtitle { fill: #5F5B55; font: 500 19px Inter, Arial, sans-serif; }
+    .stage { fill: #315D8D; font: 800 12px Inter, Arial, sans-serif; text-anchor: middle; letter-spacing: .9px; }
+    .label { fill: #161514; font: 800 17px Inter, Arial, sans-serif; text-anchor: middle; }
+    .small { fill: #4F4C47; font: 650 14px Inter, Arial, sans-serif; text-anchor: middle; }
+    .readline { fill: #4F4C47; font: 700 15px Inter, Arial, sans-serif; }
+    .chip { fill: #F6EAE1; stroke: #E5B69F; }
+    .chip-text { fill: #A64B30; font: 800 13px Inter, Arial, sans-serif; text-anchor: middle; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #07111F; }
+      .panel { fill: #101D31; stroke: #344A68; }
+      .floor { fill: #0A1627; }
+      .zone { fill: #392335; stroke: #73515F; }
+      .cell { fill: #0F1D31; stroke: #FFAA87; }
+      .body { fill: #91A4C0; }
+      .window { fill: #0B2742; }
+      .robot { stroke: #FFBE9B; }
+      .joint { fill: #101D31; stroke: #FFBE9B; }
+      .card { fill: #0F1D31; stroke: #91A4C0; }
+      .stage-chip { fill: #13253E; stroke: #486787; }
+      .line { stroke: #C7D4E7; }
+      .signal { stroke: #91A4C0; }
+      .title { fill: #F2F7FF; }
+      .subtitle { fill: #D8E3F4; }
+      .stage { fill: #BFD7F5; }
+      .label { fill: #F2F7FF; }
+      .small { fill: #D8E3F4; }
+      .readline { fill: #D8E3F4; }
+      .chip { fill: #1B2A42; stroke: #344A68; }
+      .chip-text { fill: #FFBE9B; }
+    }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M1,1 L11,6 L1,11 Z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1200" height="675"/>
+  <rect class="panel" x="42" y="42" width="1116" height="591" rx="32"/>
+  <text class="title" x="82" y="112">Automotive robot cell evidence chain</text>
+  <text class="subtitle" x="82" y="150">Station events become observations, judgments, approvals, and controlled rework evidence.</text>
+  <rect class="floor" x="82" y="188" width="1036" height="330" rx="28"/>
+  <rect class="zone" x="118" y="228" width="356" height="236" rx="24"/>
+  <rect class="cell" x="158" y="292" width="174" height="104" rx="18"/>
+  <path class="body" d="M184 358 L209 320 H286 L315 358 L304 378 H194 Z"/>
+  <rect class="window" x="227" y="330" width="48" height="20" rx="6"/>
+  <path class="line" d="M104 344 H142"/>
+  <path class="robot" d="M414 430 L414 352 L365 318 L342 286"/>
+  <circle class="joint" cx="414" cy="430" r="19"/>
+  <circle class="joint" cx="414" cy="352" r="17"/>
+  <circle class="joint" cx="365" cy="318" r="15"/>
+  <circle class="joint" cx="342" cy="286" r="13"/>
+  <path class="signal" d="M474 344 C502 332, 516 332, 542 344"/>
+  <rect class="stage-chip" x="540" y="230" width="128" height="28" rx="14"/><text class="stage" x="604" y="249">CAUSE</text>
+  <rect class="card" x="526" y="272" width="150" height="92" rx="16"/><text class="label" x="601" y="311"><tspan x="601">Station</tspan><tspan x="601" dy="22">event</tspan></text><text class="small" x="601" y="348">VIN at cell</text>
+  <path class="line" d="M694 318 H724"/>
+  <rect class="stage-chip" x="724" y="230" width="128" height="28" rx="14"/><text class="stage" x="788" y="249">OBSERVE</text>
+  <rect class="card" x="710" y="272" width="156" height="92" rx="16"/><text class="label" x="788" y="306"><tspan x="788">Vision PLC</tspan><tspan x="788" dy="22">safety</tspan></text><text class="small" x="788" y="348">Signals align</text>
+  <path class="line" d="M884 318 H914"/>
+  <rect class="stage-chip" x="914" y="230" width="128" height="28" rx="14"/><text class="stage" x="978" y="249">JUDGMENT</text>
+  <rect class="card" x="900" y="272" width="156" height="92" rx="16"/><text class="label" x="978" y="306"><tspan x="978">Quality takt</tspan><tspan x="978" dy="22">review</tspan></text><text class="small" x="978" y="348">Pass or contain</text>
+  <path class="line" d="M788 382 V410 H914"/>
+  <rect class="stage-chip" x="914" y="392" width="128" height="28" rx="14"/><text class="stage" x="978" y="411">ACTION</text>
+  <rect class="card" x="900" y="432" width="156" height="58" rx="16"/><text class="label" x="978" y="466">Approve rework</text>
+  <text class="small" x="282" y="486">guarded robot cell</text>
+  <text class="readline" x="82" y="552">Read left to right: cause -&gt; observation -&gt; judgment -&gt; approved action.</text>
+  <rect class="chip" x="82" y="580" width="196" height="36" rx="18"/>
+  <text class="chip-text" x="180" y="603">local schematic asset</text>
+  <rect class="chip" x="292" y="580" width="180" height="36" rx="18"/>
+  <text class="chip-text" x="382" y="603">AI evidence map</text>
+</svg>

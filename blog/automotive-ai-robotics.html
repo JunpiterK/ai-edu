@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automotive Manufacturing AI & Robotics - AI Edu Archive Journal</title>
+<meta name="description" content="A practical hub for automotive manufacturing AI and robotics: robot cells, vision inspection, takt time, VIN genealogy, RAG, agents, safety, and on-prem AI.">
+<meta name="author" content="AI Edu Archive">
+<meta name="theme-color" content="#FAF9F5">
+<link rel="canonical" href="https://ai-edu-archive.pages.dev/blog/automotive-ai-robotics.html">
+
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Automotive Manufacturing AI & Robotics - AI Edu Archive Journal">
+<meta property="og:description" content="A practical hub for automotive manufacturing AI and robotics: robot cells, vision inspection, takt time, VIN genealogy, RAG, agents, safety, and on-prem AI.">
+<meta property="og:site_name" content="AI Edu Archive">
+<meta property="og:url" content="https://ai-edu-archive.pages.dev/blog/automotive-ai-robotics.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/blog.css">
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/automotive-ai-robotics.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/automotive-ai-robotics.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/automotive-ai-robotics.html">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../index.html#courses">Courses</a>
+      <a href="index.html">Articles</a>
+      <a href="learning-paths.html">Learning Paths</a>
+      <a href="search.html">Search</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="automotive-ai-robotics.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="ko/automotive-ai-robotics.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<section class="page-head"><div class="wrap"><span class="eyebrow">Automotive AI & Robotics</span><h1>Vehicle factories need a different AI playbook than fabs.</h1><p class="lede">Fab AI thinks in chambers, recipes, wafers, traces, and yield. Automotive manufacturing AI thinks in VINs, stations, takt time, robot cells, torque records, vision images, Andon events, and safety zones.</p><div class="filters" aria-label="Series topics"><a class="chip" href="articles/automotive-ai-vs-fab-ai.html">Start with the comparison</a><a class="chip" href="articles/vin-genealogy-vs-wafer-genealogy.html">VIN genealogy</a><a class="chip" href="articles/takt-aware-ai-agents-assembly-lines.html">Takt-aware agents</a><a class="chip" href="articles/fdc-from-first-principles.html">FAB contrast</a></div></div></section>
+    <div class="hub-voice">
+      <span class="note-k">Field boundary</span>
+      <p>I keep this series separate because automotive plants punish lazy analogies. A robot cell, takt window, Andon event, and VIN history create a different rhythm from wafers and chambers. The overlap with FAB AI is useful, but the boundary matters.</p>
+    </div>
+
+
+<section class="section"><div class="wrap"><figure class="feature-photo"><img src="assets/photos/bmw-leipzig-karosseriebau-robots.jpg" alt="Industrial robots spot welding automotive body shells in the BMW Leipzig body shop" loading="lazy" decoding="async"><figcaption>Automotive body shop robot cells make the AI problem visibly physical: motion, fixtures, weld quality, safety zones, takt time, and traceable vehicle bodies. Photo: BMW Werk Leipzig, via <a class="link" href="https://commons.wikimedia.org/wiki/File:BMW_Leipzig_MEDIA_050719_Download_Karosseriebau_max.jpg">Wikimedia Commons</a>, <a class="link" href="https://creativecommons.org/licenses/by-sa/2.0/de/deed.en">CC BY-SA 2.0 DE</a>. Stored locally; no visual edits.</figcaption></figure></div></section>
+<section class="section"><div class="wrap"><div class="learning-grid">
+<article class="learning-card"><div class="case-top"><span class="cat-tag">Path 01</span><span class="num">Data</span></div><h2>Automotive data foundation</h2><p>Map the plant by evidence: VIN genealogy, station events, PLC tags, robot controller logs, torque results, vision images, EOL test, QMS records, supplier lots, and warranty feedback.</p><div class="deliverables"><span>VIN genealogy</span><span>Station event</span><span>Traceability</span></div></article>
+<article class="learning-card"><div class="case-top"><span class="cat-tag">Path 02</span><span class="num">Robots</span></div><h2>Robot cell AI</h2><p>Study the cell as a controlled system: robot path, gripper, weld gun, camera, fixture, PLC, safety PLC, light curtain, operator mode, maintenance mode, and cycle-time budget.</p><div class="deliverables"><span>Robot logs</span><span>Vision</span><span>Safety interlocks</span></div></article>
+<article class="learning-card"><div class="case-top"><span class="cat-tag">Path 03</span><span class="num">Agents</span></div><h2>Takt-aware agents</h2><p>A shop-floor agent must respect line rhythm. It can read, summarize, escalate, and prepare actions, but write actions need approval, rollback, and an owner who can stop the line.</p><div class="deliverables"><span>Approval gates</span><span>Andon</span><span>Incident runbook</span></div></article>
+<article class="learning-card"><div class="case-top"><span class="cat-tag">Path 04</span><span class="num">Safety</span></div><h2>Safety, quality, and cyber</h2><p>Automotive AI must speak the language of robot safety, functional safety, IATF 16949, APQP, FMEA, PPAP, control plans, OT cybersecurity, audit logs, and human-in-the-loop review.</p><div class="deliverables"><span>IATF</span><span>ISO 10218</span><span>IEC 62443</span></div><aside class="article-endcap" aria-label="Article information">
+  <p>Written from practical engineering experience and reviewed for clarity and technical accuracy.</p>
+  <div class="article-endcap-actions">
+    <a href="index.html">Back to Journal</a>
+    <a href="ai-categories.html">Browse AI categories</a>
+  </div>
+</aside>
+</article>
+</div></div></section>
+<section class="section"><div class="wrap"><div class="prose"><h2>Recommended first cluster</h2><p>Publish the series in clusters. The first cluster should define the boundary between fab thinking and automotive thinking before readers jump into tools.</p><ol><li><a class="link" href="articles/automotive-ai-vs-fab-ai.html">Automotive AI vs FAB AI: same factory word, different physics</a></li><li><a class="link" href="articles/vin-genealogy-vs-wafer-genealogy.html">VIN genealogy vs wafer genealogy</a></li><li><a class="link" href="articles/takt-aware-ai-agents-assembly-lines.html">Takt-aware AI agents for assembly lines</a></li><li>Robot cell AI architecture: camera, PLC, robot controller, safety PLC, MES</li><li>Vision inspection for automotive plants: defects, false alarms, and golden samples</li></ol><h2>Bridge articles from the existing archive</h2><p>Use these as prerequisites: <a class="link" href="articles/rag-over-sealed-documents.html">RAG over sealed documents</a>, <a class="link" href="articles/agents-mcp-mes.html">Agents with MCP and MES</a>, <a class="link" href="articles/why-air-gapped-llm-manufacturing.html">air-gapped LLMs</a>, and <a class="link" href="articles/fdc-from-first-principles.html">FDC from first principles</a>.</p></div></div></section>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../index.html#courses">Courses</a>
+          <a href="index.html">Articles</a>
+          <a href="learning-paths.html">Learning Paths</a>
+          <a href="search.html">Search</a>
+          <a href="portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/theme.js"></script>
+</body>
+</html>

@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 
 <html lang="en">
 <head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Lang modules implementation guide - AI Edu Archive Journal</title>
 <meta content="A practical guide to LangChain and LangGraph modules: what core, providers, loaders, splitters, vector stores, retrievers, tools, LCEL, and StateGraph do, when to use them, and how to implement them." name="description"/>
 <meta content="AI Edu Archive" name="author"/>
 <meta content="#FAF9F5" name="theme-color"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/lang-modules-implementation-guide.html" rel="canonical"/>
-<link href="https://ai-edu-archive.example.com/blog/ko/articles/lang-modules-implementation-guide.html" hreflang="ko" rel="alternate"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/lang-modules-implementation-guide.html" hreflang="x-default" rel="alternate"/>
+<link href="https://ai-edu-archive.pages.dev/blog/articles/lang-modules-implementation-guide.html" rel="canonical"/>
+
 <meta content="index,follow" name="robots"/>
 <meta content="article" property="og:type"/>
 <meta content="Lang modules implementation guide - AI Edu Archive Journal" property="og:title"/>
@@ -38,44 +37,42 @@
     "@type": "Organization",
     "name": "AI Edu Archive"
   },
-  "url": "https://ai-edu-archive.example.com/blog/articles/lang-modules-implementation-guide.html",
+  "url": "https://ai-edu-archive.pages.dev/blog/articles/lang-modules-implementation-guide.html",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ai-edu-archive.example.com/blog/articles/lang-modules-implementation-guide.html"
+    "@id": "https://ai-edu-archive.pages.dev/blog/articles/lang-modules-implementation-guide.html"
   }
 }</script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link href="../assets/blog.css" rel="stylesheet"/>
-<meta content="A practical guide to LangChain and LangGraph modules: what core, providers, loaders, splitters, vector stores, retrievers, tools, LCEL, and StateGraph do, when to use them, and how to implement them." name="twitter:description"/><meta content="Lang modules implementation guide - AI Edu Archive Journal" name="twitter:title"/><meta content="https://ai-edu-archive.example.com/blog/articles/lang-modules-implementation-guide.html" property="og:url"/><link href="https://ai-edu-archive.example.com/blog/articles/lang-modules-implementation-guide.html" hreflang="en" rel="alternate"/></head>
+<meta content="A practical guide to LangChain and LangGraph modules: what core, providers, loaders, splitters, vector stores, retrievers, tools, LCEL, and StateGraph do, when to use them, and how to implement them." name="twitter:description"/><meta content="Lang modules implementation guide - AI Edu Archive Journal" name="twitter:title"/><meta content="https://ai-edu-archive.pages.dev/blog/articles/lang-modules-implementation-guide.html" property="og:url"/>
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/lang-modules-implementation-guide.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/lang-modules-implementation-guide.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/lang-modules-implementation-guide.html">
+</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="nav" id="nav">
-<div class="wrap">
-<a aria-label="AI Edu Archive home" class="brand" href="../../index.html">
-<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</a>
-<nav aria-label="Primary" class="nav-links">
-<a href="../../index.html#courses">Courses</a>
-<a href="../index.html">Articles</a>
-<a href="../portfolio.html">Portfolio</a>
-<a href="../about.html">About</a>
-<div aria-label="Language selector" class="language-switch">
-<a aria-current="true" href="lang-modules-implementation-guide.html" lang="en" title="English">🇺🇸 EN</a>
-<a href="../ko/articles/lang-modules-implementation-guide.html" lang="ko" title="한국어">🇰🇷 KO</a>
-<a href="lang-modules-implementation-guide.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a>
-<a href="lang-modules-implementation-guide.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a>
-<a href="lang-modules-implementation-guide.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a>
-<a href="lang-modules-implementation-guide.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a>
-<a href="lang-modules-implementation-guide.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a>
-</div>
-</nav>
-</div>
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="lang-modules-implementation-guide.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/lang-modules-implementation-guide.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
 </header>
 <main id="main">
 <article itemscope="" itemtype="https://schema.org/TechArticle">
@@ -109,18 +106,33 @@
 <div class="toc-title">On this page</div>
 <ol>
 <li><a href="#map">The module map</a></li>
-<li><a href="#builds">What you can build</a></li>
+<li><a href="#builds">Repository scope and acceptance</a></li>
 <li><a href="#install">Install set</a></li>
 <li><a href="#chat">Chat model + prompt + parser</a></li>
 <li><a href="#rag">Load, split, embed, retrieve</a></li>
 <li><a href="#tools">Tools and structured calls</a></li>
 <li><a href="#graph">LangGraph workflow</a></li>
-<li><a href="#project">Mini project layout</a></li>
+<li><a href="#project">Repository layout</a></li>
 </ol>
 </nav>
 <div class="article-body" itemprop="articleBody">
-<p>The confusing part of the Lang ecosystem is not one API. It is knowing which package owns which job. Once that clicks, the stack becomes ordinary Python: model in, prompt in, parser out, documents in, retriever out, tools in, graph out.</p>
-<p>Think of the Lang modules as building blocks for LLM applications. A plain model call is only one block. The real value appears when you combine prompts, parsers, retrieval, tools, and graph state into workflows that can answer from your files, call local functions, ask for approval, and recover from errors.</p>
+    <figure class="visual-figure media-figure media-figure--diagram">
+      <img src="../assets/visuals/lang-modules-stack.svg" alt="Lang implementation stack" loading="lazy" decoding="async">
+      <figcaption><span class="figure-label">Figure.</span> The implementation guide is easier to navigate when the stack is seen as layers: loaders, retrievers, prompts, tools, state, and tests.</figcaption>
+    </figure>
+
+    <div class="field-story">
+      <span class="note-k">Repository brief</span>
+      <p>Build one command-line repository named <code>lang-lab</code>. It answers questions from a versioned local GPU/RAG policy file, estimates model-weight memory with one read-only calculation tool, and routes unsupported questions to a stop response. It does not call MES, edit files, execute shell commands, or control equipment.</p>
+    </div>
+
+<div class="field-story">
+<span class="note-k">Illustrative endpoint diagnosis</span>
+<p>The initial dependency list assumes the repository needs every Lang package before the first prompt can run. Installation succeeds, and the first concrete failure is only an unreachable Ollama endpoint. That clue changes the build order: prove <code>prompt -&gt; model -&gt; parser</code> first, then add retrieval, one tool, and routing. A large dependency set would have hidden a small interface problem.</p>
+</div>
+<p>The package map is much easier to hold when every dependency serves this one bounded repository. <code>langchain-core</code> defines contracts, <code>langchain-ollama</code> adapts the local model, loaders and splitters prepare the policy file, Chroma stores candidate chunks, and LangGraph chooses retrieval, calculation, or stop.</p>
+<div class="reader-shortcut"><span class="note-k">Build shortcut</span><p>Keep one smoke test per new boundary. If the current boundary fails, stop there; another framework layer will not repair it.</p></div>
+<p>The snippets are deliberately small enough to inspect. Treat them as parts on a bench, not a finished repository, until the shared configuration and acceptance tests at the end exist.</p>
 <h2 id="map">The module map</h2>
 <p>Use this table as the mental model before writing code.</p>
 <table>
@@ -135,27 +147,23 @@
 <tr><td>langgraph</td><td>Stateful, multi-step, cyclic agent workflows.</td><td>You need memory, branching, approval, retry, or long-running state.</td></tr>
 </tbody>
 </table>
-<p>Rule of thumb. If it is a reusable interface, it probably lives in langchain-core. If it talks to a vendor or external system, it probably lives in a provider or community package. If the workflow has state and branches, reach for LangGraph.</p>
-<h2 id="builds">What you can build</h2>
-<p>Before the imports, it helps to see the destination. These are realistic projects you can build with the same modules in this article.</p>
+<p>Package ownership can change across releases, so pin and test the versions used by the repository. The table identifies the role each package plays here, not a universal selection rule.</p>
+<h2 id="builds">Repository scope and acceptance</h2>
+<p>Keep the first release to the following capabilities and tests. Anything outside the table is a non-goal until its owner and contract are defined.</p>
 <table>
 <thead>
-<tr><th>Project</th><th>What it does</th><th>Main modules</th></tr>
+<tr><th>Repository capability</th><th>Acceptance test</th><th>Main modules</th></tr>
 </thead>
 <tbody>
-<tr><td>Local document Q&amp;A</td><td>Ask questions over manuals, PDFs, Markdown notes, or SOPs.</td><td>loaders, splitters, embeddings, vector store, retriever, prompt</td></tr>
-<tr><td>Meeting note summarizer</td><td>Turn messy transcripts into decisions, action items, and risks.</td><td>prompt templates, chat model, output parser, structured output</td></tr>
-<tr><td>Engineering troubleshooting assistant</td><td>Search known issues, retrieve relevant fixes, and suggest next checks.</td><td>retriever, reranking pattern, tools, LangGraph route node</td></tr>
-<tr><td>Local coding helper</td><td>Explain a repo, draft patches, run tests through a controlled tool.</td><td>tools, MCP/Goose integration, LangGraph approval state</td></tr>
-<tr><td>Spec compliance checker</td><td>Compare a design note against policy documents and cite violations.</td><td>document loaders, retriever, JSON parser, graph branch</td></tr>
-<tr><td>GPU sizing assistant</td><td>Estimate whether a model fits a consumer GPU and explain the tradeoff.</td><td>@tool functions, prompt, structured output</td></tr>
-<tr><td>Manufacturing SOP agent</td><td>Answer what should I do next from procedures while refusing unsafe actions.</td><td>RAG, tools, safety prompt, LangGraph human approval</td></tr>
-<tr><td>Research digest bot</td><td>Load notes, summarize, cluster, and create a reading plan.</td><td>loaders, splitters, map-reduce pattern, output parsers</td></tr>
-<tr><td>CSV / log explainer</td><td>Read a log or CSV summary and produce anomalies or next checks.</td><td>community loaders, tools, model, parser</td></tr>
-<tr><td>Personal knowledge base</td><td>Index notes and let a local LLM answer with source links.</td><td>Chroma/Qdrant, retriever, prompt, local embeddings</td></tr>
+<tr><td>Plain chat transform</td><td>Given fixed input, the prompt produces the expected message roles and the parser returns text; endpoint failure is reported.</td><td>langchain-core, langchain-ollama</td></tr>
+<tr><td>Policy retrieval</td><td>Questions in the fixed set retrieve the expected section from <code>docs/policy.txt</code> and return its source metadata.</td><td>loader, splitter, embeddings, Chroma, retriever</td></tr>
+<tr><td>Weight-memory estimate</td><td>Known parameter-count and quantization cases match independently calculated expected values; invalid inputs are rejected.</td><td><code>@tool</code>, typed arguments</td></tr>
+<tr><td>Router</td><td>GPU-memory questions take the tool path, policy questions take RAG, and unrelated questions stop without a tool call.</td><td>LangGraph state and conditional edges</td></tr>
+<tr><td>Answer assembly</td><td>The result distinguishes calculated estimates from retrieved policy and includes source metadata; no claim is presented as measured hardware behavior.</td><td>prompt, model, parser</td></tr>
+<tr><td>Non-goals</td><td>Tests confirm there is no shell, filesystem-write, MES, external-search, or equipment-control tool in the registry.</td><td>tool allowlist and tests</td></tr>
 </tbody>
 </table>
-<p>The same pattern repeats: model alone is good for language work, RAG is good when answers must come from documents, tools are good when the model must ask Python to do something, and LangGraph is good when the workflow needs state, routing, retry, or approval.</p>
+<p>The acceptance tests define this repository's boundary. A future capability gets a new contract and tests before its dependency is added.</p>
 <h2 id="install">Install set</h2>
 <p>For a home PC or local LLM tutorial, start with Ollama-compatible local serving. You can swap providers later without rewriting the whole app.</p>
 <figure class="code-figure">
@@ -177,9 +185,8 @@ pip install -U langchain-core langchain-ollama langchain-community langchain-tex
 (.venv) PS C:\coding\lang-lab&gt;</code></pre>
 </figure>
 <h2 id="chat">Chat model + prompt + parser</h2>
-<p>This is the smallest Lang app: a chat model, a prompt, and an output parser. Use it when you want deterministic text transformation, summarization, or a simple assistant response without tools or retrieval.</p>
-<p>Use this pattern for: email rewriting, Korean/English technical translation, meeting-note summarization, code explanation, glossary generation, report drafting, and any task where the model only needs the user's input and the instructions you provide.</p>
-<p>Do not use only this pattern for: questions that require private documents, current database values, exact calculations, or actions like writing files and running tests. Those need retrieval or tools.</p>
+<p>This first script verifies the repository's prompt, local model adapter, and text parser before retrieval and routing are added. Temperature does not make output deterministic; pin the model build and evaluate repeatability.</p>
+<p>Keep this script as a component smoke test. It must report endpoint and parser failures rather than silently substituting an answer.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span>01_chat_chain.py</span>
@@ -201,7 +208,7 @@ chain = prompt | model | StrOutputParser()
 print(chain.invoke({<span class="tok-str">"topic"</span>: <span class="tok-str">"LangChain LCEL"</span>}))</code></pre>
 </figure>
 <p>What each module did. ChatOllama called the local model. ChatPromptTemplate turned variables into chat messages. StrOutputParser converted the model message into plain text. The pipe operator created a runnable chain.</p>
-<p>Practical variation. If you need a JSON object instead of text, replace StrOutputParser with a structured-output parser or ask the model through a schema-capable interface. Example outputs include risk classification or blog metadata generation.</p>
+<p>The repository returns text in this stage. Add structured output only when an acceptance test requires another result type.</p>
 <p>Expected output.</p>
 <figure class="code-figure">
 <div class="code-bar">
@@ -216,7 +223,7 @@ print(chain.invoke({<span class="tok-str">"topic"</span>: <span class="tok-str">
 </figure>
 <h2 id="rag">Load, split, embed, retrieve</h2>
 <p>RAG uses four families of modules. Loaders turn files into Document objects. Splitters make chunks. Embeddings turn chunks into vectors. Vector stores save and search those vectors. Retrievers expose a simple query-to-documents interface.</p>
-<p>Use RAG when the answer must be grounded. If the user asks what a policy says, which SOP mentions an alarm, or where a claim came from, the model should retrieve source text first and answer from that text.</p>
+<p>Here RAG has one corpus and one purpose: retrieve the versioned local GPU/RAG policy and return source metadata with the answer.</p>
 <p>What each RAG module is for:</p>
 <ul>
 <li>Document loaders: read external material into a standard Document shape with page_content and metadata.</li>
@@ -242,7 +249,7 @@ docs_dir = Path(<span class="tok-str">"docs"</span>)
 docs_dir.mkdir(exist_ok=<span class="tok-kw">True</span>)
 (docs_dir / <span class="tok-str">"policy.txt"</span>).write_text(
     <span class="tok-str">"Local LLM lab policy: tools are read-only by default. "</span>
-    <span class="tok-str">"Shell commands require explicit approval. Secrets must not be indexed."</span>,
+    <span class="tok-str">"This repository exposes no shell tool. Secrets must not be indexed."</span>,
     encoding=<span class="tok-str">"utf-8"</span>,
 )
 
@@ -272,7 +279,7 @@ model = ChatOllama(model=<span class="tok-str">"qwen2.5:7b-instruct"</span>, tem
 <span class="tok-kw">def</span> <span class="tok-fn">format_docs</span>(docs):
     <span class="tok-kw">return</span> <span class="tok-str">"\n\n"</span>.join(f<span class="tok-str">"[{d.metadata['source']}]\n{d.page_content}"</span> <span class="tok-kw">for</span> d <span class="tok-kw">in</span> docs)
 
-question = <span class="tok-str">"Can tools run shell commands by default?"</span>
+question = <span class="tok-str">"Does this repository expose a shell tool?"</span>
 hits = retriever.invoke(question)
 answer = (prompt | model | StrOutputParser()).invoke({
     <span class="tok-str">"context"</span>: format_docs(hits),
@@ -288,23 +295,13 @@ print(<span class="tok-str">"\nSources:"</span>, [d.metadata[<span class="tok-st
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">output</span>rag-output.txt</span>
 <button class="copy-btn" data-copy="" type="button">Copy</button>
 </div>
-<pre><code>No. Tools are read-only by default, and shell commands require explicit approval.
+<pre><code>No. This repository exposes no shell tool.
 
 Sources: ['docs\\policy.txt']</code></pre>
 </figure>
-<p>When to use each piece. Use loaders when the source is external or messy. Use splitters whenever documents are longer than your retrieval target. Use embeddings and vector stores when semantic search matters. Use retrievers when the rest of the app should not care how search is implemented.</p>
-<p>Common practical choices. Use a small persistent vector store for personal notes or a prototype. Use Qdrant, Postgres with pgvector, or another server-backed store when multiple apps or users need the same index. Use metadata filters when the question includes document type, date, equipment, product, author, or permission scope.</p>
+<p>Retain the source checksum, chunk configuration, embedding model ID, collection ID, and fixed retrieval results. This guide uses one local collection; shared multi-user storage is outside scope.</p>
 <h2 id="tools">Tools and structured calls</h2>
-<p>Tools are functions with schemas. Use them when the model should ask the system to do something: calculate, search, look up a file, call an internal API, or query an MCP server. Keep the first tools boring and safe.</p>
-<p>Use tools when language is not enough. Models are bad calculators, unreliable database clients, and dangerous shell users unless capabilities are wrapped carefully. A tool is the wrapper. The model asks for estimate_weight_memory; your Python code performs the calculation; the model explains the result.</p>
-<p>Good first tools:</p>
-<ul>
-<li>Calculator: exact arithmetic, unit conversion, GPU memory estimates.</li>
-<li>Search: query a local index or controlled file list.</li>
-<li>Lookup: read a known config, policy, or glossary entry.</li>
-<li>Test runner: run pytest only inside a disposable workspace.</li>
-<li>Ticket draft: create a draft object, not a live external ticket at first.</li>
-</ul>
+<p>The repository exposes one tool schema: <code>estimate_weight_memory</code>. Python calculates raw weight storage from parameter count and quantization bits. The result excludes KV cache, runtime buffers, framework overhead, and measured throughput.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span>03_tools.py</span>
@@ -315,6 +312,8 @@ Sources: ['docs\\policy.txt']</code></pre>
 <span class="tok-dec">@tool</span>
 <span class="tok-kw">def</span> <span class="tok-fn">estimate_weight_memory</span>(params_billion: float, bits: int = <span class="tok-num">4</span>) -&gt; str:
     <span class="tok-str">"""Estimate raw LLM weight memory in GB before KV cache and overhead."""</span>
+    <span class="tok-kw">if</span> params_billion &lt;= <span class="tok-num">0</span> <span class="tok-kw">or</span> bits <span class="tok-kw">not in</span> {<span class="tok-num">2</span>, <span class="tok-num">3</span>, <span class="tok-num">4</span>, <span class="tok-num">8</span>, <span class="tok-num">16</span>}:
+        <span class="tok-kw">raise</span> <span class="tok-fn">ValueError</span>(<span class="tok-str">"positive parameter count and supported bit width required"</span>)
     gb = params_billion * bits / <span class="tok-num">8</span>
     <span class="tok-kw">return</span> f<span class="tok-str">"Raw weights need about {gb:.1f} GB."</span>
 
@@ -328,19 +327,9 @@ print(estimate_weight_memory.invoke({<span class="tok-str">"params_billion"</spa
 </div>
 <pre><code>Raw weights need about 3.5 GB.</code></pre>
 </figure>
-<p>Design rule. A tool docstring is not decoration. It is part of the interface the model reads. Write tool names, argument names, and docstrings as if a tired junior engineer will use them at 2 a.m.</p>
-<p>Danger rule. Do not expose a general shell tool on day one. Start with narrow tools. run_tests() is safer than run_command(command). read_policy(name) is safer than read_file(path). The more general the tool, the more validation and approval you need.</p>
+<p>The docstring is part of the model-facing schema; server code still validates arguments. Keep the allowlist to this function and test that unknown tool names and invalid values are rejected.</p>
 <h2 id="graph">LangGraph workflow</h2>
-<p>LCEL is great for straight-line chains. LangGraph is for workflows with state: classify, retrieve, answer, ask for approval, retry, or stop. The core idea is a StateGraph: each node reads the current state and returns a partial update.</p>
-<p>Use LangGraph when you catch yourself writing workflow flags. If your code has variables like needs_retrieval, tool_failed, approval_required, retry_count, or final_answer, you are already building a graph mentally. LangGraph makes that state explicit.</p>
-<p>Practical graph patterns:</p>
-<ul>
-<li>Router graph: send questions to chat, RAG, tool, or refusal path.</li>
-<li>RAG retry graph: retrieve, grade evidence, rewrite the query, retrieve again.</li>
-<li>Human approval graph: draft an action, pause, resume only after approval.</li>
-<li>Coding agent graph: inspect repo, propose patch, run tests, fix failures, summarize diff.</li>
-<li>Incident assistant graph: classify alarm, retrieve SOP, call read-only diagnostics, produce next steps.</li>
-</ul>
+<p>The graph stores the question, selected route, and answer. Its conditional edge permits only <code>tool</code>, <code>rag</code>, or <code>stop</code>. Route tests should use fixed questions and must confirm that the stop path calls neither tool nor retriever.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span>04_graph.py</span>
@@ -402,23 +391,24 @@ print(app.invoke({<span class="tok-str">"question"</span>: <span class="tok-str"
  'route': 'tool',
  'answer': 'Use the VRAM estimator tool for model memory questions.'}</code></pre>
 </figure>
-<p>When to use LangGraph. Use it when the application is no longer a single pipe. If you need conditional branches, human approval, retries, memory, checkpointing, or multiple agents, a graph is usually clearer than a giant function.</p>
-<h3>A combined practical flow</h3>
-<p>Here is how the modules fit together in a real local assistant:</p>
+<p>This repository uses LangGraph for one reason: the request has three explicit routes. The example graph has no persistence, approval, or autonomous loop; adding those concerns would change the repository scope.</p>
+<h3>A possible next-stage repository flow</h3>
+<p>The code above is a routing-only smoke test: each selected node returns guidance text and then ends. It does not yet call a tool, retriever, or model. A later implementation could compose the following bounded path:</p>
 <ol>
 <li>User asks: Can my 12GB GPU run a 7B model for local RAG?</li>
-<li>LangGraph routes the question to the tool path because it mentions GPU memory.</li>
+<li>LangGraph routes the question to a composed calculation-and-retrieval path.</li>
 <li>A tool estimates raw model memory and warns about KV cache overhead.</li>
-<li>The retriever fetches the local lab policy about safe model settings.</li>
+<li>The retriever fetches the local lab policy about tested model settings.</li>
 <li>The prompt combines tool result and retrieved policy.</li>
-<li>The model answers with a recommendation and source note.</li>
+<li>The model labels the estimate, reports assumptions, and includes a source note.</li>
 </ol>
 <figure class="code-figure">
 <div class="code-bar">
-<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">text</span>combined-flow.txt</span>
+<span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">text</span>proposed-combined-flow.txt</span>
 <button class="copy-btn" data-copy="" type="button">Copy</button>
 </div>
-<pre><code>User question
+<pre><code>Proposed extension (not implemented by 04_graph.py)
+User question
   -&gt; LangGraph route node
   -&gt; Tool: estimate_weight_memory(7, 4)
   -&gt; Retriever: search local GPU/RAG policy
@@ -427,8 +417,8 @@ print(app.invoke({<span class="tok-str">"question"</span>: <span class="tok-str"
   -&gt; Parser
   -&gt; Answer with recommendation and sources</code></pre>
 </figure>
-<h2 id="project">Mini project layout</h2>
-<p>When these examples grow, split them by responsibility. This layout is small enough for a home PC lab and serious enough to become a portfolio project.</p>
+<h2 id="project">Repository layout</h2>
+<p>Place the snippets behind these module boundaries. Add pinned dependencies, a configuration file for model and index IDs, and tests for every acceptance row before treating the repository as complete.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">text</span>project-tree.txt</span>
@@ -449,34 +439,41 @@ print(app.invoke({<span class="tok-str">"question"</span>: <span class="tok-str"
   run_rag.py
   run_graph.py</code></pre>
 </figure>
-<p>That is the shape to remember: core abstractions, provider calls, retrieval modules, tools, and graph orchestration. The names look big. The jobs are small.</p>
-<h3>How to choose the next module</h3>
-<p>When building a real app, do not add everything at once. Let the problem pull in the module.</p>
+<p><code>run_chat.py</code>, <code>run_rag.py</code>, and <code>run_graph.py</code> should import the same configuration and component factories. That prevents the examples from drifting into three unrelated applications.</p>
+<h3>Change-control triggers</h3>
+<p>Use this table to decide when the bounded repository needs another module or test contract.</p>
 <table>
 <thead>
 <tr><th>If the problem is...</th><th>Add this</th><th>Why</th></tr>
 </thead>
 <tbody>
-<tr><td>The model writes the wrong format.</td><td>Output parser / structured output</td><td>The response needs a contract, not a better vibe.</td></tr>
+<tr><td>The model writes the wrong format.</td><td>Output parser / structured output</td><td>The response needs a testable schema.</td></tr>
 <tr><td>The answer must come from our files.</td><td>Loader + splitter + retriever</td><td>The model needs evidence before generation.</td></tr>
 <tr><td>The model needs exact math or lookup.</td><td>@tool</td><td>Let Python do exact work and let the model explain it.</td></tr>
-<tr><td>The app has multiple possible paths.</td><td>LangGraph router</td><td>Branching belongs in state, not prompt spaghetti.</td></tr>
-<tr><td>A human must approve before action.</td><td>LangGraph interrupt / approval state</td><td>Approval is a workflow step, not a prompt paragraph.</td></tr>
+<tr><td>The app has multiple possible paths.</td><td>LangGraph router</td><td>Routing becomes an explicit, testable state transition.</td></tr>
+<tr><td>A human must review before action.</td><td>Separate workflow design</td><td>Authentication, authorization, expiry, audit, and durable state are outside this repository.</td></tr>
 <tr><td>The same index powers several apps.</td><td>Server-backed vector store</td><td>Local in-memory prototypes stop scaling quickly.</td></tr>
 <tr><td>The agent can edit files or run tests.</td><td>Narrow tools + graph + logs</td><td>Actions need boundaries, audit, and rollback.</td></tr>
 </tbody>
 </table>
-<h3>Recommended learning order</h3>
+<h3>Implementation order</h3>
 <ol>
 <li>Plain chat chain: prompt, model, parser.</li>
 <li>Structured output: force the model to return a predictable shape.</li>
 <li>Tiny RAG: one text file, one retriever, one answer with source.</li>
-<li>One safe tool: exact calculation or read-only lookup.</li>
+<li>One bounded tool: the weight-memory calculation.</li>
 <li>Router graph: decide chat vs RAG vs tool.</li>
-<li>Agent workflow: inspect, plan, call tool, summarize.</li>
-<li>Approval and logging: make it safe enough to use repeatedly.</li>
+<li>Combined answer: label estimates and attach retrieved source metadata.</li>
+<li>Acceptance suite: route, contract, retrieval, invalid-input, and non-goal tests.</li>
 </ol>
-<p>If you follow that order, you will understand why each Lang module exists before you depend on it. That is much better than starting with a full agent template and wondering which part broke.</p>
+<h3>Twenty-minute repository acceptance card</h3>
+<p><strong>Simplified exercise.</strong> Use three fixed questions: one policy lookup, one 7-billion-parameter/4-bit memory estimate, and one unrelated request. Record the route, returned artifact, source metadata, and any external call for each.</p>
+<ul>
+<li><strong>Pass:</strong> the policy question reaches the expected policy chunk, the calculation returns 3.5 GB as raw weights, and the unrelated request reaches <code>stop</code> without invoking the retriever or tool.</li>
+<li><strong>Stop:</strong> a route is ambiguous, source metadata is absent, invalid numeric input is accepted, or any unregistered capability is called.</li>
+<li><strong>Limit:</strong> this checks repository wiring only. It says nothing about answer quality across a real corpus, runtime memory overhead, throughput, or permission enforcement.</li>
+</ul>
+<p>Once that card passes, the next useful read is the core-components article: it slows down the same prompt, model, parser, and Runnable boundaries so their tests are easier to write. A calculated estimate and a retrieved policy still do not prove that a model fits or performs on a particular GPU; that requires hardware testing under stated conditions.</p>
 <div class="callout">
 <p>Security note. Treat model output as untrusted. Do not pass arbitrary model-generated strings directly into file paths, SQL filters, shell commands, or deserializers. The more tools you add, the more boring validation matters.</p>
 </div>
@@ -506,40 +503,35 @@ print(app.invoke({<span class="tok-str">"question"</span>: <span class="tok-str"
 </article>
 </main>
 <footer class="site-foot">
-<div class="wrap">
-<div class="foot-top">
-<div class="foot-lead">
-<h2>Keep the know-how in. Keep the cloud out.</h2>
-<p>A free, in-depth archive for local LLM, RAG, and agent systems.</p>
-</div>
-<div class="foot-nav-cols">
-<div class="foot-col">
-<h4>Explore</h4>
-<a href="../../index.html">Hub home</a>
-<a href="../index.html">Journal</a>
-<a href="../portfolio.html">Portfolio</a>
-</div>
-<div class="foot-col">
-<h4>Site</h4>
-<a href="../about.html">About</a>
-<a href="../contact.html">Contact</a>
-<a href="../privacy.html">Privacy</a>
-<a href="../terms.html">Terms</a>
-<a href="../disclosure.html">Disclosure</a>
-</div>
-</div>
-</div>
-<div class="foot-bottom">
-<div class="foot-brand">
-<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</div>
-<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
-</div>
-</div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
 </footer>
 <script>
 (function(){
@@ -561,5 +553,6 @@ print(app.invoke({<span class="tok-str">"question"</span>: <span class="tok-str"
   });
 })();
 </script>
+<script src="../assets/theme.js"></script>
 </body>
 </html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FDC from first principles: sensor traces, golden runs, and false alarms - AI Edu Archive Journal</title>
+<meta name="description" content="A beginner-friendly guide to fault detection and classification in semiconductor fabs: sensor traces, recipe-step alignment, golden runs, fault signatures, false alarms, and first pilot gates.">
+<meta name="author" content="AI Edu Archive">
+<meta name="theme-color" content="#FAF9F5">
+<link rel="canonical" href="https://ai-edu-archive.pages.dev/blog/articles/fdc-from-first-principles.html">
+
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FDC from first principles: sensor traces, golden runs, and false alarms - AI Edu Archive Journal">
+<meta property="og:description" content="A beginner-friendly guide to fault detection and classification in semiconductor fabs: sensor traces, recipe-step alignment, golden runs, fault signatures, false alarms, and first pilot gates.">
+<meta property="og:site_name" content="AI Edu Archive">
+<meta property="og:url" content="https://ai-edu-archive.pages.dev/blog/articles/fdc-from-first-principles.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="article:published_time" content="2026-07-13">
+<meta property="article:author" content="AI Edu Archive">
+<meta property="article:section" content="Manufacturing AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FDC from first principles: sensor traces, golden runs, and false alarms - AI Edu Archive Journal">
+<meta name="twitter:description" content="A beginner-friendly guide to fault detection and classification in semiconductor fabs: sensor traces, recipe-step alignment, golden runs, fault signatures, false alarms, and first pilot gates.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"FDC from first principles: sensor traces, golden runs, and false alarms","description":"A beginner-friendly guide to fault detection and classification in semiconductor fabs: sensor traces, recipe-step alignment, golden runs, fault signatures, false alarms, and first pilot gates.","inLanguage":"en","datePublished":"2026-07-13","dateModified":"2026-07-13","author":{"@type":"Person","name":"AI Edu Archive"},"publisher":{"@type":"Organization","name":"AI Edu Archive"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ai-edu-archive.pages.dev/blog/articles/fdc-from-first-principles.html"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/blog.css">
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/fdc-from-first-principles.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/fdc-from-first-principles.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/fdc-from-first-principles.html">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="fdc-from-first-principles.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/fdc-from-first-principles.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<article data-cat="mfg" itemscope itemtype="https://schema.org/Article">
+  <div class="article-hero"><div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span class="sep" aria-hidden="true">/</span><a href="../index.html">Journal</a><span class="sep" aria-hidden="true">/</span><span aria-current="page">FDC from first principles</span></nav><div class="post-meta"><span class="cat-tag">Manufacturing AI</span><span class="post-dot"></span><time datetime="2026-07-13" itemprop="datePublished">Jul 13, 2026</time><span class="post-dot"></span><span class="rt">15 min read</span></div><h1 itemprop="headline">FDC from first principles: sensor traces, golden runs, and false alarms</h1><div class="byline"><span class="avatar" aria-hidden="true">AE</span><span class="who"><b itemprop="author">AI Edu Archive</b><span>Applied AI, robotics, manufacturing systems</span></span></div></div></div>
+  <nav class="toc" aria-label="Table of contents"><div class="toc-title">On this page</div><ol><li><a href="#meaning">What FDC is really doing</a></li><li><a href="#trace">Why traces need step alignment</a></li><li><a href="#golden">Golden runs and fault signatures</a></li><li><a href="#false-alarms">False alarms are not a detail</a></li><li><a href="#first-pilot">A first pilot checklist</a></li><li><a href="#connect">How this connects to AI</a></li></ol></nav>
+  <div class="article-body" itemprop="articleBody">
+    <figure class="visual-figure media-figure media-figure--diagram">
+      <img src="../assets/visuals/fdc-golden-run.svg" alt="Golden run vs fault trace" loading="lazy" decoding="async">
+      <figcaption><span class="figure-label">Figure.</span> FDC is a comparison discipline: align the run by recipe step, compare live behavior to a golden band, and separate review signals from action signals.</figcaption>
+    </figure>
+
+<p><span class="lead-in">Start an FDC review with a trace contract, not an anomaly score.</span> Write down the tag, unit, sample rate, clock source, recipe-step label, missing-data rule, baseline version, and alert owner. Fault Detection and Classification then has a concrete job: compare recorded equipment behavior with a defined reference and route the deviation for the right level of review.</p>
+    <p>That makes FDC an early evidence layer between a normal-looking tool state and later metrology. It complements SPC, metrology, and engineering review; it does not establish root cause or product disposition on its own.</p>
+
+    <div class="field-note"><span class="note-k">Scope boundary</span><p>An FDC alert is evidence for review. It does not by itself diagnose root cause, establish product impact, or authorize a hold or tool stop.</p></div>
+
+    <h2 id="meaning">What FDC is really doing</h2>
+    <p>A process run is not one flat time-series. It is a sequence of recipe steps: pump down, stabilize, gas flow, plasma strike, main etch, endpoint, purge, vent. Each step has different expected behavior. A pressure spike may be normal during one step and suspicious during another.</p>
+    <p>That is why beginner FDC should be understood as four jobs:</p>
+    <ul>
+      <li><b>Collect:</b> capture relevant sensor traces with enough timestamp quality.</li>
+      <li><b>Align:</b> map those traces to recipe step, chamber, lot, wafer, and product context.</li>
+      <li><b>Compare:</b> measure distance from a healthy baseline or control band.</li>
+      <li><b>Classify:</b> connect the abnormal pattern to likely fault families and engineering actions.</li>
+    </ul>
+    <p>If collection is weak, the model sees noise. If alignment is weak, the model compares the wrong moments. If baseline is weak, every normal variation looks suspicious. If classification is weak, engineers get an alarm but no clue.</p>
+
+    <h2 id="trace">Why traces need step alignment</h2>
+    <div class="field-story"><span class="note-k">Illustrative scenario: recipe events overturn an amplitude alarm</span><p>The score from two similarly shaped hypothetical etch runs flags pressure amplitude after both traces are aligned at run start. Recipe events change the diagnosis: one run entered stabilization later, and the other had a delayed plasma strike. The apparent amplitude fault came from comparing different process moments. The revised method aligns by recipe-step boundary while preserving strike delay as its own timing feature. These are constructed traces, not plant measurements.</p></div>
+    <div class="tbl-wrap"><table class="tbl"><caption>Trace alignment choices.</caption><thead><tr><th>Alignment method</th><th>When it helps</th><th>Failure mode</th></tr></thead><tbody>
+      <tr><td class="name">Run start time</td><td>Quick prototype; simple processes with stable timing.</td><td>Step drift creates fake differences.</td></tr>
+      <tr><td class="name">Recipe step</td><td>Most useful first production method.</td><td>Step labels must be consistent across recipe revisions.</td></tr>
+      <tr><td class="name">Event markers</td><td>Useful around plasma strike, endpoint, valve transition, chamber state change.</td><td>Missing or delayed events can shift the comparison.</td></tr>
+      <tr><td class="name">Dynamic time warping</td><td>Helpful when shape matters more than exact duration.</td><td>Can hide timing problems if used carelessly.</td></tr>
+    </tbody></table></div>
+    <div class="tbl-wrap"><table class="tbl"><caption>Hypothetical trace and alignment specification; values are examples, not plant measurements.</caption><thead><tr><th>Item</th><th>Example condition</th><th>Acceptance check</th><th>Owner</th></tr></thead><tbody><tr><td class="name">Trace</td><td>Pressure in kPa and RF reflected power in W, sampled at 10 Hz</td><td>Units, calibration status, missing samples, and clock source recorded</td><td>Equipment engineering</td></tr><tr><td class="name">Context</td><td>Tool, chamber, run, recipe revision, step label, product family, maintenance state</td><td>Every scored window joins to approved context or is excluded with a reason</td><td>Equipment and process engineering</td></tr><tr><td class="name">Alignment</td><td>Recipe-step boundary, then elapsed time within step</td><td>Plasma-strike delay remains a timing feature rather than being warped away</td><td>Process engineering</td></tr><tr><td class="name">Missing data</td><td>Reject a step window with more than 1% missing samples</td><td>Threshold tested against sensor behavior and recorded as an example starting value</td><td>Equipment engineering</td></tr></tbody></table></div>
+
+    <h2 id="golden">Golden runs and fault signatures</h2>
+    <p>A golden baseline is a versioned reference set, not a claim that one run is perfect. Define inclusion and exclusion rules using product disposition, chamber state, recipe revision, metrology, alarm history, and the time interval represented. Keep the selected run IDs so another reviewer can reproduce the baseline.</p>
+    <p>A fault signature is a recurring abnormal pattern that engineers can name. For example:</p>
+    <ul>
+      <li>Pressure takes longer than usual to stabilize before plasma.</li>
+      <li>RF reflected power rises during the main etch step.</li>
+      <li>Endpoint signal shape shifts while metrology later shows CD drift.</li>
+      <li>MFC response lags after setpoint change.</li>
+      <li>Chamber temperature recovery after clean is slower than baseline.</li>
+    </ul>
+    <div class="tbl-wrap"><table class="tbl"><caption>Hypothetical baseline definition; values are examples, not plant measurements.</caption><thead><tr><th>Decision</th><th>Example rule</th><th>Review condition</th><th>Owner</th></tr></thead><tbody><tr><td class="name">Inclusion</td><td>Same recipe revision and product family; approved metrology; no unresolved critical alarm</td><td>Process and equipment owners sign the run list</td><td>Process engineering</td></tr><tr><td class="name">Exclusion</td><td>First three runs after chamber clean or any run with incomplete trace context</td><td>Exclusion remains visible in the baseline record</td><td>Equipment engineering</td></tr><tr><td class="name">Reference band</td><td>Median trace with a robust dispersion band by recipe step</td><td>Back-test separately on reviewed normal and fault runs</td><td>FDC/model owner</td></tr><tr><td class="name">Effective period</td><td>Valid until recipe, sensor, hardware, or maintenance-state definition changes</td><td>Change event triggers review, not automatic carryover</td><td>Process owner</td></tr></tbody></table></div>
+
+    <h2 id="false-alarms">False alarms are not a detail</h2>
+    <p>False positives consume review capacity and can hide useful alerts in queue noise. Set a budget in operational units, such as review alerts per chamber-day or minutes of review per shift, and pair it with a miss metric for known faults. A threshold is acceptable only under the test population and action level for which it was evaluated.</p>
+    <div class="tbl-wrap"><table class="tbl"><caption>Common false-alarm causes.</caption><thead><tr><th>Cause</th><th>What it looks like</th><th>Fix</th></tr></thead><tbody>
+      <tr><td class="name">Mixed products</td><td>Normal product difference looks like fault.</td><td>Baseline by product or process family.</td></tr>
+      <tr><td class="name">Recipe revision drift</td><td>Released change triggers old limit.</td><td>Version limits with recipe revision.</td></tr>
+      <tr><td class="name">Maintenance state</td><td>Post-PM behavior looks abnormal but is expected.</td><td>Add PM/chamber state to context.</td></tr>
+      <tr><td class="name">Sensor noise</td><td>One noisy tag dominates alerting.</td><td>Filter, validate, or remove the tag.</td></tr>
+      <tr><td class="name">Bad severity design</td><td>Every deviation becomes urgent.</td><td>Separate watch, review, hold, and stop levels.</td></tr>
+    </tbody></table></div>
+    <p>Define action levels and owners separately. A watch signal may enter a queue. A review signal may require equipment or process confirmation. A hold requires the site-authorized production or quality workflow. A tool stop requires separately engineered controls and authorization; the FDC score alone is not a functional-safety mechanism.</p>
+    <div class="tbl-wrap"><table class="tbl"><caption>Illustrative false-positive budget and ownership; values are not plant measurements.</caption><thead><tr><th>Level</th><th>Example budget</th><th>Decision boundary</th><th>Owner</th></tr></thead><tbody><tr><td class="name">Watch</td><td>No more than 2 review items per chamber-day on the validation set</td><td>Record and trend; no plant-state change</td><td>FDC/model owner</td></tr><tr><td class="name">Review</td><td>No more than 15 minutes of triage per shift for the scoped pilot</td><td>Engineer confirms, rejects, or escalates with evidence</td><td>Equipment/process engineering</td></tr><tr><td class="name">Hold proposal</td><td>Budget set from miss cost and approved workflow, not from this example</td><td>Authorized production or quality principal decides</td><td>Production/quality</td></tr><tr><td class="name">Tool stop</td><td>Outside this instructional FDC design</td><td>Use independently validated site controls</td><td>Equipment and safety owners</td></tr></tbody></table></div>
+
+    <section class="interactive-lab" data-fdc-sim data-pass-text="Balanced in this sample" data-review-text="Trade-off needs review" data-run-text="Run" data-fault-text="known fault" data-normal-text="normal">
+      <div class="interactive-lab-head"><div><span class="sim-badge">Interactive example</span><h3>Move the FDC threshold</h3><p>See how one alarm limit changes false alarms and known-fault detection.</p></div></div>
+      <div class="sim-control"><label for="fdc-threshold-en">Alarm threshold</label><input id="fdc-threshold-en" data-fdc-threshold type="range" min="1.5" max="4" step="0.1" value="2.5"><output data-fdc-value></output></div>
+      <div class="sim-run-chart" data-fdc-chart aria-label="Twenty normal runs followed by four known fault runs"></div>
+      <div class="sim-results"><div><span>False alarms</span><strong data-fdc-false></strong></div><div><span>Faults detected</span><strong data-fdc-detected></strong></div><div><span>Assessment</span><strong data-fdc-result></strong></div></div>
+      <p class="sim-note">Illustrative dataset: 20 engineer-reviewed normal runs and 4 known faults, expressed as standardized deviation from a golden-run baseline. These are teaching values, not measurements from a production tool.</p>
+    </section>
+
+    <h2 id="first-pilot">A first pilot checklist</h2>
+    <p>For a first FDC pilot, choose a narrow process and a fault family with reviewable evidence. Broader coverage can follow after the baseline, alert budget, owner response, and change triggers are measured.</p>
+    <div class="field-note"><span class="note-k">Illustrative pilot scope</span><p>One module, one tool type, one recipe family, one fault family, and one review-only action path. This is a scoping example, not a claim that the same boundary fits every site.</p></div>
+    <ul>
+      <li><b>Scope:</b> define tool type, chambers, recipe family, product family, and target fault.</li>
+      <li><b>Data:</b> list trace tags, alarm codes, recipe revision, metrology target, and maintenance context.</li>
+      <li><b>Baseline:</b> select golden runs with explicit inclusion and exclusion rules.</li>
+      <li><b>Labels:</b> collect known fault examples and engineer-reviewed normal examples.</li>
+      <li><b>Action:</b> define watch, review, hold, or stop response before deployment.</li>
+      <li><b>Review:</b> measure false alarms, misses, engineer override, and time saved.</li>
+    </ul>
+    <div class="reader-shortcut"><span class="note-k">Pilot decision record</span><p><b>Pass:</b> move to shadow mode only when every scored window has approved context; the baseline run list is reproducible; known-fault and reviewed-normal slices are separate; and the measured review load stays inside the site-approved budget. <b>Stop:</b> pause release when recipe revisions are mixed, timing faults are warped away, the miss slice is too small to support the intended claim, or no owner accepts an alert. <b>Limit:</b> shadow-mode performance applies only to the recorded tools, products, revisions, and action level.</p></div>
+
+    <h2 id="connect">How this connects to AI</h2>
+    <p>FDC can use simple rules, statistics, classical ML, deep learning, or hybrid systems. AI is not the point. The point is controlled detection. Start with understandable baselines, then add complexity only where it earns its keep.</p>
+    <p>This is also where LLM/RAG systems become useful companions. RAG can retrieve the troubleshooting guide for a detected pattern. An agent can open a read-only view of recent alarms and PM history. A knowledge graph can connect chamber, recipe, lot, and failure history. But none of that replaces the FDC basics: trace quality, step alignment, golden runs, fault signatures, and false-alarm discipline.</p>
+    <p>The deployment question is: under the recorded trace, alignment, baseline, and validation conditions, can the system provide reviewable evidence within the approved false-positive budget? Run that question in shadow mode with the FDC/model owner and process and equipment reviewers. Then use <a class="link" href="fab-ai-beginner-glossary.html">the FAB AI glossary</a> to map any added RAG, agent, or audit component to an artifact and owner. Shadow results remain advisory and do not authorize plant-state changes.</p>
+  </div>
+<aside class="article-endcap" aria-label="Article information">
+  <p>Instructional FDC design. Scenarios, traces, thresholds, and budgets are hypothetical and require site validation and named owners.</p>
+  <div class="article-endcap-actions">
+    <a href="../index.html">Back to Journal</a>
+    <a href="../ai-categories.html">Browse AI categories</a>
+  </div>
+</aside>
+</article>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
+</footer>
+<script src="../assets/theme.js"></script>
+<script src="../assets/interactive-labs.js"></script>
+</body>
+</html>

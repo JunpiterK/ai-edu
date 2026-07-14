@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAB equipment data 101: what engineers must organize before AI - AI Edu Archive Journal</title>
+<meta name="description" content="A beginner-friendly guide to FAB equipment data for AI: traces, alarms, recipes, lots, metrology, maintenance records, and the source manifest engineers should build before RAG or ML.">
+<meta name="author" content="AI Edu Archive">
+<meta name="theme-color" content="#FAF9F5">
+<link rel="canonical" href="https://ai-edu-archive.pages.dev/blog/articles/fab-equipment-data-101.html">
+
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FAB equipment data 101: what engineers must organize before AI - AI Edu Archive Journal">
+<meta property="og:description" content="A beginner-friendly guide to FAB equipment data for AI: traces, alarms, recipes, lots, metrology, maintenance records, and the source manifest engineers should build before RAG or ML.">
+<meta property="og:site_name" content="AI Edu Archive">
+<meta property="og:url" content="https://ai-edu-archive.pages.dev/blog/articles/fab-equipment-data-101.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="article:published_time" content="2026-07-13">
+<meta property="article:author" content="AI Edu Archive">
+<meta property="article:section" content="Manufacturing AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FAB equipment data 101: what engineers must organize before AI - AI Edu Archive Journal">
+<meta name="twitter:description" content="A beginner-friendly guide to FAB equipment data for AI: traces, alarms, recipes, lots, metrology, maintenance records, and the source manifest engineers should build before RAG or ML.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"FAB equipment data 101: what engineers must organize before AI","description":"A beginner-friendly guide to FAB equipment data for AI: traces, alarms, recipes, lots, metrology, maintenance records, and the source manifest engineers should build before RAG or ML.","inLanguage":"en","datePublished":"2026-07-13","dateModified":"2026-07-13","author":{"@type":"Person","name":"AI Edu Archive"},"publisher":{"@type":"Organization","name":"AI Edu Archive"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ai-edu-archive.pages.dev/blog/articles/fab-equipment-data-101.html"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/blog.css">
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/fab-equipment-data-101.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/fab-equipment-data-101.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/fab-equipment-data-101.html">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="fab-equipment-data-101.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/fab-equipment-data-101.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<article data-cat="mfg rag onprem" itemscope itemtype="https://schema.org/Article">
+  <div class="article-hero"><div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span class="sep" aria-hidden="true">/</span><a href="../index.html">Journal</a><span class="sep" aria-hidden="true">/</span><span aria-current="page">FAB equipment data 101</span></nav><div class="post-meta"><span class="cat-tag">Manufacturing AI</span><span class="post-dot"></span><time datetime="2026-07-13" itemprop="datePublished">Jul 13, 2026</time><span class="post-dot"></span><span class="rt">14 min read</span></div><h1 itemprop="headline">FAB equipment data 101: what engineers must organize before AI</h1><div class="byline"><span class="avatar" aria-hidden="true">AE</span><span class="who"><b itemprop="author">AI Edu Archive</b><span>Applied AI, robotics, manufacturing systems</span></span></div></div></div>
+  <nav class="toc" aria-label="Table of contents"><div class="toc-title">On this page</div><ol><li><a href="#why">Why this comes before AI</a></li><li><a href="#data-map">The seven data families</a></li><li><a href="#example">A concrete chamber example</a></li><li><a href="#manifest">Source manifest</a></li><li><a href="#do-not-index">Do-not-index list</a></li><li><a href="#next">What this unlocks</a></li></ol></nav>
+  <div class="article-body" itemprop="articleBody">
+    <figure class="visual-figure media-figure media-figure--diagram">
+      <img src="../assets/visuals/fab-equipment-data-sources.svg" alt="FAB equipment data sources" loading="lazy" decoding="async">
+      <figcaption><span class="figure-label">Figure.</span> Equipment AI gets useful only after tool state, traces, recipe steps, alarms, metrology, and engineer notes are joined with context.</figcaption>
+    </figure>
+
+<p><span class="lead-in">Open a blank source manifest before opening a model notebook.</span> Its first row should name one system of record, its owner, event-time meaning, revision rule, access boundary, allowed use, and known gap. That small artifact tends to expose the hard part early: whether trace, event, recipe, lot, metrology, and maintenance records can answer one bounded question without hand repair.</p>
+
+    <div class="field-story"><span class="note-k">Illustrative scenario: rows match, identities do not</span><p>The query returns rows when chamber ID and timestamp are used to connect an etch trace to the affected wafer. A shift-boundary review then finds reused local chamber names and collection timestamps several minutes after event time. The operational snag is not the model; it is ambiguous identity and clock semantics. The team stops the feature build, adds the host tool ID and run ID, documents both clocks, and keeps unmatched records visible. This is a constructed example, not a plant incident.</p></div>
+
+    <h2 id="why">Why this comes before AI</h2>
+    <p>A pilot cannot support a reproducible decision until the team answers basic data questions:</p>
+    <ul>
+      <li>Which system is the source of truth?</li>
+      <li>Is this current revision or a copied local file?</li>
+      <li>Does the timestamp mean event time, collection time, upload time, or engineer edit time?</li>
+      <li>Can every user see this data, or does retrieval need permission filtering?</li>
+      <li>Does this field identify tool, chamber, recipe, lot, wafer, product, shift, and owner?</li>
+      <li>What data should never be indexed, summarized, or exported?</li>
+    </ul>
+    <p>Record the answers in the source manifest and make missing context visible to the application. A demonstration may still run on copied files, but that result does not establish source currency, authorization, or repeatability.</p>
+
+    <h2 id="data-map">The seven data families</h2>
+    <p>For a first AI map, do not start with every database table in the company. Start with the seven families an equipment or process engineer naturally recognizes.</p>
+    <div class="tbl-wrap"><table class="tbl"><caption>FAB equipment data families and where AI usually uses them.</caption><thead><tr><th>Data family</th><th>Plain meaning</th><th>Common AI use</th><th>First quality check</th></tr></thead><tbody>
+      <tr><td class="name">Trace data</td><td>Time-series signals such as pressure, RF power, gas flow, temperature, endpoint, motor current, valve state.</td><td>FDC, anomaly detection, golden run comparison, virtual metrology.</td><td>Are signals aligned to recipe step and wafer/lot context?</td></tr>
+      <tr><td class="name">Alarm and event logs</td><td>Tool alarms, warnings, state changes, host messages, operator acknowledgements.</td><td>Alarm triage, downtime analysis, maintenance assistant, incident review.</td><td>Are alarm codes mapped to readable names and severity?</td></tr>
+      <tr><td class="name">Recipe and process settings</td><td>Setpoints, recipe versions, chamber conditions, step sequence, product mapping.</td><td>Process window review, change impact analysis, recipe comparison.</td><td>Can you prove the released version and effective date?</td></tr>
+      <tr><td class="name">Lot and wafer context</td><td>Lot, wafer, product, route, operation, chamber, carrier, hold/release history.</td><td>RCA, yield excursion review, commonality analysis.</td><td>Can trace, metrology, and alarm data join to the same lot/wafer?</td></tr>
+      <tr><td class="name">Metrology and inspection</td><td>Thickness, CD, overlay, defect count, wafer map, review images, pass/fail results.</td><td>Virtual metrology, yield prediction, defect classification, drift monitoring.</td><td>Do units, sampling plan, and measurement timing match the process question?</td></tr>
+      <tr><td class="name">Maintenance records</td><td>PM history, parts replacement, chamber clean, ticket notes, technician comments.</td><td>Predictive maintenance, PM interval review, ticket summarization.</td><td>Are free-text notes consistent enough to trust?</td></tr>
+      <tr><td class="name">Documents and knowledge</td><td>SOPs, troubleshooting guides, spec sheets, training notes, engineering memos.</td><td>RAG, onboarding, agent explanations, controlled answer generation.</td><td>Are revision, owner, access level, and superseded status explicit?</td></tr>
+    </tbody></table></div>
+
+    <div class="field-note"><span class="note-k">Readiness check</span><p>Select one wafer or run and reproduce its context from governed sources. <b>Pass:</b> source row IDs, units, event times, revision IDs, and unmatched-key counts survive the join. <b>Stop:</b> do not use the joined set for model evaluation when identity or time meaning is unresolved, or when an undocumented spreadsheet repair changes membership. <b>Limit:</b> a clean join supports traceability; it does not prove that a correlated change caused the process result.</p></div>
+
+    <h2 id="example">A hypothetical chamber join</h2>
+    <p><b>Illustrative scenario:</b> a dry etch chamber shows intermittent CD drift. The question is, "Which recorded changes overlap the affected runs?" This does not establish causality. It defines the records that an engineer would inspect in a stitched view:</p>
+    <ul>
+      <li><b>Trace:</b> pressure and RF power during the affected recipe steps.</li>
+      <li><b>Recipe:</b> exact recipe revision and any setpoint change around that shift.</li>
+      <li><b>Lot context:</b> product, route, operation, chamber, wafer order, hold history.</li>
+      <li><b>Metrology:</b> CD measurement timing, tool, sampling plan, and units.</li>
+      <li><b>Alarms:</b> warnings during the run and any acknowledged but unresolved events.</li>
+      <li><b>Maintenance:</b> last PM, chamber clean, part replacement, leak check, or technician note.</li>
+      <li><b>Documents:</b> current troubleshooting guide, known issue memo, control plan.</li>
+    </ul>
+    <div class="tbl-wrap"><table class="tbl"><caption>Hypothetical join plan; names and values are examples, not plant records.</caption><thead><tr><th>Source</th><th>Join keys</th><th>Time condition</th><th>Expected output</th><th>Owner/check</th></tr></thead><tbody><tr><td class="name">Historian trace</td><td><code>tool_id</code>, <code>chamber_id</code>, <code>run_id</code>, <code>recipe_step</code></td><td>Event time within the run start/end interval</td><td>Pressure and RF summaries by step</td><td>Equipment engineering verifies tag and clock mapping</td></tr><tr><td class="name">MES context</td><td><code>run_id</code>, <code>lot_id</code>, <code>wafer_id</code>, operation</td><td>Track-in through track-out</td><td>Product, route, wafer order, and hold state</td><td>Manufacturing systems verifies identifiers</td></tr><tr><td class="name">Recipe control</td><td><code>recipe_id</code>, revision</td><td>Revision effective at run start</td><td>Released setpoints and step sequence</td><td>Process owner confirms effective revision</td></tr><tr><td class="name">Metrology</td><td><code>lot_id</code>, <code>wafer_id</code>, operation</td><td>First approved measurement after processing</td><td>CD value, unit, method, and sampling status</td><td>Process/quality verifies measurement context</td></tr><tr><td class="name">Maintenance</td><td><code>tool_id</code>, <code>chamber_id</code></td><td>Latest completed event before each run</td><td>PM, clean, and replaced-part state</td><td>Equipment owner reviews free-text normalization</td></tr></tbody></table></div>
+    <p>The joined output should retain source row IDs, event times, source revisions, and join status. Unmatched rows remain visible; they are not silently dropped. Correlation between a change and CD drift is a review lead, not a fault diagnosis.</p>
+
+    <h2 id="manifest">Build a source manifest first</h2>
+    <p>A source manifest is a controlled inventory of what data exists and how it may be used. Create it before indexing or feature extraction, and assign an owner to every unresolved field.</p>
+    <div class="tbl-wrap"><table class="tbl"><caption>Minimal source manifest fields. Example values are illustrative.</caption><thead><tr><th>Field</th><th>Why it matters</th><th>Example value, not a plant record</th></tr></thead><tbody>
+      <tr><td class="name">Source name</td><td>Lets everyone talk about the same thing.</td><td>Etch FDC trace export</td></tr>
+      <tr><td class="name">System of record</td><td>Prevents copied files from becoming fake truth.</td><td>Historian, MES, EAM, QMS, document control</td></tr>
+      <tr><td class="name">Owner</td><td>Someone must approve access and changes.</td><td>Equipment engineering, process engineering, IT/OT, quality</td></tr>
+      <tr><td class="name">Join keys</td><td>AI workflows need context, not isolated rows.</td><td>tool_id, chamber_id, lot_id, wafer_id, recipe_id, timestamp</td></tr>
+      <tr><td class="name">Freshness rule</td><td>Defines when data is current enough to use.</td><td>Index within 24 hours; block superseded SOPs</td></tr>
+      <tr><td class="name">Access level</td><td>Prevents retrieval from leaking restricted knowledge.</td><td>All engineers, module only, owner only, restricted</td></tr>
+      <tr><td class="name">Allowed use</td><td>Separates read, summarize, train, export, and automate.</td><td>Search only; no training; no external export</td></tr>
+      <tr><td class="name">Known weakness</td><td>Stops the pilot from pretending the data is cleaner than it is.</td><td>Technician notes use inconsistent part names</td></tr>
+    </tbody></table></div>
+
+    <div class="field-note"><span class="note-k">Illustrative manifest</span><p>The YAML below demonstrates field shape only. Its names, access category, freshness interval, and dates are example values, not plant measurements or policy.</p></div>
+    <div class="code-figure"><pre><code>source: etch_chamber_trace
+owner: equipment_engineering
+system_of_record: historian
+join_keys:
+  - tool_id
+  - chamber_id
+  - lot_id
+  - wafer_id
+  - recipe_step
+  - event_time
+freshness_rule: "available within 15 minutes after run end"
+access_level: "module_engineering_only"
+allowed_use:
+  - anomaly_review
+  - virtual_metrology_features
+  - engineer_copilot_context
+blocked_use:
+  - external_export
+  - automated_recipe_change
+known_weakness: "recipe_step labels changed during 2026 Q2 migration"</code></pre></div>
+
+    <h2 id="do-not-index">Make a do-not-index list</h2>
+    <p>Teams often ask what should go into the AI system. First identify what must not go in yet. A do-not-index list excludes unsafe, stale, noisy, or restricted sources before a pilot begins.</p>
+    <ul>
+      <li><b>Superseded SOPs:</b> keep for audit, but do not retrieve as active guidance.</li>
+      <li><b>Personal notes with no owner:</b> useful for interviews, risky as authoritative source.</li>
+      <li><b>Unapproved recipe copies:</b> dangerous if a model treats them as released truth.</li>
+      <li><b>Restricted yield or customer data:</b> use only with explicit access filtering and purpose control.</li>
+      <li><b>Low-quality OCR scans:</b> fix extraction before indexing, especially tables and warning boxes.</li>
+      <li><b>Mixed-unit CSV files:</b> block until units and calibration context are explicit.</li>
+    </ul>
+
+    <div class="field-note"><span class="note-k">Rule of thumb</span><p>If a junior engineer could get in trouble for using the source without asking, the AI should not silently retrieve it. Permission-aware retrieval is not an advanced feature. In a plant, it is part of basic hygiene.</p></div>
+
+    <h2 id="next">What this unlocks</h2>
+    <p>Once the data floor is mapped, the rest of the AI roadmap becomes more practical:</p>
+    <ul>
+      <li><b>RAG:</b> documents now have owners, revisions, freshness rules, and access levels.</li>
+      <li><b>FDC:</b> trace signals can be aligned to recipe step, chamber, lot, wafer, and golden runs.</li>
+      <li><b>Virtual metrology:</b> features can be selected from known process context, not random columns.</li>
+      <li><b>RCA:</b> commonality analysis can join tool, chamber, recipe, lot, metrology, and maintenance facts.</li>
+      <li><b>Agents:</b> tools can be split into safe read-only queries, drafts, queued actions, and approved execution.</li>
+    </ul>
+    <p>The next action is to complete the manifest for one bounded join, run it on approved records, and report unmatched keys and time conflicts to the named source owners. Once that evidence chain is stable, continue with <a class="link" href="fdc-from-first-principles.html">FDC from first principles</a> to see how recipe-step alignment and baseline ownership turn trace data into review signals. The manifest still does not prove data quality or causality; it makes those claims testable.</p>
+  </div>
+<aside class="article-endcap" aria-label="Article information">
+  <p>Instructional data-governance guide. Scenarios and values are illustrative and require validation by the named system and data owners.</p>
+  <div class="article-endcap-actions">
+    <a href="../index.html">Back to Journal</a>
+    <a href="../ai-categories.html">Browse AI categories</a>
+  </div>
+</aside>
+</article>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
+</footer>
+<script src="../assets/theme.js"></script>
+</body>
+</html>

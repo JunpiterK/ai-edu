@@ -1,0 +1,31 @@
+{
+  "status": "escalated",
+  "steps": 3,
+  "reason": "step_limit_reached",
+  "observations": [
+    {
+      "tool": "read_alarm",
+      "result": {
+        "alarm_id": "E-1420",
+        "state": "active"
+      },
+      "approval_receipt": null
+    },
+    {
+      "tool": "read_alarm",
+      "result": {
+        "alarm_id": "E-1420",
+        "state": "active"
+      },
+      "approval_receipt": null
+    },
+    {
+      "tool": "read_alarm",
+      "result": {
+        "alarm_id": "E-1420",
+        "state": "active"
+      },
+      "approval_receipt": null
+    }
+  ]
+}

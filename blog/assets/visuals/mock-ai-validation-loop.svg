@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" role="img" aria-labelledby="title desc">
+  <title id="title">Mock AI validation loop for a low-spec PC</title>
+  <desc id="desc">A deterministic scripted model passes through retrieval and tool contracts. Read-only calls return observations, while state-changing calls require a bound one-time approval and durable audit receipt. Step exhaustion escalates to a person.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10Z" fill="#56C4C2"/>
+    </marker>
+    <marker id="stop" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10Z" fill="#FF8E79"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="540" rx="8" fill="#091723"/>
+  <text x="54" y="58" fill="#F1F6F8" font-family="Inter, sans-serif" font-size="25" font-weight="700">LOW-SPEC MOCK VALIDATION</text>
+  <text x="54" y="86" fill="#91A6B3" font-family="Inter, sans-serif" font-size="15">No model download · no GPU · no external package</text>
+
+  <g font-family="Inter, sans-serif">
+    <rect x="54" y="142" width="166" height="92" rx="7" fill="#102536" stroke="#345165"/>
+    <text x="137" y="177" text-anchor="middle" fill="#7ED8D4" font-size="14" font-weight="700">SCRIPTED MODEL</text>
+    <text x="137" y="204" text-anchor="middle" fill="#C8D5DC" font-size="13">fixed decisions</text>
+
+    <rect x="285" y="142" width="178" height="92" rx="7" fill="#102536" stroke="#345165"/>
+    <text x="374" y="177" text-anchor="middle" fill="#7ED8D4" font-size="14" font-weight="700">EVIDENCE GATE</text>
+    <text x="374" y="202" text-anchor="middle" fill="#C8D5DC" font-size="13">role + current revision</text>
+
+    <rect x="528" y="142" width="178" height="92" rx="7" fill="#102536" stroke="#345165"/>
+    <text x="617" y="177" text-anchor="middle" fill="#7ED8D4" font-size="14" font-weight="700">TOOL CONTRACT</text>
+    <text x="617" y="202" text-anchor="middle" fill="#C8D5DC" font-size="13">exact name + arguments</text>
+
+    <rect x="771" y="142" width="175" height="92" rx="7" fill="#12383C" stroke="#56C4C2"/>
+    <text x="858" y="177" text-anchor="middle" fill="#F1F6F8" font-size="14" font-weight="700">OBSERVATION</text>
+    <text x="858" y="202" text-anchor="middle" fill="#C8D5DC" font-size="13">recorded fixture result</text>
+
+    <path d="M220 188H282" stroke="#56C4C2" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M463 188H525" stroke="#56C4C2" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M706 188H768" stroke="#56C4C2" stroke-width="3" marker-end="url(#arrow)"/>
+
+    <rect x="528" y="314" width="178" height="108" rx="7" fill="#2B2227" stroke="#FF8E79"/>
+    <text x="617" y="346" text-anchor="middle" fill="#FFAA98" font-size="14" font-weight="700">WRITE-ACTION GATE</text>
+    <text x="617" y="372" text-anchor="middle" fill="#D9C7C4" font-size="12.5">bound one-time approval</text>
+    <text x="617" y="394" text-anchor="middle" fill="#D9C7C4" font-size="12.5">durable audit receipt</text>
+
+    <rect x="771" y="314" width="175" height="108" rx="7" fill="#102536" stroke="#345165"/>
+    <text x="858" y="352" text-anchor="middle" fill="#F1F6F8" font-size="14" font-weight="700">CONTROLLED ACTION</text>
+    <text x="858" y="378" text-anchor="middle" fill="#C8D5DC" font-size="12.5">execute once</text>
+    <text x="858" y="400" text-anchor="middle" fill="#C8D5DC" font-size="12.5">retain receipt</text>
+
+    <path d="M617 234V311" stroke="#FF8E79" stroke-width="3" marker-end="url(#stop)"/>
+    <path d="M706 368H768" stroke="#56C4C2" stroke-width="3" marker-end="url(#arrow)"/>
+
+    <rect x="54" y="314" width="409" height="108" rx="7" fill="#15212B" stroke="#E3B85F"/>
+    <text x="258" y="348" text-anchor="middle" fill="#E3B85F" font-size="14" font-weight="700">STOP / ESCALATE</text>
+    <text x="258" y="375" text-anchor="middle" fill="#C8D5DC" font-size="13">missing current source · wrong role · bad schema</text>
+    <text x="258" y="399" text-anchor="middle" fill="#C8D5DC" font-size="13">expired or replayed approval · audit outage · step limit</text>
+
+    <path d="M374 234V282H258V311" fill="none" stroke="#E3B85F" stroke-width="2.5" marker-end="url(#stop)"/>
+    <path d="M528 206H494V280H332V311" fill="none" stroke="#E3B85F" stroke-width="2.5" marker-end="url(#stop)"/>
+  </g>
+  <text x="54" y="493" fill="#91A6B3" font-family="JetBrains Mono, monospace" font-size="13">PASS means the control path behaved as specified. It does not mean the model is accurate.</text>
+</svg>

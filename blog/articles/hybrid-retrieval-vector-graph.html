@@ -1,25 +1,24 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 
 <html lang="en">
 <head>
+<script id="theme-bootstrap">(function(){try{var t=localStorage.getItem('ai-edu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- ══ SEO ══════════════════════════════════════════════════════════ -->
 <title>Hybrid retrieval: vectors + knowledge graph - AI Edu Archive Journal</title>
-<meta content="Why vector search alone misses relationships and exact facts, and how to pair it with a knowledge graph: vectors find candidates, the graph verifies and expands." name="description"/>
+<meta content="How to pair vector retrieval with stored graph assertions while preserving provenance, effective dates, and review boundaries." name="description"/>
 <meta content="AI Edu Archive" name="author"/>
 <meta content="#FAF9F5" name="theme-color"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/hybrid-retrieval-vector-graph.html" rel="canonical"/>
-<link href="https://ai-edu-archive.example.com/blog/ko/articles/hybrid-retrieval-vector-graph.html" hreflang="ko" rel="alternate"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/hybrid-retrieval-vector-graph.html" hreflang="x-default" rel="alternate"/>
+<link href="https://ai-edu-archive.pages.dev/blog/articles/hybrid-retrieval-vector-graph.html" rel="canonical"/>
+
 <meta content="index,follow" name="robots"/>
 <!-- Open Graph -->
 <meta content="article" property="og:type"/>
 <meta content="Hybrid retrieval: vectors + knowledge graph - AI Edu Archive Journal" property="og:title"/>
-<meta content="Why vector search alone misses relationships and exact facts, and how to pair it with a knowledge graph: vectors find candidates, the graph verifies and expands." property="og:description"/>
+<meta content="How to pair vector retrieval with stored graph assertions while preserving provenance, effective dates, and review boundaries." property="og:description"/>
 <meta content="AI Edu Archive" property="og:site_name"/>
-<meta content="https://ai-edu-archive.example.com/blog/articles/hybrid-retrieval-vector-graph.html" property="og:url"/>
+<meta content="https://ai-edu-archive.pages.dev/blog/articles/hybrid-retrieval-vector-graph.html" property="og:url"/>
 <meta content="en_US" property="og:locale"/>
 <meta content="ko_KR" property="og:locale:alternate"/>
 <meta content="2026-07-04" property="article:published_time"/>
@@ -27,66 +26,64 @@
 <meta content="RAG" property="article:section"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="Hybrid retrieval: vectors + knowledge graph - AI Edu Archive Journal" name="twitter:title"/>
-<meta content="Why vector search alone misses relationships and exact facts, and how to pair it with a knowledge graph: vectors find candidates, the graph verifies and expands." name="twitter:description"/>
+<meta content="How to pair vector retrieval with stored graph assertions while preserving provenance, effective dates, and review boundaries." name="twitter:description"/>
 <!-- JSON-LD: Article schema -->
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "Hybrid retrieval: vectors + knowledge graph",
-  "description": "Why vector search alone misses relationships and exact facts, and how to pair it with a knowledge graph: vectors find candidates, the graph verifies and expands.",
+  "description": "How to pair vector retrieval with stored graph assertions while preserving provenance, effective dates, and review boundaries.",
   "inLanguage": "en",
-  "image": "https://ai-edu-archive.example.com/blog/assets/og-default.png",
+  "image": "https://ai-edu-archive.pages.dev/blog/assets/visuals/article-visual-template.svg",
   "datePublished": "2026-07-04",
   "dateModified": "2026-07-04",
   "author": {
     "@type": "Person",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html",
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html",
     "jobTitle": "Semiconductor Process Engineer · Air-gapped LLM / RAG / Agents"
   },
   "publisher": {
     "@type": "Organization",
     "name": "AI Edu Archive",
-    "url": "https://ai-edu-archive.example.com/blog/about.html"
+    "url": "https://ai-edu-archive.pages.dev/blog/about.html"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ai-edu-archive.example.com/blog/articles/hybrid-retrieval-vector-graph.html"
+    "@id": "https://ai-edu-archive.pages.dev/blog/articles/hybrid-retrieval-vector-graph.html"
   },
   "name": "Hybrid retrieval: vectors + knowledge graph",
-  "url": "https://ai-edu-archive.example.com/blog/articles/hybrid-retrieval-vector-graph.html"
+  "url": "https://ai-edu-archive.pages.dev/blog/articles/hybrid-retrieval-vector-graph.html"
 }</script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&amp;family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link href="../assets/blog.css" rel="stylesheet"/>
-<link href="https://ai-edu-archive.example.com/blog/articles/hybrid-retrieval-vector-graph.html" hreflang="en" rel="alternate"/></head>
+
+<link rel="alternate" hreflang="en" href="https://ai-edu-archive.pages.dev/blog/articles/hybrid-retrieval-vector-graph.html">
+<link rel="alternate" hreflang="ko" href="https://ai-edu-archive.pages.dev/blog/ko/articles/hybrid-retrieval-vector-graph.html">
+<link rel="alternate" hreflang="x-default" href="https://ai-edu-archive.pages.dev/blog/articles/hybrid-retrieval-vector-graph.html">
+</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="nav" id="nav">
-<div class="wrap">
-<a aria-label="AI Edu Archive home" class="brand" href="../../index.html">
-<svg aria-hidden="true" class="brand-mark" fill="none" height="30" viewbox="0 0 30 30" width="30">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</a>
-<nav aria-label="Primary" class="nav-links">
-<a href="../../index.html#courses">Courses</a>
-<a href="../index.html">Articles</a>
-<a href="../about.html">About</a>
-<div aria-label="Language selector" class="language-switch">
-<a aria-current="true" href="hybrid-retrieval-vector-graph.html" lang="en" title="English">🇺🇸 EN</a>
-<a href="../ko/articles/hybrid-retrieval-vector-graph.html" lang="ko" title="한국어">🇰🇷 KO</a>
-<a href="hybrid-retrieval-vector-graph.html" lang="en" title="Spanish version will be added later; English shown for now">🇪🇸 ES</a>
-<a href="hybrid-retrieval-vector-graph.html" lang="en" title="Chinese version will be added later; English shown for now">🇨🇳 ZH</a>
-<a href="hybrid-retrieval-vector-graph.html" lang="en" title="Japanese version will be added later; English shown for now">🇯🇵 JA</a>
-<a href="hybrid-retrieval-vector-graph.html" lang="en" title="German version will be added later; English shown for now">🇩🇪 DE</a>
-<a href="hybrid-retrieval-vector-graph.html" lang="en" title="French version will be added later; English shown for now">🇫🇷 FR</a>
-</div>
-</nav>
-</div>
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="AI Edu Archive home">
+      <span class="brand-name">AI Edu <em>Archive</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../../index.html#courses">Courses</a>
+      <a href="../index.html" aria-current="page">Articles</a>
+      <a href="../learning-paths.html">Learning Paths</a>
+      <a href="../search.html">Search</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../about.html">About</a>
+      <div class="language-switch" aria-label="Language selector">
+        <a href="hybrid-retrieval-vector-graph.html" lang="en" aria-current="true" title="English">EN</a>
+        <a href="../ko/articles/hybrid-retrieval-vector-graph.html" lang="ko" title="한국어">KO</a>
+      </div>
+    </nav>
+  </div>
 </header>
 <main id="main">
 <article itemscope="" itemtype="https://schema.org/Article">
@@ -121,13 +118,15 @@
 <ol>
 <li><a href="#where-vectors-break">Where vector search breaks</a></li>
 <li><a href="#what-graphs-add">What a knowledge graph adds</a></li>
-<li><a href="#the-pattern">The pattern: candidates → verify → expand</a></li>
+<li><a href="#the-pattern">Retrieve in parallel, then qualify</a></li>
 <li><a href="#code">Wiring it in LangChain</a></li>
 <li><a href="#rerank">Reranking the merged set</a></li>
 </ol>
 </nav>
 <div class="article-body" itemprop="articleBody">
-<p>A vector store is a similarity engine, not a fact engine. Ask it which chambers share the RF generator model that failed on EV-03, and it will return paragraphs that sound like the question, not the chambers that actually share that part. On a fab network, where an answer can feed a maintenance decision, that gap matters. This article makes a simple claim: for relationship and exact-fact questions, pair vector search with a knowledge graph. Vectors find candidates; the graph verifies and expands.</p>
+<div class="field-story"><span class="note-k">Opening artifact: retrieval trace</span><p><code>query_entity=EV-03</code>; vector branch returned a maintenance paragraph at rank 1; graph branch returned no rows; entity resolver recorded <code>unresolved</code>. That is not a reranking problem. The trace says the relationship path never started.</p></div>
+<p><span class="lead-in">A vector index ranks similar text; a graph query returns assertions stored in the graph.</span> Neither result is automatically true, current, authorized, or complete. For relationship and exact-identifier questions, a hybrid retriever can place both document passages and graph assertions in front of the answer system, provided every result retains its branch, provenance, effective date, and access decision.</p>
+<div class="reader-shortcut"><span class="note-k">Constructed branch trace</span><p>Only document chunks came back for a shared-part question, making the graph weight the obvious suspect. The branch trace showed the actual snag: the natural-language query was passed to <code>CONTAINS</code> without resolving <code>EV-03</code> to a canonical tool or part ID. The first repair is entity resolution and a no-match state, not a new fusion weight. This is a constructed example, not a measured retrieval result.</p></div>
 <h2 id="where-vectors-break">Where vector search breaks</h2>
 <p>Dense retrieval embeds a query and returns the nearest chunks by cosine similarity. That is excellent for a semantic question such as explain the purge sequence for the load-lock. It is weak in three places that show up constantly in manufacturing knowledge:</p>
 <ul>
@@ -136,16 +135,18 @@
 <li>Multi-hop — which SOPs are affected if this valve is recalled needs valve → chamber → tool → SOP. Each hop is a join the vector index cannot make.</li>
 </ul>
 <p>You can hide part of the problem with a larger k and a reranker, but you are still asking a similarity index to perform a lookup it was never built to do.</p>
-<blockquote>Vectors tell you what a document is about. A graph tells you what a thing is connected to. Fab questions usually need both.</blockquote>
+<blockquote>Vectors rank passages by similarity. Graph queries return stored relationships. Both require provenance and review.</blockquote>
 <h2 id="what-graphs-add">What a knowledge graph adds</h2>
-<p>A knowledge graph stores entities as nodes and relationships as typed edges: (:Tool)-[:HAS_CHAMBER]-&gt;(:Chamber)-[:USES_PART]-&gt;(:Part). Querying it with Cypher is exact and deterministic: no embedding blur, no ranking guess, just the edges that exist. That is exactly the shape of the questions vectors struggle with. The trade-off is coverage. A graph only knows the entities and relationships you extracted into it, and it does not perform fuzzy semantic matching. Neither system is sufficient alone; together they cover each other's blind spots.</p>
-<p>Both stores can live entirely inside the plant network. The embedding model runs from local weights, and a graph database such as Neo4j runs on-prem. Hybrid retrieval does not require external egress, which is the point for an air-gapped fab.</p>
-<h2 id="the-pattern">The pattern: candidates → verify → expand</h2>
-<p>The reliable pattern is not run both and hope. It is a pipeline:</p>
+<p>A knowledge graph stores entities as nodes and relationships as typed edges: (:Tool)-[:HAS_CHAMBER]-&gt;(:Chamber)-[:USES_PART]-&gt;(:Part). A Cypher query deterministically returns matching stored nodes and edges under the current database state. That output is a stored assertion, not independent verification. It may be stale, incomplete, incorrectly extracted, or outside the requester's access scope.</p>
+<div class="tbl-wrap"><table class="tbl"><caption>Minimum evidence attached to a graph assertion.</caption><thead><tr><th>Field</th><th>Purpose</th><th>Example value, not a plant record</th></tr></thead><tbody><tr><td class="name">Source record</td><td>Points to the document or system row that asserted the relationship</td><td><code>asset_registry:part_link:1842</code></td></tr><tr><td class="name">Source revision</td><td>Identifies the version used to create the edge</td><td><code>rev_12</code></td></tr><tr><td class="name">Effective interval</td><td>Distinguishes current from historical relationships</td><td><code>2026-01-15</code> through open-ended</td></tr><tr><td class="name">Ingested at</td><td>Supports freshness and pipeline investigation</td><td><code>2026-07-01T03:20Z</code></td></tr><tr><td class="name">Assertion method</td><td>Separates system-of-record imports from extraction or manual entry</td><td><code>registry_import</code></td></tr><tr><td class="name">Access label</td><td>Allows policy filtering before return</td><td><code>module_engineering</code></td></tr></tbody></table></div>
+<p>At query time, filter assertions to the requester's authorization and the question's effective date. If provenance is missing, return the relationship as unverified context or omit it according to policy. A reviewer follows the source record before using the assertion for a maintenance or production decision.</p>
+<p>Both stores can be deployed inside the plant network. Local model paths and an on-prem graph endpoint support that design, while firewall, DNS, package, update, plugin, and telemetry checks provide the evidence that the deployed system respects the intended boundary.</p>
+<h2 id="the-pattern">The pattern: retrieve in parallel, then qualify</h2>
+<p>The implementation below fans the query out to two retrievers and merges their ranked outputs. It does not use vector candidates to verify graph edges, and the graph branch does not prove the returned assertions. Treat it as a retrieval skeleton:</p>
 <ul>
-<li>Candidates — vector search over document chunks returns semantically relevant passages. This is the recall layer.</li>
-<li>Verify and expand — pull the entities mentioned in those chunks, then query the graph for exact facts and neighbours: shared parts, affected SOPs, and the tool a chamber belongs to.</li>
-<li>Merge and rerank — fuse both result sets and rerank so the top context is both semantically on-topic and factually connected.</li>
+<li>Vector branch: return document chunks ranked by semantic similarity.</li>
+<li>Graph branch: resolve a canonical entity or identifier, then return connected stored assertions that pass authorization and effective-date filters.</li>
+<li>Merge and rerank: fuse both result sets for relevance. Reranking changes order; it does not validate truth or freshness.</li>
 </ul>
 <figure>
 <div aria-label="Hybrid retrieval flow diagram" class="diagram">
@@ -187,8 +188,9 @@
 </div>
 <figcaption>Figure 1. The query fans out to both retrievers; results merge and rerank before the on-prem LLM answers.</figcaption>
 </figure>
+<p>The diagram's "verify + expand" label means a graph traversal retrieves matching stored edges. It does not mean the graph has independently verified the underlying assertion.</p>
 <h2 id="code">Wiring it in LangChain</h2>
-<p>Everything below uses the current split packages: langchain_neo4j, langchain_huggingface, and langchain_core. No legacy langchain.embeddings or LLMChain. Start with the two stores, both running on-prem.</p>
+<p>Everything below uses the LangChain v1 package layout: <code>langchain-neo4j</code>, <code>langchain-huggingface</code>, <code>langchain-core</code>, <code>langchain-community</code>, and <code>langchain-classic</code>. Install compatible pinned versions of those packages before running the examples. Start with the two stores, both running on-prem.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> stores.py</span>
@@ -216,7 +218,7 @@ graph = <span class="tok-fn">Neo4jGraph</span>(
     password=<span class="tok-str">"***"</span>,
 )</code></pre>
 </figure>
-<p>Next, build a small custom retriever that turns the graph into a LangChain retriever. It receives a query, finds exact entities and connected facts with parameterised Cypher, and returns them as Document objects. In production you would add a dedicated entity extraction step; here the query parameter keeps the example concrete and injection-safe.</p>
+<p>Next, the code sketch turns graph rows into LangChain <code>Document</code> objects. The parameterized query avoids string interpolation, but the sample passes the full natural-language question to <code>CONTAINS</code>; it does not implement canonical entity extraction. With data shaped as shown, that branch may return no rows unless the query string matches a part name. A deployed version must resolve and validate a part, chamber, or tool identifier first, then filter the traversal by requester authorization and effective date.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> graph_retriever.py</span>
@@ -227,7 +229,7 @@ graph = <span class="tok-fn">Neo4jGraph</span>(
 <span class="tok-kw">from</span> langchain_core.callbacks <span class="tok-kw">import</span> CallbackManagerForRetrieverRun
 
 <span class="tok-kw">class</span> <span class="tok-fn">GraphFactRetriever</span>(BaseRetriever):
-    <span class="tok-str">"""Expand a query into exact facts + neighbours via Cypher."""</span>
+    <span class="tok-str">"""Return stored relationships and neighbours via Cypher."""</span>
     graph: <span class="tok-fn">object</span>
     k: <span class="tok-fn">int</span> = <span class="tok-num">6</span>
 
@@ -254,13 +256,14 @@ graph = <span class="tok-fn">Neo4jGraph</span>(
             <span class="tok-kw">for</span> r <span class="tok-kw">in</span> rows
         ]</code></pre>
 </figure>
-<p>With both retrievers speaking the same interface, EnsembleRetriever can fuse them. It merges the two result lists with Reciprocal Rank Fusion, so a document ranked highly by either retriever can survive. The weights let you lean more heavily on vectors for broad recall or on the graph for fact-heavy corpora.</p>
+<p>With both retrievers speaking the same interface, <code>EnsembleRetriever</code> can fuse their independent result lists with Reciprocal Rank Fusion. A result ranked highly by either branch can survive. The example weights and <code>k</code> values are illustrative, not evaluation results; tune them on held-out queries.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> ensemble.py</span>
 <button class="copy-btn" data-copy="" type="button">Copy</button>
 </div>
-<pre><code><span class="tok-kw">from</span> langchain.retrievers <span class="tok-kw">import</span> EnsembleRetriever
+<pre><code><span class="tok-com"># pip install langchain-classic</span>
+<span class="tok-kw">from</span> langchain_classic.retrievers <span class="tok-kw">import</span> EnsembleRetriever
 
 vec_ret = vector.<span class="tok-fn">as_retriever</span>(search_kwargs={<span class="tok-str">"k"</span>: <span class="tok-num">6</span>})
 graph_ret = <span class="tok-fn">GraphFactRetriever</span>(graph=graph, k=<span class="tok-num">6</span>)
@@ -274,14 +277,15 @@ hybrid = <span class="tok-fn">EnsembleRetriever</span>(
 docs = hybrid.<span class="tok-fn">invoke</span>(<span class="tok-str">"which chambers share the RF generator on EV-03?"</span>)</code></pre>
 </figure>
 <h2 id="rerank">Reranking the merged set</h2>
-<p>RRF fusion is rank-based, not content-aware. To push the genuinely relevant context to the top before it reaches the prompt, wrap the ensemble in a ContextualCompressionRetriever with a cross-encoder reranker. The reranker also runs from local weights, so no external API is required.</p>
+<p>RRF fusion is rank-based, not content-aware. A <code>ContextualCompressionRetriever</code> with a local cross-encoder can reorder the merged candidates by estimated relevance. It cannot confirm that a graph assertion is true, current, or authorized; those checks occur before fusion and remain visible in result metadata.</p>
 <figure class="code-figure">
 <div class="code-bar">
 <span class="code-file"><span aria-hidden="true" class="code-dots"><i></i><i></i><i></i></span><span class="lang">python</span> rerank.py</span>
 <button class="copy-btn" data-copy="" type="button">Copy</button>
 </div>
-<pre><code><span class="tok-kw">from</span> langchain.retrievers <span class="tok-kw">import</span> ContextualCompressionRetriever
-<span class="tok-kw">from</span> langchain.retrievers.document_compressors <span class="tok-kw">import</span> CrossEncoderReranker
+<pre><code><span class="tok-com"># pip install langchain-classic langchain-community sentence-transformers</span>
+<span class="tok-kw">from</span> langchain_classic.retrievers.contextual_compression <span class="tok-kw">import</span> ContextualCompressionRetriever
+<span class="tok-kw">from</span> langchain_classic.retrievers.document_compressors <span class="tok-kw">import</span> CrossEncoderReranker
 <span class="tok-kw">from</span> langchain_community.cross_encoders <span class="tok-kw">import</span> HuggingFaceCrossEncoder
 
 reranker = <span class="tok-fn">CrossEncoderReranker</span>(
@@ -295,11 +299,12 @@ retriever = <span class="tok-fn">ContextualCompressionRetriever</span>(
 )
 
 context = retriever.<span class="tok-fn">invoke</span>(<span class="tok-str">"which chambers share the RF generator on EV-03?"</span>)
-<span class="tok-com"># context now: semantically relevant AND factually connected, top-4</span></code></pre>
+<span class="tok-com"># context now: reranked semantic and stored-relationship candidates, top-4</span></code></pre>
 </figure>
-<p>Feed context into your normal LCEL chain, prompt, on-prem LLM, and parser, exactly as you would with a single-retriever RAG. The hybrid retriever is a drop-in replacement for the plain retriever; nothing downstream has to know how the context was assembled.</p>
+<p>Before feeding context to an LCEL chain, preserve the branch type, source record, revision, effective interval, access decision, and retrieval time in each document's metadata. The prompt and citation formatter must distinguish a quoted source passage from a graph assertion. Downstream components therefore do need to know how the context was assembled.</p>
+<div class="tbl-wrap"><table class="tbl"><caption>Hybrid-query decision record for one relationship question.</caption><thead><tr><th>Checkpoint</th><th>Pass</th><th>Stop</th></tr></thead><tbody><tr><td class="name">Entity resolution</td><td>The query maps to one approved canonical ID, or returns an explicit ambiguity.</td><td>No ID, multiple IDs, or free text is silently treated as an entity.</td></tr><tr><td class="name">Graph qualification</td><td>Every edge has source, revision, effective interval, assertion method, and allowed access scope.</td><td>Missing provenance, stale interval, or denied scope.</td></tr><tr><td class="name">Fusion trace</td><td>Branch ranks, fusion score, rerank score, and final metadata remain inspectable.</td><td>The merged result loses branch identity or access evidence.</td></tr><tr><td class="name">Limit</td><td>The test covers one query class and the graph snapshot named in the record.</td><td>Do not generalize it to unseen entity aliases or multi-hop paths.</td></tr></tbody></table></div>
 <hr/>
-<p>Vector-only RAG is the right default for explanation questions and the wrong tool for relationship and exact-fact questions. Pairing it with a knowledge graph, vectors for recall, graph for verified structure, and a reranker to settle the order, closes that gap without leaving the network. If your fab already has structured data in MES or an asset database, the graph is half-built. The deck below walks the full retrieval stack slide by slide.</p>
+<p>Use vector retrieval for semantic passages and a governed graph branch for stored relationships and exact identifiers. Evaluate entity resolution, authorization filtering, effective-date selection, provenance coverage, retrieval recall, and stale-assertion behavior separately. To build the relationship side with better source discipline, continue with <a href="knowledge-graph-process.html">the process knowledge-graph field note</a>. Hybrid retrieval improves access to evidence; it does not turn stored assertions into truth.</p>
 </div>
 <!-- deep-dive deck link -->
 <aside class="deck-link">
@@ -314,8 +319,8 @@ context = retriever.<span class="tok-fn">invoke</span>(<span class="tok-str">"wh
 <div class="share">
 <span class="lbl">Share</span>
 <button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)}" type="button">Share / Copy link</button>
-<a class="sbtn" href="https://twitter.com/intent/tweet?url=" rel="noopener" target="_blank">X / Twitter</a>
-<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=" rel="noopener" target="_blank">LinkedIn</a>
+<a class="sbtn" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Fhybrid-retrieval-vector-graph.html" rel="noopener" target="_blank">X / Twitter</a>
+<a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fai-edu-archive.pages.dev%2Fblog%2Farticles%2Fhybrid-retrieval-vector-graph.html" rel="noopener" target="_blank">LinkedIn</a>
 </div>
 <!-- author bio card (E-E-A-T) -->
 <aside class="author-card">
@@ -345,45 +350,35 @@ context = retriever.<span class="tok-fn">invoke</span>(<span class="tok-str">"wh
 </article>
 </main>
 <footer class="site-foot">
-<div class="wrap">
-<div class="foot-top">
-<div class="foot-lead">
-<h2>Free, in-depth, and open.</h2>
-<p>Everything here, courses and journal alike, is free to read with no signup.</p>
-</div>
-<div class="foot-nav-cols">
-<div class="foot-col">
-<h4>Explore</h4>
-<a href="../../index.html">Hub home</a>
-<a href="../../index.html#courses">All courses</a>
-<a href="../index.html">Journal</a>
-</div>
-<div class="foot-col">
-<h4>Courses</h4>
-<a href="../../overview/index.html">Fab AI</a>
-<a href="../../watsonx/index.html">Air-gapped LLM</a>
-<a href="../../llm_apply/LLM_slide.html">Enterprise LLM</a>
-</div>
-<div class="foot-col">
-<h4>Site</h4>
-<a href="../about.html">About</a>
-<a href="../contact.html">Contact</a>
-<a href="../privacy.html">Privacy</a>
-<a href="../terms.html">Terms</a>
-</div>
-</div>
-</div>
-<div class="foot-bottom">
-<div class="foot-brand">
-<svg aria-hidden="true" fill="none" height="26" viewbox="0 0 30 30" width="26">
-<rect fill="#FCFBF8" height="28" rx="8" stroke="#DBD5C8" width="28" x="1" y="1"></rect>
-<path d="M9 20.5 14.2 9h1.6L21 20.5h-2.3l-1.1-2.7h-5.2L11.3 20.5H9Zm3.9-4.5h3.6L15 11.5 12.9 16Z" fill="#C15F3C"></path>
-</svg>
-<span class="brand-name">AI Edu <em>Archive</em></span>
-</div>
-<span class="copyright">© 2026 AI Edu Archive · Open Korean AI education</span>
-</div>
-</div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-lead">
+        <h2>Practical AI education, open to everyone.</h2>
+        <p>Courses, articles, and field notes for building useful AI systems.</p>
+      </div>
+      <div class="foot-nav-cols">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="../../index.html#courses">Courses</a>
+          <a href="../index.html">Articles</a>
+          <a href="../learning-paths.html">Learning Paths</a>
+          <a href="../search.html">Search</a>
+          <a href="../portfolio.html">Portfolio</a>
+        </div>
+        <div class="foot-col">
+          <h4>Site</h4>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-brand"><span class="brand-name">AI Edu <em>Archive</em></span></div>
+      <span class="copyright">&copy; 2026 AI Edu Archive · AI education in Korean and English</span>
+    </div>
+  </div>
 </footer>
 <script>
 (function(){
@@ -408,5 +403,6 @@ context = retriever.<span class="tok-fn">invoke</span>(<span class="tok-str">"wh
   });
 })();
 </script>
+<script src="../assets/theme.js"></script>
 </body>
 </html>
